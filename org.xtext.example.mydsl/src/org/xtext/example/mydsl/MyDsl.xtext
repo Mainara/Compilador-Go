@@ -2,8 +2,110 @@ grammar org.xtext.example.mydsl.MyDsl with org.eclipse.xtext.common.Terminals
 
 generate myDsl "http://www.xtext.org/example/mydsl/MyDsl"
 
+/*
+ * {} 0 ou + -> ()*
+ * [] 0 ou 1 - > ()?
+ *           ->  ()+   
+ */
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
 Model:
 	greetings+=Greeting*;
 	
 Greeting:
 	'Hello' name=ID '!';
+
+terminal LETTER:
+	("A".."Z""a".."z") | "_" 
+;
+terminal DECIMAL_DIGIT:
+	 "0".."9" 
+;
+terminal OCTAL_DIGIT :
+	"0".. "7";
+	
+terminal HEX_DIGIT:
+	"0".."9" | "A".."F" | "a".."f"
+;
+
+terminal BREAK:"break";
+terminal DEFAULT:"default";
+terminal FUNC:"func";
+terminal INTERFACE:"interface";    
+terminal SELECT:"select";
+terminal CASE:"case";
+terminal DEFER:"defer";
+terminal GO:"go";
+terminal MAP:"map";
+terminal CHAN:"chan";
+terminal STRCUT:"struct";
+terminal ELSE:"else";
+terminal GOTO:"goto";
+terminal PACKAGE:"package";
+terminal SWITCH:"switch";
+terminal CONST:"const";
+terminal FALLTHROUGH: "fallthrough";
+terminal IF:"if";
+terminal RANGE:"RANGE";
+terminal TYPE:"type";
+terminal CONTINUE:"continue";
+terminal FOR:"for";
+terminal IMPORT:"import";   
+terminal RETURN:"return";
+terminal VAR :"var";
+
+Indetifier:
+	LETTER ( LETTER | DECIMAL_DIGIT )*
+;
+
+Operador_Aritmetico:
+	"+" | "-" | "*" | "/" | "%" | "++" | "--"
+;
+
+Operador_comparacao:
+	 "==" | "!=" | "<" | ">"|"<="| ">="
+;
+
+Operador_bit_a_bit:
+	"&" | "|" | "^"| "<<" | ">>"
+;
+
+Operador_logic:
+	"&&" | "||" | "!"
+;
+
+Operador_atribuicao:
+	"+="| "&=" | "-="| "|=" | "*=" |"^=" |"/=" |"<<=" |"%=" |">>="
+;
+
+NAO_SEI:
+	" (    )
+                          [    ]
+            <-            {    }
+                     :=    ,    ;
+                     ...   .    :
+     &^&^="
+;
+
+terminal INTEGER_LITERAL:
+	 ("1".."9")|(DECIMAL_DIGIT)* | 
+	 ("0" | (OCTAL_DIGIT))*|
+	 ("0" ( "x" | "X" ) | HEX_DIGIT |(HEX_DIGIT)*)
+;
+
+terminal FLOAT_LITERAL:     
+       ((DECIMAL_DIGIT)(DECIMAL_DIGIT)*)"."((DECIMAL_DIGIT)(DECIMAL_DIGIT)*)?
+       (( "e" | "E" ) ("+" | "-")? (DECIMAL_DIGIT)(DECIMAL_DIGIT)*)? |
+       ((DECIMAL_DIGIT)(DECIMAL_DIGIT)*)(( "e" | "E" ) ("+" | "-")? (DECIMAL_DIGIT)(DECIMAL_DIGIT)*)|
+       "."((DECIMAL_DIGIT)(DECIMAL_DIGIT)*)(( "e" | "E" ) ("+" | "-")? (DECIMAL_DIGIT)(DECIMAL_DIGIT)*)?
+;
+
+terminal IMAGINARY_LITERALS:
+	(((DECIMAL_DIGIT)(DECIMAL_DIGIT)*) | FLOAT_LITERAL) "i"
+;
+
+terminal STRING_LITERALS:
+	"oi"
+;
+
+
