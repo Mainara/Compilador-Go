@@ -18,94 +18,358 @@ Greeting:
 terminal LETTER:
 	("A".."Z""a".."z") | "_" 
 ;
+
+terminal UNICODECHAR:
+	LETTER
+;
+	
 terminal DECIMAL_DIGIT:
 	 "0".."9" 
 ;
 terminal OCTAL_DIGIT :
-	"0".. "7";
+	"0".. "7"
+;
 	
 terminal HEX_DIGIT:
 	"0".."9" | "A".."F" | "a".."f"
 ;
 
-terminal BREAK:"break";
-terminal DEFAULT:"default";
-terminal FUNC:"func";
-terminal INTERFACE:"interface";    
-terminal SELECT:"select";
-terminal CASE:"case";
-terminal DEFER:"defer";
-terminal GO:"go";
-terminal MAP:"map";
-terminal CHAN:"chan";
-terminal STRCUT:"struct";
-terminal ELSE:"else";
-terminal GOTO:"goto";
-terminal PACKAGE:"package";
-terminal SWITCH:"switch";
-terminal CONST:"const";
-terminal FALLTHROUGH: "fallthrough";
-terminal IF:"if";
-terminal RANGE:"RANGE";
-terminal TYPE:"type";
-terminal CONTINUE:"continue";
-terminal FOR:"for";
-terminal IMPORT:"import";   
-terminal RETURN:"return";
-terminal VAR :"var";
-
-Indetifier:
-	LETTER ( LETTER | DECIMAL_DIGIT )*
-;
-
-Operador_Aritmetico:
-	"+" | "-" | "*" | "/" | "%" | "++" | "--"
-;
-
-Operador_comparacao:
-	 "==" | "!=" | "<" | ">"|"<="| ">="
-;
-
-Operador_bit_a_bit:
-	"&" | "|" | "^"| "<<" | ">>"
-;
-
-Operador_logic:
-	"&&" | "||" | "!"
-;
-
-Operador_atribuicao:
-	"+="| "&=" | "-="| "|=" | "*=" |"^=" |"/=" |"<<=" |"%=" |">>="
-;
-
-NAO_SEI:
-	" (    )
-                          [    ]
-            <-            {    }
-                     :=    ,    ;
-                     ...   .    :
-     &^&^="
-;
-
-terminal INTEGER_LITERAL:
+terminal INT_LIT:
 	 ("1".."9")|(DECIMAL_DIGIT)* | 
 	 ("0" | (OCTAL_DIGIT))*|
 	 ("0" ( "x" | "X" ) | HEX_DIGIT |(HEX_DIGIT)*)
 ;
 
-terminal FLOAT_LITERAL:     
+terminal FLOAT_LIT:     
        ((DECIMAL_DIGIT)(DECIMAL_DIGIT)*)"."((DECIMAL_DIGIT)(DECIMAL_DIGIT)*)?
        (( "e" | "E" ) ("+" | "-")? (DECIMAL_DIGIT)(DECIMAL_DIGIT)*)? |
        ((DECIMAL_DIGIT)(DECIMAL_DIGIT)*)(( "e" | "E" ) ("+" | "-")? (DECIMAL_DIGIT)(DECIMAL_DIGIT)*)|
        "."((DECIMAL_DIGIT)(DECIMAL_DIGIT)*)(( "e" | "E" ) ("+" | "-")? (DECIMAL_DIGIT)(DECIMAL_DIGIT)*)?
 ;
 
-terminal IMAGINARY_LITERALS:
-	(((DECIMAL_DIGIT)(DECIMAL_DIGIT)*) | FLOAT_LITERAL) "i"
+terminal IMAGINARY_LIT:
+	(((DECIMAL_DIGIT)(DECIMAL_DIGIT)*) | FLOAT_LIT) "i"
 ;
 
-terminal STRING_LITERALS:
-	"oi"
+terminal STRING_LIT:
+	"oi"//ajeitar
 ;
 
+terminal RUNE_LIT:
+	"oiiii"
+;
+
+Type: 
+	TypeName | TypeLit | "(" Type ")"
+;
+
+TypeName: 
+	Identifier | QualifiedIdent
+;
+
+QualifiedIdent: 
+	PackageName "." Identifier
+;
+
+PackageName: 
+	Identifier
+;
+TypeLit: 
+	ArrayType | StructType | PointerType | FunctionType | InterfaceType |
+	    SliceType | MapType | ChannelType 
+;
+
+ArrayType: 
+	"[" ArrayLength "]" ElementType 
+;
+ArrayLength: 
+	Expression
+;
+
+ElementType: 
+	Type
+;
+
+SliceType: 
+	"[" "]" ElementType
+;
+
+StructType: 
+	"struct" "{"  (FieldDecl ";")* "}"
+;
+
+FieldDecl: 
+	(IdentifierList Type | EmbeddedField) (Tag)?
+;
+
+EmbeddedField: 
+	("*")? TypeName
+;
+
+Tag: 
+	STRING_LIT
+;
+
+PointerType:
+	"*" BaseType
+;
+
+BaseType:
+	Type
+;
+
+FunctionType: 
+	"func" Signature
+;
+
+Signature: 
+	Parameters(Result)?
+;
+
+Result: 
+	Parameters | Type
+;
+Parameters:
+	"(" (ParameterList (",")?)? ")"
+;
+
+ParameterList:
+	ParameterDecl ("," ParameterDecl)*
+;
+
+ParameterDecl:
+	(IdentifierList)? ("...")? Type
+;
+
+InterfaceType: 
+	"interface" "{" (MethodSpec ";") "}"
+;
+
+MethodSpec: 
+	MethodName Signature | InterfaceTypeName
+;
+
+MethodName: 
+	Identifier
+;
+
+InterfaceTypeName: 
+	TypeName
+;
+
+MapType:
+	"map" "[" KeyType "]" ElementType
+;
+
+KeyType:
+	Type
+;
+
+ChannelType: 
+	( "chan" | "chan" "<-" | "<-" "chan" ) ElementType
+;
+
+
+Expression: 
+	UnaryExpr | Expression binary_op Expression
+;
+UnaryExpr: 
+	PrimaryExpr | UNARY_OP UnaryExpr
+;
+binary_op: 
+	"||" | "&&" | REL_OP | ADD_OP | MUL_OP
+;
+
+terminal REL_OP : 
+	"==" | "!=" | "<" | "<=" | ">" | ">="
+;
+terminal ADD_OP :
+	"+" | "-" | "|" | "^" 
+;
+terminal MUL_OP :
+	"*" | "/" | "%" | "<<" | ">>" | "&" | "&^"
+;
+terminal UNARY_OP: 
+	"+" | "-" | "!" | "^" | "*" | "&" | "<-" 
+;
+
+PrimaryExpr:
+	Operand |
+	Conversion |
+	MethodExpr |
+	PrimaryExpr Selector |
+	PrimaryExpr Index |
+	PrimaryExpr Slice |
+	PrimaryExpr TypeAssertion |
+	PrimaryExpr Arguments
+;
+
+Selector: 
+	"." Identifier
+;
+Index:
+	"[" Expression "]"
+;
+Slice:
+	"[" (Expression)? ":" (Expression)? "]" | 
+		"[" (Expression)? ":" Expression ":" Expression "]"
+;
+TypeAssertion:
+	"." "(" Type ")"
+;
+
+Arguments:
+	"(" ( ( ExpressionList | Type ("," ExpressionList)? ) ( "...")? ( "," )?)? ")"
+;
+
+ExpressionList: 
+	Expression ("," Expression)*
+;
+IdentifierList: 
+	Identifier( "," Identifier )*
+;
+
+Identifier:
+	LETTER ( LETTER | DECIMAL_DIGIT )*
+;
+
+Block: 
+	"{" StatementList "}"
+;
+
+StatementList: 
+	( Statement ";")*
+;
+
+Statement:
+	Identifier
+;//fazer
+
+Declaration: 
+	ConstDecl | TypeDecl | VarDecl
+;
+
+TopLevelDecl: 
+	Declaration | FunctionDecl | MethodDecl
+;
+
+ConstDecl: 
+	"const" ( ConstSpec | "(" (ConstSpec ";")* ")" )
+;
+
+ConstSpec: 
+	IdentifierList ((Type)? "=" ExpressionList)?
+;
+
+TypeDecl: 
+	"type" ( TypeSpec | "(" (TypeSpec ";")* ")" )
+;
+
+TypeSpec: 
+	AliasDecl | TypeDef
+;
+
+AliasDecl: 
+	Identifier "=" Type
+;
+
+TypeDef: 
+	Identifier Type
+;
+
+VarDecl: 
+	"var" ( VarSpec | "(" (VarSpec ";")* ")" )
+;
+VarSpec: 
+	IdentifierList ( Type ( "=" ExpressionList)? | "=" ExpressionList )
+;
+
+ShortVarDecl: 
+	IdentifierList ":=" ExpressionList
+;
+
+FunctionDecl:
+	"func" FunctionName Signature (FunctionBody)?
+;
+
+FunctionName: 
+	Identifier
+;
+
+FunctionBody: 
+	Block
+;
+
+MethodDecl: 
+	"func" Receiver MethodName Signature (FunctionBody)?
+;
+
+Receiver: 
+	Parameters
+;
+
+Operand: 
+	Literal | OperandName | "(" Expression ")"
+;
+
+Literal: 
+	BasicLit | CompositeLit | FunctionLit
+;
+
+BasicLit:
+	INT_LIT | FLOAT_LIT | IMAGINARY_LIT | RUNE_LIT | STRING_LIT
+;
+
+OperandName: 
+	Identifier | QualifiedIdent
+;
+
+CompositeLit: 
+	LiteralType LiteralValue
+;
+
+LiteralType: 
+	StructType | ArrayType | "[" "..." "]" ElementType |
+                SliceType | MapType | TypeName
+;
+
+LiteralValue: 
+	"{" ( ElementList ( "," )? )? "}"
+;
+
+ElementList: 
+	KeyedElement ( "," KeyedElement)*
+;
+
+KeyedElement: 
+	( Key ":")? Element
+;
+
+Key: 
+	FieldName | Expression | LiteralValue
+;
+
+FieldName: 
+	Identifier
+;
+
+Element: 
+	Expression | LiteralValue
+;
+
+
+FunctionLit: 
+	"func" Signature FunctionBody
+;
+
+MethodExpr: 
+	ReceiverType "." MethodName
+;
+ReceiverType:
+	Type
+;
+
+Conversion: 
+	Type "(" Expression ( "," )? ")"
+;
 
