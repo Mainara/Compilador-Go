@@ -242,8 +242,161 @@ StatementList:
 ;
 
 Statement:
+	Declaration | LabeledStmt | SimpleStmt |
+	GoStmt | ReturnStmt | BreakStmt | ContinueStmt | GotoStmt |
+	FallthroughStmt | Block | IfStmt | SwitchStmt | SelectStmt | ForStmt |
+	DeferStmt
+;
+
+DeferStmt:
+	"defer" Expression	
+;
+
+ForStmt:
+	"for" ( Condition | ForClause | RangeClause ) Block
+;
+
+RangeClause:
+	( ExpressionList "=" | IdentifierList ":=" ) "range" Expression
+;
+
+ForClause:
+	( InitStmt ) ";" ( Condition ) ";" ( PostStmt )
+;
+
+PostStmt:
+	SimpleStmt
+;
+
+InitStmt:
+	SimpleStmt
+;
+
+Condition:
+	Expression
+;
+
+SelectStmt:
+	"select" "{" ( CommClause )* "}"
+;
+
+CommClause:
+	CommCase ":" StatementList
+;
+
+CommCase:
+	"case" ( SendStmt | RecvStmt ) | "default"
+;
+
+RecvStmt:
+	( ExpressionList "=" | IdentifierList ":=" ) RecvExpr
+;
+
+RecvExpr:
+	Expression
+;
+
+SwitchStmt:
+	ExprSwitchStmt | TypeSwitchStmt	
+;
+
+TypeSwitchStmt:
+	"switch" ( SimpleStmt ";" ) TypeSwitchGuard "{" ( TypeCaseClause )* "}"	
+;
+
+TypeCaseClause:
+	TypeSwitchCase ":" StatementList
+;
+
+TypeSwitchCase:
+	"case" TypeList | "default"	
+;
+
+TypeList:
+	Type ( "," Type )*
+;
+
+TypeSwitchGuard:
+	( Identifier ":=" ) PrimaryExpr "." "(" "type" ")"
+;
+
+ExprSwitchStmt:
+	"switch" ( SimpleStmt ";" ) ( Expression ) "{" ( ExprCaseClause )* "}"
+;
+
+ExprCaseClause:
+	ExprSwitchCase ":" StatementList
+;
+
+ExprSwitchCase:
+	"case" ExpressionList | "default"
+;
+
+IfStmt:
+	"if" ( SimpleStmt ";" ) Expression Block ( "else" ( IfStmt | Block ) )
+;
+
+FallthroughStmt:
+	"fallthrough"
+;
+
+GotoStmt:
+	"goto" Label
+;
+
+ContinueStmt:
+	"continue" ( Label )
+;
+
+BreakStmt:
+	"break" ( Label )
+;
+
+ReturnStmt:
+	"return" ( ExpressionList )
+;
+
+GoStmt:
+	"goto" Label
+;
+
+SimpleStmt:
+	ExpressionStmt | SendStmt | IncDecStmt | Assignment | ShortVarDecl
+;
+
+Assignment:
+	ExpressionList assign_op ExpressionList
+;
+
+assign_op:
+	( ADD_OP | MUL_OP ) "="
+;
+
+IncDecStmt:
+	Expression ( "++" | "--" )
+;
+
+SendStmt:
+	Channel "<-" Expression 
+;
+
+Channel:
+	Expression
+;
+
+ExpressionStmt:
+	Expression
+;
+
+LabeledStmt:
+	Label ":" Statement 
+;
+
+Label:
 	Identifier
-;//fazer
+;
+
+
 
 Declaration: 
 	ConstDecl | TypeDecl | VarDecl
@@ -372,4 +525,3 @@ ReceiverType:
 Conversion: 
 	Type "(" Expression ( "," )? ")"
 ;
-
