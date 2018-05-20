@@ -2,53 +2,36 @@ grammar org.xtext.example.mydsl.MyDsl with org.eclipse.xtext.common.Terminals
 
 generate myDsl "http://www.xtext.org/example/mydsl/MyDsl"
 
-/*
- * {} 0 ou + -> ()*
- * [] 0 ou 1 - > ()?
- *           ->  ()+   
- */
-import "http://www.eclipse.org/emf/2002/Ecore" as ecore
-
 Model:
 	greetings+=Greeting*;
 	
 Greeting:
-	'Hello' name=ID '!';
+	SourceFile;
+
+terminal UNICODE_LETTER:
+	"a".."z" | "A" .."Z"	
+;
 
 terminal LETTER:
-	("A".."Z""a".."z") | "_" 
+	UNICODE_LETTER | "_" 
 ;
 
-terminal UNICODECHAR:
-	LETTER
-;
-	
-terminal DECIMAL_DIGIT:
-	 "0".."9" 
-;
-terminal OCTAL_DIGIT :
-	"0".. "7"
-;
-	
-terminal HEX_DIGIT:
-	"0".."9" | "A".."F" | "a".."f"
+
+terminal INT_LITERAL:
+	(
+            ( '1'..'9' ( '0'..'9' )* )
+            | ( '0'..'7' )*
+            | ( '0' ('x'|"X") ('0'..'9'|'a'..'f'|"A".."F")+ )
+    )
 ;
 
-terminal INT_LIT:
-	 ("1".."9")|(DECIMAL_DIGIT)* | 
-	 ("0" | (OCTAL_DIGIT))*|
-	 ("0" ( "x" | "X" ) | HEX_DIGIT |(HEX_DIGIT)*)
+
+terminal DECIMAL_DIGITS:
+    '0'..'9'  ( '0'..'9'  )*
 ;
 
-terminal FLOAT_LIT:     
-       ((DECIMAL_DIGIT)(DECIMAL_DIGIT)*)"."((DECIMAL_DIGIT)(DECIMAL_DIGIT)*)?
-       (( "e" | "E" ) ("+" | "-")? (DECIMAL_DIGIT)(DECIMAL_DIGIT)*)? |
-       ((DECIMAL_DIGIT)(DECIMAL_DIGIT)*)(( "e" | "E" ) ("+" | "-")? (DECIMAL_DIGIT)(DECIMAL_DIGIT)*)|
-       "."((DECIMAL_DIGIT)(DECIMAL_DIGIT)*)(( "e" | "E" ) ("+" | "-")? (DECIMAL_DIGIT)(DECIMAL_DIGIT)*)?
-;
-
-terminal IMAGINARY_LIT:
-	(((DECIMAL_DIGIT)(DECIMAL_DIGIT)*) | FLOAT_LIT) "i"
+terminal EXPONENT_PART:
+    'e'  (  '+'  |  '-'  ) DECIMAL_DIGITS
 ;
 
 terminal STRING_LIT:
@@ -64,15 +47,19 @@ Type:
 ;
 
 TypeName: 
-	Identifier | QualifiedIdent
+	IDENTIFIER TypeNameLinha
+;
+
+TypeNameLinha:
+	"." IDENTIFIER
 ;
 
 QualifiedIdent: 
-	PackageName "." Identifier
+	PackageName "." IDENTIFIER | ANY_OTHER
 ;
 
 PackageName: 
-	Identifier
+	IDENTIFIER
 ;
 TypeLit: 
 	ArrayType | StructType | PointerType | FunctionType | InterfaceType |
@@ -150,7 +137,7 @@ MethodSpec:
 ;
 
 MethodName: 
-	Identifier
+	IDENTIFIER
 ;
 
 InterfaceTypeName: 
@@ -170,9 +157,13 @@ ChannelType:
 ;
 
 
-Expression: 
+/*Expression: 
 	UnaryExpr | Expression binary_op Expression
-;
+;*/
+
+Expression: UnaryExpr Expression_Linha;
+Expression_Linha : binary_op Expression_Linha;
+
 UnaryExpr: 
 	PrimaryExpr | UNARY_OP UnaryExpr
 ;
@@ -193,27 +184,23 @@ terminal UNARY_OP:
 	"+" | "-" | "!" | "^" | "*" | "&" | "<-" 
 ;
 
-PrimaryExpr:
-	Operand |
-	Conversion |
-	MethodExpr |
-	PrimaryExpr Selector |
-	PrimaryExpr Index |
-	PrimaryExpr Slice |
-	PrimaryExpr TypeAssertion |
-	PrimaryExpr Arguments
-;
+PrimaryExpr: Operand PrimaryExpr_Linha | Conversion PrimaryExpr_Linha | MethodExpr PrimaryExpr_Linha;
+
+PrimaryExpr_Linha: Selector PrimaryExpr_Linha | Index PrimaryExpr_Linha| Slice PrimaryExpr_Linha| TypeAssertion PrimaryExpr_Linha| Arguments PrimaryExpr_Linha | ANY_OTHER;
+
 
 Selector: 
-	"." Identifier
+	"." IDENTIFIER
 ;
 Index:
 	"[" Expression "]"
 ;
 Slice:
-	"[" (Expression)? ":" (Expression)? "]" | 
-		"[" (Expression)? ":" Expression ":" Expression "]"
+	"[" (Expression)? ":" SliceLinha
 ;
+
+SliceLinha: ":" (Expression)? "]" | Expression ":" Expression "]";
+
 TypeAssertion:
 	"." "(" Type ")"
 ;
@@ -226,11 +213,7 @@ ExpressionList:
 	Expression ("," Expression)*
 ;
 IdentifierList: 
-	Identifier( "," Identifier )*
-;
-
-Identifier:
-	LETTER ( LETTER | DECIMAL_DIGIT )*
+	IDENTIFIER( "," IDENTIFIER )*
 ;
 
 Block: 
@@ -242,8 +225,179 @@ StatementList:
 ;
 
 Statement:
-	Identifier
-;//fazer
+	Declaration | LabeledStmt | SimpleStmt |
+	GoStmt | ReturnStmt | BreakStmt | ContinueStmt | GotoStmt |
+	FallthroughStmt | Block | IfStmt | SwitchStmt | SelectStmt | ForStmt |
+	DeferStmt
+;
+
+DeferStmt:
+	"defer" Expression	
+;
+
+ForStmt:
+	"for" (
+			Expression ForStmtLinha
+			) Block
+;
+
+ForStmtLinha:
+	(SimpleStmtLinha| (IDENTIFIER( "," IDENTIFIER )*) ":=" (Expression ("," Expression)*) ) ";" ( Condition ) ";" ( PostStmt ) 
+	| (((("," Expression)*) "=" | IdentifierList ":=" ) "range" Expression)
+;
+
+RangeClause:
+	( ExpressionList "=" | IdentifierList ":=" ) "range" Expression
+;
+
+ForClause:
+	( InitStmt ) ";" ( Condition ) ";" ( PostStmt )
+;
+
+PostStmt:
+	SimpleStmt
+;
+
+InitStmt:
+	SimpleStmt
+;
+
+Condition:
+	Expression
+;
+
+SelectStmt:
+	"select" "{" ( CommClause )* "}"
+;
+
+CommClause:
+	CommCase ":" StatementList
+;
+
+CommCase:
+	"case" ( SendStmt | RecvStmt ) | "default"
+;
+
+RecvStmt:
+	( ExpressionList "=" | IdentifierList ":=" ) RecvExpr
+;
+
+RecvExpr:
+	Expression
+;
+
+SwitchStmt:
+	"switch" ( SimpleStmt ";" ) SwitchStmtLinha
+;
+
+SwitchStmtLinha:
+	( Expression ) "{" ( ExprCaseClause )* "}" | TypeSwitchGuard "{" ( TypeCaseClause )* "}"
+;
+
+
+TypeSwitchStmt:
+	"switch" ( SimpleStmt ";" ) TypeSwitchGuard "{" ( TypeCaseClause )* "}"	
+;
+
+TypeCaseClause:
+	TypeSwitchCase ":" StatementList
+;
+
+TypeSwitchCase:
+	"case" TypeList | "default"	
+;
+
+TypeList:
+	Type ( "," Type )*
+;
+
+TypeSwitchGuard:
+	( IDENTIFIER ":=" ) PrimaryExpr "." "(" "type" ")"
+;
+
+ExprSwitchStmt:
+	"switch" ( SimpleStmt ";" ) ( Expression ) "{" ( ExprCaseClause )* "}"
+;
+
+ExprCaseClause:
+	ExprSwitchCase ":" StatementList
+;
+
+ExprSwitchCase:
+	"case" ExpressionList | "default"
+;
+
+IfStmt:
+	"if" ( 
+		SimpleStmt ";"
+	) Expression Block ( "else" ( IfStmt | Block ) )
+;
+
+FallthroughStmt:
+	"fallthrough"
+;
+
+GotoStmt:
+	"goto" Label
+;
+
+ContinueStmt:
+	"continue" ( Label )
+;
+
+BreakStmt:
+	"break" ( Label )
+;
+
+ReturnStmt:
+	"return" ( ExpressionList )
+;
+
+GoStmt:
+	"go" Label
+;
+
+SimpleStmt:
+	Expression SimpleStmtLinha| (IDENTIFIER( "," IDENTIFIER )*) ":=" (Expression ("," Expression)*)
+;
+
+SimpleStmtLinha:
+	"<-" Expression  | ( "++" | "--" ) | ("," Expression)* assign_op (Expression ("," Expression)*)
+;
+
+Assignment:
+	ExpressionList assign_op ExpressionList
+;
+
+assign_op:
+	( ADD_OP | MUL_OP ) "="
+;
+
+IncDecStmt:
+	Expression ( "++" | "--" )
+;
+
+SendStmt:
+	Channel "<-" Expression 
+;
+
+Channel:
+	Expression
+;
+
+ExpressionStmt:
+	Expression
+;
+
+LabeledStmt:
+	Label ":" Statement 
+;
+
+Label:
+	IDENTIFIER
+;
+
+
 
 Declaration: 
 	ConstDecl | TypeDecl | VarDecl
@@ -270,11 +424,11 @@ TypeSpec:
 ;
 
 AliasDecl: 
-	Identifier "=" Type
+	IDENTIFIER "=" Type
 ;
 
 TypeDef: 
-	Identifier Type
+	IDENTIFIER Type
 ;
 
 VarDecl: 
@@ -293,7 +447,7 @@ FunctionDecl:
 ;
 
 FunctionName: 
-	Identifier
+	IDENTIFIER
 ;
 
 FunctionBody: 
@@ -317,12 +471,25 @@ Literal:
 ;
 
 BasicLit:
-	INT_LIT | FLOAT_LIT | IMAGINARY_LIT | RUNE_LIT | STRING_LIT
+	INT_LITERAL  | STRING_LIT | float_literal
+;
+
+float_literal:
+    (
+            ( DECIMAL_DIGITS  '.'  ( DECIMAL_DIGITS ) ( EXPONENT_PART )   )
+            | (  '.' DECIMAL_DIGITS  ( EXPONENT_PART )    )
+            | ( DECIMAL_DIGITS  ( EXPONENT_PART )   )
+    )
 ;
 
 OperandName: 
-	Identifier | QualifiedIdent
+	IDENTIFIER OperandNameLinha
 ;
+
+OperandNameLinha:
+	"." IDENTIFIER | ANY_OTHER
+;
+
 
 CompositeLit: 
 	LiteralType LiteralValue
@@ -350,7 +517,7 @@ Key:
 ;
 
 FieldName: 
-	Identifier
+	IDENTIFIER
 ;
 
 Element: 
@@ -373,3 +540,16 @@ Conversion:
 	Type "(" Expression ( "," )? ")"
 ;
 
+SourceFile: PackageClause ";" ( ImportDecl ";" )* ( TopLevelDecl ";" )*;
+
+PackageClause: "package" PackageName;
+
+ImportDecl:"import" ( ImportSpec | "(" ( ImportSpec ";" )* ")" );
+ImportSpec:( "." | PackageName )? ImportPath;
+ImportPath: STRING_LIT;
+
+terminal IDENTIFIER:
+	LETTER ( LETTER | ("0".."9") )*
+;
+
+	
