@@ -35,8 +35,12 @@ ruleTypeName:
 
 // Rule TypeNameLinha
 ruleTypeNameLinha:
-	'.'
-	RULE_IDENTIFIER
+	(
+		'.'
+		RULE_IDENTIFIER
+		    |
+		RULE_ANY_OTHER
+	)
 ;
 
 // Rule PackageName
@@ -149,7 +153,10 @@ ruleSignature:
 // Rule Result
 ruleResult:
 	(
-		ruleParameters
+		(
+			(ruleParameters)=>
+			ruleParameters
+		)
 		    |
 		ruleType
 	)
@@ -228,14 +235,21 @@ ruleKeyType:
 ruleChannelType:
 	(
 		'chan'
-		    |
-		'chan'
-		'<-'
+		ruleChannelTypeLinha
 		    |
 		'<-'
 		'chan'
 	)
 	ruleElementType
+;
+
+// Rule ChannelTypeLinha
+ruleChannelTypeLinha:
+	(
+		'<-'
+		    |
+		RULE_ANY_OTHER
+	)
 ;
 
 // Rule Expression
@@ -281,28 +295,40 @@ rulePrimaryExpr:
 		ruleOperand
 		rulePrimaryExpr_Linha
 		    |
-		ruleConversion
+		ruleType
+		rulePrimaryExprFatoracao
 		rulePrimaryExpr_Linha
+	)
+;
+
+// Rule PrimaryExprFatoracao
+rulePrimaryExprFatoracao:
+	(
+		'('
+		ruleExpression
+		','?
+		')'
 		    |
-		ruleMethodExpr
-		rulePrimaryExpr_Linha
+		'.'
+		ruleMethodName
 	)
 ;
 
 // Rule PrimaryExpr_Linha
 rulePrimaryExpr_Linha:
 	(
-		ruleSelector
+		'.'
+		rulePrimaryExprFatorado
 		rulePrimaryExpr_Linha
 		    |
-		ruleIndex
+		'['
+		ruleExpression
+		rulePrimaryExpr_Fatorado1
 		rulePrimaryExpr_Linha
 		    |
-		ruleSlice
-		rulePrimaryExpr_Linha
-		    |
-		ruleTypeAssertion
-		rulePrimaryExpr_Linha
+		'['
+		':'
+		ruleSliceLinha
 		    |
 		ruleArguments
 		rulePrimaryExpr_Linha
@@ -311,25 +337,25 @@ rulePrimaryExpr_Linha:
 	)
 ;
 
-// Rule Selector
-ruleSelector:
-	'.'
-	RULE_IDENTIFIER
+// Rule PrimaryExprFatorado
+rulePrimaryExprFatorado:
+	(
+		RULE_IDENTIFIER
+		    |
+		'('
+		ruleType
+		')'
+	)
 ;
 
-// Rule Index
-ruleIndex:
-	'['
-	ruleExpression
-	']'
-;
-
-// Rule Slice
-ruleSlice:
-	'['
-	ruleExpression?
-	':'
-	ruleSliceLinha
+// Rule PrimaryExpr_Fatorado1
+rulePrimaryExpr_Fatorado1:
+	(
+		']'
+		    |
+		':'
+		ruleSliceLinha
+	)
 ;
 
 // Rule SliceLinha
@@ -344,14 +370,6 @@ ruleSliceLinha:
 		ruleExpression
 		']'
 	)
-;
-
-// Rule TypeAssertion
-ruleTypeAssertion:
-	'.'
-	'('
-	ruleType
-	')'
 ;
 
 // Rule Arguments
@@ -450,8 +468,10 @@ ruleDeferStmt:
 // Rule ForStmt
 ruleForStmt:
 	'for'
-	ruleExpression
-	ruleForStmtLinha
+	(
+		ruleExpression
+		ruleForStmtLinha
+	)?
 	ruleBlock
 ;
 
@@ -476,9 +496,22 @@ ruleForStmtLinha:
 		';'
 		ruleCondition
 		';'
-		rulePostStmt
-		    |
 		(
+			ruleExpression
+			ruleSimpleStmtLinha
+			    |
+			RULE_IDENTIFIER
+			(
+				','
+				RULE_IDENTIFIER
+			)*
+			':='
+			ruleExpression
+			(
+				','
+				ruleExpression
+			)*
+			    |
 			(
 				','
 				ruleExpression
@@ -490,6 +523,8 @@ ruleForStmtLinha:
 		)
 		'range'
 		ruleExpression
+		    |
+		RULE_ANY_OTHER
 	)
 ;
 
@@ -527,26 +562,31 @@ ruleCommClause:
 ruleCommCase:
 	(
 		'case'
-		(
-			ruleSendStmt
-			    |
-			ruleRecvStmt
-		)
+		ruleExpression
+		ruleCommCaseLinha
 		    |
 		'default'
 	)
 ;
 
-// Rule RecvStmt
-ruleRecvStmt:
+// Rule CommCaseLinha
+ruleCommCaseLinha:
 	(
-		ruleExpressionList
-		'='
+		'<-'
+		ruleExpression
 		    |
-		ruleIdentifierList
-		':='
+		(
+			(
+				','
+				ruleExpression
+			)*
+			'='
+			    |
+			ruleIdentifierList
+			':='
+		)
+		ruleRecvExpr
 	)
-	ruleRecvExpr
 ;
 
 // Rule RecvExpr
@@ -734,13 +774,6 @@ ruleassign_op:
 		RULE_MUL_OP
 	)
 	'='
-;
-
-// Rule SendStmt
-ruleSendStmt:
-	ruleChannel
-	'<-'
-	ruleExpression
 ;
 
 // Rule Channel
@@ -1004,7 +1037,12 @@ ruleLiteralType:
 ruleLiteralValue:
 	'{'
 	(
-		ruleElementList
+		(
+			(ruleKey
+			':'
+			)=>
+			ruleElementList
+		)
 		','?
 	)?
 	'}'
@@ -1012,16 +1050,29 @@ ruleLiteralValue:
 
 // Rule ElementList
 ruleElementList:
-	ruleKeyedElement
+	(
+		(ruleKey
+		':'
+		)=>
+		ruleKeyedElement
+	)
 	(
 		','
-		ruleKeyedElement
+		(
+			(ruleKey
+			':'
+			)=>
+			ruleKeyedElement
+		)
 	)*
 ;
 
 // Rule KeyedElement
 ruleKeyedElement:
 	(
+		(ruleKey
+		':'
+		)=>
 		ruleKey
 		':'
 	)?
@@ -1060,25 +1111,9 @@ ruleFunctionLit:
 	ruleFunctionBody
 ;
 
-// Rule MethodExpr
-ruleMethodExpr:
-	ruleReceiverType
-	'.'
-	ruleMethodName
-;
-
 // Rule ReceiverType
 ruleReceiverType:
 	ruleType
-;
-
-// Rule Conversion
-ruleConversion:
-	ruleType
-	'('
-	ruleExpression
-	','?
-	')'
 ;
 
 // Rule SourceFile

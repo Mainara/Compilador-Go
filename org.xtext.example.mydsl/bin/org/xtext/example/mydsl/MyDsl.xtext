@@ -51,11 +51,11 @@ TypeName:
 ;
 
 TypeNameLinha:
-	"." IDENTIFIER
+	"." IDENTIFIER |  ANY_OTHER
 ;
 
 QualifiedIdent: 
-	PackageName "." IDENTIFIER | ANY_OTHER
+	PackageName "." IDENTIFIER
 ;
 
 PackageName: 
@@ -114,7 +114,7 @@ Signature:
 ;
 
 Result: 
-	Parameters | Type
+	(=>Parameters) | Type
 ;
 Parameters:
 	"(" (ParameterList (",")?)? ")"
@@ -153,9 +153,12 @@ KeyType:
 ;
 
 ChannelType: 
-	( "chan" | "chan" "<-" | "<-" "chan" ) ElementType
+	( "chan" ChannelTypeLinha | "<-" "chan") ElementType
 ;
 
+ChannelTypeLinha:
+	"<-" | ANY_OTHER
+;
 
 /*Expression: 
 	UnaryExpr | Expression binary_op Expression
@@ -184,10 +187,25 @@ terminal UNARY_OP:
 	"+" | "-" | "!" | "^" | "*" | "&" | "<-" 
 ;
 
-PrimaryExpr: Operand PrimaryExpr_Linha | Conversion PrimaryExpr_Linha | MethodExpr PrimaryExpr_Linha;
+PrimaryExpr: 
+	Operand PrimaryExpr_Linha | Type PrimaryExprFatoracao PrimaryExpr_Linha
+;
 
-PrimaryExpr_Linha: Selector PrimaryExpr_Linha | Index PrimaryExpr_Linha| Slice PrimaryExpr_Linha| TypeAssertion PrimaryExpr_Linha| Arguments PrimaryExpr_Linha | ANY_OTHER;
+PrimaryExprFatoracao:
+	"(" Expression ( "," )? ")" | "." MethodName
+;
 
+PrimaryExpr_Linha: "." PrimaryExprFatorado PrimaryExpr_Linha 
+					| "["Expression PrimaryExpr_Fatorado1 PrimaryExpr_Linha
+					|  "["  ":" SliceLinha
+					| Arguments PrimaryExpr_Linha 
+					| ANY_OTHER
+;
+
+PrimaryExprFatorado : IDENTIFIER | "(" Type ")"	
+;
+
+PrimaryExpr_Fatorado1: "]" | ":" SliceLinha ;
 
 Selector: 
 	"." IDENTIFIER
@@ -236,14 +254,13 @@ DeferStmt:
 ;
 
 ForStmt:
-	"for" (
-			Expression ForStmtLinha
-			) Block
+	 "for" ( Expression ForStmtLinha)? Block
 ;
 
 ForStmtLinha:
-	(SimpleStmtLinha| (IDENTIFIER( "," IDENTIFIER )*) ":=" (Expression ("," Expression)*) ) ";" ( Condition ) ";" ( PostStmt ) 
-	| (((("," Expression)*) "=" | IdentifierList ":=" ) "range" Expression)
+	(SimpleStmtLinha| (IDENTIFIER( "," IDENTIFIER )*) ":=" (Expression ("," Expression)*) ) ";" ( Condition ) ";" ( Expression SimpleStmtLinha| (IDENTIFIER( "," IDENTIFIER )*) ":=" (Expression ("," Expression)*) 
+		|(("," Expression)*) "=" | IdentifierList ":=" ) "range" Expression 
+		|ANY_OTHER
 ;
 
 RangeClause:
@@ -275,7 +292,11 @@ CommClause:
 ;
 
 CommCase:
-	"case" ( SendStmt | RecvStmt ) | "default"
+	"case" ( Expression CommCaseLinha) | "default"
+;
+
+CommCaseLinha:
+	"<-" Expression | (("," Expression)* "=" | IdentifierList ":=" ) RecvExpr
 ;
 
 RecvStmt:
@@ -509,7 +530,7 @@ ElementList:
 ;
 
 KeyedElement: 
-	( Key ":")? Element
+	(=>( Key ":")?) Element
 ;
 
 Key: 
