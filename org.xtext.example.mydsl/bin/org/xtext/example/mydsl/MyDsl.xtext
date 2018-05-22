@@ -8,30 +8,43 @@ Model:
 Greeting:
 	SourceFile;
 
-terminal UNICODE_LETTER:
-	"a".."z" | "A" .."Z"	
-;
-
 terminal LETTER:
-	UNICODE_LETTER | "_" 
+	"a".."z" | "A" .."Z"| "_" 
 ;
 
+terminal NEW_LINE:
+	"\n" | "\r" | "\n\r"
+;
+
+terminal UNICODE_CHAR:
+	(!NEW_LINE)
+;
 
 terminal INT_LITERAL:
-	(
-            ( '1'..'9' ( '0'..'9' )* )
-            | ( '0'..'7' )*
-            | ( '0' ('x'|"X") ('0'..'9'|'a'..'f'|"A".."F")+ )
+	( '1'..'9' ( '0'..'9' )* )
+    | ( '0'..'7' )*
+    | ( '0' ('x'|"X") ('0'..'9'|'a'..'f'|"A".."F")+ )
+;
+
+float_literal:
+    (
+            ( DECIMAL_DIGITS  '.'  ( DECIMAL_DIGITS ) ( EXPONENT_PART )   )
+            | (  '.' DECIMAL_DIGITS  ( EXPONENT_PART )    )
+            | ( DECIMAL_DIGITS  ( EXPONENT_PART )   )
     )
 ;
 
 
 terminal DECIMAL_DIGITS:
-    '0'..'9'  ( '0'..'9'  )*
+    '0'..'9'  ('0'..'9')*
 ;
 
 terminal EXPONENT_PART:
-    'e'  (  '+'  |  '-'  ) DECIMAL_DIGITS
+    'e'  ( '+'|'-') DECIMAL_DIGITS
+;
+
+Imaginary_lit:
+	(DECIMAL_DIGITS | float_literal) "i" 
 ;
 
 terminal STRING_LIT:
@@ -39,7 +52,7 @@ terminal STRING_LIT:
 ;
 
 terminal RUNE_LIT:
-	"oiiii"
+	"oiiii"//ve o que e unicode_char
 ;
 
 Type: 
@@ -61,14 +74,17 @@ QualifiedIdent:
 PackageName: 
 	IDENTIFIER
 ;
+
 TypeLit: 
-	ArrayType | StructType | PointerType | FunctionType | InterfaceType |
-	    SliceType | MapType | ChannelType 
+	 "[" TypeLitLinha | StructType | PointerType | FunctionType | InterfaceType |
+	  MapType | ChannelType
 ;
 
-ArrayType: 
-	"[" ArrayLength "]" ElementType 
+TypeLitLinha:
+	ArrayLength "]" ElementType 
+	| "]" ElementType
 ;
+
 ArrayLength: 
 	Expression
 ;
@@ -77,15 +93,11 @@ ElementType:
 	Type
 ;
 
-SliceType: 
-	"[" "]" ElementType
-;
-
 StructType: 
 	"struct" "{"  (FieldDecl ";")* "}"
 ;
 
-FieldDecl: 
+FieldDecl: //ve
 	(IdentifierList Type | EmbeddedField) (Tag)?
 ;
 
@@ -110,7 +122,7 @@ FunctionType:
 ;
 
 Signature: 
-	Parameters(Result)?
+	(Parameters)(=>Result)?
 ;
 
 Result: 
@@ -156,20 +168,22 @@ ChannelType:
 	( "chan" ChannelTypeLinha | "<-" "chan") ElementType
 ;
 
-ChannelTypeLinha:
+ChannelTypeLinha://fatoracao
 	"<-" | ANY_OTHER
 ;
 
-/*Expression: 
-	UnaryExpr | Expression binary_op Expression
-;*/
+Expression: 
+	UnaryExpr Expression_Linha
+;
 
-Expression: UnaryExpr Expression_Linha;
-Expression_Linha : binary_op Expression_Linha;
+Expression_Linha: 
+	binary_op Expression Expression_Linha
+;
 
 UnaryExpr: 
 	PrimaryExpr | UNARY_OP UnaryExpr
 ;
+
 binary_op: 
 	"||" | "&&" | REL_OP | ADD_OP | MUL_OP
 ;
@@ -188,48 +202,95 @@ terminal UNARY_OP:
 ;
 
 PrimaryExpr: 
-	Operand PrimaryExpr_Linha | Type PrimaryExprFatoracao PrimaryExpr_Linha
+	BasicLit PrimaryExprLinha
+	|StructType PrimaryExprFatFatFatFat
+	|MapType PrimaryExprFatFatFatFat
+	| "func" Signature PrimaryExprFatFatFatFatFat PrimaryExprLinha
+	| "..." "]" ElementType LiteralValue PrimaryExprLinha
+	|  Name PrimaryExprFatFatFat PrimaryExprLinha
+	| "("  PrimaryExprFatFat PrimaryExprLinha  
+	| "[" TypeLitLinha PrimaryExprFatFatFatFatFatFat PrimaryExprLinha
+	|PointerType PrimaryExprFat PrimaryExprLinha
+	| InterfaceType PrimaryExprFat PrimaryExprLinha
+	|ChannelType PrimaryExprFat PrimaryExprLinha
+	
+	//(Literal | OperandName | "(" Expression ")") PrimaryExprLinha 
+	//| (TypeName | TypeLit ) PrimaryExprFat PrimaryExprLinha
 ;
 
-PrimaryExprFatoracao:
+PrimaryExprFatFatFatFatFatFat:
+	LiteralValue | PrimaryExprFat
+;
+PrimaryExprFatFatFatFatFat:
+	FunctionBody | PrimaryExprFat
+;
+PrimaryExprFatFatFatFat:
+	LiteralValue | PrimaryExprFat
+;
+PrimaryExprFatFatFat:
+	LiteralValue | PrimaryExprFat | ANY_OTHER
+;
+
+
+Name:
+	IDENTIFIER NameLinha
+;
+
+NameLinha:
+	"." IDENTIFIER | ANY_OTHER
+;
+PrimaryExprFatFat:
+	(=>Expression ")") | Type ")" PrimaryExprFat
+;
+PrimaryExprFat:
 	"(" Expression ( "," )? ")" | "." MethodName
 ;
 
-PrimaryExpr_Linha: "." PrimaryExprFatorado PrimaryExpr_Linha 
-					| "["Expression PrimaryExpr_Fatorado1 PrimaryExpr_Linha
-					|  "["  ":" SliceLinha
-					| Arguments PrimaryExpr_Linha 
-					| ANY_OTHER
+PrimaryExprLinha:
+	"." PrimaryExprLinhaLinha PrimaryExprLinha
+	| "[" PrimaryExprLinhaLinhaLinha PrimaryExprLinha
+	| Arguments PrimaryExprLinha
 ;
 
-PrimaryExprFatorado : IDENTIFIER | "(" Type ")"	
+PrimaryExprLinhaLinha:
+	IDENTIFIER | "(" Type ")"
 ;
 
-PrimaryExpr_Fatorado1: "]" | ":" SliceLinha ;
+PrimaryExprLinhaLinhaLinha:
+	Expression PrimaryExprLinhaLinhaLinhaLinha |  ":" SliceLinha
+;
+
+PrimaryExprLinhaLinhaLinhaLinha:
+	"]" | ":" SliceLinha
+;
 
 Selector: 
 	"." IDENTIFIER
 ;
+
 Index:
 	"[" Expression "]"
 ;
+
 Slice:
 	"[" (Expression)? ":" SliceLinha
 ;
 
-SliceLinha: ":" (Expression)? "]" | Expression ":" Expression "]";
+SliceLinha: //fatoracao
+	":" (Expression)? "]" | Expression ":" Expression "]";
 
 TypeAssertion:
 	"." "(" Type ")"
 ;
 
 Arguments:
-	"(" ( ( ExpressionList | Type ("," ExpressionList)? ) ( "...")? ( "," )?)? ")"
+	"(" ( ( (=>ExpressionList) | Type ("," ExpressionList)? ) ( "...")? ( "," )?)? ")"
 ;
 
 ExpressionList: 
 	Expression ("," Expression)*
 ;
+
 IdentifierList: 
 	IDENTIFIER( "," IDENTIFIER )*
 ;
@@ -257,7 +318,7 @@ ForStmt:
 	 "for" ( Expression ForStmtLinha)? Block
 ;
 
-ForStmtLinha:
+ForStmtLinha://fatoracao
 	(SimpleStmtLinha| (IDENTIFIER( "," IDENTIFIER )*) ":=" (Expression ("," Expression)*) ) ";" ( Condition ) ";" ( Expression SimpleStmtLinha| (IDENTIFIER( "," IDENTIFIER )*) ":=" (Expression ("," Expression)*) 
 		|(("," Expression)*) "=" | IdentifierList ":=" ) "range" Expression 
 		|ANY_OTHER
@@ -311,7 +372,7 @@ SwitchStmt:
 	"switch" ( SimpleStmt ";" ) SwitchStmtLinha
 ;
 
-SwitchStmtLinha:
+SwitchStmtLinha://fatoracao
 	( Expression ) "{" ( ExprCaseClause )* "}" | TypeSwitchGuard "{" ( TypeCaseClause )* "}"
 ;
 
@@ -418,8 +479,6 @@ Label:
 	IDENTIFIER
 ;
 
-
-
 Declaration: 
 	ConstDecl | TypeDecl | VarDecl
 ;
@@ -455,6 +514,7 @@ TypeDef:
 VarDecl: 
 	"var" ( VarSpec | "(" (VarSpec ";")* ")" )
 ;
+
 VarSpec: 
 	IdentifierList ( Type ( "=" ExpressionList)? | "=" ExpressionList )
 ;
@@ -492,15 +552,7 @@ Literal:
 ;
 
 BasicLit:
-	INT_LITERAL  | STRING_LIT | float_literal
-;
-
-float_literal:
-    (
-            ( DECIMAL_DIGITS  '.'  ( DECIMAL_DIGITS ) ( EXPONENT_PART )   )
-            | (  '.' DECIMAL_DIGITS  ( EXPONENT_PART )    )
-            | ( DECIMAL_DIGITS  ( EXPONENT_PART )   )
-    )
+	INT_LITERAL  | STRING_LIT | float_literal | Imaginary_lit
 ;
 
 OperandName: 
@@ -517,8 +569,11 @@ CompositeLit:
 ;
 
 LiteralType: 
-	StructType | ArrayType | "[" "..." "]" ElementType |
-                SliceType | MapType | TypeName
+	StructType | MapType | TypeName | "[" LiteralTypeLinha
+;
+
+LiteralTypeLinha://fatoracao
+	(=>ArrayLength "]" ElementType) | "..." "]" ElementType | "]" ElementType
 ;
 
 LiteralValue: 
@@ -553,6 +608,7 @@ FunctionLit:
 MethodExpr: 
 	ReceiverType "." MethodName
 ;
+
 ReceiverType:
 	Type
 ;
@@ -561,13 +617,25 @@ Conversion:
 	Type "(" Expression ( "," )? ")"
 ;
 
-SourceFile: PackageClause ";" ( ImportDecl ";" )* ( TopLevelDecl ";" )*;
+SourceFile: 
+	PackageClause ";" ( ImportDecl ";" )* ( TopLevelDecl ";" )*
+;
 
-PackageClause: "package" PackageName;
+PackageClause: 
+	"package" PackageName
+;
 
-ImportDecl:"import" ( ImportSpec | "(" ( ImportSpec ";" )* ")" );
-ImportSpec:( "." | PackageName )? ImportPath;
-ImportPath: STRING_LIT;
+ImportDecl:
+	"import" ( ImportSpec | "(" ( ImportSpec ";" )* ")" )
+;
+
+ImportSpec:
+	( "." | PackageName )? ImportPath
+;
+
+ImportPath: 
+	STRING_LIT
+;
 
 terminal IDENTIFIER:
 	LETTER ( LETTER | ("0".."9") )*

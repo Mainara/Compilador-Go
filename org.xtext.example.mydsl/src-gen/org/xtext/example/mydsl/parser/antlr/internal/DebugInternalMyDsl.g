@@ -14,6 +14,33 @@ ruleGreeting:
 	ruleSourceFile
 ;
 
+// Rule float_literal
+rulefloat_literal:
+	(
+		RULE_DECIMAL_DIGITS
+		'.'
+		RULE_DECIMAL_DIGITS
+		RULE_EXPONENT_PART
+		    |
+		'.'
+		RULE_DECIMAL_DIGITS
+		RULE_EXPONENT_PART
+		    |
+		RULE_DECIMAL_DIGITS
+		RULE_EXPONENT_PART
+	)
+;
+
+// Rule Imaginary_lit
+ruleImaginary_lit:
+	(
+		RULE_DECIMAL_DIGITS
+		    |
+		rulefloat_literal
+	)
+	'i'
+;
+
 // Rule Type
 ruleType:
 	(
@@ -51,7 +78,8 @@ rulePackageName:
 // Rule TypeLit
 ruleTypeLit:
 	(
-		ruleArrayType
+		'['
+		ruleTypeLitLinha
 		    |
 		ruleStructType
 		    |
@@ -61,20 +89,22 @@ ruleTypeLit:
 		    |
 		ruleInterfaceType
 		    |
-		ruleSliceType
-		    |
 		ruleMapType
 		    |
 		ruleChannelType
 	)
 ;
 
-// Rule ArrayType
-ruleArrayType:
-	'['
-	ruleArrayLength
-	']'
-	ruleElementType
+// Rule TypeLitLinha
+ruleTypeLitLinha:
+	(
+		ruleArrayLength
+		']'
+		ruleElementType
+		    |
+		']'
+		ruleElementType
+	)
 ;
 
 // Rule ArrayLength
@@ -85,13 +115,6 @@ ruleArrayLength:
 // Rule ElementType
 ruleElementType:
 	ruleType
-;
-
-// Rule SliceType
-ruleSliceType:
-	'['
-	']'
-	ruleElementType
 ;
 
 // Rule StructType
@@ -147,7 +170,10 @@ ruleFunctionType:
 // Rule Signature
 ruleSignature:
 	ruleParameters
-	ruleResult?
+	(
+		(ruleResult)=>
+		ruleResult
+	)?
 ;
 
 // Rule Result
@@ -261,6 +287,7 @@ ruleExpression:
 // Rule Expression_Linha
 ruleExpression_Linha:
 	rulebinary_op
+	ruleExpression
 	ruleExpression_Linha
 ;
 
@@ -292,17 +319,124 @@ rulebinary_op:
 // Rule PrimaryExpr
 rulePrimaryExpr:
 	(
-		ruleOperand
-		rulePrimaryExpr_Linha
+		ruleBasicLit
+		rulePrimaryExprLinha
 		    |
-		ruleType
-		rulePrimaryExprFatoracao
-		rulePrimaryExpr_Linha
+		ruleStructType
+		rulePrimaryExprFatFatFatFat
+		    |
+		ruleMapType
+		rulePrimaryExprFatFatFatFat
+		    |
+		'func'
+		ruleSignature
+		rulePrimaryExprFatFatFatFatFat
+		rulePrimaryExprLinha
+		    |
+		'...'
+		']'
+		ruleElementType
+		ruleLiteralValue
+		rulePrimaryExprLinha
+		    |
+		ruleName
+		rulePrimaryExprFatFatFat
+		rulePrimaryExprLinha
+		    |
+		'('
+		rulePrimaryExprFatFat
+		rulePrimaryExprLinha
+		    |
+		'['
+		ruleTypeLitLinha
+		rulePrimaryExprFatFatFatFatFatFat
+		rulePrimaryExprLinha
+		    |
+		rulePointerType
+		rulePrimaryExprFat
+		rulePrimaryExprLinha
+		    |
+		ruleInterfaceType
+		rulePrimaryExprFat
+		rulePrimaryExprLinha
+		    |
+		ruleChannelType
+		rulePrimaryExprFat
+		rulePrimaryExprLinha
 	)
 ;
 
-// Rule PrimaryExprFatoracao
-rulePrimaryExprFatoracao:
+// Rule PrimaryExprFatFatFatFatFatFat
+rulePrimaryExprFatFatFatFatFatFat:
+	(
+		ruleLiteralValue
+		    |
+		rulePrimaryExprFat
+	)
+;
+
+// Rule PrimaryExprFatFatFatFatFat
+rulePrimaryExprFatFatFatFatFat:
+	(
+		ruleFunctionBody
+		    |
+		rulePrimaryExprFat
+	)
+;
+
+// Rule PrimaryExprFatFatFatFat
+rulePrimaryExprFatFatFatFat:
+	(
+		ruleLiteralValue
+		    |
+		rulePrimaryExprFat
+	)
+;
+
+// Rule PrimaryExprFatFatFat
+rulePrimaryExprFatFatFat:
+	(
+		ruleLiteralValue
+		    |
+		rulePrimaryExprFat
+		    |
+		RULE_ANY_OTHER
+	)
+;
+
+// Rule Name
+ruleName:
+	RULE_IDENTIFIER
+	ruleNameLinha
+;
+
+// Rule NameLinha
+ruleNameLinha:
+	(
+		'.'
+		RULE_IDENTIFIER
+		    |
+		RULE_ANY_OTHER
+	)
+;
+
+// Rule PrimaryExprFatFat
+rulePrimaryExprFatFat:
+	(
+		(
+			(ruleExpression)=>
+			ruleExpression
+		)
+		')'
+		    |
+		ruleType
+		')'
+		rulePrimaryExprFat
+	)
+;
+
+// Rule PrimaryExprFat
+rulePrimaryExprFat:
 	(
 		'('
 		ruleExpression
@@ -314,31 +448,24 @@ rulePrimaryExprFatoracao:
 	)
 ;
 
-// Rule PrimaryExpr_Linha
-rulePrimaryExpr_Linha:
+// Rule PrimaryExprLinha
+rulePrimaryExprLinha:
 	(
 		'.'
-		rulePrimaryExprFatorado
-		rulePrimaryExpr_Linha
+		rulePrimaryExprLinhaLinha
+		rulePrimaryExprLinha
 		    |
 		'['
-		ruleExpression
-		rulePrimaryExpr_Fatorado1
-		rulePrimaryExpr_Linha
-		    |
-		'['
-		':'
-		ruleSliceLinha
+		rulePrimaryExprLinhaLinhaLinha
+		rulePrimaryExprLinha
 		    |
 		ruleArguments
-		rulePrimaryExpr_Linha
-		    |
-		RULE_ANY_OTHER
+		rulePrimaryExprLinha
 	)
 ;
 
-// Rule PrimaryExprFatorado
-rulePrimaryExprFatorado:
+// Rule PrimaryExprLinhaLinha
+rulePrimaryExprLinhaLinha:
 	(
 		RULE_IDENTIFIER
 		    |
@@ -348,8 +475,19 @@ rulePrimaryExprFatorado:
 	)
 ;
 
-// Rule PrimaryExpr_Fatorado1
-rulePrimaryExpr_Fatorado1:
+// Rule PrimaryExprLinhaLinhaLinha
+rulePrimaryExprLinhaLinhaLinha:
+	(
+		ruleExpression
+		rulePrimaryExprLinhaLinhaLinhaLinha
+		    |
+		':'
+		ruleSliceLinha
+	)
+;
+
+// Rule PrimaryExprLinhaLinhaLinhaLinha
+rulePrimaryExprLinhaLinhaLinhaLinha:
 	(
 		']'
 		    |
@@ -377,7 +515,10 @@ ruleArguments:
 	'('
 	(
 		(
-			ruleExpressionList
+			(
+				(ruleExpressionList)=>
+				ruleExpressionList
+			)
 			    |
 			ruleType
 			(
@@ -939,19 +1080,6 @@ ruleReceiver:
 	ruleParameters
 ;
 
-// Rule Operand
-ruleOperand:
-	(
-		ruleLiteral
-		    |
-		ruleOperandName
-		    |
-		'('
-		ruleExpression
-		')'
-	)
-;
-
 // Rule Literal
 ruleLiteral:
 	(
@@ -971,23 +1099,8 @@ ruleBasicLit:
 		RULE_STRING_LIT
 		    |
 		rulefloat_literal
-	)
-;
-
-// Rule float_literal
-rulefloat_literal:
-	(
-		RULE_DECIMAL_DIGITS
-		'.'
-		RULE_DECIMAL_DIGITS
-		RULE_EXPONENT_PART
 		    |
-		'.'
-		RULE_DECIMAL_DIGITS
-		RULE_EXPONENT_PART
-		    |
-		RULE_DECIMAL_DIGITS
-		RULE_EXPONENT_PART
+		ruleImaginary_lit
 	)
 ;
 
@@ -1018,18 +1131,31 @@ ruleLiteralType:
 	(
 		ruleStructType
 		    |
-		ruleArrayType
+		ruleMapType
+		    |
+		ruleTypeName
 		    |
 		'['
+		ruleLiteralTypeLinha
+	)
+;
+
+// Rule LiteralTypeLinha
+ruleLiteralTypeLinha:
+	(
+		(
+			(ruleArrayLength)=>
+			ruleArrayLength
+		)
+		']'
+		ruleElementType
+		    |
 		'...'
 		']'
 		ruleElementType
 		    |
-		ruleSliceType
-		    |
-		ruleMapType
-		    |
-		ruleTypeName
+		']'
+		ruleElementType
 	)
 ;
 
@@ -1166,9 +1292,11 @@ ruleImportPath:
 	RULE_STRING_LIT
 ;
 
-fragment RULE_UNICODE_LETTER : ('a'..'z'|'A'..'Z');
+fragment RULE_LETTER : ('a'..'z'|'A'..'Z'|'_');
 
-fragment RULE_LETTER : (RULE_UNICODE_LETTER|'_');
+fragment RULE_NEW_LINE : ('\n'|'\r'|'\n\r');
+
+RULE_UNICODE_CHAR : ~(RULE_NEW_LINE);
 
 RULE_INT_LITERAL : ('1'..'9' ('0'..'9')*|('0'..'7')*|'0' ('x'|'X') ('0'..'9'|'a'..'f'|'A'..'F')+);
 
