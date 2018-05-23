@@ -286,9 +286,13 @@ ruleExpression:
 
 // Rule Expression_Linha
 ruleExpression_Linha:
-	rulebinary_op
-	ruleExpression
-	ruleExpression_Linha
+	(
+		rulebinary_op
+		ruleExpression
+		ruleExpression_Linha
+		    |
+		RULE_ANY_OTHER
+	)
 ;
 
 // Rule UnaryExpr
@@ -669,16 +673,6 @@ ruleForStmtLinha:
 	)
 ;
 
-// Rule PostStmt
-rulePostStmt:
-	ruleSimpleStmt
-;
-
-// Rule InitStmt
-ruleInitStmt:
-	ruleSimpleStmt
-;
-
 // Rule Condition
 ruleCondition:
 	ruleExpression
@@ -917,11 +911,6 @@ ruleassign_op:
 	'='
 ;
 
-// Rule Channel
-ruleChannel:
-	ruleExpression
-;
-
 // Rule LabeledStmt
 ruleLabeledStmt:
 	ruleLabel
@@ -1080,82 +1069,16 @@ ruleReceiver:
 	ruleParameters
 ;
 
-// Rule Literal
-ruleLiteral:
-	(
-		ruleBasicLit
-		    |
-		ruleCompositeLit
-		    |
-		ruleFunctionLit
-	)
-;
-
 // Rule BasicLit
 ruleBasicLit:
 	(
-		RULE_INT_LITERAL
+		RULE_INTEGERLITERAL
 		    |
 		RULE_STRING_LIT
 		    |
 		rulefloat_literal
 		    |
 		ruleImaginary_lit
-	)
-;
-
-// Rule OperandName
-ruleOperandName:
-	RULE_IDENTIFIER
-	ruleOperandNameLinha
-;
-
-// Rule OperandNameLinha
-ruleOperandNameLinha:
-	(
-		'.'
-		RULE_IDENTIFIER
-		    |
-		RULE_ANY_OTHER
-	)
-;
-
-// Rule CompositeLit
-ruleCompositeLit:
-	ruleLiteralType
-	ruleLiteralValue
-;
-
-// Rule LiteralType
-ruleLiteralType:
-	(
-		ruleStructType
-		    |
-		ruleMapType
-		    |
-		ruleTypeName
-		    |
-		'['
-		ruleLiteralTypeLinha
-	)
-;
-
-// Rule LiteralTypeLinha
-ruleLiteralTypeLinha:
-	(
-		(
-			(ruleArrayLength)=>
-			ruleArrayLength
-		)
-		']'
-		ruleElementType
-		    |
-		'...'
-		']'
-		ruleElementType
-		    |
-		']'
-		ruleElementType
 	)
 ;
 
@@ -1230,18 +1153,6 @@ ruleElement:
 	)
 ;
 
-// Rule FunctionLit
-ruleFunctionLit:
-	'func'
-	ruleSignature
-	ruleFunctionBody
-;
-
-// Rule ReceiverType
-ruleReceiverType:
-	ruleType
-;
-
 // Rule SourceFile
 ruleSourceFile:
 	rulePackageClause
@@ -1294,19 +1205,13 @@ ruleImportPath:
 
 fragment RULE_LETTER : ('a'..'z'|'A'..'Z'|'_');
 
-fragment RULE_NEW_LINE : ('\n'|'\r'|'\n\r');
+RULE_INTEGERLITERAL : ('1'..'9' ('0'..'9')*|'0' ('0'..'7')*|'0' ('x'|'X') ('0'..'9'|'a'..'f'|'A'..'F')+);
 
-RULE_UNICODE_CHAR : ~(RULE_NEW_LINE);
-
-RULE_INT_LITERAL : ('1'..'9' ('0'..'9')*|('0'..'7')*|'0' ('x'|'X') ('0'..'9'|'a'..'f'|'A'..'F')+);
-
-RULE_DECIMAL_DIGITS : '0'..'9' ('0'..'9')*;
+RULE_DECIMAL_DIGITS : RULE_INT;
 
 RULE_EXPONENT_PART : 'e' ('+'|'-') RULE_DECIMAL_DIGITS;
 
 RULE_STRING_LIT : 'oi';
-
-RULE_RUNE_LIT : 'oiiii';
 
 RULE_REL_OP : ('=='|'!='|'<'|'<='|'>'|'>=');
 
@@ -1320,7 +1225,7 @@ RULE_IDENTIFIER : RULE_LETTER (RULE_LETTER|'0'..'9')*;
 
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 
-RULE_INT : ('0'..'9')+;
+fragment RULE_INT : ('0'..'9')+;
 
 RULE_STRING : ('"' ('\\' .|~(('\\'|'"')))* '"'|'\'' ('\\' .|~(('\\'|'\'')))* '\'');
 

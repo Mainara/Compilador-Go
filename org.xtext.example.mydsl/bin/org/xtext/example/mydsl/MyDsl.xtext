@@ -12,17 +12,17 @@ terminal LETTER:
 	"a".."z" | "A" .."Z"| "_" 
 ;
 
-terminal NEW_LINE:
+/*terminal NEW_LINE:
 	"\n" | "\r" | "\n\r"
-;
+;*/
 
-terminal UNICODE_CHAR:
+/*terminal UNICODE_CHAR:
 	(!NEW_LINE)
-;
+;*/
 
-terminal INT_LITERAL:
-	( '1'..'9' ( '0'..'9' )* )
-    | ( '0'..'7' )*
+terminal INTEGERLITERAL:
+	( ('1'..'9') ( '0'..'9' )* )
+	| "0" ("0".."7")*
     | ( '0' ('x'|"X") ('0'..'9'|'a'..'f'|"A".."F")+ )
 ;
 
@@ -36,7 +36,7 @@ float_literal:
 
 
 terminal DECIMAL_DIGITS:
-    '0'..'9'  ('0'..'9')*
+     INT
 ;
 
 terminal EXPONENT_PART:
@@ -51,9 +51,9 @@ terminal STRING_LIT:
 	"oi"//ajeitar
 ;
 
-terminal RUNE_LIT:
+/*terminal RUNE_LIT:
 	"oiiii"//ve o que e unicode_char
-;
+;*/
 
 Type: 
 	TypeName | TypeLit | "(" Type ")"
@@ -67,9 +67,9 @@ TypeNameLinha:
 	"." IDENTIFIER |  ANY_OTHER
 ;
 
-QualifiedIdent: 
+/*QualifiedIdent: 
 	PackageName "." IDENTIFIER
-;
+;*/
 
 PackageName: 
 	IDENTIFIER
@@ -177,7 +177,7 @@ Expression:
 ;
 
 Expression_Linha: 
-	binary_op Expression Expression_Linha
+	binary_op Expression Expression_Linha | ANY_OTHER
 ;
 
 UnaryExpr: 
@@ -264,24 +264,24 @@ PrimaryExprLinhaLinhaLinhaLinha:
 	"]" | ":" SliceLinha
 ;
 
-Selector: 
+/*Selector: 
 	"." IDENTIFIER
-;
+;*/
 
-Index:
+/*Index:
 	"[" Expression "]"
-;
+;*/
 
-Slice:
+/*Slice:
 	"[" (Expression)? ":" SliceLinha
-;
+;*/
 
 SliceLinha: //fatoracao
 	":" (Expression)? "]" | Expression ":" Expression "]";
 
-TypeAssertion:
+/*TypeAssertion:
 	"." "(" Type ")"
-;
+;*/
 
 Arguments:
 	"(" ( ( (=>ExpressionList) | Type ("," ExpressionList)? ) ( "...")? ( "," )?)? ")"
@@ -324,7 +324,7 @@ ForStmtLinha://fatoracao
 		|ANY_OTHER
 ;
 
-RangeClause:
+/*RangeClause:
 	( ExpressionList "=" | IdentifierList ":=" ) "range" Expression
 ;
 
@@ -338,7 +338,7 @@ PostStmt:
 
 InitStmt:
 	SimpleStmt
-;
+;*/
 
 Condition:
 	Expression
@@ -360,9 +360,9 @@ CommCaseLinha:
 	"<-" Expression | (("," Expression)* "=" | IdentifierList ":=" ) RecvExpr
 ;
 
-RecvStmt:
+/*RecvStmt:
 	( ExpressionList "=" | IdentifierList ":=" ) RecvExpr
-;
+;*/
 
 RecvExpr:
 	Expression
@@ -377,9 +377,9 @@ SwitchStmtLinha://fatoracao
 ;
 
 
-TypeSwitchStmt:
+/*TypeSwitchStmt:
 	"switch" ( SimpleStmt ";" ) TypeSwitchGuard "{" ( TypeCaseClause )* "}"	
-;
+;*/
 
 TypeCaseClause:
 	TypeSwitchCase ":" StatementList
@@ -397,9 +397,9 @@ TypeSwitchGuard:
 	( IDENTIFIER ":=" ) PrimaryExpr "." "(" "type" ")"
 ;
 
-ExprSwitchStmt:
+/*ExprSwitchStmt:
 	"switch" ( SimpleStmt ";" ) ( Expression ) "{" ( ExprCaseClause )* "}"
-;
+;*/
 
 ExprCaseClause:
 	ExprSwitchCase ":" StatementList
@@ -447,15 +447,15 @@ SimpleStmtLinha:
 	"<-" Expression  | ( "++" | "--" ) | ("," Expression)* assign_op (Expression ("," Expression)*)
 ;
 
-Assignment:
+/*Assignment:
 	ExpressionList assign_op ExpressionList
-;
+;*/
 
 assign_op:
 	( ADD_OP | MUL_OP ) "="
 ;
 
-IncDecStmt:
+/*IncDecStmt:
 	Expression ( "++" | "--" )
 ;
 
@@ -465,11 +465,11 @@ SendStmt:
 
 Channel:
 	Expression
-;
+;*/
 
-ExpressionStmt:
+/*ExpressionStmt:
 	Expression
-;
+;*/
 
 LabeledStmt:
 	Label ":" Statement 
@@ -519,9 +519,9 @@ VarSpec:
 	IdentifierList ( Type ( "=" ExpressionList)? | "=" ExpressionList )
 ;
 
-ShortVarDecl: 
+/*ShortVarDecl: 
 	IdentifierList ":=" ExpressionList
-;
+;*/
 
 FunctionDecl:
 	"func" FunctionName Signature (FunctionBody)?
@@ -543,19 +543,19 @@ Receiver:
 	Parameters
 ;
 
-Operand: 
+/*Operand: 
 	Literal | OperandName | "(" Expression ")"
 ;
 
 Literal: 
 	BasicLit | CompositeLit | FunctionLit
-;
+;*/
 
 BasicLit:
-	INT_LITERAL  | STRING_LIT | float_literal | Imaginary_lit
+	   INTEGERLITERAL | STRING_LIT | float_literal | Imaginary_lit
 ;
 
-OperandName: 
+/*OperandName: 
 	IDENTIFIER OperandNameLinha
 ;
 
@@ -574,7 +574,7 @@ LiteralType:
 
 LiteralTypeLinha://fatoracao
 	(=>ArrayLength "]" ElementType) | "..." "]" ElementType | "]" ElementType
-;
+;*/
 
 LiteralValue: 
 	"{" ( ElementList ( "," )? )? "}"
@@ -601,7 +601,7 @@ Element:
 ;
 
 
-FunctionLit: 
+/*FunctionLit: 
 	"func" Signature FunctionBody
 ;
 
@@ -615,7 +615,7 @@ ReceiverType:
 
 Conversion: 
 	Type "(" Expression ( "," )? ")"
-;
+;*/
 
 SourceFile: 
 	PackageClause ";" ( ImportDecl ";" )* ( TopLevelDecl ";" )*
