@@ -14,29 +14,60 @@ ruleGreeting:
 	ruleSourceFile
 ;
 
-// Rule float_literal
-rulefloat_literal:
+// Rule FLOAT_LIT
+ruleFLOAT_LIT:
 	(
-		RULE_DECIMAL_DIGITS
+		RULE_DECIMALS
+		ruleFLOAT_LIT_Linha
+		    |
+		RULE_DECIMALS
 		'.'
-		RULE_DECIMAL_DIGITS
-		RULE_EXPONENT_PART
+		RULE_DECIMALS
+		ruleFLOAT_LIT_Linha_Linha
+		    |
+		RULE_DECIMALS
+		'.'
+		ruleFLOAT_LIT_Linha_Linha_Linha
 		    |
 		'.'
-		RULE_DECIMAL_DIGITS
-		RULE_EXPONENT_PART
-		    |
-		RULE_DECIMAL_DIGITS
-		RULE_EXPONENT_PART
+		RULE_DECIMALS
+		RULE_EXPONENT
 	)
 ;
 
-// Rule Imaginary_lit
-ruleImaginary_lit:
+// Rule FLOAT_LIT_Linha_Linha_Linha
+ruleFLOAT_LIT_Linha_Linha_Linha:
 	(
-		RULE_DECIMAL_DIGITS
+		RULE_EXPONENT
 		    |
-		rulefloat_literal
+		RULE_ANY_OTHER
+	)
+;
+
+// Rule FLOAT_LIT_Linha_Linha
+ruleFLOAT_LIT_Linha_Linha:
+	(
+		RULE_EXPONENT
+		    |
+		RULE_ANY_OTHER
+	)
+;
+
+// Rule FLOAT_LIT_Linha
+ruleFLOAT_LIT_Linha:
+	(
+		RULE_EXPONENT
+		    |
+		RULE_ANY_OTHER
+	)
+;
+
+// Rule IMAGINARY_LIT
+ruleIMAGINARY_LIT:
+	(
+		RULE_DECIMALS
+		    |
+		ruleFLOAT_LIT
 	)
 	'i'
 ;
@@ -119,7 +150,7 @@ ruleElementType:
 
 // Rule StructType
 ruleStructType:
-	'struct'
+	RULE_STRUCT
 	'{'
 	(
 		ruleFieldDecl
@@ -163,7 +194,7 @@ ruleBaseType:
 
 // Rule FunctionType
 ruleFunctionType:
-	'func'
+	RULE_FUNC
 	ruleSignature
 ;
 
@@ -216,7 +247,7 @@ ruleParameterDecl:
 
 // Rule InterfaceType
 ruleInterfaceType:
-	'interface'
+	RULE_INTERFACE
 	'{'
 	ruleMethodSpec
 	';'
@@ -245,7 +276,7 @@ ruleInterfaceTypeName:
 
 // Rule MapType
 ruleMapType:
-	'map'
+	RULE_MAP
 	'['
 	ruleKeyType
 	']'
@@ -260,11 +291,11 @@ ruleKeyType:
 // Rule ChannelType
 ruleChannelType:
 	(
-		'chan'
+		RULE_CHAN
 		ruleChannelTypeLinha
 		    |
 		'<-'
-		'chan'
+		RULE_CHAN
 	)
 	ruleElementType
 ;
@@ -332,7 +363,7 @@ rulePrimaryExpr:
 		ruleMapType
 		rulePrimaryExprFatFatFatFat
 		    |
-		'func'
+		RULE_FUNC
 		ruleSignature
 		rulePrimaryExprFatFatFatFatFat
 		rulePrimaryExprLinha
@@ -606,13 +637,13 @@ ruleStatement:
 
 // Rule DeferStmt
 ruleDeferStmt:
-	'defer'
+	RULE_DEFER
 	ruleExpression
 ;
 
 // Rule ForStmt
 ruleForStmt:
-	'for'
+	RULE_FOR
 	(
 		ruleExpression
 		ruleForStmtLinha
@@ -666,7 +697,7 @@ ruleForStmtLinha:
 			ruleIdentifierList
 			':='
 		)
-		'range'
+		RULE_RANGE
 		ruleExpression
 		    |
 		RULE_ANY_OTHER
@@ -680,7 +711,7 @@ ruleCondition:
 
 // Rule SelectStmt
 ruleSelectStmt:
-	'select'
+	RULE_SELECT
 	'{'
 	ruleCommClause*
 	'}'
@@ -696,11 +727,11 @@ ruleCommClause:
 // Rule CommCase
 ruleCommCase:
 	(
-		'case'
+		RULE_CASE
 		ruleExpression
 		ruleCommCaseLinha
 		    |
-		'default'
+		RULE_DEFAULT
 	)
 ;
 
@@ -731,7 +762,7 @@ ruleRecvExpr:
 
 // Rule SwitchStmt
 ruleSwitchStmt:
-	'switch'
+	RULE_SWITCH
 	ruleSimpleStmt
 	';'
 	ruleSwitchStmtLinha
@@ -762,10 +793,10 @@ ruleTypeCaseClause:
 // Rule TypeSwitchCase
 ruleTypeSwitchCase:
 	(
-		'case'
+		RULE_CASE
 		ruleTypeList
 		    |
-		'default'
+		RULE_DEFAULT
 	)
 ;
 
@@ -785,7 +816,7 @@ ruleTypeSwitchGuard:
 	rulePrimaryExpr
 	'.'
 	'('
-	'type'
+	RULE_TYPEKEYWORD
 	')'
 ;
 
@@ -799,21 +830,21 @@ ruleExprCaseClause:
 // Rule ExprSwitchCase
 ruleExprSwitchCase:
 	(
-		'case'
+		RULE_CASE
 		ruleExpressionList
 		    |
-		'default'
+		RULE_DEFAULT
 	)
 ;
 
 // Rule IfStmt
 ruleIfStmt:
-	'if'
+	RULE_IF
 	ruleSimpleStmt
 	';'
 	ruleExpression
 	ruleBlock
-	'else'
+	RULE_ELSE
 	(
 		ruleIfStmt
 		    |
@@ -823,36 +854,36 @@ ruleIfStmt:
 
 // Rule FallthroughStmt
 ruleFallthroughStmt:
-	'fallthrough'
+	RULE_FALLTHROUGH
 ;
 
 // Rule GotoStmt
 ruleGotoStmt:
-	'goto'
+	RULE_GOTO
 	ruleLabel
 ;
 
 // Rule ContinueStmt
 ruleContinueStmt:
-	'continue'
+	RULE_CONTINUE
 	ruleLabel
 ;
 
 // Rule BreakStmt
 ruleBreakStmt:
-	'break'
+	RULE_BREAK
 	ruleLabel
 ;
 
 // Rule ReturnStmt
 ruleReturnStmt:
-	'return'
+	RULE_RETURN
 	ruleExpressionList
 ;
 
 // Rule GoStmt
 ruleGoStmt:
-	'go'
+	RULE_GO
 	ruleLabel
 ;
 
@@ -947,7 +978,7 @@ ruleTopLevelDecl:
 
 // Rule ConstDecl
 ruleConstDecl:
-	'const'
+	RULE_CONST
 	(
 		ruleConstSpec
 		    |
@@ -972,7 +1003,7 @@ ruleConstSpec:
 
 // Rule TypeDecl
 ruleTypeDecl:
-	'type'
+	RULE_TYPEKEYWORD
 	(
 		ruleTypeSpec
 		    |
@@ -1009,7 +1040,7 @@ ruleTypeDef:
 
 // Rule VarDecl
 ruleVarDecl:
-	'var'
+	RULE_VAR
 	(
 		ruleVarSpec
 		    |
@@ -1039,7 +1070,7 @@ ruleVarSpec:
 
 // Rule FunctionDecl
 ruleFunctionDecl:
-	'func'
+	RULE_FUNC
 	ruleFunctionName
 	ruleSignature
 	ruleFunctionBody?
@@ -1057,7 +1088,7 @@ ruleFunctionBody:
 
 // Rule MethodDecl
 ruleMethodDecl:
-	'func'
+	RULE_FUNC
 	ruleReceiver
 	ruleMethodName
 	ruleSignature
@@ -1072,13 +1103,13 @@ ruleReceiver:
 // Rule BasicLit
 ruleBasicLit:
 	(
-		RULE_INTEGERLITERAL
+		RULE_INT_LIT
 		    |
 		RULE_STRING_LIT
 		    |
-		rulefloat_literal
+		ruleFLOAT_LIT
 		    |
-		ruleImaginary_lit
+		ruleIMAGINARY_LIT
 	)
 ;
 
@@ -1169,13 +1200,13 @@ ruleSourceFile:
 
 // Rule PackageClause
 rulePackageClause:
-	'package'
+	RULE_PACKAGE
 	rulePackageName
 ;
 
 // Rule ImportDecl
 ruleImportDecl:
-	'import'
+	RULE_IMPORT
 	(
 		ruleImportSpec
 		    |
@@ -1203,15 +1234,97 @@ ruleImportPath:
 	RULE_STRING_LIT
 ;
 
+fragment RULE_NEWLINE : ('\n'|'\r'|'\n\r');
+
 fragment RULE_LETTER : ('a'..'z'|'A'..'Z'|'_');
 
-RULE_INTEGERLITERAL : ('1'..'9' ('0'..'9')*|'0' ('0'..'7')*|'0' ('x'|'X') ('0'..'9'|'a'..'f'|'A'..'F')+);
+fragment RULE_DECIMAL_DIGIT : '0'..'9';
 
-RULE_DECIMAL_DIGITS : RULE_INT;
+fragment RULE_OCTAL_DIGIT : '0'..'7';
 
-RULE_EXPONENT_PART : 'e' ('+'|'-') RULE_DECIMAL_DIGITS;
+fragment RULE_HEX_DIGIT : ('0'..'9'|'A'..'F'|'a'..'f');
 
-RULE_STRING_LIT : 'oi';
+RULE_BREAK : 'break';
+
+RULE_DEFAULT : 'default';
+
+RULE_FUNC : 'func';
+
+RULE_INTERFACE : 'interface';
+
+RULE_SELECT : 'select';
+
+RULE_CASE : 'case';
+
+RULE_DEFER : 'defer';
+
+RULE_GO : 'go';
+
+RULE_MAP : 'map';
+
+RULE_STRUCT : 'struct';
+
+RULE_CHAN : 'chan';
+
+RULE_ELSE : 'else';
+
+RULE_GOTO : 'goto';
+
+RULE_PACKAGE : 'package';
+
+RULE_SWITCH : 'switch';
+
+RULE_CONST : 'const';
+
+RULE_FALLTHROUGH : 'fallthrough';
+
+RULE_IF : 'if';
+
+RULE_RANGE : 'range';
+
+RULE_TYPEKEYWORD : 'type';
+
+RULE_CONTINUE : 'continue';
+
+RULE_FOR : 'for';
+
+RULE_IMPORT : 'import';
+
+RULE_RETURN : 'return';
+
+RULE_VAR : 'var';
+
+RULE_IDENTIFIER : RULE_LETTER (RULE_LETTER|'0'..'9')*;
+
+fragment RULE_UNICODE_CHAR : 'fazeer';
+
+RULE_INT_LIT : ('1'..'9' RULE_DECIMAL_DIGIT*|'0' RULE_OCTAL_DIGIT*|'0' ('x'|'X') RULE_HEX_DIGIT+);
+
+RULE_DECIMALS : RULE_INT;
+
+RULE_EXPONENT : ('e'|'E') ('+'|'-')? RULE_DECIMALS;
+
+RULE_RUNE_LIT : '\'' (RULE_UNICODE_VALUE|RULE_BYTE_VALUE) '\'';
+
+fragment RULE_UNICODE_VALUE : (RULE_UNICODE_CHAR|RULE_LITTLE_U_VALUE|RULE_BIG_U_VALUE|RULE_ESCAPED_CHAR);
+
+fragment RULE_BYTE_VALUE : (RULE_OCTAL_BYTE_VALUE|RULE_HEX_BYTE_VALUE);
+
+fragment RULE_OCTAL_BYTE_VALUE : '\\' RULE_OCTAL_DIGIT RULE_OCTAL_DIGIT RULE_OCTAL_DIGIT;
+
+fragment RULE_HEX_BYTE_VALUE : '\\' 'x' RULE_HEX_DIGIT RULE_HEX_DIGIT;
+
+fragment RULE_LITTLE_U_VALUE : '\\' 'u' RULE_HEX_DIGIT RULE_HEX_DIGIT RULE_HEX_DIGIT RULE_HEX_DIGIT;
+
+fragment RULE_BIG_U_VALUE : '\\' 'U' RULE_HEX_DIGIT RULE_HEX_DIGIT RULE_HEX_DIGIT RULE_HEX_DIGIT RULE_HEX_DIGIT RULE_HEX_DIGIT RULE_HEX_DIGIT RULE_HEX_DIGIT;
+
+fragment RULE_ESCAPED_CHAR : '\\' ('a'|'b'|'f'|'n'|'r'|'t'|'v'|'\\'|'\''|'"');
+
+RULE_STRING_LIT : (RULE_RAW_STRING_LIT|RULE_INTERPRETED_STRING_LIT);
+
+fragment RULE_RAW_STRING_LIT : '\'' (RULE_UNICODE_CHAR|RULE_NEWLINE)* '\'';
+
+fragment RULE_INTERPRETED_STRING_LIT : '"' (RULE_UNICODE_VALUE|RULE_BYTE_VALUE)* '"';
 
 RULE_REL_OP : ('=='|'!='|'<'|'<='|'>'|'>=');
 
@@ -1220,8 +1333,6 @@ RULE_ADD_OP : ('+'|'-'|'|'|'^');
 RULE_MUL_OP : ('*'|'/'|'%'|'<<'|'>>'|'&'|'&^');
 
 RULE_UNARY_OP : ('+'|'-'|'!'|'^'|'*'|'&'|'<-');
-
-RULE_IDENTIFIER : RULE_LETTER (RULE_LETTER|'0'..'9')*;
 
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 

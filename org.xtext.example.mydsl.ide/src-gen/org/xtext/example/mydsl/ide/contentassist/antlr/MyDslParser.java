@@ -35,8 +35,11 @@ public class MyDslParser extends AbstractContentAssistParser {
 			nameMappings = new HashMap<AbstractElement, String>() {
 				private static final long serialVersionUID = 1L;
 				{
-					put(grammarAccess.getFloat_literalAccess().getAlternatives(), "rule__Float_literal__Alternatives");
-					put(grammarAccess.getImaginary_litAccess().getAlternatives_0(), "rule__Imaginary_lit__Alternatives_0");
+					put(grammarAccess.getFLOAT_LITAccess().getAlternatives(), "rule__FLOAT_LIT__Alternatives");
+					put(grammarAccess.getFLOAT_LIT_Linha_Linha_LinhaAccess().getAlternatives(), "rule__FLOAT_LIT_Linha_Linha_Linha__Alternatives");
+					put(grammarAccess.getFLOAT_LIT_Linha_LinhaAccess().getAlternatives(), "rule__FLOAT_LIT_Linha_Linha__Alternatives");
+					put(grammarAccess.getFLOAT_LIT_LinhaAccess().getAlternatives(), "rule__FLOAT_LIT_Linha__Alternatives");
+					put(grammarAccess.getIMAGINARY_LITAccess().getAlternatives_0(), "rule__IMAGINARY_LIT__Alternatives_0");
 					put(grammarAccess.getTypeAccess().getAlternatives(), "rule__Type__Alternatives");
 					put(grammarAccess.getTypeNameLinhaAccess().getAlternatives(), "rule__TypeNameLinha__Alternatives");
 					put(grammarAccess.getTypeLitAccess().getAlternatives(), "rule__TypeLit__Alternatives");
@@ -90,10 +93,11 @@ public class MyDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getElementAccess().getAlternatives(), "rule__Element__Alternatives");
 					put(grammarAccess.getImportDeclAccess().getAlternatives_1(), "rule__ImportDecl__Alternatives_1");
 					put(grammarAccess.getImportSpecAccess().getAlternatives_0(), "rule__ImportSpec__Alternatives_0");
-					put(grammarAccess.getFloat_literalAccess().getGroup_0(), "rule__Float_literal__Group_0__0");
-					put(grammarAccess.getFloat_literalAccess().getGroup_1(), "rule__Float_literal__Group_1__0");
-					put(grammarAccess.getFloat_literalAccess().getGroup_2(), "rule__Float_literal__Group_2__0");
-					put(grammarAccess.getImaginary_litAccess().getGroup(), "rule__Imaginary_lit__Group__0");
+					put(grammarAccess.getFLOAT_LITAccess().getGroup_0(), "rule__FLOAT_LIT__Group_0__0");
+					put(grammarAccess.getFLOAT_LITAccess().getGroup_1(), "rule__FLOAT_LIT__Group_1__0");
+					put(grammarAccess.getFLOAT_LITAccess().getGroup_2(), "rule__FLOAT_LIT__Group_2__0");
+					put(grammarAccess.getFLOAT_LITAccess().getGroup_3(), "rule__FLOAT_LIT__Group_3__0");
+					put(grammarAccess.getIMAGINARY_LITAccess().getGroup(), "rule__IMAGINARY_LIT__Group__0");
 					put(grammarAccess.getTypeAccess().getGroup_2(), "rule__Type__Group_2__0");
 					put(grammarAccess.getTypeNameAccess().getGroup(), "rule__TypeName__Group__0");
 					put(grammarAccess.getTypeNameLinhaAccess().getGroup_0(), "rule__TypeNameLinha__Group_0__0");
