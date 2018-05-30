@@ -118,35 +118,12 @@ terminal INT_LIT:
     | ( '0' ('x'|"X") HEX_DIGIT+)
 ;
 
-FLOAT_LIT:
-	DECIMALS FLOAT_LIT_Linha
-	|DECIMALS '.' (DECIMALS) FLOAT_LIT_Linha_Linha
-	|DECIMALS '.' FLOAT_LIT_Linha_Linha_Linha
-	| '.' DECIMALS  (EXPONENT)
-;
-
-FLOAT_LIT_Linha_Linha_Linha:
-	(EXPONENT) | ANY_OTHER
-;
-
-FLOAT_LIT_Linha_Linha:
-	(EXPONENT) | ANY_OTHER
-;
-
-FLOAT_LIT_Linha:
-	 (EXPONENT) | ANY_OTHER 
-;
-
 terminal DECIMALS:
      INT
 ;
 
 terminal EXPONENT:
     ("e"|"E")('+'|'-')? DECIMALS
-;
-
-IMAGINARY_LIT:
-	(DECIMALS | FLOAT_LIT) "i" 
 ;
 
 terminal RUNE_LIT:
@@ -190,15 +167,51 @@ terminal INTERPRETED_STRING_LIT:
 	'"' (UNICODE_VALUE | BYTE_VALUE)* '"'
 ;
 
+terminal REL_OP : 
+	"==" | "!=" | "<" | "<=" | ">" | ">="
+;
+terminal ADD_OP :
+	"+" | "-" | "|" | "^" 
+;
+terminal MUL_OP :
+	"*" | "/" | "%" | "<<" | ">>" | "&" | "&^"
+;
+terminal UNARY_OP: 
+	"+" | "-" | "!" | "^" | "*" | "&" | "<-" 
+;
+
+FLOAT_LIT:
+	DECIMALS FLOAT_LIT_Linha
+	|DECIMALS '.' (DECIMALS) FLOAT_LIT_Linha_2
+	|DECIMALS '.' FLOAT_LIT_Linha_3
+	| '.' DECIMALS  (EXPONENT)
+;
+
+FLOAT_LIT_Linha_3:
+	(EXPONENT) | ANY_OTHER
+;
+
+FLOAT_LIT_Linha_2:
+	(EXPONENT) | ANY_OTHER
+;
+
+FLOAT_LIT_Linha:
+	 (EXPONENT) | ANY_OTHER 
+;
+
+IMAGINARY_LIT:
+	(DECIMALS | FLOAT_LIT) "i" 
+;
+
 Type: 
 	TypeName | TypeLit | "(" Type ")"
 ;
 
 TypeName: 
-	IDENTIFIER TypeNameLinha
+	IDENTIFIER TypeName_Linha
 ;
 
-TypeNameLinha:
+TypeName_Linha:
 	"." IDENTIFIER |  ANY_OTHER
 ;
 
@@ -211,11 +224,11 @@ PackageName:
 ;
 
 TypeLit: 
-	 "[" TypeLitLinha | StructType | PointerType | FunctionType | InterfaceType |
+	 "[" TypeLit_Linha | StructType | PointerType | FunctionType | InterfaceType |
 	  MapType | ChannelType
 ;
 
-TypeLitLinha:
+TypeLit_Linha:
 	ArrayLength "]" ElementType 
 	| "]" ElementType
 ;
@@ -300,10 +313,10 @@ KeyType:
 ;
 
 ChannelType: 
-	( CHAN ChannelTypeLinha | "<-" CHAN) ElementType
+	( CHAN ChannelType_Linha | "<-" CHAN) ElementType
 ;
 
-ChannelTypeLinha://fatoracao
+ChannelType_Linha://fatoracao
 	"<-" | ANY_OTHER
 ;
 
@@ -323,79 +336,65 @@ binary_op:
 	"||" | "&&" | REL_OP | ADD_OP | MUL_OP
 ;
 
-terminal REL_OP : 
-	"==" | "!=" | "<" | "<=" | ">" | ">="
-;
-terminal ADD_OP :
-	"+" | "-" | "|" | "^" 
-;
-terminal MUL_OP :
-	"*" | "/" | "%" | "<<" | ">>" | "&" | "&^"
-;
-terminal UNARY_OP: 
-	"+" | "-" | "!" | "^" | "*" | "&" | "<-" 
-;
-
 PrimaryExpr: 
-	BasicLit PrimaryExprLinha
-	|StructType PrimaryExprFatFatFatFat
-	|MapType PrimaryExprFatFatFatFat
-	| FUNC Signature PrimaryExprFatFatFatFatFat PrimaryExprLinha
-	| "..." "]" ElementType LiteralValue PrimaryExprLinha
-	|  Name PrimaryExprFatFatFat PrimaryExprLinha
-	| "("  PrimaryExprFatFat PrimaryExprLinha  
-	| "[" TypeLitLinha PrimaryExprFatFatFatFatFatFat PrimaryExprLinha
-	|PointerType PrimaryExprFat PrimaryExprLinha
-	| InterfaceType PrimaryExprFat PrimaryExprLinha
-	|ChannelType PrimaryExprFat PrimaryExprLinha
+	BasicLit PrimaryExpr_Linha
+	|StructType PrimaryExpr_Fat_4
+	|MapType PrimaryExpr_Fat_4
+	| FUNC Signature PrimaryExpr_Fat_5 PrimaryExpr_Linha
+	| "..." "]" ElementType LiteralValue PrimaryExpr_Linha
+	|  Name PrimaryExpr_Fat_3 PrimaryExpr_Linha
+	| "("  PrimaryExpr_Fat_2 PrimaryExpr_Linha  
+	| "[" TypeLit_Linha PrimaryExpr_Fat_6 PrimaryExpr_Linha
+	|PointerType PrimaryExpr_Fat PrimaryExpr_Linha
+	| InterfaceType PrimaryExpr_Fat PrimaryExpr_Linha
+	|ChannelType PrimaryExpr_Fat PrimaryExpr_Linha
 	
 	//(Literal | OperandName | "(" Expression ")") PrimaryExprLinha 
 	//| (TypeName | TypeLit ) PrimaryExprFat PrimaryExprLinha
 ;
 
-PrimaryExprFatFatFatFatFatFat:
-	LiteralValue | PrimaryExprFat
+PrimaryExpr_Fat_6:
+	LiteralValue | PrimaryExpr_Fat
 ;
-PrimaryExprFatFatFatFatFat:
-	FunctionBody | PrimaryExprFat
+PrimaryExpr_Fat_5:
+	FunctionBody | PrimaryExpr_Fat
 ;
-PrimaryExprFatFatFatFat:
-	LiteralValue | PrimaryExprFat
+PrimaryExpr_Fat_4:
+	LiteralValue | PrimaryExpr_Fat
 ;
-PrimaryExprFatFatFat:
-	LiteralValue | PrimaryExprFat | ANY_OTHER
+PrimaryExpr_Fat_3:
+	LiteralValue | PrimaryExpr_Fat | ANY_OTHER
 ;
-
 
 Name:
-	IDENTIFIER NameLinha
+	IDENTIFIER Name_Linha
 ;
 
-NameLinha:
+Name_Linha:
 	"." IDENTIFIER | ANY_OTHER
 ;
-PrimaryExprFatFat:
-	(=>Expression ")") | Type ")" PrimaryExprFat
+PrimaryExpr_Fat_2:
+	(=>Expression ")") | Type ")" PrimaryExpr_Fat
 ;
-PrimaryExprFat:
+PrimaryExpr_Fat:
 	"(" Expression ( "," )? ")" | "." MethodName
 ;
 
-PrimaryExprLinha:
-	"." PrimaryExprLinhaLinha PrimaryExprLinha
-	| "[" PrimaryExprLinhaLinhaLinha PrimaryExprLinha
-	| Arguments PrimaryExprLinha
+PrimaryExpr_Linha:
+	"." PrimaryExpr_Linha_2 PrimaryExpr_Linha
+	| "[" PrimaryExpr_Linha_2 PrimaryExpr_Linha
+	| Arguments PrimaryExpr_Linha
 ;
 
-PrimaryExprLinhaLinha:
+PrimaryExpr_Linha_2:
 	IDENTIFIER | "(" Type ")"
 ;
 
-PrimaryExprLinhaLinhaLinha:
-	Expression PrimaryExprLinhaLinhaLinhaLinha |  ":" SliceLinha
+PrimaryExpr_Linha_3:
+	Expression PrimaryExpr_Linha_4 |  ":" SliceLinha
 ;
 
-PrimaryExprLinhaLinhaLinhaLinha:
+PrimaryExpr_Linha_4:
 	"]" | ":" SliceLinha
 ;
 
@@ -450,11 +449,11 @@ DeferStmt:
 ;
 
 ForStmt:
-	 FOR ( Expression ForStmtLinha)? Block
+	 FOR ( Expression ForStmt_Linha)? Block
 ;
 
-ForStmtLinha://fatoracao
-	(SimpleStmtLinha| (IDENTIFIER( "," IDENTIFIER )*) ":=" (Expression ("," Expression)*) ) ";" ( Condition ) ";" ( Expression SimpleStmtLinha| (IDENTIFIER( "," IDENTIFIER )*) ":=" (Expression ("," Expression)*) 
+ForStmt_Linha://fatoracao
+	(SimpleStmt_Linha| (IDENTIFIER( "," IDENTIFIER )*) ":=" (Expression ("," Expression)*) ) ";" ( Condition ) ";" ( Expression SimpleStmt_Linha| (IDENTIFIER( "," IDENTIFIER )*) ":=" (Expression ("," Expression)*) 
 		|(("," Expression)*) "=" | IdentifierList ":=" ) RANGE Expression 
 		|ANY_OTHER
 ;
@@ -488,10 +487,10 @@ CommClause:
 ;
 
 CommCase:
-	CASE ( Expression CommCaseLinha) | DEFAULT
+	CASE ( Expression CommCase_Linha) | DEFAULT
 ;
 
-CommCaseLinha:
+CommCase_Linha:
 	"<-" Expression | (("," Expression)* "=" | IdentifierList ":=" ) RecvExpr
 ;
 
@@ -504,13 +503,12 @@ RecvExpr:
 ;
 
 SwitchStmt:
-	SWITCH ( SimpleStmt ";" ) SwitchStmtLinha
+	SWITCH ( SimpleStmt ";" ) SwitchStmt_Linha
 ;
 
-SwitchStmtLinha://fatoracao
+SwitchStmt_Linha://fatoracao
 	( Expression ) "{" ( ExprCaseClause )* "}" | TypeSwitchGuard "{" ( TypeCaseClause )* "}"
 ;
-
 
 /*TypeSwitchStmt:
 	"switch" ( SimpleStmt ";" ) TypeSwitchGuard "{" ( TypeCaseClause )* "}"	
@@ -575,10 +573,10 @@ GoStmt:
 ;
 
 SimpleStmt:
-	Expression SimpleStmtLinha| (IDENTIFIER( "," IDENTIFIER )*) ":=" (Expression ("," Expression)*)
+	Expression SimpleStmt_Linha| (IDENTIFIER( "," IDENTIFIER )*) ":=" (Expression ("," Expression)*)
 ;
 
-SimpleStmtLinha:
+SimpleStmt_Linha:
 	"<-" Expression  | ( "++" | "--" ) | ("," Expression)* assign_op (Expression ("," Expression)*)
 ;
 
