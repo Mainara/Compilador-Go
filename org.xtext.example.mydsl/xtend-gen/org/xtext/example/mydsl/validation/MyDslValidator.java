@@ -3,7 +3,17 @@
  */
 package org.xtext.example.mydsl.validation;
 
+import com.google.common.base.Objects;
+import org.eclipse.xtext.validation.Check;
+import org.xtext.example.mydsl.myDsl.ConstDecl;
+import org.xtext.example.mydsl.myDsl.Declaration;
+import org.xtext.example.mydsl.myDsl.Expression;
+import org.xtext.example.mydsl.myDsl.MethodDecl;
+import org.xtext.example.mydsl.myDsl.MyDslPackage;
+import org.xtext.example.mydsl.myDsl.TypeDecl;
 import org.xtext.example.mydsl.validation.AbstractMyDslValidator;
+import org.xtext.example.mydsl.validation.ConstDeclValidator;
+import org.xtext.example.mydsl.validation.MethodDeclValidator;
 
 /**
  * This class contains custom validation rules.
@@ -12,4 +22,48 @@ import org.xtext.example.mydsl.validation.AbstractMyDslValidator;
  */
 @SuppressWarnings("all")
 public class MyDslValidator extends AbstractMyDslValidator {
+  private ConstDeclValidator constDeclValidator = new ConstDeclValidator();
+  
+  private MethodDeclValidator methodDeclValidator = new MethodDeclValidator();
+  
+  @Check
+  public String checkMethodDecl(final MethodDecl methodDecl) {
+    return this.methodDeclValidator.checkMethodDecl(methodDecl);
+  }
+  
+  @Check
+  public Object checkDecl(final Declaration decl) {
+    Object _xifexpression = null;
+    ConstDecl _constDecl = decl.getConstDecl();
+    boolean _notEquals = (!Objects.equal(_constDecl, null));
+    if (_notEquals) {
+      ConstDecl _constDecl_1 = decl.getConstDecl();
+      String _validaConstDecl = this.constDeclValidator.validaConstDecl(_constDecl_1);
+      boolean _notEquals_1 = (!Objects.equal(_validaConstDecl, null));
+      if (_notEquals_1) {
+        ConstDecl _constDecl_2 = decl.getConstDecl();
+        String erro = this.constDeclValidator.validaConstDecl(_constDecl_2);
+        this.error(erro, MyDslPackage.Literals.DECLARATION__CONST_DECL);
+      }
+    } else {
+      Object _xifexpression_1 = null;
+      TypeDecl _typeDecl = decl.getTypeDecl();
+      boolean _notEquals_2 = (!Objects.equal(_typeDecl, null));
+      if (_notEquals_2) {
+        _xifexpression_1 = null;
+      }
+      _xifexpression = _xifexpression_1;
+    }
+    return _xifexpression;
+  }
+  
+  @Check
+  public Object checkExpression(final Expression exp) {
+    Object _xifexpression = null;
+    boolean _notEquals = (!Objects.equal(exp, null));
+    if (_notEquals) {
+      _xifexpression = null;
+    }
+    return _xifexpression;
+  }
 }

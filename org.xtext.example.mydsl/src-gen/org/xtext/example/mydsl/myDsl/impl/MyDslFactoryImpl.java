@@ -66,6 +66,122 @@ public class MyDslFactoryImpl extends EFactoryImpl implements MyDslFactory
     switch (eClass.getClassifierID())
     {
       case MyDslPackage.MODEL: return createModel();
+      case MyDslPackage.FLOAT_LIT: return createFLOAT_LIT();
+      case MyDslPackage.IMAGINARY_LIT: return createIMAGINARY_LIT();
+      case MyDslPackage.TYPE: return createType();
+      case MyDslPackage.TYPE_NAME: return createTypeName();
+      case MyDslPackage.TYPE_NAME_LINHA: return createTypeNameLinha();
+      case MyDslPackage.TYPE_LIT: return createTypeLit();
+      case MyDslPackage.TYPE_LIT_LINHA: return createTypeLitLinha();
+      case MyDslPackage.ARRAY_LENGTH: return createArrayLength();
+      case MyDslPackage.ELEMENT_TYPE: return createElementType();
+      case MyDslPackage.STRUCT_TYPE: return createStructType();
+      case MyDslPackage.FIELD_DECL: return createFieldDecl();
+      case MyDslPackage.EMBEDDED_FIELD: return createEmbeddedField();
+      case MyDslPackage.TAG: return createTag();
+      case MyDslPackage.POINTER_TYPE: return createPointerType();
+      case MyDslPackage.BASE_TYPE: return createBaseType();
+      case MyDslPackage.FUNCTION_TYPE: return createFunctionType();
+      case MyDslPackage.SIGNATURE: return createSignature();
+      case MyDslPackage.RESULT: return createResult();
+      case MyDslPackage.PARAMETERS: return createParameters();
+      case MyDslPackage.PARAMETER_LIST: return createParameterList();
+      case MyDslPackage.PARAMETER_DECL: return createParameterDecl();
+      case MyDslPackage.INTERFACE_TYPE: return createInterfaceType();
+      case MyDslPackage.METHOD_SPEC: return createMethodSpec();
+      case MyDslPackage.METHOD_NAME: return createMethodName();
+      case MyDslPackage.INTERFACE_TYPE_NAME: return createInterfaceTypeName();
+      case MyDslPackage.MAP_TYPE: return createMapType();
+      case MyDslPackage.KEY_TYPE: return createKeyType();
+      case MyDslPackage.CHANNEL_TYPE: return createChannelType();
+      case MyDslPackage.CHANNEL_TYPE_LINHA: return createChannelTypeLinha();
+      case MyDslPackage.BLOCK: return createBlock();
+      case MyDslPackage.STATEMENT_LIST: return createStatementList();
+      case MyDslPackage.DECLARATION: return createDeclaration();
+      case MyDslPackage.TOP_LEVEL_DECL: return createTopLevelDecl();
+      case MyDslPackage.CONST_DECL: return createConstDecl();
+      case MyDslPackage.CONST_SPEC: return createConstSpec();
+      case MyDslPackage.IDENTIFIER_LIST: return createIdentifierList();
+      case MyDslPackage.EXPRESSION_LIST: return createExpressionList();
+      case MyDslPackage.TYPE_DECL: return createTypeDecl();
+      case MyDslPackage.TYPE_SPEC: return createTypeSpec();
+      case MyDslPackage.ALIAS_DECL: return createAliasDecl();
+      case MyDslPackage.TYPE_DEF: return createTypeDef();
+      case MyDslPackage.VAR_DECL: return createVarDecl();
+      case MyDslPackage.VAR_SPEC: return createVarSpec();
+      case MyDslPackage.SHORT_VAR_DECL: return createShortVarDecl();
+      case MyDslPackage.FUNCTION_DECL: return createFunctionDecl();
+      case MyDslPackage.FUNCTION_NAME: return createFunctionName();
+      case MyDslPackage.FUNCTION_BODY: return createFunctionBody();
+      case MyDslPackage.METHOD_DECL: return createMethodDecl();
+      case MyDslPackage.RECEIVER: return createReceiver();
+      case MyDslPackage.OPERAND: return createOperand();
+      case MyDslPackage.LITERAL: return createLiteral();
+      case MyDslPackage.BASIC_LIT: return createBasicLit();
+      case MyDslPackage.OPERAND_NAME: return createOperandName();
+      case MyDslPackage.COMPOSITE_LIT: return createCompositeLit();
+      case MyDslPackage.LITERAL_TYPE: return createLiteralType();
+      case MyDslPackage.LITERAL_TYPE_LINHA: return createLiteralTypeLinha();
+      case MyDslPackage.LITERAL_VALUE: return createLiteralValue();
+      case MyDslPackage.ELEMENT_LIST: return createElementList();
+      case MyDslPackage.KEYED_ELEMENT: return createKeyedElement();
+      case MyDslPackage.KEY: return createKey();
+      case MyDslPackage.FIELD_NAME: return createFieldName();
+      case MyDslPackage.ELEMENT: return createElement();
+      case MyDslPackage.FUNCTION_LIT: return createFunctionLit();
+      case MyDslPackage.PRIMARY_EXPR: return createPrimaryExpr();
+      case MyDslPackage.PRIMARY_EXPR_LINHA: return createPrimaryExprLinha();
+      case MyDslPackage.SELECTOR: return createSelector();
+      case MyDslPackage.INDEX: return createIndex();
+      case MyDslPackage.SLICE: return createSlice();
+      case MyDslPackage.TYPE_ASSERTION: return createTypeAssertion();
+      case MyDslPackage.ARGUMENTS: return createArguments();
+      case MyDslPackage.METHOD_EXPR: return createMethodExpr();
+      case MyDslPackage.RECEIVER_TYPE: return createReceiverType();
+      case MyDslPackage.EXPRESSION: return createExpression();
+      case MyDslPackage.EXPRESSION_LINHA: return createExpression_Linha();
+      case MyDslPackage.UNARY_EXPR: return createUnaryExpr();
+      case MyDslPackage.BINARY_OP: return createBINARY_OP();
+      case MyDslPackage.CONVERSION: return createConversion();
+      case MyDslPackage.STATEMENT: return createStatement();
+      case MyDslPackage.SIMPLE_STMT: return createSimpleStmt();
+      case MyDslPackage.SIMPLE_STMT_LINHA: return createSimpleStmtLinha();
+      case MyDslPackage.EMPTY_STMT: return createEmptyStmt();
+      case MyDslPackage.LABELED_STMT: return createLabeledStmt();
+      case MyDslPackage.LABEL: return createLabel();
+      case MyDslPackage.ASSIGN_OP: return createassign_op();
+      case MyDslPackage.IF_STMT: return createIfStmt();
+      case MyDslPackage.IF_STMT_LINHA: return createIfStmtLinha();
+      case MyDslPackage.SWITCH_STMT: return createSwitchStmt();
+      case MyDslPackage.SWITCH_STMT_LINHA: return createSwitchStmtLinha();
+      case MyDslPackage.SWITCH_STMT_LINHA_LINHA: return createSwitchStmtLinhaLinha();
+      case MyDslPackage.EXPR_CASE_CLAUSE: return createExprCaseClause();
+      case MyDslPackage.EXPR_SWITCH_CASE: return createExprSwitchCase();
+      case MyDslPackage.TYPE_CASE_CLAUSE: return createTypeCaseClause();
+      case MyDslPackage.TYPE_SWITCH_CASE: return createTypeSwitchCase();
+      case MyDslPackage.TYPE_LIST: return createTypeList();
+      case MyDslPackage.FOR_STMT: return createForStmt();
+      case MyDslPackage.FOR_STMT_LINHA: return createForStmtLinha();
+      case MyDslPackage.FOR_STMT_LINHA_LINHA: return createForStmtLinhaLinha();
+      case MyDslPackage.CONDITION: return createCondition();
+      case MyDslPackage.POST_STMT: return createPostStmt();
+      case MyDslPackage.GO_STMT: return createGoStmt();
+      case MyDslPackage.SELECT_STMT: return createSelectStmt();
+      case MyDslPackage.COMM_CLAUSE: return createCommClause();
+      case MyDslPackage.COMM_CASE: return createCommCase();
+      case MyDslPackage.COMM_CASE_LINHA: return createCommCaseLinha();
+      case MyDslPackage.RECV_EXPR: return createRecvExpr();
+      case MyDslPackage.RETURN_STMT: return createReturnStmt();
+      case MyDslPackage.BREAK_STMT: return createBreakStmt();
+      case MyDslPackage.CONTINUE_STMT: return createContinueStmt();
+      case MyDslPackage.GOTO_STMT: return createGotoStmt();
+      case MyDslPackage.FALLTHROUGH_STMT: return createFallthroughStmt();
+      case MyDslPackage.DEFER_STMT: return createDeferStmt();
+      case MyDslPackage.SOURCE_FILE: return createSourceFile();
+      case MyDslPackage.PACKAGE_CLAUSE: return createPackageClause();
+      case MyDslPackage.PACKAGE_NAME: return createPackageName();
+      case MyDslPackage.IMPORT_DECL: return createImportDecl();
+      case MyDslPackage.IMPORT_SPEC: return createImportSpec();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -80,6 +196,1282 @@ public class MyDslFactoryImpl extends EFactoryImpl implements MyDslFactory
   {
     ModelImpl model = new ModelImpl();
     return model;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public FLOAT_LIT createFLOAT_LIT()
+  {
+    FLOAT_LITImpl floaT_LIT = new FLOAT_LITImpl();
+    return floaT_LIT;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public IMAGINARY_LIT createIMAGINARY_LIT()
+  {
+    IMAGINARY_LITImpl imaginarY_LIT = new IMAGINARY_LITImpl();
+    return imaginarY_LIT;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Type createType()
+  {
+    TypeImpl type = new TypeImpl();
+    return type;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TypeName createTypeName()
+  {
+    TypeNameImpl typeName = new TypeNameImpl();
+    return typeName;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TypeNameLinha createTypeNameLinha()
+  {
+    TypeNameLinhaImpl typeNameLinha = new TypeNameLinhaImpl();
+    return typeNameLinha;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TypeLit createTypeLit()
+  {
+    TypeLitImpl typeLit = new TypeLitImpl();
+    return typeLit;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TypeLitLinha createTypeLitLinha()
+  {
+    TypeLitLinhaImpl typeLitLinha = new TypeLitLinhaImpl();
+    return typeLitLinha;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ArrayLength createArrayLength()
+  {
+    ArrayLengthImpl arrayLength = new ArrayLengthImpl();
+    return arrayLength;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ElementType createElementType()
+  {
+    ElementTypeImpl elementType = new ElementTypeImpl();
+    return elementType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public StructType createStructType()
+  {
+    StructTypeImpl structType = new StructTypeImpl();
+    return structType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public FieldDecl createFieldDecl()
+  {
+    FieldDeclImpl fieldDecl = new FieldDeclImpl();
+    return fieldDecl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EmbeddedField createEmbeddedField()
+  {
+    EmbeddedFieldImpl embeddedField = new EmbeddedFieldImpl();
+    return embeddedField;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Tag createTag()
+  {
+    TagImpl tag = new TagImpl();
+    return tag;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public PointerType createPointerType()
+  {
+    PointerTypeImpl pointerType = new PointerTypeImpl();
+    return pointerType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public BaseType createBaseType()
+  {
+    BaseTypeImpl baseType = new BaseTypeImpl();
+    return baseType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public FunctionType createFunctionType()
+  {
+    FunctionTypeImpl functionType = new FunctionTypeImpl();
+    return functionType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Signature createSignature()
+  {
+    SignatureImpl signature = new SignatureImpl();
+    return signature;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Result createResult()
+  {
+    ResultImpl result = new ResultImpl();
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Parameters createParameters()
+  {
+    ParametersImpl parameters = new ParametersImpl();
+    return parameters;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ParameterList createParameterList()
+  {
+    ParameterListImpl parameterList = new ParameterListImpl();
+    return parameterList;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ParameterDecl createParameterDecl()
+  {
+    ParameterDeclImpl parameterDecl = new ParameterDeclImpl();
+    return parameterDecl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public InterfaceType createInterfaceType()
+  {
+    InterfaceTypeImpl interfaceType = new InterfaceTypeImpl();
+    return interfaceType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MethodSpec createMethodSpec()
+  {
+    MethodSpecImpl methodSpec = new MethodSpecImpl();
+    return methodSpec;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MethodName createMethodName()
+  {
+    MethodNameImpl methodName = new MethodNameImpl();
+    return methodName;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public InterfaceTypeName createInterfaceTypeName()
+  {
+    InterfaceTypeNameImpl interfaceTypeName = new InterfaceTypeNameImpl();
+    return interfaceTypeName;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MapType createMapType()
+  {
+    MapTypeImpl mapType = new MapTypeImpl();
+    return mapType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public KeyType createKeyType()
+  {
+    KeyTypeImpl keyType = new KeyTypeImpl();
+    return keyType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ChannelType createChannelType()
+  {
+    ChannelTypeImpl channelType = new ChannelTypeImpl();
+    return channelType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ChannelTypeLinha createChannelTypeLinha()
+  {
+    ChannelTypeLinhaImpl channelTypeLinha = new ChannelTypeLinhaImpl();
+    return channelTypeLinha;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Block createBlock()
+  {
+    BlockImpl block = new BlockImpl();
+    return block;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public StatementList createStatementList()
+  {
+    StatementListImpl statementList = new StatementListImpl();
+    return statementList;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Declaration createDeclaration()
+  {
+    DeclarationImpl declaration = new DeclarationImpl();
+    return declaration;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TopLevelDecl createTopLevelDecl()
+  {
+    TopLevelDeclImpl topLevelDecl = new TopLevelDeclImpl();
+    return topLevelDecl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ConstDecl createConstDecl()
+  {
+    ConstDeclImpl constDecl = new ConstDeclImpl();
+    return constDecl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ConstSpec createConstSpec()
+  {
+    ConstSpecImpl constSpec = new ConstSpecImpl();
+    return constSpec;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public IdentifierList createIdentifierList()
+  {
+    IdentifierListImpl identifierList = new IdentifierListImpl();
+    return identifierList;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ExpressionList createExpressionList()
+  {
+    ExpressionListImpl expressionList = new ExpressionListImpl();
+    return expressionList;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TypeDecl createTypeDecl()
+  {
+    TypeDeclImpl typeDecl = new TypeDeclImpl();
+    return typeDecl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TypeSpec createTypeSpec()
+  {
+    TypeSpecImpl typeSpec = new TypeSpecImpl();
+    return typeSpec;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public AliasDecl createAliasDecl()
+  {
+    AliasDeclImpl aliasDecl = new AliasDeclImpl();
+    return aliasDecl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TypeDef createTypeDef()
+  {
+    TypeDefImpl typeDef = new TypeDefImpl();
+    return typeDef;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public VarDecl createVarDecl()
+  {
+    VarDeclImpl varDecl = new VarDeclImpl();
+    return varDecl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public VarSpec createVarSpec()
+  {
+    VarSpecImpl varSpec = new VarSpecImpl();
+    return varSpec;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ShortVarDecl createShortVarDecl()
+  {
+    ShortVarDeclImpl shortVarDecl = new ShortVarDeclImpl();
+    return shortVarDecl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public FunctionDecl createFunctionDecl()
+  {
+    FunctionDeclImpl functionDecl = new FunctionDeclImpl();
+    return functionDecl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public FunctionName createFunctionName()
+  {
+    FunctionNameImpl functionName = new FunctionNameImpl();
+    return functionName;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public FunctionBody createFunctionBody()
+  {
+    FunctionBodyImpl functionBody = new FunctionBodyImpl();
+    return functionBody;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MethodDecl createMethodDecl()
+  {
+    MethodDeclImpl methodDecl = new MethodDeclImpl();
+    return methodDecl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Receiver createReceiver()
+  {
+    ReceiverImpl receiver = new ReceiverImpl();
+    return receiver;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Operand createOperand()
+  {
+    OperandImpl operand = new OperandImpl();
+    return operand;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Literal createLiteral()
+  {
+    LiteralImpl literal = new LiteralImpl();
+    return literal;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public BasicLit createBasicLit()
+  {
+    BasicLitImpl basicLit = new BasicLitImpl();
+    return basicLit;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public OperandName createOperandName()
+  {
+    OperandNameImpl operandName = new OperandNameImpl();
+    return operandName;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public CompositeLit createCompositeLit()
+  {
+    CompositeLitImpl compositeLit = new CompositeLitImpl();
+    return compositeLit;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public LiteralType createLiteralType()
+  {
+    LiteralTypeImpl literalType = new LiteralTypeImpl();
+    return literalType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public LiteralTypeLinha createLiteralTypeLinha()
+  {
+    LiteralTypeLinhaImpl literalTypeLinha = new LiteralTypeLinhaImpl();
+    return literalTypeLinha;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public LiteralValue createLiteralValue()
+  {
+    LiteralValueImpl literalValue = new LiteralValueImpl();
+    return literalValue;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ElementList createElementList()
+  {
+    ElementListImpl elementList = new ElementListImpl();
+    return elementList;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public KeyedElement createKeyedElement()
+  {
+    KeyedElementImpl keyedElement = new KeyedElementImpl();
+    return keyedElement;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Key createKey()
+  {
+    KeyImpl key = new KeyImpl();
+    return key;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public FieldName createFieldName()
+  {
+    FieldNameImpl fieldName = new FieldNameImpl();
+    return fieldName;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Element createElement()
+  {
+    ElementImpl element = new ElementImpl();
+    return element;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public FunctionLit createFunctionLit()
+  {
+    FunctionLitImpl functionLit = new FunctionLitImpl();
+    return functionLit;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public PrimaryExpr createPrimaryExpr()
+  {
+    PrimaryExprImpl primaryExpr = new PrimaryExprImpl();
+    return primaryExpr;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public PrimaryExprLinha createPrimaryExprLinha()
+  {
+    PrimaryExprLinhaImpl primaryExprLinha = new PrimaryExprLinhaImpl();
+    return primaryExprLinha;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Selector createSelector()
+  {
+    SelectorImpl selector = new SelectorImpl();
+    return selector;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Index createIndex()
+  {
+    IndexImpl index = new IndexImpl();
+    return index;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Slice createSlice()
+  {
+    SliceImpl slice = new SliceImpl();
+    return slice;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TypeAssertion createTypeAssertion()
+  {
+    TypeAssertionImpl typeAssertion = new TypeAssertionImpl();
+    return typeAssertion;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Arguments createArguments()
+  {
+    ArgumentsImpl arguments = new ArgumentsImpl();
+    return arguments;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public MethodExpr createMethodExpr()
+  {
+    MethodExprImpl methodExpr = new MethodExprImpl();
+    return methodExpr;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ReceiverType createReceiverType()
+  {
+    ReceiverTypeImpl receiverType = new ReceiverTypeImpl();
+    return receiverType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Expression createExpression()
+  {
+    ExpressionImpl expression = new ExpressionImpl();
+    return expression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Expression_Linha createExpression_Linha()
+  {
+    Expression_LinhaImpl expression_Linha = new Expression_LinhaImpl();
+    return expression_Linha;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public UnaryExpr createUnaryExpr()
+  {
+    UnaryExprImpl unaryExpr = new UnaryExprImpl();
+    return unaryExpr;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public BINARY_OP createBINARY_OP()
+  {
+    BINARY_OPImpl binarY_OP = new BINARY_OPImpl();
+    return binarY_OP;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Conversion createConversion()
+  {
+    ConversionImpl conversion = new ConversionImpl();
+    return conversion;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Statement createStatement()
+  {
+    StatementImpl statement = new StatementImpl();
+    return statement;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SimpleStmt createSimpleStmt()
+  {
+    SimpleStmtImpl simpleStmt = new SimpleStmtImpl();
+    return simpleStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SimpleStmtLinha createSimpleStmtLinha()
+  {
+    SimpleStmtLinhaImpl simpleStmtLinha = new SimpleStmtLinhaImpl();
+    return simpleStmtLinha;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EmptyStmt createEmptyStmt()
+  {
+    EmptyStmtImpl emptyStmt = new EmptyStmtImpl();
+    return emptyStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public LabeledStmt createLabeledStmt()
+  {
+    LabeledStmtImpl labeledStmt = new LabeledStmtImpl();
+    return labeledStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Label createLabel()
+  {
+    LabelImpl label = new LabelImpl();
+    return label;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public assign_op createassign_op()
+  {
+    assign_opImpl assign_op = new assign_opImpl();
+    return assign_op;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public IfStmt createIfStmt()
+  {
+    IfStmtImpl ifStmt = new IfStmtImpl();
+    return ifStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public IfStmtLinha createIfStmtLinha()
+  {
+    IfStmtLinhaImpl ifStmtLinha = new IfStmtLinhaImpl();
+    return ifStmtLinha;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SwitchStmt createSwitchStmt()
+  {
+    SwitchStmtImpl switchStmt = new SwitchStmtImpl();
+    return switchStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SwitchStmtLinha createSwitchStmtLinha()
+  {
+    SwitchStmtLinhaImpl switchStmtLinha = new SwitchStmtLinhaImpl();
+    return switchStmtLinha;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SwitchStmtLinhaLinha createSwitchStmtLinhaLinha()
+  {
+    SwitchStmtLinhaLinhaImpl switchStmtLinhaLinha = new SwitchStmtLinhaLinhaImpl();
+    return switchStmtLinhaLinha;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ExprCaseClause createExprCaseClause()
+  {
+    ExprCaseClauseImpl exprCaseClause = new ExprCaseClauseImpl();
+    return exprCaseClause;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ExprSwitchCase createExprSwitchCase()
+  {
+    ExprSwitchCaseImpl exprSwitchCase = new ExprSwitchCaseImpl();
+    return exprSwitchCase;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TypeCaseClause createTypeCaseClause()
+  {
+    TypeCaseClauseImpl typeCaseClause = new TypeCaseClauseImpl();
+    return typeCaseClause;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TypeSwitchCase createTypeSwitchCase()
+  {
+    TypeSwitchCaseImpl typeSwitchCase = new TypeSwitchCaseImpl();
+    return typeSwitchCase;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TypeList createTypeList()
+  {
+    TypeListImpl typeList = new TypeListImpl();
+    return typeList;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ForStmt createForStmt()
+  {
+    ForStmtImpl forStmt = new ForStmtImpl();
+    return forStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ForStmtLinha createForStmtLinha()
+  {
+    ForStmtLinhaImpl forStmtLinha = new ForStmtLinhaImpl();
+    return forStmtLinha;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ForStmtLinhaLinha createForStmtLinhaLinha()
+  {
+    ForStmtLinhaLinhaImpl forStmtLinhaLinha = new ForStmtLinhaLinhaImpl();
+    return forStmtLinhaLinha;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Condition createCondition()
+  {
+    ConditionImpl condition = new ConditionImpl();
+    return condition;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public PostStmt createPostStmt()
+  {
+    PostStmtImpl postStmt = new PostStmtImpl();
+    return postStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public GoStmt createGoStmt()
+  {
+    GoStmtImpl goStmt = new GoStmtImpl();
+    return goStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SelectStmt createSelectStmt()
+  {
+    SelectStmtImpl selectStmt = new SelectStmtImpl();
+    return selectStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public CommClause createCommClause()
+  {
+    CommClauseImpl commClause = new CommClauseImpl();
+    return commClause;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public CommCase createCommCase()
+  {
+    CommCaseImpl commCase = new CommCaseImpl();
+    return commCase;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public CommCaseLinha createCommCaseLinha()
+  {
+    CommCaseLinhaImpl commCaseLinha = new CommCaseLinhaImpl();
+    return commCaseLinha;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public RecvExpr createRecvExpr()
+  {
+    RecvExprImpl recvExpr = new RecvExprImpl();
+    return recvExpr;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ReturnStmt createReturnStmt()
+  {
+    ReturnStmtImpl returnStmt = new ReturnStmtImpl();
+    return returnStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public BreakStmt createBreakStmt()
+  {
+    BreakStmtImpl breakStmt = new BreakStmtImpl();
+    return breakStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ContinueStmt createContinueStmt()
+  {
+    ContinueStmtImpl continueStmt = new ContinueStmtImpl();
+    return continueStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public GotoStmt createGotoStmt()
+  {
+    GotoStmtImpl gotoStmt = new GotoStmtImpl();
+    return gotoStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public FallthroughStmt createFallthroughStmt()
+  {
+    FallthroughStmtImpl fallthroughStmt = new FallthroughStmtImpl();
+    return fallthroughStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public DeferStmt createDeferStmt()
+  {
+    DeferStmtImpl deferStmt = new DeferStmtImpl();
+    return deferStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public SourceFile createSourceFile()
+  {
+    SourceFileImpl sourceFile = new SourceFileImpl();
+    return sourceFile;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public PackageClause createPackageClause()
+  {
+    PackageClauseImpl packageClause = new PackageClauseImpl();
+    return packageClause;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public PackageName createPackageName()
+  {
+    PackageNameImpl packageName = new PackageNameImpl();
+    return packageName;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ImportDecl createImportDecl()
+  {
+    ImportDeclImpl importDecl = new ImportDeclImpl();
+    return importDecl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ImportSpec createImportSpec()
+  {
+    ImportSpecImpl importSpec = new ImportSpecImpl();
+    return importSpec;
   }
 
   /**

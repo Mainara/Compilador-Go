@@ -6,12 +6,126 @@ package org.xtext.example.mydsl.myDsl.impl;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import org.xtext.example.mydsl.myDsl.AliasDecl;
+import org.xtext.example.mydsl.myDsl.Arguments;
+import org.xtext.example.mydsl.myDsl.ArrayLength;
+import org.xtext.example.mydsl.myDsl.BaseType;
+import org.xtext.example.mydsl.myDsl.BasicLit;
+import org.xtext.example.mydsl.myDsl.Block;
+import org.xtext.example.mydsl.myDsl.BreakStmt;
+import org.xtext.example.mydsl.myDsl.ChannelType;
+import org.xtext.example.mydsl.myDsl.ChannelTypeLinha;
+import org.xtext.example.mydsl.myDsl.CommCase;
+import org.xtext.example.mydsl.myDsl.CommCaseLinha;
+import org.xtext.example.mydsl.myDsl.CommClause;
+import org.xtext.example.mydsl.myDsl.CompositeLit;
+import org.xtext.example.mydsl.myDsl.Condition;
+import org.xtext.example.mydsl.myDsl.ConstDecl;
+import org.xtext.example.mydsl.myDsl.ConstSpec;
+import org.xtext.example.mydsl.myDsl.ContinueStmt;
+import org.xtext.example.mydsl.myDsl.Conversion;
+import org.xtext.example.mydsl.myDsl.Declaration;
+import org.xtext.example.mydsl.myDsl.DeferStmt;
+import org.xtext.example.mydsl.myDsl.Element;
+import org.xtext.example.mydsl.myDsl.ElementList;
+import org.xtext.example.mydsl.myDsl.ElementType;
+import org.xtext.example.mydsl.myDsl.EmbeddedField;
+import org.xtext.example.mydsl.myDsl.EmptyStmt;
+import org.xtext.example.mydsl.myDsl.ExprCaseClause;
+import org.xtext.example.mydsl.myDsl.ExprSwitchCase;
+import org.xtext.example.mydsl.myDsl.Expression;
+import org.xtext.example.mydsl.myDsl.ExpressionList;
+import org.xtext.example.mydsl.myDsl.Expression_Linha;
+import org.xtext.example.mydsl.myDsl.FallthroughStmt;
+import org.xtext.example.mydsl.myDsl.FieldDecl;
+import org.xtext.example.mydsl.myDsl.FieldName;
+import org.xtext.example.mydsl.myDsl.ForStmt;
+import org.xtext.example.mydsl.myDsl.ForStmtLinha;
+import org.xtext.example.mydsl.myDsl.ForStmtLinhaLinha;
+import org.xtext.example.mydsl.myDsl.FunctionBody;
+import org.xtext.example.mydsl.myDsl.FunctionDecl;
+import org.xtext.example.mydsl.myDsl.FunctionLit;
+import org.xtext.example.mydsl.myDsl.FunctionName;
+import org.xtext.example.mydsl.myDsl.FunctionType;
+import org.xtext.example.mydsl.myDsl.GoStmt;
+import org.xtext.example.mydsl.myDsl.GotoStmt;
+import org.xtext.example.mydsl.myDsl.IdentifierList;
+import org.xtext.example.mydsl.myDsl.IfStmt;
+import org.xtext.example.mydsl.myDsl.IfStmtLinha;
+import org.xtext.example.mydsl.myDsl.ImportDecl;
+import org.xtext.example.mydsl.myDsl.ImportSpec;
+import org.xtext.example.mydsl.myDsl.Index;
+import org.xtext.example.mydsl.myDsl.InterfaceType;
+import org.xtext.example.mydsl.myDsl.InterfaceTypeName;
+import org.xtext.example.mydsl.myDsl.Key;
+import org.xtext.example.mydsl.myDsl.KeyType;
+import org.xtext.example.mydsl.myDsl.KeyedElement;
+import org.xtext.example.mydsl.myDsl.Label;
+import org.xtext.example.mydsl.myDsl.LabeledStmt;
+import org.xtext.example.mydsl.myDsl.Literal;
+import org.xtext.example.mydsl.myDsl.LiteralType;
+import org.xtext.example.mydsl.myDsl.LiteralTypeLinha;
+import org.xtext.example.mydsl.myDsl.LiteralValue;
+import org.xtext.example.mydsl.myDsl.MapType;
+import org.xtext.example.mydsl.myDsl.MethodDecl;
+import org.xtext.example.mydsl.myDsl.MethodExpr;
+import org.xtext.example.mydsl.myDsl.MethodName;
+import org.xtext.example.mydsl.myDsl.MethodSpec;
 import org.xtext.example.mydsl.myDsl.Model;
 import org.xtext.example.mydsl.myDsl.MyDslFactory;
 import org.xtext.example.mydsl.myDsl.MyDslPackage;
+import org.xtext.example.mydsl.myDsl.Operand;
+import org.xtext.example.mydsl.myDsl.OperandName;
+import org.xtext.example.mydsl.myDsl.PackageClause;
+import org.xtext.example.mydsl.myDsl.PackageName;
+import org.xtext.example.mydsl.myDsl.ParameterDecl;
+import org.xtext.example.mydsl.myDsl.ParameterList;
+import org.xtext.example.mydsl.myDsl.Parameters;
+import org.xtext.example.mydsl.myDsl.PointerType;
+import org.xtext.example.mydsl.myDsl.PostStmt;
+import org.xtext.example.mydsl.myDsl.PrimaryExpr;
+import org.xtext.example.mydsl.myDsl.PrimaryExprLinha;
+import org.xtext.example.mydsl.myDsl.Receiver;
+import org.xtext.example.mydsl.myDsl.ReceiverType;
+import org.xtext.example.mydsl.myDsl.RecvExpr;
+import org.xtext.example.mydsl.myDsl.Result;
+import org.xtext.example.mydsl.myDsl.ReturnStmt;
+import org.xtext.example.mydsl.myDsl.SelectStmt;
+import org.xtext.example.mydsl.myDsl.Selector;
+import org.xtext.example.mydsl.myDsl.ShortVarDecl;
+import org.xtext.example.mydsl.myDsl.Signature;
+import org.xtext.example.mydsl.myDsl.SimpleStmt;
+import org.xtext.example.mydsl.myDsl.SimpleStmtLinha;
+import org.xtext.example.mydsl.myDsl.Slice;
+import org.xtext.example.mydsl.myDsl.SourceFile;
+import org.xtext.example.mydsl.myDsl.Statement;
+import org.xtext.example.mydsl.myDsl.StatementList;
+import org.xtext.example.mydsl.myDsl.StructType;
+import org.xtext.example.mydsl.myDsl.SwitchStmt;
+import org.xtext.example.mydsl.myDsl.SwitchStmtLinha;
+import org.xtext.example.mydsl.myDsl.SwitchStmtLinhaLinha;
+import org.xtext.example.mydsl.myDsl.Tag;
+import org.xtext.example.mydsl.myDsl.TopLevelDecl;
+import org.xtext.example.mydsl.myDsl.Type;
+import org.xtext.example.mydsl.myDsl.TypeAssertion;
+import org.xtext.example.mydsl.myDsl.TypeCaseClause;
+import org.xtext.example.mydsl.myDsl.TypeDecl;
+import org.xtext.example.mydsl.myDsl.TypeDef;
+import org.xtext.example.mydsl.myDsl.TypeList;
+import org.xtext.example.mydsl.myDsl.TypeLit;
+import org.xtext.example.mydsl.myDsl.TypeLitLinha;
+import org.xtext.example.mydsl.myDsl.TypeName;
+import org.xtext.example.mydsl.myDsl.TypeNameLinha;
+import org.xtext.example.mydsl.myDsl.TypeSpec;
+import org.xtext.example.mydsl.myDsl.TypeSwitchCase;
+import org.xtext.example.mydsl.myDsl.UnaryExpr;
+import org.xtext.example.mydsl.myDsl.VarDecl;
+import org.xtext.example.mydsl.myDsl.VarSpec;
+import org.xtext.example.mydsl.myDsl.assign_op;
 
 /**
  * <!-- begin-user-doc -->
@@ -27,6 +141,818 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * @generated
    */
   private EClass modelEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass floaT_LITEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass imaginarY_LITEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass typeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass typeNameEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass typeNameLinhaEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass typeLitEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass typeLitLinhaEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass arrayLengthEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass elementTypeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass structTypeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass fieldDeclEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass embeddedFieldEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass tagEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass pointerTypeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass baseTypeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass functionTypeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass signatureEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass resultEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass parametersEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass parameterListEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass parameterDeclEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass interfaceTypeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass methodSpecEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass methodNameEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass interfaceTypeNameEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass mapTypeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass keyTypeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass channelTypeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass channelTypeLinhaEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass blockEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass statementListEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass declarationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass topLevelDeclEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass constDeclEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass constSpecEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass identifierListEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass expressionListEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass typeDeclEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass typeSpecEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass aliasDeclEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass typeDefEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass varDeclEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass varSpecEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass shortVarDeclEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass functionDeclEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass functionNameEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass functionBodyEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass methodDeclEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass receiverEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass operandEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass literalEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass basicLitEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass operandNameEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass compositeLitEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass literalTypeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass literalTypeLinhaEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass literalValueEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass elementListEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass keyedElementEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass keyEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass fieldNameEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass elementEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass functionLitEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass primaryExprEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass primaryExprLinhaEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass selectorEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass indexEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass sliceEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass typeAssertionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass argumentsEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass methodExprEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass receiverTypeEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass expressionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass expression_LinhaEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass unaryExprEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass binarY_OPEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass conversionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass statementEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass simpleStmtEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass simpleStmtLinhaEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass emptyStmtEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass labeledStmtEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass labelEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass assign_opEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass ifStmtEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass ifStmtLinhaEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass switchStmtEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass switchStmtLinhaEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass switchStmtLinhaLinhaEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass exprCaseClauseEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass exprSwitchCaseEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass typeCaseClauseEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass typeSwitchCaseEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass typeListEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass forStmtEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass forStmtLinhaEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass forStmtLinhaLinhaEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass conditionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass postStmtEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass goStmtEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass selectStmtEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass commClauseEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass commCaseEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass commCaseLinhaEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass recvExprEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass returnStmtEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass breakStmtEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass continueStmtEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass gotoStmtEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass fallthroughStmtEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass deferStmtEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass sourceFileEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass packageClauseEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass packageNameEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass importDeclEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass importSpecEClass = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -106,9 +1032,4199 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getModel_Greetings()
+  public EReference getModel_Greetings()
   {
-    return (EAttribute)modelEClass.getEStructuralFeatures().get(0);
+    return (EReference)modelEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getFLOAT_LIT()
+  {
+    return floaT_LITEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getFLOAT_LIT_DECIMALS()
+  {
+    return (EAttribute)floaT_LITEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getFLOAT_LIT_DECIMALS1()
+  {
+    return (EAttribute)floaT_LITEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getFLOAT_LIT_EXPONENT()
+  {
+    return (EAttribute)floaT_LITEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getIMAGINARY_LIT()
+  {
+    return imaginarY_LITEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getIMAGINARY_LIT_DECIMALS()
+  {
+    return (EAttribute)imaginarY_LITEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIMAGINARY_LIT_FLOAT_LIT()
+  {
+    return (EReference)imaginarY_LITEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getType()
+  {
+    return typeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getType_TypeName()
+  {
+    return (EReference)typeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getType_TypeLit()
+  {
+    return (EReference)typeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getType_Type()
+  {
+    return (EReference)typeEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTypeName()
+  {
+    return typeNameEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getTypeName_Id()
+  {
+    return (EAttribute)typeNameEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTypeNameLinha()
+  {
+    return typeNameLinhaEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getTypeNameLinha_Id()
+  {
+    return (EAttribute)typeNameLinhaEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTypeLit()
+  {
+    return typeLitEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeLit_TypeLitLinha()
+  {
+    return (EReference)typeLitEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeLit_SrtuctType()
+  {
+    return (EReference)typeLitEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeLit_PointerType()
+  {
+    return (EReference)typeLitEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeLit_FunctionType()
+  {
+    return (EReference)typeLitEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeLit_InterfaceType()
+  {
+    return (EReference)typeLitEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeLit_MapType()
+  {
+    return (EReference)typeLitEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeLit_ChannelType()
+  {
+    return (EReference)typeLitEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTypeLitLinha()
+  {
+    return typeLitLinhaEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeLitLinha_ArrayLength()
+  {
+    return (EReference)typeLitLinhaEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeLitLinha_ElementType()
+  {
+    return (EReference)typeLitLinhaEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getArrayLength()
+  {
+    return arrayLengthEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getArrayLength_Expression()
+  {
+    return (EReference)arrayLengthEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getElementType()
+  {
+    return elementTypeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getElementType_Type()
+  {
+    return (EReference)elementTypeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getStructType()
+  {
+    return structTypeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getStructType_Struct()
+  {
+    return (EAttribute)structTypeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getStructType_FieldDecl()
+  {
+    return (EReference)structTypeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getFieldDecl()
+  {
+    return fieldDeclEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFieldDecl_IdentifierList()
+  {
+    return (EReference)fieldDeclEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFieldDecl_Type()
+  {
+    return (EReference)fieldDeclEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFieldDecl_EmbeddedField()
+  {
+    return (EReference)fieldDeclEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFieldDecl_Tag()
+  {
+    return (EReference)fieldDeclEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getEmbeddedField()
+  {
+    return embeddedFieldEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getEmbeddedField_TypeName()
+  {
+    return (EReference)embeddedFieldEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTag()
+  {
+    return tagEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getTag_String_lit()
+  {
+    return (EAttribute)tagEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getPointerType()
+  {
+    return pointerTypeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPointerType_BaseType()
+  {
+    return (EReference)pointerTypeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getBaseType()
+  {
+    return baseTypeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getBaseType_Type()
+  {
+    return (EReference)baseTypeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getFunctionType()
+  {
+    return functionTypeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getFunctionType_Func()
+  {
+    return (EAttribute)functionTypeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFunctionType_Signature()
+  {
+    return (EReference)functionTypeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSignature()
+  {
+    return signatureEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSignature_Parameters()
+  {
+    return (EReference)signatureEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSignature_Result()
+  {
+    return (EReference)signatureEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getResult()
+  {
+    return resultEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getResult_Parameters()
+  {
+    return (EReference)resultEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getResult_Type()
+  {
+    return (EReference)resultEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getParameters()
+  {
+    return parametersEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getParameters_ParameterList()
+  {
+    return (EReference)parametersEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getParameterList()
+  {
+    return parameterListEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getParameterList_ParameterDecl()
+  {
+    return (EReference)parameterListEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getParameterList_ParameterDecl1()
+  {
+    return (EReference)parameterListEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getParameterDecl()
+  {
+    return parameterDeclEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getParameterDecl_IdentifierList()
+  {
+    return (EReference)parameterDeclEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getParameterDecl_Type()
+  {
+    return (EReference)parameterDeclEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getInterfaceType()
+  {
+    return interfaceTypeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getInterfaceType_Interface()
+  {
+    return (EAttribute)interfaceTypeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getInterfaceType_MethodSpec()
+  {
+    return (EReference)interfaceTypeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getMethodSpec()
+  {
+    return methodSpecEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMethodSpec_MethodName()
+  {
+    return (EReference)methodSpecEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMethodSpec_Signature()
+  {
+    return (EReference)methodSpecEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMethodSpec_InterfaceTypeName()
+  {
+    return (EReference)methodSpecEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getMethodName()
+  {
+    return methodNameEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getMethodName_Id()
+  {
+    return (EAttribute)methodNameEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getInterfaceTypeName()
+  {
+    return interfaceTypeNameEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getInterfaceTypeName_TypeName()
+  {
+    return (EReference)interfaceTypeNameEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getMapType()
+  {
+    return mapTypeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getMapType_Map()
+  {
+    return (EAttribute)mapTypeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMapType_KeyType()
+  {
+    return (EReference)mapTypeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMapType_ElementType()
+  {
+    return (EReference)mapTypeEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getKeyType()
+  {
+    return keyTypeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getKeyType_Type()
+  {
+    return (EReference)keyTypeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getChannelType()
+  {
+    return channelTypeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getChannelType_Chan()
+  {
+    return (EAttribute)channelTypeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getChannelType_ChannelTypeLinha()
+  {
+    return (EReference)channelTypeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getChannelType_ElementType()
+  {
+    return (EReference)channelTypeEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getChannelTypeLinha()
+  {
+    return channelTypeLinhaEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getChannelTypeLinha_ANY_OTHER()
+  {
+    return (EAttribute)channelTypeLinhaEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getBlock()
+  {
+    return blockEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getBlock_StatementList()
+  {
+    return (EReference)blockEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getStatementList()
+  {
+    return statementListEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getStatementList_Statements()
+  {
+    return (EReference)statementListEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getDeclaration()
+  {
+    return declarationEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getDeclaration_ConstDecl()
+  {
+    return (EReference)declarationEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getDeclaration_TypeDecl()
+  {
+    return (EReference)declarationEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getDeclaration_VarDecl()
+  {
+    return (EReference)declarationEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTopLevelDecl()
+  {
+    return topLevelDeclEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTopLevelDecl_Declaration()
+  {
+    return (EReference)topLevelDeclEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTopLevelDecl_FunctionDecl()
+  {
+    return (EReference)topLevelDeclEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTopLevelDecl_MethodDecl()
+  {
+    return (EReference)topLevelDeclEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getConstDecl()
+  {
+    return constDeclEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getConstDecl_Const()
+  {
+    return (EAttribute)constDeclEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getConstDecl_ConstSpec()
+  {
+    return (EReference)constDeclEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getConstDecl_ConstSpec1()
+  {
+    return (EReference)constDeclEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getConstSpec()
+  {
+    return constSpecEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getConstSpec_IdentifierList()
+  {
+    return (EReference)constSpecEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getConstSpec_Type()
+  {
+    return (EReference)constSpecEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getConstSpec_ExpressionList()
+  {
+    return (EReference)constSpecEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getIdentifierList()
+  {
+    return identifierListEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getIdentifierList_Id()
+  {
+    return (EAttribute)identifierListEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getIdentifierList_Id1()
+  {
+    return (EAttribute)identifierListEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getExpressionList()
+  {
+    return expressionListEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpressionList_Expression()
+  {
+    return (EReference)expressionListEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpressionList_Expression1()
+  {
+    return (EReference)expressionListEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTypeDecl()
+  {
+    return typeDeclEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getTypeDecl_Typekeyword()
+  {
+    return (EAttribute)typeDeclEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeDecl_TypeSpec()
+  {
+    return (EReference)typeDeclEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeDecl_TypeSpec1()
+  {
+    return (EReference)typeDeclEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTypeSpec()
+  {
+    return typeSpecEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeSpec_AliasDecl()
+  {
+    return (EReference)typeSpecEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeSpec_TypeDef()
+  {
+    return (EReference)typeSpecEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getAliasDecl()
+  {
+    return aliasDeclEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getAliasDecl_Id()
+  {
+    return (EAttribute)aliasDeclEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getAliasDecl_Type()
+  {
+    return (EReference)aliasDeclEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTypeDef()
+  {
+    return typeDefEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getTypeDef_Id()
+  {
+    return (EAttribute)typeDefEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeDef_Type()
+  {
+    return (EReference)typeDefEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getVarDecl()
+  {
+    return varDeclEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getVarDecl_VarSpec()
+  {
+    return (EReference)varDeclEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getVarDecl_VarSpec1()
+  {
+    return (EReference)varDeclEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getVarSpec()
+  {
+    return varSpecEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getVarSpec_IdentifierList()
+  {
+    return (EReference)varSpecEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getVarSpec_Type()
+  {
+    return (EReference)varSpecEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getVarSpec_ExpressionList()
+  {
+    return (EReference)varSpecEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getShortVarDecl()
+  {
+    return shortVarDeclEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getShortVarDecl_IdentifierList()
+  {
+    return (EReference)shortVarDeclEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getShortVarDecl_ExpressionList()
+  {
+    return (EReference)shortVarDeclEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getFunctionDecl()
+  {
+    return functionDeclEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFunctionDecl_FunctionName()
+  {
+    return (EReference)functionDeclEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFunctionDecl_Signature()
+  {
+    return (EReference)functionDeclEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFunctionDecl_FunctionBody()
+  {
+    return (EReference)functionDeclEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getFunctionName()
+  {
+    return functionNameEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getFunctionName_Id()
+  {
+    return (EAttribute)functionNameEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getFunctionBody()
+  {
+    return functionBodyEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFunctionBody_Block()
+  {
+    return (EReference)functionBodyEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getMethodDecl()
+  {
+    return methodDeclEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMethodDecl_Receiver()
+  {
+    return (EReference)methodDeclEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMethodDecl_MethodName()
+  {
+    return (EReference)methodDeclEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMethodDecl_Signature()
+  {
+    return (EReference)methodDeclEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMethodDecl_FunctionBody()
+  {
+    return (EReference)methodDeclEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getReceiver()
+  {
+    return receiverEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getReceiver_Parameters()
+  {
+    return (EReference)receiverEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getOperand()
+  {
+    return operandEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getOperand_Literal()
+  {
+    return (EReference)operandEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getOperand_OperandName()
+  {
+    return (EReference)operandEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getOperand_Expression()
+  {
+    return (EReference)operandEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getLiteral()
+  {
+    return literalEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLiteral_BasicLit()
+  {
+    return (EReference)literalEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLiteral_CompositeLit()
+  {
+    return (EReference)literalEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLiteral_FunctionLit()
+  {
+    return (EReference)literalEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getBasicLit()
+  {
+    return basicLitEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getBasicLit_Int_lit()
+  {
+    return (EAttribute)basicLitEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getBasicLit_Float_lit()
+  {
+    return (EReference)basicLitEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getBasicLit_Imaginary_lit()
+  {
+    return (EReference)basicLitEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getBasicLit_Rune_lit()
+  {
+    return (EAttribute)basicLitEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getBasicLit_String_lit()
+  {
+    return (EAttribute)basicLitEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getOperandName()
+  {
+    return operandNameEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getOperandName_Id()
+  {
+    return (EAttribute)operandNameEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getCompositeLit()
+  {
+    return compositeLitEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCompositeLit_LiteralType()
+  {
+    return (EReference)compositeLitEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCompositeLit_LiteralValue()
+  {
+    return (EReference)compositeLitEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getLiteralType()
+  {
+    return literalTypeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLiteralType_StructType()
+  {
+    return (EReference)literalTypeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLiteralType_MapType()
+  {
+    return (EReference)literalTypeEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLiteralType_TypeName()
+  {
+    return (EReference)literalTypeEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLiteralType_LiteralTypeLinha()
+  {
+    return (EReference)literalTypeEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getLiteralTypeLinha()
+  {
+    return literalTypeLinhaEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLiteralTypeLinha_ArrayLength()
+  {
+    return (EReference)literalTypeLinhaEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLiteralTypeLinha_ElementType()
+  {
+    return (EReference)literalTypeLinhaEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getLiteralValue()
+  {
+    return literalValueEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLiteralValue_ElementList()
+  {
+    return (EReference)literalValueEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getElementList()
+  {
+    return elementListEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getElementList_KeyedElement()
+  {
+    return (EReference)elementListEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getElementList_KeyedElement1()
+  {
+    return (EReference)elementListEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getKeyedElement()
+  {
+    return keyedElementEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getKeyedElement_Key()
+  {
+    return (EReference)keyedElementEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getKeyedElement_Element()
+  {
+    return (EReference)keyedElementEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getKey()
+  {
+    return keyEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getKey_FieldName()
+  {
+    return (EReference)keyEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getKey_Expression()
+  {
+    return (EReference)keyEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getKey_LiteralValue()
+  {
+    return (EReference)keyEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getFieldName()
+  {
+    return fieldNameEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getFieldName_Id()
+  {
+    return (EAttribute)fieldNameEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getElement()
+  {
+    return elementEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getElement_Expression()
+  {
+    return (EReference)elementEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getElement_LiteralValue()
+  {
+    return (EReference)elementEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getFunctionLit()
+  {
+    return functionLitEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getFunctionLit_Func()
+  {
+    return (EAttribute)functionLitEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFunctionLit_Signature()
+  {
+    return (EReference)functionLitEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getFunctionLit_FunctionBody()
+  {
+    return (EReference)functionLitEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getPrimaryExpr()
+  {
+    return primaryExprEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExpr_Operand()
+  {
+    return (EReference)primaryExprEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExpr_PrimaryExprLinha()
+  {
+    return (EReference)primaryExprEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExpr_Conversion()
+  {
+    return (EReference)primaryExprEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExpr_MethodExpr()
+  {
+    return (EReference)primaryExprEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getPrimaryExprLinha()
+  {
+    return primaryExprLinhaEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExprLinha_Selector()
+  {
+    return (EReference)primaryExprLinhaEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExprLinha_PrimaryExprLinha()
+  {
+    return (EReference)primaryExprLinhaEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExprLinha_Index()
+  {
+    return (EReference)primaryExprLinhaEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExprLinha_Slice()
+  {
+    return (EReference)primaryExprLinhaEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExprLinha_TypeAssertion()
+  {
+    return (EReference)primaryExprLinhaEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPrimaryExprLinha_Arguments()
+  {
+    return (EReference)primaryExprLinhaEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSelector()
+  {
+    return selectorEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSelector_Id()
+  {
+    return (EAttribute)selectorEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getIndex()
+  {
+    return indexEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIndex_Expression()
+  {
+    return (EReference)indexEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSlice()
+  {
+    return sliceEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSlice_Expression()
+  {
+    return (EReference)sliceEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSlice_Expression1()
+  {
+    return (EReference)sliceEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSlice_Expression2()
+  {
+    return (EReference)sliceEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTypeAssertion()
+  {
+    return typeAssertionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeAssertion_Type()
+  {
+    return (EReference)typeAssertionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getArguments()
+  {
+    return argumentsEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getArguments_ExpressionList()
+  {
+    return (EReference)argumentsEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getArguments_Type()
+  {
+    return (EReference)argumentsEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getMethodExpr()
+  {
+    return methodExprEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMethodExpr_ReceiverType()
+  {
+    return (EReference)methodExprEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getMethodExpr_MethodName()
+  {
+    return (EReference)methodExprEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getReceiverType()
+  {
+    return receiverTypeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getReceiverType_Type()
+  {
+    return (EReference)receiverTypeEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getExpression()
+  {
+    return expressionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression_UnaryExpr()
+  {
+    return (EReference)expressionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression_Expression_Linha()
+  {
+    return (EReference)expressionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getExpression_Linha()
+  {
+    return expression_LinhaEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression_Linha_BINARY_OP()
+  {
+    return (EReference)expression_LinhaEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression_Linha_Expression()
+  {
+    return (EReference)expression_LinhaEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression_Linha_Expression_Linha()
+  {
+    return (EReference)expression_LinhaEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getUnaryExpr()
+  {
+    return unaryExprEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getUnaryExpr_PrimaryExpr()
+  {
+    return (EReference)unaryExprEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getUnaryExpr_UnaryExpr()
+  {
+    return (EReference)unaryExprEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getBINARY_OP()
+  {
+    return binarY_OPEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getBINARY_OP_Or()
+  {
+    return (EAttribute)binarY_OPEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getBINARY_OP_And()
+  {
+    return (EAttribute)binarY_OPEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getBINARY_OP_REL_OP()
+  {
+    return (EAttribute)binarY_OPEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getBINARY_OP_ADD_OP()
+  {
+    return (EAttribute)binarY_OPEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getBINARY_OP_MUL_OP()
+  {
+    return (EAttribute)binarY_OPEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getConversion()
+  {
+    return conversionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getConversion_Type()
+  {
+    return (EReference)conversionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getConversion_Expression()
+  {
+    return (EReference)conversionEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getStatement()
+  {
+    return statementEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getStatement_Declaration()
+  {
+    return (EReference)statementEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getStatement_LabeledStmt()
+  {
+    return (EReference)statementEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getStatement_SimpleStmt()
+  {
+    return (EReference)statementEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getStatement_GoStmt()
+  {
+    return (EReference)statementEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getStatement_ReturnStmt()
+  {
+    return (EReference)statementEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getStatement_BreakStmt()
+  {
+    return (EReference)statementEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getStatement_ContinueStmt()
+  {
+    return (EReference)statementEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getStatement_GotoStmt()
+  {
+    return (EReference)statementEClass.getEStructuralFeatures().get(7);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getStatement_FallthroughStmt()
+  {
+    return (EReference)statementEClass.getEStructuralFeatures().get(8);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getStatement_Block()
+  {
+    return (EReference)statementEClass.getEStructuralFeatures().get(9);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getStatement_IfStmt()
+  {
+    return (EReference)statementEClass.getEStructuralFeatures().get(10);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getStatement_SwitchStmt()
+  {
+    return (EReference)statementEClass.getEStructuralFeatures().get(11);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getStatement_SelectStmt()
+  {
+    return (EReference)statementEClass.getEStructuralFeatures().get(12);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getStatement_ForStmt()
+  {
+    return (EReference)statementEClass.getEStructuralFeatures().get(13);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getStatement_DeferStmt()
+  {
+    return (EReference)statementEClass.getEStructuralFeatures().get(14);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSimpleStmt()
+  {
+    return simpleStmtEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSimpleStmt_EmptyStmt()
+  {
+    return (EReference)simpleStmtEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSimpleStmt_Expression()
+  {
+    return (EReference)simpleStmtEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSimpleStmt_SimpleStmtLinha()
+  {
+    return (EReference)simpleStmtEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSimpleStmt_ShortVarDecl()
+  {
+    return (EReference)simpleStmtEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSimpleStmtLinha()
+  {
+    return simpleStmtLinhaEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSimpleStmtLinha_Expression()
+  {
+    return (EReference)simpleStmtLinhaEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSimpleStmtLinha_Expression1()
+  {
+    return (EReference)simpleStmtLinhaEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSimpleStmtLinha_Assign_op()
+  {
+    return (EReference)simpleStmtLinhaEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSimpleStmtLinha_ExpressionList()
+  {
+    return (EReference)simpleStmtLinhaEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSimpleStmtLinha_ANY_OTHER()
+  {
+    return (EAttribute)simpleStmtLinhaEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getEmptyStmt()
+  {
+    return emptyStmtEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getEmptyStmt_ANY_OTHER()
+  {
+    return (EAttribute)emptyStmtEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getLabeledStmt()
+  {
+    return labeledStmtEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLabeledStmt_Label()
+  {
+    return (EReference)labeledStmtEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getLabeledStmt_Statement()
+  {
+    return (EReference)labeledStmtEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getLabel()
+  {
+    return labelEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getLabel_Id()
+  {
+    return (EAttribute)labelEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getassign_op()
+  {
+    return assign_opEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getassign_op_ADD_OP()
+  {
+    return (EAttribute)assign_opEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getassign_op_MUL_OP()
+  {
+    return (EAttribute)assign_opEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getIfStmt()
+  {
+    return ifStmtEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getIfStmt_If()
+  {
+    return (EAttribute)ifStmtEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIfStmt_Expression()
+  {
+    return (EReference)ifStmtEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIfStmt_IfStmtLinha()
+  {
+    return (EReference)ifStmtEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIfStmt_EmptyStmt()
+  {
+    return (EReference)ifStmtEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIfStmt_ShortVarDecl()
+  {
+    return (EReference)ifStmtEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIfStmt_Block()
+  {
+    return (EReference)ifStmtEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getIfStmt_Else()
+  {
+    return (EAttribute)ifStmtEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIfStmt_IfStmt()
+  {
+    return (EReference)ifStmtEClass.getEStructuralFeatures().get(7);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIfStmt_Block1()
+  {
+    return (EReference)ifStmtEClass.getEStructuralFeatures().get(8);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getIfStmtLinha()
+  {
+    return ifStmtLinhaEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIfStmtLinha_SimpleStmtLinha()
+  {
+    return (EReference)ifStmtLinhaEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIfStmtLinha_Expression()
+  {
+    return (EReference)ifStmtLinhaEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIfStmtLinha_Block()
+  {
+    return (EReference)ifStmtLinhaEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getIfStmtLinha_Else()
+  {
+    return (EAttribute)ifStmtLinhaEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIfStmtLinha_IfStmt()
+  {
+    return (EReference)ifStmtLinhaEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getIfStmtLinha_Block1()
+  {
+    return (EReference)ifStmtLinhaEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSwitchStmt()
+  {
+    return switchStmtEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSwitchStmt_Switch()
+  {
+    return (EAttribute)switchStmtEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSwitchStmt_SimpleStmt()
+  {
+    return (EReference)switchStmtEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSwitchStmt_SwitchStmtLinha()
+  {
+    return (EReference)switchStmtEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSwitchStmtLinha()
+  {
+    return switchStmtLinhaEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSwitchStmtLinha_PrimaryExpr()
+  {
+    return (EReference)switchStmtLinhaEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSwitchStmtLinha_SwitchStmtLinhaLinha()
+  {
+    return (EReference)switchStmtLinhaEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSwitchStmtLinha_Unary_op()
+  {
+    return (EAttribute)switchStmtLinhaEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSwitchStmtLinha_UnaryExpr()
+  {
+    return (EReference)switchStmtLinhaEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSwitchStmtLinha_Expression()
+  {
+    return (EReference)switchStmtLinhaEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSwitchStmtLinha_ExprCaseClause()
+  {
+    return (EReference)switchStmtLinhaEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSwitchStmtLinha_Id()
+  {
+    return (EAttribute)switchStmtLinhaEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSwitchStmtLinha_Typekeyword()
+  {
+    return (EAttribute)switchStmtLinhaEClass.getEStructuralFeatures().get(7);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSwitchStmtLinha_TypeCaseClause()
+  {
+    return (EReference)switchStmtLinhaEClass.getEStructuralFeatures().get(8);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSwitchStmtLinhaLinha()
+  {
+    return switchStmtLinhaLinhaEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSwitchStmtLinhaLinha_ExprCaseClause()
+  {
+    return (EReference)switchStmtLinhaLinhaEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSwitchStmtLinhaLinha_Typekeyword()
+  {
+    return (EAttribute)switchStmtLinhaLinhaEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSwitchStmtLinhaLinha_TypeCaseClause()
+  {
+    return (EReference)switchStmtLinhaLinhaEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getExprCaseClause()
+  {
+    return exprCaseClauseEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExprCaseClause_ExprSwitchCase()
+  {
+    return (EReference)exprCaseClauseEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExprCaseClause_StatementList()
+  {
+    return (EReference)exprCaseClauseEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getExprSwitchCase()
+  {
+    return exprSwitchCaseEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getExprSwitchCase_Case()
+  {
+    return (EAttribute)exprSwitchCaseEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExprSwitchCase_ExpressionList()
+  {
+    return (EReference)exprSwitchCaseEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getExprSwitchCase_Default()
+  {
+    return (EAttribute)exprSwitchCaseEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTypeCaseClause()
+  {
+    return typeCaseClauseEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeCaseClause_TypeSwitchCase()
+  {
+    return (EReference)typeCaseClauseEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeCaseClause_StatementList()
+  {
+    return (EReference)typeCaseClauseEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTypeSwitchCase()
+  {
+    return typeSwitchCaseEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getTypeSwitchCase_Case()
+  {
+    return (EAttribute)typeSwitchCaseEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeSwitchCase_TypeList()
+  {
+    return (EReference)typeSwitchCaseEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getTypeSwitchCase_Default()
+  {
+    return (EAttribute)typeSwitchCaseEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTypeList()
+  {
+    return typeListEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeList_Type()
+  {
+    return (EReference)typeListEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeList_Type1()
+  {
+    return (EReference)typeListEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getForStmt()
+  {
+    return forStmtEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getForStmt_For()
+  {
+    return (EAttribute)forStmtEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getForStmt_Expression()
+  {
+    return (EReference)forStmtEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getForStmt_ForStmtLinha()
+  {
+    return (EReference)forStmtEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getForStmt_EmptyStmt()
+  {
+    return (EReference)forStmtEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getForStmt_ShortVarDecl()
+  {
+    return (EReference)forStmtEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getForStmt_Condition()
+  {
+    return (EReference)forStmtEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getForStmt_PostStmt()
+  {
+    return (EReference)forStmtEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getForStmt_IdentifierList()
+  {
+    return (EReference)forStmtEClass.getEStructuralFeatures().get(7);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getForStmt_Range()
+  {
+    return (EAttribute)forStmtEClass.getEStructuralFeatures().get(8);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getForStmt_Block()
+  {
+    return (EReference)forStmtEClass.getEStructuralFeatures().get(9);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getForStmtLinha()
+  {
+    return forStmtLinhaEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getForStmtLinha_Vazio()
+  {
+    return (EAttribute)forStmtLinhaEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getForStmtLinha_Expression()
+  {
+    return (EReference)forStmtLinhaEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getForStmtLinha_ForStmtLinhaLinha()
+  {
+    return (EReference)forStmtLinhaEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getForStmtLinha_Expression1()
+  {
+    return (EReference)forStmtLinhaEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getForStmtLinha_Condition()
+  {
+    return (EReference)forStmtLinhaEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getForStmtLinha_PostStmt()
+  {
+    return (EReference)forStmtLinhaEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getForStmtLinhaLinha()
+  {
+    return forStmtLinhaLinhaEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getForStmtLinhaLinha_Assign_op()
+  {
+    return (EReference)forStmtLinhaLinhaEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getForStmtLinhaLinha_ExpressionList()
+  {
+    return (EReference)forStmtLinhaLinhaEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getForStmtLinhaLinha_Condition()
+  {
+    return (EReference)forStmtLinhaLinhaEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getForStmtLinhaLinha_PostStmt()
+  {
+    return (EReference)forStmtLinhaLinhaEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getForStmtLinhaLinha_Range()
+  {
+    return (EAttribute)forStmtLinhaLinhaEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getForStmtLinhaLinha_Expression()
+  {
+    return (EReference)forStmtLinhaLinhaEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getCondition()
+  {
+    return conditionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCondition_Expression()
+  {
+    return (EReference)conditionEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getPostStmt()
+  {
+    return postStmtEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPostStmt_SimpleStmt()
+  {
+    return (EReference)postStmtEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getGoStmt()
+  {
+    return goStmtEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getGoStmt_Go()
+  {
+    return (EAttribute)goStmtEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getGoStmt_Expression()
+  {
+    return (EReference)goStmtEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSelectStmt()
+  {
+    return selectStmtEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getSelectStmt_Select()
+  {
+    return (EAttribute)selectStmtEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSelectStmt_CommClause()
+  {
+    return (EReference)selectStmtEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getCommClause()
+  {
+    return commClauseEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCommClause_CommCase()
+  {
+    return (EReference)commClauseEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCommClause_StatementList()
+  {
+    return (EReference)commClauseEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getCommCase()
+  {
+    return commCaseEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getCommCase_Case()
+  {
+    return (EAttribute)commCaseEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCommCase_Expression()
+  {
+    return (EReference)commCaseEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCommCase_CommCaseLinha()
+  {
+    return (EReference)commCaseEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getCommCase_Default()
+  {
+    return (EAttribute)commCaseEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getCommCaseLinha()
+  {
+    return commCaseLinhaEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCommCaseLinha_Expression()
+  {
+    return (EReference)commCaseLinhaEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCommCaseLinha_Expression1()
+  {
+    return (EReference)commCaseLinhaEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCommCaseLinha_IdentifierList()
+  {
+    return (EReference)commCaseLinhaEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getCommCaseLinha_RecvExpr()
+  {
+    return (EReference)commCaseLinhaEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getRecvExpr()
+  {
+    return recvExprEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getRecvExpr_Expression()
+  {
+    return (EReference)recvExprEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getReturnStmt()
+  {
+    return returnStmtEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getReturnStmt_Return()
+  {
+    return (EAttribute)returnStmtEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getReturnStmt_ExpressionList()
+  {
+    return (EReference)returnStmtEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getBreakStmt()
+  {
+    return breakStmtEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getBreakStmt_Break()
+  {
+    return (EAttribute)breakStmtEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getBreakStmt_Label()
+  {
+    return (EReference)breakStmtEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getContinueStmt()
+  {
+    return continueStmtEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getContinueStmt_Continue()
+  {
+    return (EAttribute)continueStmtEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getContinueStmt_Label()
+  {
+    return (EReference)continueStmtEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getGotoStmt()
+  {
+    return gotoStmtEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getGotoStmt_Goto()
+  {
+    return (EAttribute)gotoStmtEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getGotoStmt_Label()
+  {
+    return (EReference)gotoStmtEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getFallthroughStmt()
+  {
+    return fallthroughStmtEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getFallthroughStmt_Fallthrough()
+  {
+    return (EAttribute)fallthroughStmtEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getDeferStmt()
+  {
+    return deferStmtEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getDeferStmt_Defer()
+  {
+    return (EAttribute)deferStmtEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getDeferStmt_Expression()
+  {
+    return (EReference)deferStmtEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getSourceFile()
+  {
+    return sourceFileEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSourceFile_PackageClause()
+  {
+    return (EReference)sourceFileEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSourceFile_ImportDecl()
+  {
+    return (EReference)sourceFileEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getSourceFile_TopLevelDecl()
+  {
+    return (EReference)sourceFileEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getPackageClause()
+  {
+    return packageClauseEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getPackageClause_Package()
+  {
+    return (EAttribute)packageClauseEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getPackageClause_PackageName()
+  {
+    return (EReference)packageClauseEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getPackageName()
+  {
+    return packageNameEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getPackageName_Id()
+  {
+    return (EAttribute)packageNameEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getImportDecl()
+  {
+    return importDeclEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getImportDecl_Importt()
+  {
+    return (EAttribute)importDeclEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getImportDecl_ImportSpec()
+  {
+    return (EReference)importDeclEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getImportDecl_ImportSpec1()
+  {
+    return (EReference)importDeclEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getImportSpec()
+  {
+    return importSpecEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getImportSpec_PackageName()
+  {
+    return (EReference)importSpecEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getImportSpec_STRING_LIT()
+  {
+    return (EAttribute)importSpecEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -142,7 +5258,542 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
 
     // Create classes and their features
     modelEClass = createEClass(MODEL);
-    createEAttribute(modelEClass, MODEL__GREETINGS);
+    createEReference(modelEClass, MODEL__GREETINGS);
+
+    floaT_LITEClass = createEClass(FLOAT_LIT);
+    createEAttribute(floaT_LITEClass, FLOAT_LIT__DECIMALS);
+    createEAttribute(floaT_LITEClass, FLOAT_LIT__DECIMALS1);
+    createEAttribute(floaT_LITEClass, FLOAT_LIT__EXPONENT);
+
+    imaginarY_LITEClass = createEClass(IMAGINARY_LIT);
+    createEAttribute(imaginarY_LITEClass, IMAGINARY_LIT__DECIMALS);
+    createEReference(imaginarY_LITEClass, IMAGINARY_LIT__FLOAT_LIT);
+
+    typeEClass = createEClass(TYPE);
+    createEReference(typeEClass, TYPE__TYPE_NAME);
+    createEReference(typeEClass, TYPE__TYPE_LIT);
+    createEReference(typeEClass, TYPE__TYPE);
+
+    typeNameEClass = createEClass(TYPE_NAME);
+    createEAttribute(typeNameEClass, TYPE_NAME__ID);
+
+    typeNameLinhaEClass = createEClass(TYPE_NAME_LINHA);
+    createEAttribute(typeNameLinhaEClass, TYPE_NAME_LINHA__ID);
+
+    typeLitEClass = createEClass(TYPE_LIT);
+    createEReference(typeLitEClass, TYPE_LIT__TYPE_LIT_LINHA);
+    createEReference(typeLitEClass, TYPE_LIT__SRTUCT_TYPE);
+    createEReference(typeLitEClass, TYPE_LIT__POINTER_TYPE);
+    createEReference(typeLitEClass, TYPE_LIT__FUNCTION_TYPE);
+    createEReference(typeLitEClass, TYPE_LIT__INTERFACE_TYPE);
+    createEReference(typeLitEClass, TYPE_LIT__MAP_TYPE);
+    createEReference(typeLitEClass, TYPE_LIT__CHANNEL_TYPE);
+
+    typeLitLinhaEClass = createEClass(TYPE_LIT_LINHA);
+    createEReference(typeLitLinhaEClass, TYPE_LIT_LINHA__ARRAY_LENGTH);
+    createEReference(typeLitLinhaEClass, TYPE_LIT_LINHA__ELEMENT_TYPE);
+
+    arrayLengthEClass = createEClass(ARRAY_LENGTH);
+    createEReference(arrayLengthEClass, ARRAY_LENGTH__EXPRESSION);
+
+    elementTypeEClass = createEClass(ELEMENT_TYPE);
+    createEReference(elementTypeEClass, ELEMENT_TYPE__TYPE);
+
+    structTypeEClass = createEClass(STRUCT_TYPE);
+    createEAttribute(structTypeEClass, STRUCT_TYPE__STRUCT);
+    createEReference(structTypeEClass, STRUCT_TYPE__FIELD_DECL);
+
+    fieldDeclEClass = createEClass(FIELD_DECL);
+    createEReference(fieldDeclEClass, FIELD_DECL__IDENTIFIER_LIST);
+    createEReference(fieldDeclEClass, FIELD_DECL__TYPE);
+    createEReference(fieldDeclEClass, FIELD_DECL__EMBEDDED_FIELD);
+    createEReference(fieldDeclEClass, FIELD_DECL__TAG);
+
+    embeddedFieldEClass = createEClass(EMBEDDED_FIELD);
+    createEReference(embeddedFieldEClass, EMBEDDED_FIELD__TYPE_NAME);
+
+    tagEClass = createEClass(TAG);
+    createEAttribute(tagEClass, TAG__STRING_LIT);
+
+    pointerTypeEClass = createEClass(POINTER_TYPE);
+    createEReference(pointerTypeEClass, POINTER_TYPE__BASE_TYPE);
+
+    baseTypeEClass = createEClass(BASE_TYPE);
+    createEReference(baseTypeEClass, BASE_TYPE__TYPE);
+
+    functionTypeEClass = createEClass(FUNCTION_TYPE);
+    createEAttribute(functionTypeEClass, FUNCTION_TYPE__FUNC);
+    createEReference(functionTypeEClass, FUNCTION_TYPE__SIGNATURE);
+
+    signatureEClass = createEClass(SIGNATURE);
+    createEReference(signatureEClass, SIGNATURE__PARAMETERS);
+    createEReference(signatureEClass, SIGNATURE__RESULT);
+
+    resultEClass = createEClass(RESULT);
+    createEReference(resultEClass, RESULT__PARAMETERS);
+    createEReference(resultEClass, RESULT__TYPE);
+
+    parametersEClass = createEClass(PARAMETERS);
+    createEReference(parametersEClass, PARAMETERS__PARAMETER_LIST);
+
+    parameterListEClass = createEClass(PARAMETER_LIST);
+    createEReference(parameterListEClass, PARAMETER_LIST__PARAMETER_DECL);
+    createEReference(parameterListEClass, PARAMETER_LIST__PARAMETER_DECL1);
+
+    parameterDeclEClass = createEClass(PARAMETER_DECL);
+    createEReference(parameterDeclEClass, PARAMETER_DECL__IDENTIFIER_LIST);
+    createEReference(parameterDeclEClass, PARAMETER_DECL__TYPE);
+
+    interfaceTypeEClass = createEClass(INTERFACE_TYPE);
+    createEAttribute(interfaceTypeEClass, INTERFACE_TYPE__INTERFACE);
+    createEReference(interfaceTypeEClass, INTERFACE_TYPE__METHOD_SPEC);
+
+    methodSpecEClass = createEClass(METHOD_SPEC);
+    createEReference(methodSpecEClass, METHOD_SPEC__METHOD_NAME);
+    createEReference(methodSpecEClass, METHOD_SPEC__SIGNATURE);
+    createEReference(methodSpecEClass, METHOD_SPEC__INTERFACE_TYPE_NAME);
+
+    methodNameEClass = createEClass(METHOD_NAME);
+    createEAttribute(methodNameEClass, METHOD_NAME__ID);
+
+    interfaceTypeNameEClass = createEClass(INTERFACE_TYPE_NAME);
+    createEReference(interfaceTypeNameEClass, INTERFACE_TYPE_NAME__TYPE_NAME);
+
+    mapTypeEClass = createEClass(MAP_TYPE);
+    createEAttribute(mapTypeEClass, MAP_TYPE__MAP);
+    createEReference(mapTypeEClass, MAP_TYPE__KEY_TYPE);
+    createEReference(mapTypeEClass, MAP_TYPE__ELEMENT_TYPE);
+
+    keyTypeEClass = createEClass(KEY_TYPE);
+    createEReference(keyTypeEClass, KEY_TYPE__TYPE);
+
+    channelTypeEClass = createEClass(CHANNEL_TYPE);
+    createEAttribute(channelTypeEClass, CHANNEL_TYPE__CHAN);
+    createEReference(channelTypeEClass, CHANNEL_TYPE__CHANNEL_TYPE_LINHA);
+    createEReference(channelTypeEClass, CHANNEL_TYPE__ELEMENT_TYPE);
+
+    channelTypeLinhaEClass = createEClass(CHANNEL_TYPE_LINHA);
+    createEAttribute(channelTypeLinhaEClass, CHANNEL_TYPE_LINHA__ANY_OTHER);
+
+    blockEClass = createEClass(BLOCK);
+    createEReference(blockEClass, BLOCK__STATEMENT_LIST);
+
+    statementListEClass = createEClass(STATEMENT_LIST);
+    createEReference(statementListEClass, STATEMENT_LIST__STATEMENTS);
+
+    declarationEClass = createEClass(DECLARATION);
+    createEReference(declarationEClass, DECLARATION__CONST_DECL);
+    createEReference(declarationEClass, DECLARATION__TYPE_DECL);
+    createEReference(declarationEClass, DECLARATION__VAR_DECL);
+
+    topLevelDeclEClass = createEClass(TOP_LEVEL_DECL);
+    createEReference(topLevelDeclEClass, TOP_LEVEL_DECL__DECLARATION);
+    createEReference(topLevelDeclEClass, TOP_LEVEL_DECL__FUNCTION_DECL);
+    createEReference(topLevelDeclEClass, TOP_LEVEL_DECL__METHOD_DECL);
+
+    constDeclEClass = createEClass(CONST_DECL);
+    createEAttribute(constDeclEClass, CONST_DECL__CONST);
+    createEReference(constDeclEClass, CONST_DECL__CONST_SPEC);
+    createEReference(constDeclEClass, CONST_DECL__CONST_SPEC1);
+
+    constSpecEClass = createEClass(CONST_SPEC);
+    createEReference(constSpecEClass, CONST_SPEC__IDENTIFIER_LIST);
+    createEReference(constSpecEClass, CONST_SPEC__TYPE);
+    createEReference(constSpecEClass, CONST_SPEC__EXPRESSION_LIST);
+
+    identifierListEClass = createEClass(IDENTIFIER_LIST);
+    createEAttribute(identifierListEClass, IDENTIFIER_LIST__ID);
+    createEAttribute(identifierListEClass, IDENTIFIER_LIST__ID1);
+
+    expressionListEClass = createEClass(EXPRESSION_LIST);
+    createEReference(expressionListEClass, EXPRESSION_LIST__EXPRESSION);
+    createEReference(expressionListEClass, EXPRESSION_LIST__EXPRESSION1);
+
+    typeDeclEClass = createEClass(TYPE_DECL);
+    createEAttribute(typeDeclEClass, TYPE_DECL__TYPEKEYWORD);
+    createEReference(typeDeclEClass, TYPE_DECL__TYPE_SPEC);
+    createEReference(typeDeclEClass, TYPE_DECL__TYPE_SPEC1);
+
+    typeSpecEClass = createEClass(TYPE_SPEC);
+    createEReference(typeSpecEClass, TYPE_SPEC__ALIAS_DECL);
+    createEReference(typeSpecEClass, TYPE_SPEC__TYPE_DEF);
+
+    aliasDeclEClass = createEClass(ALIAS_DECL);
+    createEAttribute(aliasDeclEClass, ALIAS_DECL__ID);
+    createEReference(aliasDeclEClass, ALIAS_DECL__TYPE);
+
+    typeDefEClass = createEClass(TYPE_DEF);
+    createEAttribute(typeDefEClass, TYPE_DEF__ID);
+    createEReference(typeDefEClass, TYPE_DEF__TYPE);
+
+    varDeclEClass = createEClass(VAR_DECL);
+    createEReference(varDeclEClass, VAR_DECL__VAR_SPEC);
+    createEReference(varDeclEClass, VAR_DECL__VAR_SPEC1);
+
+    varSpecEClass = createEClass(VAR_SPEC);
+    createEReference(varSpecEClass, VAR_SPEC__IDENTIFIER_LIST);
+    createEReference(varSpecEClass, VAR_SPEC__TYPE);
+    createEReference(varSpecEClass, VAR_SPEC__EXPRESSION_LIST);
+
+    shortVarDeclEClass = createEClass(SHORT_VAR_DECL);
+    createEReference(shortVarDeclEClass, SHORT_VAR_DECL__IDENTIFIER_LIST);
+    createEReference(shortVarDeclEClass, SHORT_VAR_DECL__EXPRESSION_LIST);
+
+    functionDeclEClass = createEClass(FUNCTION_DECL);
+    createEReference(functionDeclEClass, FUNCTION_DECL__FUNCTION_NAME);
+    createEReference(functionDeclEClass, FUNCTION_DECL__SIGNATURE);
+    createEReference(functionDeclEClass, FUNCTION_DECL__FUNCTION_BODY);
+
+    functionNameEClass = createEClass(FUNCTION_NAME);
+    createEAttribute(functionNameEClass, FUNCTION_NAME__ID);
+
+    functionBodyEClass = createEClass(FUNCTION_BODY);
+    createEReference(functionBodyEClass, FUNCTION_BODY__BLOCK);
+
+    methodDeclEClass = createEClass(METHOD_DECL);
+    createEReference(methodDeclEClass, METHOD_DECL__RECEIVER);
+    createEReference(methodDeclEClass, METHOD_DECL__METHOD_NAME);
+    createEReference(methodDeclEClass, METHOD_DECL__SIGNATURE);
+    createEReference(methodDeclEClass, METHOD_DECL__FUNCTION_BODY);
+
+    receiverEClass = createEClass(RECEIVER);
+    createEReference(receiverEClass, RECEIVER__PARAMETERS);
+
+    operandEClass = createEClass(OPERAND);
+    createEReference(operandEClass, OPERAND__LITERAL);
+    createEReference(operandEClass, OPERAND__OPERAND_NAME);
+    createEReference(operandEClass, OPERAND__EXPRESSION);
+
+    literalEClass = createEClass(LITERAL);
+    createEReference(literalEClass, LITERAL__BASIC_LIT);
+    createEReference(literalEClass, LITERAL__COMPOSITE_LIT);
+    createEReference(literalEClass, LITERAL__FUNCTION_LIT);
+
+    basicLitEClass = createEClass(BASIC_LIT);
+    createEAttribute(basicLitEClass, BASIC_LIT__INT_LIT);
+    createEReference(basicLitEClass, BASIC_LIT__FLOAT_LIT);
+    createEReference(basicLitEClass, BASIC_LIT__IMAGINARY_LIT);
+    createEAttribute(basicLitEClass, BASIC_LIT__RUNE_LIT);
+    createEAttribute(basicLitEClass, BASIC_LIT__STRING_LIT);
+
+    operandNameEClass = createEClass(OPERAND_NAME);
+    createEAttribute(operandNameEClass, OPERAND_NAME__ID);
+
+    compositeLitEClass = createEClass(COMPOSITE_LIT);
+    createEReference(compositeLitEClass, COMPOSITE_LIT__LITERAL_TYPE);
+    createEReference(compositeLitEClass, COMPOSITE_LIT__LITERAL_VALUE);
+
+    literalTypeEClass = createEClass(LITERAL_TYPE);
+    createEReference(literalTypeEClass, LITERAL_TYPE__STRUCT_TYPE);
+    createEReference(literalTypeEClass, LITERAL_TYPE__MAP_TYPE);
+    createEReference(literalTypeEClass, LITERAL_TYPE__TYPE_NAME);
+    createEReference(literalTypeEClass, LITERAL_TYPE__LITERAL_TYPE_LINHA);
+
+    literalTypeLinhaEClass = createEClass(LITERAL_TYPE_LINHA);
+    createEReference(literalTypeLinhaEClass, LITERAL_TYPE_LINHA__ARRAY_LENGTH);
+    createEReference(literalTypeLinhaEClass, LITERAL_TYPE_LINHA__ELEMENT_TYPE);
+
+    literalValueEClass = createEClass(LITERAL_VALUE);
+    createEReference(literalValueEClass, LITERAL_VALUE__ELEMENT_LIST);
+
+    elementListEClass = createEClass(ELEMENT_LIST);
+    createEReference(elementListEClass, ELEMENT_LIST__KEYED_ELEMENT);
+    createEReference(elementListEClass, ELEMENT_LIST__KEYED_ELEMENT1);
+
+    keyedElementEClass = createEClass(KEYED_ELEMENT);
+    createEReference(keyedElementEClass, KEYED_ELEMENT__KEY);
+    createEReference(keyedElementEClass, KEYED_ELEMENT__ELEMENT);
+
+    keyEClass = createEClass(KEY);
+    createEReference(keyEClass, KEY__FIELD_NAME);
+    createEReference(keyEClass, KEY__EXPRESSION);
+    createEReference(keyEClass, KEY__LITERAL_VALUE);
+
+    fieldNameEClass = createEClass(FIELD_NAME);
+    createEAttribute(fieldNameEClass, FIELD_NAME__ID);
+
+    elementEClass = createEClass(ELEMENT);
+    createEReference(elementEClass, ELEMENT__EXPRESSION);
+    createEReference(elementEClass, ELEMENT__LITERAL_VALUE);
+
+    functionLitEClass = createEClass(FUNCTION_LIT);
+    createEAttribute(functionLitEClass, FUNCTION_LIT__FUNC);
+    createEReference(functionLitEClass, FUNCTION_LIT__SIGNATURE);
+    createEReference(functionLitEClass, FUNCTION_LIT__FUNCTION_BODY);
+
+    primaryExprEClass = createEClass(PRIMARY_EXPR);
+    createEReference(primaryExprEClass, PRIMARY_EXPR__OPERAND);
+    createEReference(primaryExprEClass, PRIMARY_EXPR__PRIMARY_EXPR_LINHA);
+    createEReference(primaryExprEClass, PRIMARY_EXPR__CONVERSION);
+    createEReference(primaryExprEClass, PRIMARY_EXPR__METHOD_EXPR);
+
+    primaryExprLinhaEClass = createEClass(PRIMARY_EXPR_LINHA);
+    createEReference(primaryExprLinhaEClass, PRIMARY_EXPR_LINHA__SELECTOR);
+    createEReference(primaryExprLinhaEClass, PRIMARY_EXPR_LINHA__PRIMARY_EXPR_LINHA);
+    createEReference(primaryExprLinhaEClass, PRIMARY_EXPR_LINHA__INDEX);
+    createEReference(primaryExprLinhaEClass, PRIMARY_EXPR_LINHA__SLICE);
+    createEReference(primaryExprLinhaEClass, PRIMARY_EXPR_LINHA__TYPE_ASSERTION);
+    createEReference(primaryExprLinhaEClass, PRIMARY_EXPR_LINHA__ARGUMENTS);
+
+    selectorEClass = createEClass(SELECTOR);
+    createEAttribute(selectorEClass, SELECTOR__ID);
+
+    indexEClass = createEClass(INDEX);
+    createEReference(indexEClass, INDEX__EXPRESSION);
+
+    sliceEClass = createEClass(SLICE);
+    createEReference(sliceEClass, SLICE__EXPRESSION);
+    createEReference(sliceEClass, SLICE__EXPRESSION1);
+    createEReference(sliceEClass, SLICE__EXPRESSION2);
+
+    typeAssertionEClass = createEClass(TYPE_ASSERTION);
+    createEReference(typeAssertionEClass, TYPE_ASSERTION__TYPE);
+
+    argumentsEClass = createEClass(ARGUMENTS);
+    createEReference(argumentsEClass, ARGUMENTS__EXPRESSION_LIST);
+    createEReference(argumentsEClass, ARGUMENTS__TYPE);
+
+    methodExprEClass = createEClass(METHOD_EXPR);
+    createEReference(methodExprEClass, METHOD_EXPR__RECEIVER_TYPE);
+    createEReference(methodExprEClass, METHOD_EXPR__METHOD_NAME);
+
+    receiverTypeEClass = createEClass(RECEIVER_TYPE);
+    createEReference(receiverTypeEClass, RECEIVER_TYPE__TYPE);
+
+    expressionEClass = createEClass(EXPRESSION);
+    createEReference(expressionEClass, EXPRESSION__UNARY_EXPR);
+    createEReference(expressionEClass, EXPRESSION__EXPRESSION_LINHA);
+
+    expression_LinhaEClass = createEClass(EXPRESSION_LINHA);
+    createEReference(expression_LinhaEClass, EXPRESSION_LINHA__BINARY_OP);
+    createEReference(expression_LinhaEClass, EXPRESSION_LINHA__EXPRESSION);
+    createEReference(expression_LinhaEClass, EXPRESSION_LINHA__EXPRESSION_LINHA);
+
+    unaryExprEClass = createEClass(UNARY_EXPR);
+    createEReference(unaryExprEClass, UNARY_EXPR__PRIMARY_EXPR);
+    createEReference(unaryExprEClass, UNARY_EXPR__UNARY_EXPR);
+
+    binarY_OPEClass = createEClass(BINARY_OP);
+    createEAttribute(binarY_OPEClass, BINARY_OP__OR);
+    createEAttribute(binarY_OPEClass, BINARY_OP__AND);
+    createEAttribute(binarY_OPEClass, BINARY_OP__REL_OP);
+    createEAttribute(binarY_OPEClass, BINARY_OP__ADD_OP);
+    createEAttribute(binarY_OPEClass, BINARY_OP__MUL_OP);
+
+    conversionEClass = createEClass(CONVERSION);
+    createEReference(conversionEClass, CONVERSION__TYPE);
+    createEReference(conversionEClass, CONVERSION__EXPRESSION);
+
+    statementEClass = createEClass(STATEMENT);
+    createEReference(statementEClass, STATEMENT__DECLARATION);
+    createEReference(statementEClass, STATEMENT__LABELED_STMT);
+    createEReference(statementEClass, STATEMENT__SIMPLE_STMT);
+    createEReference(statementEClass, STATEMENT__GO_STMT);
+    createEReference(statementEClass, STATEMENT__RETURN_STMT);
+    createEReference(statementEClass, STATEMENT__BREAK_STMT);
+    createEReference(statementEClass, STATEMENT__CONTINUE_STMT);
+    createEReference(statementEClass, STATEMENT__GOTO_STMT);
+    createEReference(statementEClass, STATEMENT__FALLTHROUGH_STMT);
+    createEReference(statementEClass, STATEMENT__BLOCK);
+    createEReference(statementEClass, STATEMENT__IF_STMT);
+    createEReference(statementEClass, STATEMENT__SWITCH_STMT);
+    createEReference(statementEClass, STATEMENT__SELECT_STMT);
+    createEReference(statementEClass, STATEMENT__FOR_STMT);
+    createEReference(statementEClass, STATEMENT__DEFER_STMT);
+
+    simpleStmtEClass = createEClass(SIMPLE_STMT);
+    createEReference(simpleStmtEClass, SIMPLE_STMT__EMPTY_STMT);
+    createEReference(simpleStmtEClass, SIMPLE_STMT__EXPRESSION);
+    createEReference(simpleStmtEClass, SIMPLE_STMT__SIMPLE_STMT_LINHA);
+    createEReference(simpleStmtEClass, SIMPLE_STMT__SHORT_VAR_DECL);
+
+    simpleStmtLinhaEClass = createEClass(SIMPLE_STMT_LINHA);
+    createEReference(simpleStmtLinhaEClass, SIMPLE_STMT_LINHA__EXPRESSION);
+    createEReference(simpleStmtLinhaEClass, SIMPLE_STMT_LINHA__EXPRESSION1);
+    createEReference(simpleStmtLinhaEClass, SIMPLE_STMT_LINHA__ASSIGN_OP);
+    createEReference(simpleStmtLinhaEClass, SIMPLE_STMT_LINHA__EXPRESSION_LIST);
+    createEAttribute(simpleStmtLinhaEClass, SIMPLE_STMT_LINHA__ANY_OTHER);
+
+    emptyStmtEClass = createEClass(EMPTY_STMT);
+    createEAttribute(emptyStmtEClass, EMPTY_STMT__ANY_OTHER);
+
+    labeledStmtEClass = createEClass(LABELED_STMT);
+    createEReference(labeledStmtEClass, LABELED_STMT__LABEL);
+    createEReference(labeledStmtEClass, LABELED_STMT__STATEMENT);
+
+    labelEClass = createEClass(LABEL);
+    createEAttribute(labelEClass, LABEL__ID);
+
+    assign_opEClass = createEClass(ASSIGN_OP);
+    createEAttribute(assign_opEClass, ASSIGN_OP__ADD_OP);
+    createEAttribute(assign_opEClass, ASSIGN_OP__MUL_OP);
+
+    ifStmtEClass = createEClass(IF_STMT);
+    createEAttribute(ifStmtEClass, IF_STMT__IF);
+    createEReference(ifStmtEClass, IF_STMT__EXPRESSION);
+    createEReference(ifStmtEClass, IF_STMT__IF_STMT_LINHA);
+    createEReference(ifStmtEClass, IF_STMT__EMPTY_STMT);
+    createEReference(ifStmtEClass, IF_STMT__SHORT_VAR_DECL);
+    createEReference(ifStmtEClass, IF_STMT__BLOCK);
+    createEAttribute(ifStmtEClass, IF_STMT__ELSE);
+    createEReference(ifStmtEClass, IF_STMT__IF_STMT);
+    createEReference(ifStmtEClass, IF_STMT__BLOCK1);
+
+    ifStmtLinhaEClass = createEClass(IF_STMT_LINHA);
+    createEReference(ifStmtLinhaEClass, IF_STMT_LINHA__SIMPLE_STMT_LINHA);
+    createEReference(ifStmtLinhaEClass, IF_STMT_LINHA__EXPRESSION);
+    createEReference(ifStmtLinhaEClass, IF_STMT_LINHA__BLOCK);
+    createEAttribute(ifStmtLinhaEClass, IF_STMT_LINHA__ELSE);
+    createEReference(ifStmtLinhaEClass, IF_STMT_LINHA__IF_STMT);
+    createEReference(ifStmtLinhaEClass, IF_STMT_LINHA__BLOCK1);
+
+    switchStmtEClass = createEClass(SWITCH_STMT);
+    createEAttribute(switchStmtEClass, SWITCH_STMT__SWITCH);
+    createEReference(switchStmtEClass, SWITCH_STMT__SIMPLE_STMT);
+    createEReference(switchStmtEClass, SWITCH_STMT__SWITCH_STMT_LINHA);
+
+    switchStmtLinhaEClass = createEClass(SWITCH_STMT_LINHA);
+    createEReference(switchStmtLinhaEClass, SWITCH_STMT_LINHA__PRIMARY_EXPR);
+    createEReference(switchStmtLinhaEClass, SWITCH_STMT_LINHA__SWITCH_STMT_LINHA_LINHA);
+    createEAttribute(switchStmtLinhaEClass, SWITCH_STMT_LINHA__UNARY_OP);
+    createEReference(switchStmtLinhaEClass, SWITCH_STMT_LINHA__UNARY_EXPR);
+    createEReference(switchStmtLinhaEClass, SWITCH_STMT_LINHA__EXPRESSION);
+    createEReference(switchStmtLinhaEClass, SWITCH_STMT_LINHA__EXPR_CASE_CLAUSE);
+    createEAttribute(switchStmtLinhaEClass, SWITCH_STMT_LINHA__ID);
+    createEAttribute(switchStmtLinhaEClass, SWITCH_STMT_LINHA__TYPEKEYWORD);
+    createEReference(switchStmtLinhaEClass, SWITCH_STMT_LINHA__TYPE_CASE_CLAUSE);
+
+    switchStmtLinhaLinhaEClass = createEClass(SWITCH_STMT_LINHA_LINHA);
+    createEReference(switchStmtLinhaLinhaEClass, SWITCH_STMT_LINHA_LINHA__EXPR_CASE_CLAUSE);
+    createEAttribute(switchStmtLinhaLinhaEClass, SWITCH_STMT_LINHA_LINHA__TYPEKEYWORD);
+    createEReference(switchStmtLinhaLinhaEClass, SWITCH_STMT_LINHA_LINHA__TYPE_CASE_CLAUSE);
+
+    exprCaseClauseEClass = createEClass(EXPR_CASE_CLAUSE);
+    createEReference(exprCaseClauseEClass, EXPR_CASE_CLAUSE__EXPR_SWITCH_CASE);
+    createEReference(exprCaseClauseEClass, EXPR_CASE_CLAUSE__STATEMENT_LIST);
+
+    exprSwitchCaseEClass = createEClass(EXPR_SWITCH_CASE);
+    createEAttribute(exprSwitchCaseEClass, EXPR_SWITCH_CASE__CASE);
+    createEReference(exprSwitchCaseEClass, EXPR_SWITCH_CASE__EXPRESSION_LIST);
+    createEAttribute(exprSwitchCaseEClass, EXPR_SWITCH_CASE__DEFAULT);
+
+    typeCaseClauseEClass = createEClass(TYPE_CASE_CLAUSE);
+    createEReference(typeCaseClauseEClass, TYPE_CASE_CLAUSE__TYPE_SWITCH_CASE);
+    createEReference(typeCaseClauseEClass, TYPE_CASE_CLAUSE__STATEMENT_LIST);
+
+    typeSwitchCaseEClass = createEClass(TYPE_SWITCH_CASE);
+    createEAttribute(typeSwitchCaseEClass, TYPE_SWITCH_CASE__CASE);
+    createEReference(typeSwitchCaseEClass, TYPE_SWITCH_CASE__TYPE_LIST);
+    createEAttribute(typeSwitchCaseEClass, TYPE_SWITCH_CASE__DEFAULT);
+
+    typeListEClass = createEClass(TYPE_LIST);
+    createEReference(typeListEClass, TYPE_LIST__TYPE);
+    createEReference(typeListEClass, TYPE_LIST__TYPE1);
+
+    forStmtEClass = createEClass(FOR_STMT);
+    createEAttribute(forStmtEClass, FOR_STMT__FOR);
+    createEReference(forStmtEClass, FOR_STMT__EXPRESSION);
+    createEReference(forStmtEClass, FOR_STMT__FOR_STMT_LINHA);
+    createEReference(forStmtEClass, FOR_STMT__EMPTY_STMT);
+    createEReference(forStmtEClass, FOR_STMT__SHORT_VAR_DECL);
+    createEReference(forStmtEClass, FOR_STMT__CONDITION);
+    createEReference(forStmtEClass, FOR_STMT__POST_STMT);
+    createEReference(forStmtEClass, FOR_STMT__IDENTIFIER_LIST);
+    createEAttribute(forStmtEClass, FOR_STMT__RANGE);
+    createEReference(forStmtEClass, FOR_STMT__BLOCK);
+
+    forStmtLinhaEClass = createEClass(FOR_STMT_LINHA);
+    createEAttribute(forStmtLinhaEClass, FOR_STMT_LINHA__VAZIO);
+    createEReference(forStmtLinhaEClass, FOR_STMT_LINHA__EXPRESSION);
+    createEReference(forStmtLinhaEClass, FOR_STMT_LINHA__FOR_STMT_LINHA_LINHA);
+    createEReference(forStmtLinhaEClass, FOR_STMT_LINHA__EXPRESSION1);
+    createEReference(forStmtLinhaEClass, FOR_STMT_LINHA__CONDITION);
+    createEReference(forStmtLinhaEClass, FOR_STMT_LINHA__POST_STMT);
+
+    forStmtLinhaLinhaEClass = createEClass(FOR_STMT_LINHA_LINHA);
+    createEReference(forStmtLinhaLinhaEClass, FOR_STMT_LINHA_LINHA__ASSIGN_OP);
+    createEReference(forStmtLinhaLinhaEClass, FOR_STMT_LINHA_LINHA__EXPRESSION_LIST);
+    createEReference(forStmtLinhaLinhaEClass, FOR_STMT_LINHA_LINHA__CONDITION);
+    createEReference(forStmtLinhaLinhaEClass, FOR_STMT_LINHA_LINHA__POST_STMT);
+    createEAttribute(forStmtLinhaLinhaEClass, FOR_STMT_LINHA_LINHA__RANGE);
+    createEReference(forStmtLinhaLinhaEClass, FOR_STMT_LINHA_LINHA__EXPRESSION);
+
+    conditionEClass = createEClass(CONDITION);
+    createEReference(conditionEClass, CONDITION__EXPRESSION);
+
+    postStmtEClass = createEClass(POST_STMT);
+    createEReference(postStmtEClass, POST_STMT__SIMPLE_STMT);
+
+    goStmtEClass = createEClass(GO_STMT);
+    createEAttribute(goStmtEClass, GO_STMT__GO);
+    createEReference(goStmtEClass, GO_STMT__EXPRESSION);
+
+    selectStmtEClass = createEClass(SELECT_STMT);
+    createEAttribute(selectStmtEClass, SELECT_STMT__SELECT);
+    createEReference(selectStmtEClass, SELECT_STMT__COMM_CLAUSE);
+
+    commClauseEClass = createEClass(COMM_CLAUSE);
+    createEReference(commClauseEClass, COMM_CLAUSE__COMM_CASE);
+    createEReference(commClauseEClass, COMM_CLAUSE__STATEMENT_LIST);
+
+    commCaseEClass = createEClass(COMM_CASE);
+    createEAttribute(commCaseEClass, COMM_CASE__CASE);
+    createEReference(commCaseEClass, COMM_CASE__EXPRESSION);
+    createEReference(commCaseEClass, COMM_CASE__COMM_CASE_LINHA);
+    createEAttribute(commCaseEClass, COMM_CASE__DEFAULT);
+
+    commCaseLinhaEClass = createEClass(COMM_CASE_LINHA);
+    createEReference(commCaseLinhaEClass, COMM_CASE_LINHA__EXPRESSION);
+    createEReference(commCaseLinhaEClass, COMM_CASE_LINHA__EXPRESSION1);
+    createEReference(commCaseLinhaEClass, COMM_CASE_LINHA__IDENTIFIER_LIST);
+    createEReference(commCaseLinhaEClass, COMM_CASE_LINHA__RECV_EXPR);
+
+    recvExprEClass = createEClass(RECV_EXPR);
+    createEReference(recvExprEClass, RECV_EXPR__EXPRESSION);
+
+    returnStmtEClass = createEClass(RETURN_STMT);
+    createEAttribute(returnStmtEClass, RETURN_STMT__RETURN);
+    createEReference(returnStmtEClass, RETURN_STMT__EXPRESSION_LIST);
+
+    breakStmtEClass = createEClass(BREAK_STMT);
+    createEAttribute(breakStmtEClass, BREAK_STMT__BREAK);
+    createEReference(breakStmtEClass, BREAK_STMT__LABEL);
+
+    continueStmtEClass = createEClass(CONTINUE_STMT);
+    createEAttribute(continueStmtEClass, CONTINUE_STMT__CONTINUE);
+    createEReference(continueStmtEClass, CONTINUE_STMT__LABEL);
+
+    gotoStmtEClass = createEClass(GOTO_STMT);
+    createEAttribute(gotoStmtEClass, GOTO_STMT__GOTO);
+    createEReference(gotoStmtEClass, GOTO_STMT__LABEL);
+
+    fallthroughStmtEClass = createEClass(FALLTHROUGH_STMT);
+    createEAttribute(fallthroughStmtEClass, FALLTHROUGH_STMT__FALLTHROUGH);
+
+    deferStmtEClass = createEClass(DEFER_STMT);
+    createEAttribute(deferStmtEClass, DEFER_STMT__DEFER);
+    createEReference(deferStmtEClass, DEFER_STMT__EXPRESSION);
+
+    sourceFileEClass = createEClass(SOURCE_FILE);
+    createEReference(sourceFileEClass, SOURCE_FILE__PACKAGE_CLAUSE);
+    createEReference(sourceFileEClass, SOURCE_FILE__IMPORT_DECL);
+    createEReference(sourceFileEClass, SOURCE_FILE__TOP_LEVEL_DECL);
+
+    packageClauseEClass = createEClass(PACKAGE_CLAUSE);
+    createEAttribute(packageClauseEClass, PACKAGE_CLAUSE__PACKAGE);
+    createEReference(packageClauseEClass, PACKAGE_CLAUSE__PACKAGE_NAME);
+
+    packageNameEClass = createEClass(PACKAGE_NAME);
+    createEAttribute(packageNameEClass, PACKAGE_NAME__ID);
+
+    importDeclEClass = createEClass(IMPORT_DECL);
+    createEAttribute(importDeclEClass, IMPORT_DECL__IMPORTT);
+    createEReference(importDeclEClass, IMPORT_DECL__IMPORT_SPEC);
+    createEReference(importDeclEClass, IMPORT_DECL__IMPORT_SPEC1);
+
+    importSpecEClass = createEClass(IMPORT_SPEC);
+    createEReference(importSpecEClass, IMPORT_SPEC__PACKAGE_NAME);
+    createEAttribute(importSpecEClass, IMPORT_SPEC__STRING_LIT);
   }
 
   /**
@@ -177,7 +5828,542 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
 
     // Initialize classes and features; add operations and parameters
     initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getModel_Greetings(), ecorePackage.getEString(), "greetings", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getModel_Greetings(), this.getSourceFile(), null, "greetings", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(floaT_LITEClass, org.xtext.example.mydsl.myDsl.FLOAT_LIT.class, "FLOAT_LIT", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getFLOAT_LIT_DECIMALS(), ecorePackage.getEString(), "dECIMALS", null, 0, 1, org.xtext.example.mydsl.myDsl.FLOAT_LIT.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getFLOAT_LIT_DECIMALS1(), ecorePackage.getEString(), "dECIMALS1", null, 0, 1, org.xtext.example.mydsl.myDsl.FLOAT_LIT.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getFLOAT_LIT_EXPONENT(), ecorePackage.getEString(), "eXPONENT", null, 0, 1, org.xtext.example.mydsl.myDsl.FLOAT_LIT.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(imaginarY_LITEClass, org.xtext.example.mydsl.myDsl.IMAGINARY_LIT.class, "IMAGINARY_LIT", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getIMAGINARY_LIT_DECIMALS(), ecorePackage.getEString(), "dECIMALS", null, 0, 1, org.xtext.example.mydsl.myDsl.IMAGINARY_LIT.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIMAGINARY_LIT_FLOAT_LIT(), this.getFLOAT_LIT(), null, "fLOAT_LIT", null, 0, 1, org.xtext.example.mydsl.myDsl.IMAGINARY_LIT.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(typeEClass, Type.class, "Type", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getType_TypeName(), this.getTypeName(), null, "typeName", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getType_TypeLit(), this.getTypeLit(), null, "typeLit", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getType_Type(), this.getType(), null, "type", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(typeNameEClass, TypeName.class, "TypeName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getTypeName_Id(), ecorePackage.getEString(), "id", null, 0, 1, TypeName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(typeNameLinhaEClass, TypeNameLinha.class, "TypeNameLinha", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getTypeNameLinha_Id(), ecorePackage.getEString(), "id", null, 0, 1, TypeNameLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(typeLitEClass, TypeLit.class, "TypeLit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getTypeLit_TypeLitLinha(), this.getTypeLitLinha(), null, "typeLitLinha", null, 0, 1, TypeLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTypeLit_SrtuctType(), this.getStructType(), null, "srtuctType", null, 0, 1, TypeLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTypeLit_PointerType(), this.getPointerType(), null, "pointerType", null, 0, 1, TypeLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTypeLit_FunctionType(), this.getFunctionType(), null, "functionType", null, 0, 1, TypeLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTypeLit_InterfaceType(), this.getInterfaceType(), null, "interfaceType", null, 0, 1, TypeLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTypeLit_MapType(), this.getMapType(), null, "mapType", null, 0, 1, TypeLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTypeLit_ChannelType(), this.getChannelType(), null, "channelType", null, 0, 1, TypeLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(typeLitLinhaEClass, TypeLitLinha.class, "TypeLitLinha", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getTypeLitLinha_ArrayLength(), this.getArrayLength(), null, "arrayLength", null, 0, 1, TypeLitLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTypeLitLinha_ElementType(), this.getElementType(), null, "elementType", null, 0, 1, TypeLitLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(arrayLengthEClass, ArrayLength.class, "ArrayLength", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getArrayLength_Expression(), this.getExpression(), null, "expression", null, 0, 1, ArrayLength.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(elementTypeEClass, ElementType.class, "ElementType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getElementType_Type(), this.getType(), null, "type", null, 0, 1, ElementType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(structTypeEClass, StructType.class, "StructType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getStructType_Struct(), ecorePackage.getEString(), "struct", null, 0, 1, StructType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStructType_FieldDecl(), this.getFieldDecl(), null, "fieldDecl", null, 0, -1, StructType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(fieldDeclEClass, FieldDecl.class, "FieldDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getFieldDecl_IdentifierList(), this.getIdentifierList(), null, "identifierList", null, 0, 1, FieldDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFieldDecl_Type(), this.getType(), null, "type", null, 0, 1, FieldDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFieldDecl_EmbeddedField(), this.getEmbeddedField(), null, "embeddedField", null, 0, 1, FieldDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFieldDecl_Tag(), this.getTag(), null, "tag", null, 0, 1, FieldDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(embeddedFieldEClass, EmbeddedField.class, "EmbeddedField", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getEmbeddedField_TypeName(), this.getTypeName(), null, "typeName", null, 0, 1, EmbeddedField.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(tagEClass, Tag.class, "Tag", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getTag_String_lit(), ecorePackage.getEString(), "string_lit", null, 0, 1, Tag.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(pointerTypeEClass, PointerType.class, "PointerType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getPointerType_BaseType(), this.getBaseType(), null, "baseType", null, 0, 1, PointerType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(baseTypeEClass, BaseType.class, "BaseType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getBaseType_Type(), this.getType(), null, "type", null, 0, 1, BaseType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(functionTypeEClass, FunctionType.class, "FunctionType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getFunctionType_Func(), ecorePackage.getEString(), "func", null, 0, 1, FunctionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFunctionType_Signature(), this.getSignature(), null, "signature", null, 0, 1, FunctionType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(signatureEClass, Signature.class, "Signature", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getSignature_Parameters(), this.getParameters(), null, "parameters", null, 0, 1, Signature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSignature_Result(), this.getResult(), null, "result", null, 0, 1, Signature.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(resultEClass, Result.class, "Result", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getResult_Parameters(), this.getParameters(), null, "parameters", null, 0, 1, Result.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getResult_Type(), this.getType(), null, "type", null, 0, 1, Result.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(parametersEClass, Parameters.class, "Parameters", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getParameters_ParameterList(), this.getParameterList(), null, "parameterList", null, 0, 1, Parameters.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(parameterListEClass, ParameterList.class, "ParameterList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getParameterList_ParameterDecl(), this.getParameterDecl(), null, "parameterDecl", null, 0, 1, ParameterList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getParameterList_ParameterDecl1(), this.getParameterDecl(), null, "parameterDecl1", null, 0, -1, ParameterList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(parameterDeclEClass, ParameterDecl.class, "ParameterDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getParameterDecl_IdentifierList(), this.getIdentifierList(), null, "identifierList", null, 0, 1, ParameterDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getParameterDecl_Type(), this.getType(), null, "type", null, 0, 1, ParameterDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(interfaceTypeEClass, InterfaceType.class, "InterfaceType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getInterfaceType_Interface(), ecorePackage.getEString(), "interface", null, 0, 1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getInterfaceType_MethodSpec(), this.getMethodSpec(), null, "methodSpec", null, 0, -1, InterfaceType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(methodSpecEClass, MethodSpec.class, "MethodSpec", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getMethodSpec_MethodName(), this.getMethodName(), null, "methodName", null, 0, 1, MethodSpec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMethodSpec_Signature(), this.getSignature(), null, "Signature", null, 0, 1, MethodSpec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMethodSpec_InterfaceTypeName(), this.getInterfaceTypeName(), null, "interfaceTypeName", null, 0, 1, MethodSpec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(methodNameEClass, MethodName.class, "MethodName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getMethodName_Id(), ecorePackage.getEString(), "id", null, 0, 1, MethodName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(interfaceTypeNameEClass, InterfaceTypeName.class, "InterfaceTypeName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getInterfaceTypeName_TypeName(), this.getTypeName(), null, "typeName", null, 0, 1, InterfaceTypeName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(mapTypeEClass, MapType.class, "MapType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getMapType_Map(), ecorePackage.getEString(), "map", null, 0, 1, MapType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMapType_KeyType(), this.getKeyType(), null, "keyType", null, 0, 1, MapType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMapType_ElementType(), this.getElementType(), null, "elementType", null, 0, 1, MapType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(keyTypeEClass, KeyType.class, "KeyType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getKeyType_Type(), this.getType(), null, "type", null, 0, 1, KeyType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(channelTypeEClass, ChannelType.class, "ChannelType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getChannelType_Chan(), ecorePackage.getEString(), "chan", null, 0, 1, ChannelType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getChannelType_ChannelTypeLinha(), this.getChannelTypeLinha(), null, "channelTypeLinha", null, 0, 1, ChannelType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getChannelType_ElementType(), this.getElementType(), null, "elementType", null, 0, 1, ChannelType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(channelTypeLinhaEClass, ChannelTypeLinha.class, "ChannelTypeLinha", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getChannelTypeLinha_ANY_OTHER(), ecorePackage.getEString(), "aNY_OTHER", null, 0, 1, ChannelTypeLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(blockEClass, Block.class, "Block", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getBlock_StatementList(), this.getStatementList(), null, "statementList", null, 0, 1, Block.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(statementListEClass, StatementList.class, "StatementList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getStatementList_Statements(), this.getStatement(), null, "statements", null, 0, -1, StatementList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(declarationEClass, Declaration.class, "Declaration", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getDeclaration_ConstDecl(), this.getConstDecl(), null, "constDecl", null, 0, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDeclaration_TypeDecl(), this.getTypeDecl(), null, "typeDecl", null, 0, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDeclaration_VarDecl(), this.getVarDecl(), null, "varDecl", null, 0, 1, Declaration.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(topLevelDeclEClass, TopLevelDecl.class, "TopLevelDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getTopLevelDecl_Declaration(), this.getDeclaration(), null, "declaration", null, 0, 1, TopLevelDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTopLevelDecl_FunctionDecl(), this.getFunctionDecl(), null, "functionDecl", null, 0, 1, TopLevelDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTopLevelDecl_MethodDecl(), this.getMethodDecl(), null, "methodDecl", null, 0, 1, TopLevelDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(constDeclEClass, ConstDecl.class, "ConstDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getConstDecl_Const(), ecorePackage.getEString(), "const", null, 0, 1, ConstDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConstDecl_ConstSpec(), this.getConstSpec(), null, "constSpec", null, 0, 1, ConstDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConstDecl_ConstSpec1(), this.getConstSpec(), null, "constSpec1", null, 0, -1, ConstDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(constSpecEClass, ConstSpec.class, "ConstSpec", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getConstSpec_IdentifierList(), this.getIdentifierList(), null, "identifierList", null, 0, 1, ConstSpec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConstSpec_Type(), this.getType(), null, "type", null, 0, 1, ConstSpec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConstSpec_ExpressionList(), this.getExpressionList(), null, "expressionList", null, 0, 1, ConstSpec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(identifierListEClass, IdentifierList.class, "IdentifierList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getIdentifierList_Id(), ecorePackage.getEString(), "id", null, 0, 1, IdentifierList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getIdentifierList_Id1(), ecorePackage.getEString(), "id1", null, 0, -1, IdentifierList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(expressionListEClass, ExpressionList.class, "ExpressionList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getExpressionList_Expression(), this.getExpression(), null, "expression", null, 0, 1, ExpressionList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpressionList_Expression1(), this.getExpression(), null, "expression1", null, 0, -1, ExpressionList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(typeDeclEClass, TypeDecl.class, "TypeDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getTypeDecl_Typekeyword(), ecorePackage.getEString(), "typekeyword", null, 0, 1, TypeDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTypeDecl_TypeSpec(), this.getTypeSpec(), null, "typeSpec", null, 0, 1, TypeDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTypeDecl_TypeSpec1(), this.getTypeSpec(), null, "typeSpec1", null, 0, -1, TypeDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(typeSpecEClass, TypeSpec.class, "TypeSpec", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getTypeSpec_AliasDecl(), this.getAliasDecl(), null, "aliasDecl", null, 0, 1, TypeSpec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTypeSpec_TypeDef(), this.getTypeDef(), null, "typeDef", null, 0, 1, TypeSpec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(aliasDeclEClass, AliasDecl.class, "AliasDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getAliasDecl_Id(), ecorePackage.getEString(), "id", null, 0, 1, AliasDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAliasDecl_Type(), this.getType(), null, "type", null, 0, 1, AliasDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(typeDefEClass, TypeDef.class, "TypeDef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getTypeDef_Id(), ecorePackage.getEString(), "id", null, 0, 1, TypeDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTypeDef_Type(), this.getType(), null, "type", null, 0, 1, TypeDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(varDeclEClass, VarDecl.class, "VarDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getVarDecl_VarSpec(), this.getVarSpec(), null, "varSpec", null, 0, 1, VarDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getVarDecl_VarSpec1(), this.getVarSpec(), null, "varSpec1", null, 0, -1, VarDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(varSpecEClass, VarSpec.class, "VarSpec", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getVarSpec_IdentifierList(), this.getIdentifierList(), null, "IdentifierList", null, 0, 1, VarSpec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getVarSpec_Type(), this.getType(), null, "type", null, 0, 1, VarSpec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getVarSpec_ExpressionList(), this.getExpressionList(), null, "expressionList", null, 0, 1, VarSpec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(shortVarDeclEClass, ShortVarDecl.class, "ShortVarDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getShortVarDecl_IdentifierList(), this.getIdentifierList(), null, "identifierList", null, 0, 1, ShortVarDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getShortVarDecl_ExpressionList(), this.getExpressionList(), null, "expressionList", null, 0, 1, ShortVarDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(functionDeclEClass, FunctionDecl.class, "FunctionDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getFunctionDecl_FunctionName(), this.getFunctionName(), null, "functionName", null, 0, 1, FunctionDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFunctionDecl_Signature(), this.getSignature(), null, "signature", null, 0, 1, FunctionDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFunctionDecl_FunctionBody(), this.getFunctionBody(), null, "functionBody", null, 0, 1, FunctionDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(functionNameEClass, FunctionName.class, "FunctionName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getFunctionName_Id(), ecorePackage.getEString(), "id", null, 0, 1, FunctionName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(functionBodyEClass, FunctionBody.class, "FunctionBody", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getFunctionBody_Block(), this.getBlock(), null, "block", null, 0, 1, FunctionBody.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(methodDeclEClass, MethodDecl.class, "MethodDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getMethodDecl_Receiver(), this.getReceiver(), null, "receiver", null, 0, 1, MethodDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMethodDecl_MethodName(), this.getMethodName(), null, "methodName", null, 0, 1, MethodDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMethodDecl_Signature(), this.getSignature(), null, "signature", null, 0, 1, MethodDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMethodDecl_FunctionBody(), this.getFunctionBody(), null, "functionBody", null, 0, 1, MethodDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(receiverEClass, Receiver.class, "Receiver", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getReceiver_Parameters(), this.getParameters(), null, "parameters", null, 0, 1, Receiver.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(operandEClass, Operand.class, "Operand", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getOperand_Literal(), this.getLiteral(), null, "literal", null, 0, 1, Operand.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getOperand_OperandName(), this.getOperandName(), null, "operandName", null, 0, 1, Operand.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getOperand_Expression(), this.getExpression(), null, "expression", null, 0, 1, Operand.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(literalEClass, Literal.class, "Literal", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getLiteral_BasicLit(), this.getBasicLit(), null, "basicLit", null, 0, 1, Literal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLiteral_CompositeLit(), this.getCompositeLit(), null, "compositeLit", null, 0, 1, Literal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLiteral_FunctionLit(), this.getFunctionLit(), null, "functionLit", null, 0, 1, Literal.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(basicLitEClass, BasicLit.class, "BasicLit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getBasicLit_Int_lit(), ecorePackage.getEString(), "int_lit", null, 0, 1, BasicLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBasicLit_Float_lit(), this.getFLOAT_LIT(), null, "float_lit", null, 0, 1, BasicLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBasicLit_Imaginary_lit(), this.getIMAGINARY_LIT(), null, "imaginary_lit", null, 0, 1, BasicLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBasicLit_Rune_lit(), ecorePackage.getEString(), "rune_lit", null, 0, 1, BasicLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBasicLit_String_lit(), ecorePackage.getEString(), "string_lit", null, 0, 1, BasicLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(operandNameEClass, OperandName.class, "OperandName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getOperandName_Id(), ecorePackage.getEString(), "id", null, 0, 1, OperandName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(compositeLitEClass, CompositeLit.class, "CompositeLit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getCompositeLit_LiteralType(), this.getLiteralType(), null, "literalType", null, 0, 1, CompositeLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCompositeLit_LiteralValue(), this.getLiteralValue(), null, "literalValue", null, 0, 1, CompositeLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(literalTypeEClass, LiteralType.class, "LiteralType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getLiteralType_StructType(), this.getStructType(), null, "structType", null, 0, 1, LiteralType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLiteralType_MapType(), this.getMapType(), null, "mapType", null, 0, 1, LiteralType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLiteralType_TypeName(), this.getTypeName(), null, "typeName", null, 0, 1, LiteralType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLiteralType_LiteralTypeLinha(), this.getLiteralTypeLinha(), null, "literalTypeLinha", null, 0, 1, LiteralType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(literalTypeLinhaEClass, LiteralTypeLinha.class, "LiteralTypeLinha", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getLiteralTypeLinha_ArrayLength(), this.getArrayLength(), null, "arrayLength", null, 0, 1, LiteralTypeLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLiteralTypeLinha_ElementType(), this.getElementType(), null, "elementType", null, 0, 1, LiteralTypeLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(literalValueEClass, LiteralValue.class, "LiteralValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getLiteralValue_ElementList(), this.getElementList(), null, "elementList", null, 0, 1, LiteralValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(elementListEClass, ElementList.class, "ElementList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getElementList_KeyedElement(), this.getKeyedElement(), null, "keyedElement", null, 0, 1, ElementList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getElementList_KeyedElement1(), this.getKeyedElement(), null, "keyedElement1", null, 0, -1, ElementList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(keyedElementEClass, KeyedElement.class, "KeyedElement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getKeyedElement_Key(), this.getKey(), null, "key", null, 0, 1, KeyedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getKeyedElement_Element(), this.getElement(), null, "element", null, 0, 1, KeyedElement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(keyEClass, Key.class, "Key", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getKey_FieldName(), this.getFieldName(), null, "fieldName", null, 0, 1, Key.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getKey_Expression(), this.getExpression(), null, "expression", null, 0, 1, Key.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getKey_LiteralValue(), this.getLiteralValue(), null, "literalValue", null, 0, 1, Key.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(fieldNameEClass, FieldName.class, "FieldName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getFieldName_Id(), ecorePackage.getEString(), "id", null, 0, 1, FieldName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(elementEClass, Element.class, "Element", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getElement_Expression(), this.getExpression(), null, "expression", null, 0, 1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getElement_LiteralValue(), this.getLiteralValue(), null, "literalValue", null, 0, 1, Element.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(functionLitEClass, FunctionLit.class, "FunctionLit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getFunctionLit_Func(), ecorePackage.getEString(), "func", null, 0, 1, FunctionLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFunctionLit_Signature(), this.getSignature(), null, "signature", null, 0, 1, FunctionLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getFunctionLit_FunctionBody(), this.getFunctionBody(), null, "functionBody", null, 0, 1, FunctionLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(primaryExprEClass, PrimaryExpr.class, "PrimaryExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getPrimaryExpr_Operand(), this.getOperand(), null, "operand", null, 0, 1, PrimaryExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimaryExpr_PrimaryExprLinha(), this.getPrimaryExprLinha(), null, "primaryExprLinha", null, 0, 1, PrimaryExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimaryExpr_Conversion(), this.getConversion(), null, "conversion", null, 0, 1, PrimaryExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimaryExpr_MethodExpr(), this.getMethodExpr(), null, "methodExpr", null, 0, 1, PrimaryExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(primaryExprLinhaEClass, PrimaryExprLinha.class, "PrimaryExprLinha", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getPrimaryExprLinha_Selector(), this.getSelector(), null, "selector", null, 0, 1, PrimaryExprLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimaryExprLinha_PrimaryExprLinha(), this.getPrimaryExprLinha(), null, "primaryExprLinha", null, 0, 1, PrimaryExprLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimaryExprLinha_Index(), this.getIndex(), null, "index", null, 0, 1, PrimaryExprLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimaryExprLinha_Slice(), this.getSlice(), null, "slice", null, 0, 1, PrimaryExprLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimaryExprLinha_TypeAssertion(), this.getTypeAssertion(), null, "typeAssertion", null, 0, 1, PrimaryExprLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPrimaryExprLinha_Arguments(), this.getArguments(), null, "arguments", null, 0, 1, PrimaryExprLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(selectorEClass, Selector.class, "Selector", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getSelector_Id(), ecorePackage.getEString(), "id", null, 0, 1, Selector.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(indexEClass, Index.class, "Index", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getIndex_Expression(), this.getExpression(), null, "expression", null, 0, 1, Index.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(sliceEClass, Slice.class, "Slice", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getSlice_Expression(), this.getExpression(), null, "expression", null, 0, 1, Slice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSlice_Expression1(), this.getExpression(), null, "expression1", null, 0, 1, Slice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSlice_Expression2(), this.getExpression(), null, "expression2", null, 0, 1, Slice.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(typeAssertionEClass, TypeAssertion.class, "TypeAssertion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getTypeAssertion_Type(), this.getType(), null, "type", null, 0, 1, TypeAssertion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(argumentsEClass, Arguments.class, "Arguments", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getArguments_ExpressionList(), this.getExpressionList(), null, "expressionList", null, 0, 1, Arguments.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getArguments_Type(), this.getType(), null, "type", null, 0, 1, Arguments.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(methodExprEClass, MethodExpr.class, "MethodExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getMethodExpr_ReceiverType(), this.getReceiverType(), null, "receiverType", null, 0, 1, MethodExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMethodExpr_MethodName(), this.getMethodName(), null, "methodName", null, 0, 1, MethodExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(receiverTypeEClass, ReceiverType.class, "ReceiverType", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getReceiverType_Type(), this.getType(), null, "type", null, 0, 1, ReceiverType.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(expressionEClass, Expression.class, "Expression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getExpression_UnaryExpr(), this.getUnaryExpr(), null, "unaryExpr", null, 0, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression_Expression_Linha(), this.getExpression_Linha(), null, "expression_Linha", null, 0, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(expression_LinhaEClass, Expression_Linha.class, "Expression_Linha", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getExpression_Linha_BINARY_OP(), this.getBINARY_OP(), null, "BINARY_OP", null, 0, 1, Expression_Linha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression_Linha_Expression(), this.getExpression(), null, "expression", null, 0, 1, Expression_Linha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression_Linha_Expression_Linha(), this.getExpression_Linha(), null, "expression_Linha", null, 0, 1, Expression_Linha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(unaryExprEClass, UnaryExpr.class, "UnaryExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getUnaryExpr_PrimaryExpr(), this.getPrimaryExpr(), null, "primaryExpr", null, 0, 1, UnaryExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getUnaryExpr_UnaryExpr(), this.getUnaryExpr(), null, "unaryExpr", null, 0, 1, UnaryExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(binarY_OPEClass, org.xtext.example.mydsl.myDsl.BINARY_OP.class, "BINARY_OP", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getBINARY_OP_Or(), ecorePackage.getEString(), "or", null, 0, 1, org.xtext.example.mydsl.myDsl.BINARY_OP.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBINARY_OP_And(), ecorePackage.getEString(), "and", null, 0, 1, org.xtext.example.mydsl.myDsl.BINARY_OP.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBINARY_OP_REL_OP(), ecorePackage.getEString(), "rEL_OP", null, 0, 1, org.xtext.example.mydsl.myDsl.BINARY_OP.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBINARY_OP_ADD_OP(), ecorePackage.getEString(), "aDD_OP", null, 0, 1, org.xtext.example.mydsl.myDsl.BINARY_OP.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBINARY_OP_MUL_OP(), ecorePackage.getEString(), "mUL_OP", null, 0, 1, org.xtext.example.mydsl.myDsl.BINARY_OP.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(conversionEClass, Conversion.class, "Conversion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getConversion_Type(), this.getType(), null, "type", null, 0, 1, Conversion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getConversion_Expression(), this.getExpression(), null, "expression", null, 0, 1, Conversion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(statementEClass, Statement.class, "Statement", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getStatement_Declaration(), this.getDeclaration(), null, "declaration", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStatement_LabeledStmt(), this.getLabeledStmt(), null, "labeledStmt", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStatement_SimpleStmt(), this.getSimpleStmt(), null, "simpleStmt", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStatement_GoStmt(), this.getGoStmt(), null, "goStmt", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStatement_ReturnStmt(), this.getReturnStmt(), null, "returnStmt", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStatement_BreakStmt(), this.getBreakStmt(), null, "breakStmt", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStatement_ContinueStmt(), this.getContinueStmt(), null, "continueStmt", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStatement_GotoStmt(), this.getGotoStmt(), null, "gotoStmt", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStatement_FallthroughStmt(), this.getFallthroughStmt(), null, "fallthroughStmt", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStatement_Block(), this.getBlock(), null, "block", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStatement_IfStmt(), this.getIfStmt(), null, "ifStmt", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStatement_SwitchStmt(), this.getSwitchStmt(), null, "switchStmt", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStatement_SelectStmt(), this.getSelectStmt(), null, "selectStmt", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStatement_ForStmt(), this.getForStmt(), null, "forStmt", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStatement_DeferStmt(), this.getDeferStmt(), null, "deferStmt", null, 0, 1, Statement.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(simpleStmtEClass, SimpleStmt.class, "SimpleStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getSimpleStmt_EmptyStmt(), this.getEmptyStmt(), null, "emptyStmt", null, 0, 1, SimpleStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSimpleStmt_Expression(), this.getExpression(), null, "expression", null, 0, 1, SimpleStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSimpleStmt_SimpleStmtLinha(), this.getSimpleStmtLinha(), null, "simpleStmtLinha", null, 0, 1, SimpleStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSimpleStmt_ShortVarDecl(), this.getShortVarDecl(), null, "shortVarDecl", null, 0, 1, SimpleStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(simpleStmtLinhaEClass, SimpleStmtLinha.class, "SimpleStmtLinha", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getSimpleStmtLinha_Expression(), this.getExpression(), null, "expression", null, 0, 1, SimpleStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSimpleStmtLinha_Expression1(), this.getExpression(), null, "expression1", null, 0, -1, SimpleStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSimpleStmtLinha_Assign_op(), this.getassign_op(), null, "assign_op", null, 0, 1, SimpleStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSimpleStmtLinha_ExpressionList(), this.getExpressionList(), null, "expressionList", null, 0, 1, SimpleStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSimpleStmtLinha_ANY_OTHER(), ecorePackage.getEString(), "aNY_OTHER", null, 0, 1, SimpleStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(emptyStmtEClass, EmptyStmt.class, "EmptyStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getEmptyStmt_ANY_OTHER(), ecorePackage.getEString(), "aNY_OTHER", null, 0, 1, EmptyStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(labeledStmtEClass, LabeledStmt.class, "LabeledStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getLabeledStmt_Label(), this.getLabel(), null, "label", null, 0, 1, LabeledStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLabeledStmt_Statement(), this.getStatement(), null, "statement", null, 0, 1, LabeledStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(labelEClass, Label.class, "Label", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getLabel_Id(), ecorePackage.getEString(), "id", null, 0, 1, Label.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(assign_opEClass, assign_op.class, "assign_op", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getassign_op_ADD_OP(), ecorePackage.getEString(), "aDD_OP", null, 0, 1, assign_op.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getassign_op_MUL_OP(), ecorePackage.getEString(), "mUL_OP", null, 0, 1, assign_op.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(ifStmtEClass, IfStmt.class, "IfStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getIfStmt_If(), ecorePackage.getEString(), "if", null, 0, 1, IfStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIfStmt_Expression(), this.getExpression(), null, "expression", null, 0, 1, IfStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIfStmt_IfStmtLinha(), this.getIfStmtLinha(), null, "ifStmtLinha", null, 0, 1, IfStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIfStmt_EmptyStmt(), this.getEmptyStmt(), null, "emptyStmt", null, 0, 1, IfStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIfStmt_ShortVarDecl(), this.getShortVarDecl(), null, "shortVarDecl", null, 0, 1, IfStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIfStmt_Block(), this.getBlock(), null, "block", null, 0, 1, IfStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getIfStmt_Else(), ecorePackage.getEString(), "else", null, 0, 1, IfStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIfStmt_IfStmt(), this.getIfStmt(), null, "ifStmt", null, 0, 1, IfStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIfStmt_Block1(), this.getBlock(), null, "block1", null, 0, 1, IfStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(ifStmtLinhaEClass, IfStmtLinha.class, "IfStmtLinha", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getIfStmtLinha_SimpleStmtLinha(), this.getSimpleStmtLinha(), null, "simpleStmtLinha", null, 0, 1, IfStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIfStmtLinha_Expression(), this.getExpression(), null, "expression", null, 0, 1, IfStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIfStmtLinha_Block(), this.getBlock(), null, "block", null, 0, 1, IfStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getIfStmtLinha_Else(), ecorePackage.getEString(), "else", null, 0, 1, IfStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIfStmtLinha_IfStmt(), this.getIfStmt(), null, "ifStmt", null, 0, 1, IfStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getIfStmtLinha_Block1(), this.getBlock(), null, "block1", null, 0, 1, IfStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(switchStmtEClass, SwitchStmt.class, "SwitchStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getSwitchStmt_Switch(), ecorePackage.getEString(), "switch", null, 0, 1, SwitchStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSwitchStmt_SimpleStmt(), this.getSimpleStmt(), null, "simpleStmt", null, 0, 1, SwitchStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSwitchStmt_SwitchStmtLinha(), this.getSwitchStmtLinha(), null, "switchStmtLinha", null, 0, 1, SwitchStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(switchStmtLinhaEClass, SwitchStmtLinha.class, "SwitchStmtLinha", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getSwitchStmtLinha_PrimaryExpr(), this.getPrimaryExpr(), null, "primaryExpr", null, 0, 1, SwitchStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSwitchStmtLinha_SwitchStmtLinhaLinha(), this.getSwitchStmtLinhaLinha(), null, "switchStmtLinhaLinha", null, 0, 1, SwitchStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSwitchStmtLinha_Unary_op(), ecorePackage.getEString(), "unary_op", null, 0, 1, SwitchStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSwitchStmtLinha_UnaryExpr(), this.getUnaryExpr(), null, "unaryExpr", null, 0, 1, SwitchStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSwitchStmtLinha_Expression(), this.getExpression_Linha(), null, "expression", null, 0, 1, SwitchStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSwitchStmtLinha_ExprCaseClause(), this.getExprCaseClause(), null, "exprCaseClause", null, 0, -1, SwitchStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSwitchStmtLinha_Id(), ecorePackage.getEString(), "id", null, 0, 1, SwitchStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSwitchStmtLinha_Typekeyword(), ecorePackage.getEString(), "typekeyword", null, 0, 1, SwitchStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSwitchStmtLinha_TypeCaseClause(), this.getTypeCaseClause(), null, "typeCaseClause", null, 0, -1, SwitchStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(switchStmtLinhaLinhaEClass, SwitchStmtLinhaLinha.class, "SwitchStmtLinhaLinha", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getSwitchStmtLinhaLinha_ExprCaseClause(), this.getExprCaseClause(), null, "exprCaseClause", null, 0, -1, SwitchStmtLinhaLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getSwitchStmtLinhaLinha_Typekeyword(), ecorePackage.getEString(), "typekeyword", null, 0, 1, SwitchStmtLinhaLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSwitchStmtLinhaLinha_TypeCaseClause(), this.getTypeCaseClause(), null, "typeCaseClause", null, 0, -1, SwitchStmtLinhaLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(exprCaseClauseEClass, ExprCaseClause.class, "ExprCaseClause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getExprCaseClause_ExprSwitchCase(), this.getExprSwitchCase(), null, "exprSwitchCase", null, 0, 1, ExprCaseClause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExprCaseClause_StatementList(), this.getStatementList(), null, "statementList", null, 0, 1, ExprCaseClause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(exprSwitchCaseEClass, ExprSwitchCase.class, "ExprSwitchCase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getExprSwitchCase_Case(), ecorePackage.getEString(), "case", null, 0, 1, ExprSwitchCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExprSwitchCase_ExpressionList(), this.getExpressionList(), null, "expressionList", null, 0, 1, ExprSwitchCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getExprSwitchCase_Default(), ecorePackage.getEString(), "default", null, 0, 1, ExprSwitchCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(typeCaseClauseEClass, TypeCaseClause.class, "TypeCaseClause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getTypeCaseClause_TypeSwitchCase(), this.getTypeSwitchCase(), null, "typeSwitchCase", null, 0, 1, TypeCaseClause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTypeCaseClause_StatementList(), this.getStatementList(), null, "statementList", null, 0, 1, TypeCaseClause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(typeSwitchCaseEClass, TypeSwitchCase.class, "TypeSwitchCase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getTypeSwitchCase_Case(), ecorePackage.getEString(), "case", null, 0, 1, TypeSwitchCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTypeSwitchCase_TypeList(), this.getTypeList(), null, "typeList", null, 0, 1, TypeSwitchCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTypeSwitchCase_Default(), ecorePackage.getEString(), "default", null, 0, 1, TypeSwitchCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(typeListEClass, TypeList.class, "TypeList", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getTypeList_Type(), this.getType(), null, "type", null, 0, 1, TypeList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTypeList_Type1(), this.getType(), null, "type1", null, 0, -1, TypeList.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(forStmtEClass, ForStmt.class, "ForStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getForStmt_For(), ecorePackage.getEString(), "for", null, 0, 1, ForStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getForStmt_Expression(), this.getExpression(), null, "expression", null, 0, 1, ForStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getForStmt_ForStmtLinha(), this.getForStmtLinha(), null, "forStmtLinha", null, 0, 1, ForStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getForStmt_EmptyStmt(), this.getEmptyStmt(), null, "emptyStmt", null, 0, 1, ForStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getForStmt_ShortVarDecl(), this.getShortVarDecl(), null, "shortVarDecl", null, 0, 1, ForStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getForStmt_Condition(), this.getCondition(), null, "condition", null, 0, 1, ForStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getForStmt_PostStmt(), this.getPostStmt(), null, "postStmt", null, 0, 1, ForStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getForStmt_IdentifierList(), this.getIdentifierList(), null, "identifierList", null, 0, 1, ForStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getForStmt_Range(), ecorePackage.getEString(), "range", null, 0, 1, ForStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getForStmt_Block(), this.getBlock(), null, "block", null, 0, 1, ForStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(forStmtLinhaEClass, ForStmtLinha.class, "ForStmtLinha", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getForStmtLinha_Vazio(), ecorePackage.getEString(), "vazio", null, 0, 1, ForStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getForStmtLinha_Expression(), this.getExpression(), null, "expression", null, 0, -1, ForStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getForStmtLinha_ForStmtLinhaLinha(), this.getForStmtLinhaLinha(), null, "forStmtLinhaLinha", null, 0, 1, ForStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getForStmtLinha_Expression1(), this.getExpression(), null, "expression1", null, 0, 1, ForStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getForStmtLinha_Condition(), this.getCondition(), null, "condition", null, 0, 1, ForStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getForStmtLinha_PostStmt(), this.getPostStmt(), null, "postStmt", null, 0, 1, ForStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(forStmtLinhaLinhaEClass, ForStmtLinhaLinha.class, "ForStmtLinhaLinha", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getForStmtLinhaLinha_Assign_op(), this.getassign_op(), null, "assign_op", null, 0, 1, ForStmtLinhaLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getForStmtLinhaLinha_ExpressionList(), this.getExpressionList(), null, "expressionList", null, 0, 1, ForStmtLinhaLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getForStmtLinhaLinha_Condition(), this.getCondition(), null, "condition", null, 0, 1, ForStmtLinhaLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getForStmtLinhaLinha_PostStmt(), this.getPostStmt(), null, "postStmt", null, 0, 1, ForStmtLinhaLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getForStmtLinhaLinha_Range(), ecorePackage.getEString(), "range", null, 0, 1, ForStmtLinhaLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getForStmtLinhaLinha_Expression(), this.getExpression(), null, "expression", null, 0, 1, ForStmtLinhaLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(conditionEClass, Condition.class, "Condition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getCondition_Expression(), this.getExpression(), null, "expression", null, 0, 1, Condition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(postStmtEClass, PostStmt.class, "PostStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getPostStmt_SimpleStmt(), this.getSimpleStmt(), null, "simpleStmt", null, 0, 1, PostStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(goStmtEClass, GoStmt.class, "GoStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getGoStmt_Go(), ecorePackage.getEString(), "go", null, 0, 1, GoStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getGoStmt_Expression(), this.getExpression(), null, "expression", null, 0, 1, GoStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(selectStmtEClass, SelectStmt.class, "SelectStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getSelectStmt_Select(), ecorePackage.getEString(), "select", null, 0, 1, SelectStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSelectStmt_CommClause(), this.getCommClause(), null, "commClause", null, 0, -1, SelectStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(commClauseEClass, CommClause.class, "CommClause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getCommClause_CommCase(), this.getCommCase(), null, "commCase", null, 0, 1, CommClause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCommClause_StatementList(), this.getStatementList(), null, "statementList", null, 0, 1, CommClause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(commCaseEClass, CommCase.class, "CommCase", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getCommCase_Case(), ecorePackage.getEString(), "case", null, 0, 1, CommCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCommCase_Expression(), this.getExpression(), null, "expression", null, 0, 1, CommCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCommCase_CommCaseLinha(), this.getCommCaseLinha(), null, "commCaseLinha", null, 0, 1, CommCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getCommCase_Default(), ecorePackage.getEString(), "default", null, 0, 1, CommCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(commCaseLinhaEClass, CommCaseLinha.class, "CommCaseLinha", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getCommCaseLinha_Expression(), this.getExpression(), null, "expression", null, 0, 1, CommCaseLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCommCaseLinha_Expression1(), this.getExpression(), null, "expression1", null, 0, -1, CommCaseLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCommCaseLinha_IdentifierList(), this.getIdentifierList(), null, "identifierList", null, 0, 1, CommCaseLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCommCaseLinha_RecvExpr(), this.getRecvExpr(), null, "recvExpr", null, 0, 1, CommCaseLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(recvExprEClass, RecvExpr.class, "RecvExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getRecvExpr_Expression(), this.getExpression(), null, "expression", null, 0, 1, RecvExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(returnStmtEClass, ReturnStmt.class, "ReturnStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getReturnStmt_Return(), ecorePackage.getEString(), "return", null, 0, 1, ReturnStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getReturnStmt_ExpressionList(), this.getExpressionList(), null, "expressionList", null, 0, 1, ReturnStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(breakStmtEClass, BreakStmt.class, "BreakStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getBreakStmt_Break(), ecorePackage.getEString(), "break", null, 0, 1, BreakStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getBreakStmt_Label(), this.getLabel(), null, "label", null, 0, 1, BreakStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(continueStmtEClass, ContinueStmt.class, "ContinueStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getContinueStmt_Continue(), ecorePackage.getEString(), "continue", null, 0, 1, ContinueStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getContinueStmt_Label(), this.getLabel(), null, "label", null, 0, 1, ContinueStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(gotoStmtEClass, GotoStmt.class, "GotoStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getGotoStmt_Goto(), ecorePackage.getEString(), "goto", null, 0, 1, GotoStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getGotoStmt_Label(), this.getLabel(), null, "label", null, 0, 1, GotoStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(fallthroughStmtEClass, FallthroughStmt.class, "FallthroughStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getFallthroughStmt_Fallthrough(), ecorePackage.getEString(), "fallthrough", null, 0, 1, FallthroughStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(deferStmtEClass, DeferStmt.class, "DeferStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getDeferStmt_Defer(), ecorePackage.getEString(), "defer", null, 0, 1, DeferStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDeferStmt_Expression(), this.getExpression(), null, "expression", null, 0, 1, DeferStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(sourceFileEClass, SourceFile.class, "SourceFile", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getSourceFile_PackageClause(), this.getPackageClause(), null, "packageClause", null, 0, 1, SourceFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSourceFile_ImportDecl(), this.getImportDecl(), null, "importDecl", null, 0, -1, SourceFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSourceFile_TopLevelDecl(), this.getTopLevelDecl(), null, "topLevelDecl", null, 0, -1, SourceFile.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(packageClauseEClass, PackageClause.class, "PackageClause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getPackageClause_Package(), ecorePackage.getEString(), "package", null, 0, 1, PackageClause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPackageClause_PackageName(), this.getPackageName(), null, "packageName", null, 0, 1, PackageClause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(packageNameEClass, PackageName.class, "PackageName", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getPackageName_Id(), ecorePackage.getEString(), "id", null, 0, 1, PackageName.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(importDeclEClass, ImportDecl.class, "ImportDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getImportDecl_Importt(), ecorePackage.getEString(), "importt", null, 0, 1, ImportDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getImportDecl_ImportSpec(), this.getImportSpec(), null, "importSpec", null, 0, 1, ImportDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getImportDecl_ImportSpec1(), this.getImportSpec(), null, "importSpec1", null, 0, -1, ImportDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(importSpecEClass, ImportSpec.class, "ImportSpec", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getImportSpec_PackageName(), this.getPackageName(), null, "packageName", null, 0, 1, ImportSpec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getImportSpec_STRING_LIT(), ecorePackage.getEString(), "sTRING_LIT", null, 0, 1, ImportSpec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

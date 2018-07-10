@@ -3,11 +3,16 @@
  */
 package org.xtext.example.mydsl;
 
+import org.eclipse.xtext.parser.antlr.ISyntaxErrorMessageProvider;
 import org.xtext.example.mydsl.AbstractMyDslRuntimeModule;
+import org.xtext.example.mydsl.MyDslSyntaxErrorMessageProvider;
 
 /**
  * Use this class to register components to be used at runtime / without the Equinox extension registry.
  */
 @SuppressWarnings("all")
 public class MyDslRuntimeModule extends AbstractMyDslRuntimeModule {
+  public Class<? extends ISyntaxErrorMessageProvider> bindISyntaxErrorMessageProvider() {
+    return MyDslSyntaxErrorMessageProvider.class;
+  }
 }

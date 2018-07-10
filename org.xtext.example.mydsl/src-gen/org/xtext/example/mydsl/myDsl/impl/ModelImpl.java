@@ -5,16 +5,21 @@ package org.xtext.example.mydsl.myDsl.impl;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.NotificationChain;
+
 import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EDataTypeEList;
+import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.xtext.example.mydsl.myDsl.Model;
 import org.xtext.example.mydsl.myDsl.MyDslPackage;
+import org.xtext.example.mydsl.myDsl.SourceFile;
 
 /**
  * <!-- begin-user-doc -->
@@ -32,14 +37,14 @@ import org.xtext.example.mydsl.myDsl.MyDslPackage;
 public class ModelImpl extends MinimalEObjectImpl.Container implements Model
 {
   /**
-   * The cached value of the '{@link #getGreetings() <em>Greetings</em>}' attribute list.
+   * The cached value of the '{@link #getGreetings() <em>Greetings</em>}' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getGreetings()
    * @generated
    * @ordered
    */
-  protected EList<String> greetings;
+  protected EList<SourceFile> greetings;
 
   /**
    * <!-- begin-user-doc -->
@@ -67,13 +72,29 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<String> getGreetings()
+  public EList<SourceFile> getGreetings()
   {
     if (greetings == null)
     {
-      greetings = new EDataTypeEList<String>(String.class, this, MyDslPackage.MODEL__GREETINGS);
+      greetings = new EObjectContainmentEList<SourceFile>(SourceFile.class, this, MyDslPackage.MODEL__GREETINGS);
     }
     return greetings;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
+  {
+    switch (featureID)
+    {
+      case MyDslPackage.MODEL__GREETINGS:
+        return ((InternalEList<?>)getGreetings()).basicRemove(otherEnd, msgs);
+    }
+    return super.eInverseRemove(otherEnd, featureID, msgs);
   }
 
   /**
@@ -105,7 +126,7 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
     {
       case MyDslPackage.MODEL__GREETINGS:
         getGreetings().clear();
-        getGreetings().addAll((Collection<? extends String>)newValue);
+        getGreetings().addAll((Collection<? extends SourceFile>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -142,23 +163,6 @@ public class ModelImpl extends MinimalEObjectImpl.Container implements Model
         return greetings != null && !greetings.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (greetings: ");
-    result.append(greetings);
-    result.append(')');
-    return result.toString();
   }
 
 } //ModelImpl

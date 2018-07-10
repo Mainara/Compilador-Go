@@ -5,60 +5,27 @@ grammar DebugInternalMyDsl;
 
 // Rule Model
 ruleModel:
-	ruleGreeting
-	*
-;
-
-// Rule Greeting
-ruleGreeting:
 	ruleSourceFile
+	*
 ;
 
 // Rule FLOAT_LIT
 ruleFLOAT_LIT:
 	(
 		RULE_DECIMALS
-		ruleFLOAT_LIT_Linha
-		    |
-		RULE_DECIMALS
 		'.'
 		RULE_DECIMALS
-		ruleFLOAT_LIT_Linha_Linha
+		?
+		RULE_EXPONENT
+		?
 		    |
 		RULE_DECIMALS
-		'.'
-		ruleFLOAT_LIT_Linha_Linha_Linha
+		RULE_EXPONENT
 		    |
 		'.'
 		RULE_DECIMALS
 		RULE_EXPONENT
-	)
-;
-
-// Rule FLOAT_LIT_Linha_Linha_Linha
-ruleFLOAT_LIT_Linha_Linha_Linha:
-	(
-		RULE_EXPONENT
-		    |
-		RULE_ANY_OTHER
-	)
-;
-
-// Rule FLOAT_LIT_Linha_Linha
-ruleFLOAT_LIT_Linha_Linha:
-	(
-		RULE_EXPONENT
-		    |
-		RULE_ANY_OTHER
-	)
-;
-
-// Rule FLOAT_LIT_Linha
-ruleFLOAT_LIT_Linha:
-	(
-		RULE_EXPONENT
-		    |
-		RULE_ANY_OTHER
+		?
 	)
 ;
 
@@ -87,22 +54,6 @@ ruleType:
 
 // Rule TypeName
 ruleTypeName:
-	RULE_IDENTIFIER
-	ruleTypeNameLinha
-;
-
-// Rule TypeNameLinha
-ruleTypeNameLinha:
-	(
-		'.'
-		RULE_IDENTIFIER
-		    |
-		RULE_ANY_OTHER
-	)
-;
-
-// Rule PackageName
-rulePackageName:
 	RULE_IDENTIFIER
 ;
 
@@ -152,10 +103,8 @@ ruleElementType:
 ruleStructType:
 	RULE_STRUCT
 	'{'
-	(
-		ruleFieldDecl
-		';'
-	)*
+	ruleFieldDecl
+	*
 	'}'
 ;
 
@@ -167,7 +116,8 @@ ruleFieldDecl:
 		    |
 		ruleEmbeddedField
 	)
-	ruleTag?
+	ruleTag
+	?
 ;
 
 // Rule EmbeddedField
@@ -194,26 +144,21 @@ ruleBaseType:
 
 // Rule FunctionType
 ruleFunctionType:
-	RULE_FUNC
+	'func'
 	ruleSignature
 ;
 
 // Rule Signature
 ruleSignature:
 	ruleParameters
-	(
-		(ruleResult)=>
-		ruleResult
-	)?
+	ruleResult
+	?
 ;
 
 // Rule Result
 ruleResult:
 	(
-		(
-			(ruleParameters)=>
-			ruleParameters
-		)
+		ruleParameters
 		    |
 		ruleType
 	)
@@ -222,10 +167,8 @@ ruleResult:
 // Rule Parameters
 ruleParameters:
 	'('
-	(
-		ruleParameterList
-		','?
-	)?
+	ruleParameterList
+	?
 	')'
 ;
 
@@ -240,7 +183,8 @@ ruleParameterList:
 
 // Rule ParameterDecl
 ruleParameterDecl:
-	ruleIdentifierList?
+	ruleIdentifierList
+	?
 	'...'?
 	ruleType
 ;
@@ -250,7 +194,7 @@ ruleInterfaceType:
 	RULE_INTERFACE
 	'{'
 	ruleMethodSpec
-	';'
+	*
 	'}'
 ;
 
@@ -309,282 +253,6 @@ ruleChannelTypeLinha:
 	)
 ;
 
-// Rule Expression
-ruleExpression:
-	ruleUnaryExpr
-	ruleExpression_Linha
-;
-
-// Rule Expression_Linha
-ruleExpression_Linha:
-	(
-		rulebinary_op
-		ruleExpression
-		ruleExpression_Linha
-		    |
-		RULE_ANY_OTHER
-	)
-;
-
-// Rule UnaryExpr
-ruleUnaryExpr:
-	(
-		rulePrimaryExpr
-		    |
-		RULE_UNARY_OP
-		ruleUnaryExpr
-	)
-;
-
-// Rule binary_op
-rulebinary_op:
-	(
-		'||'
-		    |
-		'&&'
-		    |
-		RULE_REL_OP
-		    |
-		RULE_ADD_OP
-		    |
-		RULE_MUL_OP
-	)
-;
-
-// Rule PrimaryExpr
-rulePrimaryExpr:
-	(
-		ruleBasicLit
-		rulePrimaryExprLinha
-		    |
-		ruleStructType
-		rulePrimaryExprFatFatFatFat
-		    |
-		ruleMapType
-		rulePrimaryExprFatFatFatFat
-		    |
-		RULE_FUNC
-		ruleSignature
-		rulePrimaryExprFatFatFatFatFat
-		rulePrimaryExprLinha
-		    |
-		'...'
-		']'
-		ruleElementType
-		ruleLiteralValue
-		rulePrimaryExprLinha
-		    |
-		ruleName
-		rulePrimaryExprFatFatFat
-		rulePrimaryExprLinha
-		    |
-		'('
-		rulePrimaryExprFatFat
-		rulePrimaryExprLinha
-		    |
-		'['
-		ruleTypeLitLinha
-		rulePrimaryExprFatFatFatFatFatFat
-		rulePrimaryExprLinha
-		    |
-		rulePointerType
-		rulePrimaryExprFat
-		rulePrimaryExprLinha
-		    |
-		ruleInterfaceType
-		rulePrimaryExprFat
-		rulePrimaryExprLinha
-		    |
-		ruleChannelType
-		rulePrimaryExprFat
-		rulePrimaryExprLinha
-	)
-;
-
-// Rule PrimaryExprFatFatFatFatFatFat
-rulePrimaryExprFatFatFatFatFatFat:
-	(
-		ruleLiteralValue
-		    |
-		rulePrimaryExprFat
-	)
-;
-
-// Rule PrimaryExprFatFatFatFatFat
-rulePrimaryExprFatFatFatFatFat:
-	(
-		ruleFunctionBody
-		    |
-		rulePrimaryExprFat
-	)
-;
-
-// Rule PrimaryExprFatFatFatFat
-rulePrimaryExprFatFatFatFat:
-	(
-		ruleLiteralValue
-		    |
-		rulePrimaryExprFat
-	)
-;
-
-// Rule PrimaryExprFatFatFat
-rulePrimaryExprFatFatFat:
-	(
-		ruleLiteralValue
-		    |
-		rulePrimaryExprFat
-		    |
-		RULE_ANY_OTHER
-	)
-;
-
-// Rule Name
-ruleName:
-	RULE_IDENTIFIER
-	ruleNameLinha
-;
-
-// Rule NameLinha
-ruleNameLinha:
-	(
-		'.'
-		RULE_IDENTIFIER
-		    |
-		RULE_ANY_OTHER
-	)
-;
-
-// Rule PrimaryExprFatFat
-rulePrimaryExprFatFat:
-	(
-		(
-			(ruleExpression)=>
-			ruleExpression
-		)
-		')'
-		    |
-		ruleType
-		')'
-		rulePrimaryExprFat
-	)
-;
-
-// Rule PrimaryExprFat
-rulePrimaryExprFat:
-	(
-		'('
-		ruleExpression
-		','?
-		')'
-		    |
-		'.'
-		ruleMethodName
-	)
-;
-
-// Rule PrimaryExprLinha
-rulePrimaryExprLinha:
-	(
-		'.'
-		rulePrimaryExprLinhaLinha
-		rulePrimaryExprLinha
-		    |
-		'['
-		rulePrimaryExprLinhaLinhaLinha
-		rulePrimaryExprLinha
-		    |
-		ruleArguments
-		rulePrimaryExprLinha
-	)
-;
-
-// Rule PrimaryExprLinhaLinha
-rulePrimaryExprLinhaLinha:
-	(
-		RULE_IDENTIFIER
-		    |
-		'('
-		ruleType
-		')'
-	)
-;
-
-// Rule PrimaryExprLinhaLinhaLinha
-rulePrimaryExprLinhaLinhaLinha:
-	(
-		ruleExpression
-		rulePrimaryExprLinhaLinhaLinhaLinha
-		    |
-		':'
-		ruleSliceLinha
-	)
-;
-
-// Rule PrimaryExprLinhaLinhaLinhaLinha
-rulePrimaryExprLinhaLinhaLinhaLinha:
-	(
-		']'
-		    |
-		':'
-		ruleSliceLinha
-	)
-;
-
-// Rule SliceLinha
-ruleSliceLinha:
-	(
-		':'
-		ruleExpression?
-		']'
-		    |
-		ruleExpression
-		':'
-		ruleExpression
-		']'
-	)
-;
-
-// Rule Arguments
-ruleArguments:
-	'('
-	(
-		(
-			(
-				(ruleExpressionList)=>
-				ruleExpressionList
-			)
-			    |
-			ruleType
-			(
-				','
-				ruleExpressionList
-			)?
-		)
-		'...'?
-		','?
-	)?
-	')'
-;
-
-// Rule ExpressionList
-ruleExpressionList:
-	ruleExpression
-	(
-		','
-		ruleExpression
-	)*
-;
-
-// Rule IdentifierList
-ruleIdentifierList:
-	RULE_IDENTIFIER
-	(
-		','
-		RULE_IDENTIFIER
-	)*
-;
-
 // Rule Block
 ruleBlock:
 	'{'
@@ -598,6 +266,471 @@ ruleStatementList:
 		ruleStatement
 		';'
 	)*
+;
+
+// Rule Declaration
+ruleDeclaration:
+	(
+		ruleConstDecl
+		    |
+		ruleTypeDecl
+		    |
+		ruleVarDecl
+	)
+;
+
+// Rule TopLevelDecl
+ruleTopLevelDecl:
+	(
+		ruleDeclaration
+		    |
+		ruleFunctionDecl
+		    |
+		ruleMethodDecl
+	)
+;
+
+// Rule ConstDecl
+ruleConstDecl:
+	'const'
+	(
+		ruleConstSpec
+		    |
+		'('
+		ruleConstSpec
+		*
+		')'
+	)
+;
+
+// Rule ConstSpec
+ruleConstSpec:
+	ruleIdentifierList
+	(
+		ruleType
+		?
+		'='
+		ruleExpressionList
+	)?
+;
+
+// Rule IdentifierList
+ruleIdentifierList:
+	RULE_IDENTIFIER
+	(
+		','
+		RULE_IDENTIFIER
+	)*
+;
+
+// Rule ExpressionList
+ruleExpressionList:
+	ruleExpression
+	(
+		','
+		ruleExpression
+	)*
+;
+
+// Rule TypeDecl
+ruleTypeDecl:
+	'type'
+	(
+		ruleTypeSpec
+		    |
+		'('
+		ruleTypeSpec
+		*
+		')'
+	)
+;
+
+// Rule TypeSpec
+ruleTypeSpec:
+	(
+		ruleAliasDecl
+		    |
+		ruleTypeDef
+	)
+;
+
+// Rule AliasDecl
+ruleAliasDecl:
+	RULE_IDENTIFIER
+	'='
+	ruleType
+;
+
+// Rule TypeDef
+ruleTypeDef:
+	RULE_IDENTIFIER
+	ruleType
+;
+
+// Rule VarDecl
+ruleVarDecl:
+	RULE_VAR
+	(
+		ruleVarSpec
+		    |
+		'('
+		ruleVarSpec
+		*
+		')'
+	)
+;
+
+// Rule VarSpec
+ruleVarSpec:
+	ruleIdentifierList
+	(
+		ruleType
+		(
+			'='
+			ruleExpressionList
+		)?
+		    |
+		'='
+		ruleExpressionList
+	)
+;
+
+// Rule ShortVarDecl
+ruleShortVarDecl:
+	ruleIdentifierList
+	':='
+	ruleExpressionList
+;
+
+// Rule FunctionDecl
+ruleFunctionDecl:
+	'func'
+	ruleFunctionName
+	ruleSignature
+	ruleFunctionBody
+	?
+;
+
+// Rule FunctionName
+ruleFunctionName:
+	RULE_IDENTIFIER
+;
+
+// Rule FunctionBody
+ruleFunctionBody:
+	ruleBlock
+;
+
+// Rule MethodDecl
+ruleMethodDecl:
+	'func'
+	ruleReceiver
+	ruleMethodName
+	ruleSignature
+	ruleFunctionBody
+	?
+;
+
+// Rule Receiver
+ruleReceiver:
+	ruleParameters
+;
+
+// Rule Operand
+ruleOperand:
+	(
+		ruleLiteral
+		    |
+		ruleOperandName
+		    |
+		'('
+		ruleExpression
+		')'
+	)
+;
+
+// Rule Literal
+ruleLiteral:
+	(
+		ruleBasicLit
+		    |
+		ruleCompositeLit
+		    |
+		ruleFunctionLit
+	)
+;
+
+// Rule BasicLit
+ruleBasicLit:
+	(
+		RULE_INT_LIT
+		    |
+		ruleFLOAT_LIT
+		    |
+		ruleIMAGINARY_LIT
+		    |
+		RULE_RUNE_LIT
+		    |
+		RULE_STRING_LIT
+	)
+;
+
+// Rule OperandName
+ruleOperandName:
+	RULE_IDENTIFIER
+;
+
+// Rule CompositeLit
+ruleCompositeLit:
+	ruleLiteralType
+	ruleLiteralValue
+;
+
+// Rule LiteralType
+ruleLiteralType:
+	(
+		ruleStructType
+		    |
+		ruleMapType
+		    |
+		ruleTypeName
+		    |
+		'['
+		ruleLiteralTypeLinha
+	)
+;
+
+// Rule LiteralTypeLinha
+ruleLiteralTypeLinha:
+	(
+		ruleArrayLength
+		']'
+		ruleElementType
+		    |
+		'...'
+		']'
+		ruleElementType
+		    |
+		']'
+		ruleElementType
+	)
+;
+
+// Rule LiteralValue
+ruleLiteralValue:
+	'{'
+	(
+		ruleElementList
+		','?
+	)?
+	'}'
+;
+
+// Rule ElementList
+ruleElementList:
+	ruleKeyedElement
+	(
+		','
+		ruleKeyedElement
+	)*
+;
+
+// Rule KeyedElement
+ruleKeyedElement:
+	(
+		ruleKey
+		':'
+	)?
+	ruleElement
+;
+
+// Rule Key
+ruleKey:
+	(
+		ruleFieldName
+		    |
+		ruleExpression
+		    |
+		ruleLiteralValue
+	)
+;
+
+// Rule FieldName
+ruleFieldName:
+	RULE_IDENTIFIER
+;
+
+// Rule Element
+ruleElement:
+	(
+		ruleExpression
+		    |
+		ruleLiteralValue
+	)
+;
+
+// Rule FunctionLit
+ruleFunctionLit:
+	'func'
+	ruleSignature
+	ruleFunctionBody
+;
+
+// Rule PrimaryExpr
+rulePrimaryExpr:
+	(
+		ruleOperand
+		rulePrimaryExprLinha
+		    |
+		ruleConversion
+		rulePrimaryExprLinha
+		    |
+		ruleMethodExpr
+		rulePrimaryExprLinha
+	)
+;
+
+// Rule PrimaryExprLinha
+rulePrimaryExprLinha:
+	(
+		ruleSelector
+		rulePrimaryExprLinha
+		    |
+		ruleIndex
+		rulePrimaryExprLinha
+		    |
+		ruleSlice
+		rulePrimaryExprLinha
+		    |
+		ruleTypeAssertion
+		rulePrimaryExprLinha
+		    |
+		ruleArguments
+		rulePrimaryExprLinha
+	)?
+;
+
+// Rule Selector
+ruleSelector:
+	'.'
+	RULE_IDENTIFIER
+;
+
+// Rule Index
+ruleIndex:
+	'['
+	ruleExpression
+	']'
+;
+
+// Rule Slice
+ruleSlice:
+	(
+		'['
+		ruleExpression
+		?
+		':'
+		ruleExpression
+		?
+		']'
+		    |
+		'['
+		ruleExpression
+		?
+		':'
+		ruleExpression
+		':'
+		ruleExpression
+		']'
+	)
+;
+
+// Rule TypeAssertion
+ruleTypeAssertion:
+	'.'
+	'('
+	ruleType
+	')'
+;
+
+// Rule Arguments
+ruleArguments:
+	'('
+	(
+		(
+			ruleExpressionList
+			    |
+			ruleType
+			(
+				','
+				ruleExpressionList
+			)?
+		)
+		'...'?
+		','?
+	)?
+	')'
+;
+
+// Rule MethodExpr
+ruleMethodExpr:
+	ruleReceiverType
+	'.'
+	ruleMethodName
+;
+
+// Rule ReceiverType
+ruleReceiverType:
+	ruleType
+;
+
+// Rule Expression
+ruleExpression:
+	ruleUnaryExpr
+	ruleExpression_Linha
+;
+
+// Rule Expression_Linha
+ruleExpression_Linha:
+	(
+		ruleBINARY_OP
+		ruleExpression
+		ruleExpression_Linha
+	)?
+;
+
+// Rule UnaryExpr
+ruleUnaryExpr:
+	(
+		rulePrimaryExpr
+		    |
+		RULE_UNARY_OP
+		ruleUnaryExpr
+	)
+;
+
+// Rule BINARY_OP
+ruleBINARY_OP:
+	(
+		'||'
+		    |
+		'&&'
+		    |
+		RULE_REL_OP
+		    |
+		RULE_ADD_OP
+		    |
+		RULE_MUL_OP
+	)
+;
+
+// Rule Conversion
+ruleConversion:
+	ruleType
+	'('
+	ruleExpression
+	','?
+	')'
 ;
 
 // Rule Statement
@@ -635,10 +768,223 @@ ruleStatement:
 	)
 ;
 
-// Rule DeferStmt
-ruleDeferStmt:
-	RULE_DEFER
-	ruleExpression
+// Rule SimpleStmt
+ruleSimpleStmt:
+	(
+		ruleEmptyStmt
+		    |
+		ruleExpression
+		ruleSimpleStmtLinha
+		    |
+		ruleShortVarDecl
+	)
+;
+
+// Rule SimpleStmtLinha
+ruleSimpleStmtLinha:
+	(
+		'<-'
+		ruleExpression
+		    |
+		(
+			'++'
+			    |
+			'--'
+		)
+		    |
+		(
+			','
+			ruleExpression
+		)*
+		ruleassign_op
+		ruleExpressionList
+		    |
+		RULE_ANY_OTHER
+	)
+;
+
+// Rule EmptyStmt
+ruleEmptyStmt:
+	RULE_ANY_OTHER
+;
+
+// Rule LabeledStmt
+ruleLabeledStmt:
+	ruleLabel
+	':'
+	ruleStatement
+;
+
+// Rule Label
+ruleLabel:
+	RULE_IDENTIFIER
+;
+
+// Rule assign_op
+ruleassign_op:
+	(
+		RULE_ADD_OP
+		    |
+		RULE_MUL_OP
+	)?
+	'='
+;
+
+// Rule IfStmt
+ruleIfStmt:
+	(
+		RULE_IF
+		ruleExpression
+		ruleIfStmtLinha
+		    |
+		RULE_IF
+		(
+			ruleEmptyStmt
+			    |
+			ruleShortVarDecl
+		)
+		';'
+		ruleExpression
+		ruleBlock
+		(
+			RULE_ELSE
+			(
+				ruleIfStmt
+				    |
+				ruleBlock
+			)
+		)?
+	)
+;
+
+// Rule IfStmtLinha
+ruleIfStmtLinha:
+	(
+		ruleSimpleStmtLinha
+		';'
+		ruleExpression
+		ruleBlock
+		(
+			RULE_ELSE
+			(
+				ruleIfStmt
+				    |
+				ruleBlock
+			)
+		)?
+		    |
+		ruleBlock
+		(
+			RULE_ELSE
+			(
+				ruleIfStmt
+				    |
+				ruleBlock
+			)
+		)?
+	)
+;
+
+// Rule SwitchStmt
+ruleSwitchStmt:
+	RULE_SWITCH
+	(
+		ruleSimpleStmt
+		';'
+	)?
+	ruleSwitchStmtLinha
+;
+
+// Rule SwitchStmtLinha
+ruleSwitchStmtLinha:
+	(
+		rulePrimaryExpr
+		ruleSwitchStmtLinhaLinha
+		    |
+		(
+			RULE_UNARY_OP
+			ruleUnaryExpr
+			ruleExpression_Linha
+		)?
+		'{'
+		ruleExprCaseClause
+		*
+		'}'
+		    |
+		RULE_IDENTIFIER
+		':='
+		rulePrimaryExpr
+		'.'
+		'('
+		'type'
+		')'
+		'{'
+		ruleTypeCaseClause
+		*
+		'}'
+	)
+;
+
+// Rule SwitchStmtLinhaLinha
+ruleSwitchStmtLinhaLinha:
+	(
+		'{'
+		ruleExprCaseClause
+		*
+		'}'
+		    |
+		'.'
+		'('
+		'type'
+		')'
+		'{'
+		ruleTypeCaseClause
+		*
+		'}'
+	)
+;
+
+// Rule ExprCaseClause
+ruleExprCaseClause:
+	ruleExprSwitchCase
+	':'
+	ruleStatementList
+;
+
+// Rule ExprSwitchCase
+ruleExprSwitchCase:
+	(
+		RULE_CASE
+		ruleExpressionList
+		    |
+		RULE_DEFAULT
+	)
+;
+
+// Rule TypeCaseClause
+ruleTypeCaseClause:
+	ruleTypeSwitchCase
+	':'
+	ruleStatementList
+;
+
+// Rule TypeSwitchCase
+ruleTypeSwitchCase:
+	(
+		RULE_CASE
+		ruleTypeList
+		    |
+		RULE_DEFAULT
+	)
+;
+
+// Rule TypeList
+ruleTypeList:
+	ruleType
+	(
+		','
+		ruleType
+	)*
 ;
 
 // Rule ForStmt
@@ -647,6 +993,21 @@ ruleForStmt:
 	(
 		ruleExpression
 		ruleForStmtLinha
+		    |
+		(
+			ruleEmptyStmt
+			    |
+			ruleShortVarDecl
+		)
+		';'
+		ruleCondition
+		';'
+		rulePostStmt
+		    |
+		ruleIdentifierList
+		':='
+		RULE_RANGE
+		ruleExpression
 	)?
 	ruleBlock
 ;
@@ -654,53 +1015,46 @@ ruleForStmt:
 // Rule ForStmtLinha
 ruleForStmtLinha:
 	(
+		RULE_ANY_OTHER
+		    |
 		(
-			ruleSimpleStmtLinha
-			    |
-			RULE_IDENTIFIER
-			(
-				','
-				RULE_IDENTIFIER
-			)*
-			':='
+			','
 			ruleExpression
+		)*
+		ruleForStmtLinhaLinha
+		    |
+		(
+			'<-'
+			ruleExpression
+			    |
 			(
-				','
-				ruleExpression
-			)*
+				'++'
+				    |
+				'--'
+			)
+			    |
+			RULE_ANY_OTHER
 		)
 		';'
 		ruleCondition
 		';'
-		(
-			ruleExpression
-			ruleSimpleStmtLinha
-			    |
-			RULE_IDENTIFIER
-			(
-				','
-				RULE_IDENTIFIER
-			)*
-			':='
-			ruleExpression
-			(
-				','
-				ruleExpression
-			)*
-			    |
-			(
-				','
-				ruleExpression
-			)*
-			'='
-			    |
-			ruleIdentifierList
-			':='
-		)
+		rulePostStmt
+	)
+;
+
+// Rule ForStmtLinhaLinha
+ruleForStmtLinhaLinha:
+	(
+		ruleassign_op
+		ruleExpressionList
+		';'
+		ruleCondition
+		';'
+		rulePostStmt
+		    |
+		'='
 		RULE_RANGE
 		ruleExpression
-		    |
-		RULE_ANY_OTHER
 	)
 ;
 
@@ -709,11 +1063,23 @@ ruleCondition:
 	ruleExpression
 ;
 
+// Rule PostStmt
+rulePostStmt:
+	ruleSimpleStmt
+;
+
+// Rule GoStmt
+ruleGoStmt:
+	RULE_GO
+	ruleExpression
+;
+
 // Rule SelectStmt
 ruleSelectStmt:
 	RULE_SELECT
 	'{'
-	ruleCommClause*
+	ruleCommClause
+	*
 	'}'
 ;
 
@@ -760,106 +1126,15 @@ ruleRecvExpr:
 	ruleExpression
 ;
 
-// Rule SwitchStmt
-ruleSwitchStmt:
-	RULE_SWITCH
-	ruleSimpleStmt
-	';'
-	ruleSwitchStmtLinha
+// Rule ReturnStmt
+ruleReturnStmt:
+	RULE_RETURN
+	ruleExpressionList
 ;
 
-// Rule SwitchStmtLinha
-ruleSwitchStmtLinha:
-	(
-		ruleExpression
-		'{'
-		ruleExprCaseClause*
-		'}'
-		    |
-		ruleTypeSwitchGuard
-		'{'
-		ruleTypeCaseClause*
-		'}'
-	)
-;
-
-// Rule TypeCaseClause
-ruleTypeCaseClause:
-	ruleTypeSwitchCase
-	':'
-	ruleStatementList
-;
-
-// Rule TypeSwitchCase
-ruleTypeSwitchCase:
-	(
-		RULE_CASE
-		ruleTypeList
-		    |
-		RULE_DEFAULT
-	)
-;
-
-// Rule TypeList
-ruleTypeList:
-	ruleType
-	(
-		','
-		ruleType
-	)*
-;
-
-// Rule TypeSwitchGuard
-ruleTypeSwitchGuard:
-	RULE_IDENTIFIER
-	':='
-	rulePrimaryExpr
-	'.'
-	'('
-	RULE_TYPEKEYWORD
-	')'
-;
-
-// Rule ExprCaseClause
-ruleExprCaseClause:
-	ruleExprSwitchCase
-	':'
-	ruleStatementList
-;
-
-// Rule ExprSwitchCase
-ruleExprSwitchCase:
-	(
-		RULE_CASE
-		ruleExpressionList
-		    |
-		RULE_DEFAULT
-	)
-;
-
-// Rule IfStmt
-ruleIfStmt:
-	RULE_IF
-	ruleSimpleStmt
-	';'
-	ruleExpression
-	ruleBlock
-	RULE_ELSE
-	(
-		ruleIfStmt
-		    |
-		ruleBlock
-	)
-;
-
-// Rule FallthroughStmt
-ruleFallthroughStmt:
-	RULE_FALLTHROUGH
-;
-
-// Rule GotoStmt
-ruleGotoStmt:
-	RULE_GOTO
+// Rule BreakStmt
+ruleBreakStmt:
+	RULE_BREAK
 	ruleLabel
 ;
 
@@ -869,352 +1144,52 @@ ruleContinueStmt:
 	ruleLabel
 ;
 
-// Rule BreakStmt
-ruleBreakStmt:
-	RULE_BREAK
+// Rule GotoStmt
+ruleGotoStmt:
+	RULE_GOTO
 	ruleLabel
 ;
 
-// Rule ReturnStmt
-ruleReturnStmt:
-	RULE_RETURN
-	ruleExpressionList
+// Rule FallthroughStmt
+ruleFallthroughStmt:
+	RULE_FALLTHROUGH
 ;
 
-// Rule GoStmt
-ruleGoStmt:
-	RULE_GO
-	ruleLabel
-;
-
-// Rule SimpleStmt
-ruleSimpleStmt:
-	(
-		ruleExpression
-		ruleSimpleStmtLinha
-		    |
-		RULE_IDENTIFIER
-		(
-			','
-			RULE_IDENTIFIER
-		)*
-		':='
-		ruleExpression
-		(
-			','
-			ruleExpression
-		)*
-	)
-;
-
-// Rule SimpleStmtLinha
-ruleSimpleStmtLinha:
-	(
-		'<-'
-		ruleExpression
-		    |
-		(
-			'++'
-			    |
-			'--'
-		)
-		    |
-		(
-			','
-			ruleExpression
-		)*
-		ruleassign_op
-		ruleExpression
-		(
-			','
-			ruleExpression
-		)*
-	)
-;
-
-// Rule assign_op
-ruleassign_op:
-	(
-		RULE_ADD_OP
-		    |
-		RULE_MUL_OP
-	)
-	'='
-;
-
-// Rule LabeledStmt
-ruleLabeledStmt:
-	ruleLabel
-	':'
-	ruleStatement
-;
-
-// Rule Label
-ruleLabel:
-	RULE_IDENTIFIER
-;
-
-// Rule Declaration
-ruleDeclaration:
-	(
-		ruleConstDecl
-		    |
-		ruleTypeDecl
-		    |
-		ruleVarDecl
-	)
-;
-
-// Rule TopLevelDecl
-ruleTopLevelDecl:
-	(
-		ruleDeclaration
-		    |
-		ruleFunctionDecl
-		    |
-		ruleMethodDecl
-	)
-;
-
-// Rule ConstDecl
-ruleConstDecl:
-	RULE_CONST
-	(
-		ruleConstSpec
-		    |
-		'('
-		(
-			ruleConstSpec
-			';'
-		)*
-		')'
-	)
-;
-
-// Rule ConstSpec
-ruleConstSpec:
-	ruleIdentifierList
-	(
-		ruleType?
-		'='
-		ruleExpressionList
-	)?
-;
-
-// Rule TypeDecl
-ruleTypeDecl:
-	RULE_TYPEKEYWORD
-	(
-		ruleTypeSpec
-		    |
-		'('
-		(
-			ruleTypeSpec
-			';'
-		)*
-		')'
-	)
-;
-
-// Rule TypeSpec
-ruleTypeSpec:
-	(
-		ruleAliasDecl
-		    |
-		ruleTypeDef
-	)
-;
-
-// Rule AliasDecl
-ruleAliasDecl:
-	RULE_IDENTIFIER
-	'='
-	ruleType
-;
-
-// Rule TypeDef
-ruleTypeDef:
-	RULE_IDENTIFIER
-	ruleType
-;
-
-// Rule VarDecl
-ruleVarDecl:
-	RULE_VAR
-	(
-		ruleVarSpec
-		    |
-		'('
-		(
-			ruleVarSpec
-			';'
-		)*
-		')'
-	)
-;
-
-// Rule VarSpec
-ruleVarSpec:
-	ruleIdentifierList
-	(
-		ruleType
-		(
-			'='
-			ruleExpressionList
-		)?
-		    |
-		'='
-		ruleExpressionList
-	)
-;
-
-// Rule FunctionDecl
-ruleFunctionDecl:
-	RULE_FUNC
-	ruleFunctionName
-	ruleSignature
-	ruleFunctionBody?
-;
-
-// Rule FunctionName
-ruleFunctionName:
-	RULE_IDENTIFIER
-;
-
-// Rule FunctionBody
-ruleFunctionBody:
-	ruleBlock
-;
-
-// Rule MethodDecl
-ruleMethodDecl:
-	RULE_FUNC
-	ruleReceiver
-	ruleMethodName
-	ruleSignature
-	ruleFunctionBody?
-;
-
-// Rule Receiver
-ruleReceiver:
-	ruleParameters
-;
-
-// Rule BasicLit
-ruleBasicLit:
-	(
-		RULE_INT_LIT
-		    |
-		RULE_STRING_LIT
-		    |
-		ruleFLOAT_LIT
-		    |
-		ruleIMAGINARY_LIT
-	)
-;
-
-// Rule LiteralValue
-ruleLiteralValue:
-	'{'
-	(
-		(
-			(ruleKey
-			':'
-			)=>
-			ruleElementList
-		)
-		','?
-	)?
-	'}'
-;
-
-// Rule ElementList
-ruleElementList:
-	(
-		(ruleKey
-		':'
-		)=>
-		ruleKeyedElement
-	)
-	(
-		','
-		(
-			(ruleKey
-			':'
-			)=>
-			ruleKeyedElement
-		)
-	)*
-;
-
-// Rule KeyedElement
-ruleKeyedElement:
-	(
-		(ruleKey
-		':'
-		)=>
-		ruleKey
-		':'
-	)?
-	ruleElement
-;
-
-// Rule Key
-ruleKey:
-	(
-		ruleFieldName
-		    |
-		ruleExpression
-		    |
-		ruleLiteralValue
-	)
-;
-
-// Rule FieldName
-ruleFieldName:
-	RULE_IDENTIFIER
-;
-
-// Rule Element
-ruleElement:
-	(
-		ruleExpression
-		    |
-		ruleLiteralValue
-	)
+// Rule DeferStmt
+ruleDeferStmt:
+	RULE_DEFER
+	ruleExpression
 ;
 
 // Rule SourceFile
 ruleSourceFile:
 	rulePackageClause
-	';'
-	(
-		ruleImportDecl
-		';'
-	)*
-	(
-		ruleTopLevelDecl
-		';'
-	)*
+	ruleImportDecl
+	*
+	ruleTopLevelDecl
+	*
 ;
 
 // Rule PackageClause
 rulePackageClause:
-	RULE_PACKAGE
+	'package'
 	rulePackageName
+;
+
+// Rule PackageName
+rulePackageName:
+	RULE_IDENTIFIER
 ;
 
 // Rule ImportDecl
 ruleImportDecl:
-	RULE_IMPORT
+	'import'
 	(
 		ruleImportSpec
 		    |
 		'('
-		(
-			ruleImportSpec
-			';'
-		)*
+		ruleImportSpec
+		*
 		')'
 	)
 ;
@@ -1226,15 +1201,12 @@ ruleImportSpec:
 		    |
 		rulePackageName
 	)?
-	ruleImportPath
-;
-
-// Rule ImportPath
-ruleImportPath:
 	RULE_STRING_LIT
 ;
 
 fragment RULE_NEWLINE : ('\n'|'\r'|'\n\r');
+
+fragment RULE_UNICODE_CHAR : 'nao seei';
 
 fragment RULE_LETTER : ('a'..'z'|'A'..'Z'|'_');
 
@@ -1247,8 +1219,6 @@ fragment RULE_HEX_DIGIT : ('0'..'9'|'A'..'F'|'a'..'f');
 RULE_BREAK : 'break';
 
 RULE_DEFAULT : 'default';
-
-RULE_FUNC : 'func';
 
 RULE_INTERFACE : 'interface';
 
@@ -1270,11 +1240,7 @@ RULE_ELSE : 'else';
 
 RULE_GOTO : 'goto';
 
-RULE_PACKAGE : 'package';
-
 RULE_SWITCH : 'switch';
-
-RULE_CONST : 'const';
 
 RULE_FALLTHROUGH : 'fallthrough';
 
@@ -1282,21 +1248,15 @@ RULE_IF : 'if';
 
 RULE_RANGE : 'range';
 
-RULE_TYPEKEYWORD : 'type';
-
 RULE_CONTINUE : 'continue';
 
 RULE_FOR : 'for';
-
-RULE_IMPORT : 'import';
 
 RULE_RETURN : 'return';
 
 RULE_VAR : 'var';
 
 RULE_IDENTIFIER : RULE_LETTER (RULE_LETTER|'0'..'9')*;
-
-fragment RULE_UNICODE_CHAR : 'fazeer';
 
 RULE_INT_LIT : ('1'..'9' RULE_DECIMAL_DIGIT*|'0' RULE_OCTAL_DIGIT*|'0' ('x'|'X') RULE_HEX_DIGIT+);
 
@@ -1326,6 +1286,8 @@ fragment RULE_RAW_STRING_LIT : '\'' (RULE_UNICODE_CHAR|RULE_NEWLINE)* '\'';
 
 fragment RULE_INTERPRETED_STRING_LIT : '"' (RULE_UNICODE_VALUE|RULE_BYTE_VALUE)* '"';
 
+RULE_ANY_OTHER : '#';
+
 RULE_REL_OP : ('=='|'!='|'<'|'<='|'>'|'>=');
 
 RULE_ADD_OP : ('+'|'-'|'|'|'^');
@@ -1345,5 +1307,3 @@ RULE_ML_COMMENT : '/*' ( options {greedy=false;} : . )*'*/' {skip();};
 RULE_SL_COMMENT : '//' ~(('\n'|'\r'))* ('\r'? '\n')? {skip();};
 
 RULE_WS : (' '|'\t'|'\r'|'\n')+ {skip();};
-
-RULE_ANY_OTHER : .;

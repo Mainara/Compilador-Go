@@ -3,15 +3,16 @@ grammar org.xtext.example.mydsl.MyDsl with org.eclipse.xtext.common.Terminals
 generate myDsl "http://www.xtext.org/example/mydsl/MyDsl"
 
 Model:
-	greetings+=Greeting*;
-	
-Greeting:
-	SourceFile;
+	greetings+=SourceFile*;
+
 
 terminal NEWLINE:
 	"\n" | "\r" | "\n\r"
 ;
 
+terminal UNICODE_CHAR:
+	"nao seei"
+;
 
 terminal LETTER:
 	"a".."z" | "A" .."Z"| "_" 
@@ -35,9 +36,9 @@ terminal BREAK:
 terminal DEFAULT:
 	"default"
 ;
-terminal FUNC:
-	"func"
-;
+//terminal FUNC:
+	//"func"
+//;
 terminal INTERFACE:
 	"interface"
 ;
@@ -68,15 +69,15 @@ terminal ELSE:
 terminal GOTO:
 	"goto"
 ;
-terminal PACKAGE:
-	"package"
-;
+//terminal PACKAGE:
+	//"package"
+//;
 terminal SWITCH:
 	"switch"
 ;
-terminal CONST:
-	"const"
-;
+//terminal CONST:
+	//"const"
+//;
 terminal FALLTHROUGH:
 	"fallthrough"
 ;
@@ -86,18 +87,18 @@ terminal IF:
 terminal RANGE:
 	"range"
 ;
-terminal TYPEKEYWORD:
+/*terminal TYPEKEYWORD:
 	"type"
-;
+;*/
 terminal CONTINUE:
 	"continue"
 ;
 terminal FOR:
 	"for"
 ;
-terminal IMPORT:
+/*terminal IMPORT:
 	"import"
-;
+;*/
 terminal RETURN: 
 	"return"
 ;
@@ -105,11 +106,7 @@ terminal VAR:
 	"var"
 ;
 terminal IDENTIFIER:
-	LETTER ( LETTER | ("0".."9") )*
-;
-
-terminal UNICODE_CHAR:
-	"fazeer"
+	LETTER (LETTER|("0".."9"))*
 ;
 
 terminal INT_LIT:
@@ -119,9 +116,9 @@ terminal INT_LIT:
 ;
 
 FLOAT_LIT:
-	DECIMALS "." (DECIMALS )? ( EXPONENT )? |
-    DECIMALS EXPONENT |
-   "." DECIMALS ( EXPONENT )? 
+	dECIMALS = DECIMALS "." (dECIMALS1 = DECIMALS )? ( eXPONENT = EXPONENT )? |
+    dECIMALS = DECIMALS eXPONENT = EXPONENT |
+   "." dECIMALS = DECIMALS ( eXPONENT = EXPONENT )? 
 ;
 
 terminal DECIMALS:
@@ -133,7 +130,7 @@ terminal EXPONENT:
 ;
 
 IMAGINARY_LIT:
-	(DECIMALS | FLOAT_LIT) "i" 
+	(dECIMALS = DECIMALS | fLOAT_LIT = FLOAT_LIT) "i" 
 ;
 
 terminal RUNE_LIT:
@@ -178,441 +175,315 @@ terminal INTERPRETED_STRING_LIT:
 ;
 
 Type: 
-	TypeName | TypeLit | "(" Type ")"
+	typeName = TypeName | typeLit = TypeLit | "(" type = Type ")"
 ;
 
 TypeName: 
-	IDENTIFIER TypeNameLinha
+	id = IDENTIFIER
 ;
 
 TypeNameLinha:
-	"." IDENTIFIER |  ANY_OTHER
+	"." id = IDENTIFIER //| ANY_OTHER
+;
+
+terminal ANY_OTHER:
+	"#"
 ;
 
 TypeLit: 
-	 "[" TypeLitLinha | StructType | PointerType | FunctionType | InterfaceType |
-	  MapType | ChannelType
+	 "[" typeLitLinha = TypeLitLinha | srtuctType = StructType | pointerType = PointerType | functionType = FunctionType | interfaceType = InterfaceType |
+	  mapType = MapType | channelType = ChannelType
 ;
 
 TypeLitLinha:
-	ArrayLength "]" ElementType 
-	| "]" ElementType
+	arrayLength = ArrayLength "]" elementType = ElementType 
+	| "]" elementType = ElementType
 ;
 
 ArrayLength: 
-	Expression
+	expression = Expression
 ;
 
 ElementType: 
-	Type
+	type = Type
 ;
 
 StructType: 
-	STRUCT "{"  (FieldDecl ";")* "}"
+	struct = STRUCT "{"  fieldDecl += (FieldDecl)* "}"
 ;
 
 FieldDecl:
-	(IdentifierList Type | EmbeddedField) (Tag)?
+	(identifierList = IdentifierList type = Type | embeddedField = EmbeddedField) tag = (Tag)?
 ;
 
 EmbeddedField: 
-	("*")? TypeName
+	("*")? typeName = TypeName
 ;
 
 Tag: 
-	STRING_LIT
+	string_lit = STRING_LIT
 ;
 
 PointerType:
-	"*" BaseType
+	"*" baseType = BaseType
 ;
 
 BaseType:
-	Type
+	type = Type
 ;
 
 FunctionType: 
-	FUNC Signature
+	 func = "func" signature = Signature
 ;
 
 Signature: 
-	(Parameters)(=>Result)?
+	(parameters = Parameters) result = (Result)?
 ;
 
 Result: 
-	(=>Parameters) | Type
+	(parameters = (Parameters)) | type = Type
 ;
+
 Parameters:
-	"(" (ParameterList (",")?)? ")"
+	{Parameters}"(" (parameterList = ParameterList)?")"
 ;
 
 ParameterList:
-	ParameterDecl ("," ParameterDecl)*
+	parameterDecl = ParameterDecl ("," parameterDecl1 += ParameterDecl)*
 ;
 
 ParameterDecl:
-	(IdentifierList)? ("...")? Type
+	identifierList = (IdentifierList)? ("...")? type = Type
 ;
 
 InterfaceType: 
-	INTERFACE "{" (MethodSpec ";")* "}"
+	interface = INTERFACE "{"  methodSpec += (MethodSpec)* "}"
 ;
 
 MethodSpec: 
-	MethodName Signature | InterfaceTypeName
+	methodName = MethodName Signature = Signature | interfaceTypeName = InterfaceTypeName
 ;
 
 MethodName: 
-	IDENTIFIER
+	id = IDENTIFIER
 ;
 
 InterfaceTypeName: 
-	TypeName
+	typeName = TypeName
 ;
 
 MapType:
-	MAP "[" KeyType "]" ElementType
+	map = MAP "[" keyType = KeyType "]" elementType = ElementType
 ;
 
 KeyType:
-	Type
+	type = Type
 ;
 
 ChannelType: 
-	( CHAN ChannelTypeLinha | "<-" CHAN) ElementType
+	( chan = CHAN channelTypeLinha = ChannelTypeLinha | "<-" chan = CHAN) elementType = ElementType
 ;
 
 ChannelTypeLinha:
-	"<-" | ANY_OTHER
+	"<-" | aNY_OTHER = ANY_OTHER
 ;
 
 Block: 
-	"{" StatementList "}"
+	"{" statementList = StatementList "}"
 ;
 
 StatementList: 
-	( Statement ";")*
+	 {StatementList}( statements += Statement ";")*
 ;
 
 Declaration: 
-	ConstDecl | TypeDecl | VarDecl
+	constDecl = ConstDecl | 
+	typeDecl = TypeDecl  |
+	varDecl = VarDecl
 ;
 
 TopLevelDecl: 
-	Declaration | FunctionDecl | MethodDecl
+	declaration = Declaration | functionDecl = FunctionDecl | methodDecl = MethodDecl
 ;
 
 ConstDecl: 
-	CONST ( ConstSpec | "(" (ConstSpec ";")* ")" )
+	const = 'const' (constSpec = ConstSpec | "(" constSpec1 += (ConstSpec)* ")" )
 ;
 
 ConstSpec: 
-	IdentifierList ((Type)? "=" ExpressionList)?
+	identifierList = IdentifierList ((type = Type)? "=" expressionList = ExpressionList)?//(type = (Type)? "=" expressionList = ExpressionList)?
 ;
 
 IdentifierList: 
-	IDENTIFIER( "," IDENTIFIER )*
+	id = IDENTIFIER( "," id1 += IDENTIFIER )*
 ;
 
 ExpressionList: 
-	Expression ("," Expression)*
+	expression = Expression ("," expression1 += Expression)*
 ;
 
 TypeDecl: 
-	TYPEKEYWORD (TypeSpec | "(" (TypeSpec ";")* ")")
+	typekeyword = 'type' ( typeSpec = TypeSpec | "(" typeSpec1 += (TypeSpec)* ")")
 ;
 
 TypeSpec: 
-	AliasDecl | TypeDef
+	aliasDecl = AliasDecl | typeDef = TypeDef
 ;
 
 AliasDecl: 
-	IDENTIFIER "=" Type
+	id = IDENTIFIER "=" type = Type
 ;
 
 TypeDef: 
-	IDENTIFIER Type
+	id = IDENTIFIER type = Type
 ;
 
 VarDecl: 
-	VAR (VarSpec | "(" (VarSpec ";")* ")" )
+	VAR ( varSpec = VarSpec | "(" varSpec1 += (VarSpec)* ")" )
 ;
 
 VarSpec: 
-	IdentifierList ( Type ( "=" ExpressionList)? | "=" ExpressionList )
+	IdentifierList = IdentifierList ( type = Type ( "=" expressionList = ExpressionList)? | "=" expressionList = ExpressionList )
 ;
 
 ShortVarDecl:
-	IdentifierList ":=" ExpressionList
+	identifierList = IdentifierList ":=" expressionList = ExpressionList
 ;
 
 FunctionDecl:
-	FUNC FunctionName Signature (FunctionBody)?
+	"func" functionName = FunctionName signature = Signature functionBody = (FunctionBody)?
 ;
 
 FunctionName: 
-	IDENTIFIER
+	id = IDENTIFIER
 ;
 
 FunctionBody: 
-	Block
+	block = Block
 ;
 
 MethodDecl: 
-	FUNC Receiver MethodName Signature (FunctionBody)?
+	"func" receiver = Receiver methodName = MethodName signature = Signature functionBody = (FunctionBody)?
 ;
 
 Receiver: 
-	Parameters
+	parameters = Parameters
 ;
 
 Operand: 
-	Literal | OperandName | "(" Expression ")"
+	literal = Literal | operandName = OperandName | "(" expression = Expression ")"
 ;
 
 Literal:
-	BasicLit | CompositeLit | FunctionLit
+	basicLit = BasicLit | compositeLit = CompositeLit | functionLit = FunctionLit
 ;
 
 BasicLit:
-	   INT_LIT | FLOAT_LIT | IMAGINARY_LIT | STRING_LIT
+	   int_lit = INT_LIT | float_lit = FLOAT_LIT | imaginary_lit = IMAGINARY_LIT | rune_lit = RUNE_LIT | string_lit = STRING_LIT
 ;
 
 OperandName: 
-	IDENTIFIER OperandNameLinha
+	id = IDENTIFIER //OperandNameLinha
 ;
 
-OperandNameLinha:
+/*OperandNameLinha:
 	"." IDENTIFIER |  ANY_OTHER
-;
+;*/
 
 CompositeLit: 
-	LiteralType LiteralValue
+	literalType = LiteralType literalValue = LiteralValue
 ;
 
 LiteralType: 
-	StructType | MapType | TypeName | "[" LiteralTypeLinha
+	structType = StructType | mapType = MapType | typeName = TypeName | "[" literalTypeLinha = LiteralTypeLinha
 ;
 
 LiteralTypeLinha:
-	ArrayLength "]" ElementType | "..." "]" ElementType | "]" ElementType
+	arrayLength= ArrayLength "]" elementType = ElementType | 
+	"..." "]"elementType =  ElementType | 
+	"]" elementType = ElementType
 ;
 
 LiteralValue: 
-	"{" ( ElementList ( "," )? )? "}"
+	{LiteralValue}"{" ( elementList = ElementList ( "," )? )? "}"
 ;
 
 ElementList: 
-	KeyedElement ( "," KeyedElement)*
+	keyedElement = KeyedElement ( "," keyedElement1 += KeyedElement)*
 ;
 
 KeyedElement: 
-	(=>(Key":")?) Element
+	(key = Key":")? element = Element
 ;
 
 Key: 
-	FieldName | Expression | LiteralValue
+	fieldName = FieldName | expression = Expression | literalValue = LiteralValue
 ;
 
 FieldName: 
-	IDENTIFIER
+	id = IDENTIFIER
 ;
 
 Element: 
-	Expression | LiteralValue
+	expression = Expression | literalValue = LiteralValue
 ;
 
 FunctionLit: 
-	FUNC Signature FunctionBody
+	func = "func" signature= Signature functionBody = FunctionBody
 ;
 
 PrimaryExpr: 
-	BasicLit PrimaryExprLinha |
-	StructType PrimaryExpr4 PrimaryExprLinha |
-	MapType PrimaryExpr4 PrimaryExprLinha |
-	IDENTIFIER TypeNameLinha PrimaryExpr5 PrimaryExprLinha |
-	"[" PrimaryExpr6 PrimaryExprLinha |
-	FUNC Signature PrimaryExpr7 PrimaryExprLinha|
-	PointerType PrimaryExpr1 PrimaryExprLinha| 
-	InterfaceType PrimaryExpr1 PrimaryExprLinha|
-	ChannelType PrimaryExpr1 PrimaryExprLinha|
-	"(" PrimaryExpr3 PrimaryExprLinha
-	
-	/*BasicLit PrimaryExprLinha |
-	StructType LiteralValue PrimaryExprLinha|
-	MapType LiteralValue PrimaryExprLinha|
-	TypeName LiteralValue PrimaryExprLinha|
-	"[" LiteralTypeLinha LiteralValue PrimaryExprLinha|
-	FunctionLit PrimaryExprLinha |
-	"[" TypeLitLinha PrimaryExpr1 PrimaryExprLinha|
-	StructType PrimaryExpr1 PrimaryExprLinha|
-	PointerType PrimaryExpr1 PrimaryExprLinha|
-	FunctionType PrimaryExpr1 PrimaryExprLinha|
-	InterfaceType PrimaryExpr1 PrimaryExprLinha|
-	MapType PrimaryExpr1 PrimaryExprLinha|
-	ChannelType PrimaryExpr1 PrimaryExprLinha|
-	"(" PrimaryExpr3 PrimaryExprLinha |
-	IDENTIFIER TypeNameLinha PrimaryExpr2 PrimaryExprLinha*/
-	
-	/*BasicLit PrimaryExprLinha |
-	(StructType | MapType | TypeName | "[" LiteralTypeLinha) LiteralValue PrimaryExprLinha |
-	FunctionLit PrimaryExprLinha |
-	"[" TypeLitLinha PrimaryExpr1 PrimaryExprLinha|
-	StructType PrimaryExpr1 PrimaryExprLinha|
-	PointerType PrimaryExpr1 PrimaryExprLinha|
-	FunctionType PrimaryExpr1 PrimaryExprLinha|
-	InterfaceType PrimaryExpr1 PrimaryExprLinha|
-	MapType PrimaryExpr1 PrimaryExprLinha|
-	ChannelType PrimaryExpr1 PrimaryExprLinha|
-	"(" PrimaryExpr3 PrimaryExprLinha |
-	IDENTIFIER TypeNameLinha PrimaryExpr2 PrimaryExprLinha*/
-	
-	/*(BasicLit | CompositeLit | FunctionLit) PrimaryExprLinha |
-	( "[" TypeLitLinha | StructType | PointerType | FunctionType | InterfaceType |
-	  MapType | ChannelType) PrimaryExpr1 PrimaryExprLinha |
-	"(" PrimaryExpr3 PrimaryExprLinha |
-	IDENTIFIER TypeNameLinha PrimaryExpr2 PrimaryExprLinha*/
-	
-	
-	/*Literal PrimaryExprLinha |
-	TypeLit PrimaryExpr1 PrimaryExprLinha |
-	"(" PrimaryExpr3 PrimaryExprLinha |
-	IDENTIFIER TypeNameLinha PrimaryExpr2 PrimaryExprLinha*/
-	
-	/*(Literal | "(" Expression ")") PrimaryExprLinha|
-	(TypeLit |  "(" Type ")") PrimaryExpr1 PrimaryExprLinha |
-	IDENTIFIER TypeNameLinha PrimaryExpr2 PrimaryExprLinha*/
-	
-	/*(Literal | IDENTIFIER OperandNameLinha | "(" Expression ")") PrimaryExprLinha|
-	(IDENTIFIER TypeNameLinha | TypeLit | "(" Type ")") PrimaryExpr1 PrimaryExprLinha*/
-	
-	/*(Literal | OperandName | "(" Expression ")") PrimaryExprLinha | 
-	Type "(" Expression ( "," )? ")" PrimaryExprLinha |
-	Type "." MethodName PrimaryExprLinha*/
-	 
-	 /*Operand PrimaryExprLinha | Conversion PrimaryExprLinha | MethodExpr PrimaryExprLinha */
-;
-
-PrimaryExpr1:
-	"(" Expression ( "," )? ")" | "." MethodName
-;
-
-PrimaryExpr2:
-	 PrimaryExpr1 | ANY_OTHER 
-;
-
-PrimaryExpr3:
-	(=>Expression ")") | Type ")" PrimaryExpr1
-;
-
-PrimaryExpr4:
-	LiteralValue | PrimaryExpr1
-;
-
-PrimaryExpr5:
-	LiteralValue | PrimaryExpr2
-;
-
-PrimaryExpr6:
-	ArrayLength "]" ElementType PrimaryExpr4 |
-	"..." "]" ElementType LiteralValue| 
-	"]" ElementType PrimaryExpr4
-	/*(ArrayLength "]" ElementType | "..." "]" ElementType | "]" ElementType) LiteralValue | 
-	(ArrayLength "]" ElementType | "]" ElementType) PrimaryExpr1*/
-;
-
-PrimaryExpr7:
-	FunctionBody | PrimaryExpr1
+	 operand = Operand primaryExprLinha = PrimaryExprLinha | conversion = Conversion primaryExprLinha = PrimaryExprLinha | methodExpr = MethodExpr primaryExprLinha = PrimaryExprLinha
 ;
 
 PrimaryExprLinha:
-	"." PrimaryExprLinha1 PrimaryExprLinha |
-	"[" PrimaryExprLinha2 PrimaryExprLinha |
-	Arguments PrimaryExprLinha
-	
-	
-	/*"." IDENTIFIER PrimaryExprLinha| "[" Expression "]" PrimaryExprLinha| 
-	 * ("[" ( Expression )? ":" ( Expression )? "]" | "[" ( Expression )? ":" Expression ":" Expression "]" ) PrimaryExprLinha| 
-	"." "(" Type ")"  PrimaryExprLinha| 
-	* "(" ( ( ExpressionList | Type ( "," ExpressionList )? ) ( "..." )? ( "," )? )? ")"  PrimaryExprLinha*/
-;
-
-PrimaryExprLinha1:
-	IDENTIFIER | "(" Type ")"
-;
-
-PrimaryExprLinha2:
-	Expression PrimaryExprLinha21 | ":" PrimaryExprLinha22
-	
-	/*Expression "]" | 
-	( Expression ) ":" ( Expression ) "]" |
-	":" ( Expression ) "]" |
-	( Expression ) ":" "]" |
-	 ":"  "]" |
-	 ( Expression ) ":" Expression ":" Expression "]"|
-	 ":" Expression ":" Expression "]"*/
-;
-
-PrimaryExprLinha21:
-	"]" | ":" PrimaryExprLinha211
-;
-
-PrimaryExprLinha211:
-	 ( Expression ) PrimaryExprLinha2111 | "]"
-;
-
-PrimaryExprLinha2111:
-	"]" | ":" Expression "]"
-;
-
-
-PrimaryExprLinha22:
-	( Expression ) PrimaryExprLinha221 | "]"
-;
-
-PrimaryExprLinha221:
-	"]" | ":" Expression "]"
+	 {PrimaryExprLinha}(selector = Selector primaryExprLinha = PrimaryExprLinha | 
+	 index = Index primaryExprLinha = PrimaryExprLinha |  
+	 slice = Slice primaryExprLinha = PrimaryExprLinha |  
+	 typeAssertion = TypeAssertion primaryExprLinha = PrimaryExprLinha | 
+	 arguments = Arguments primaryExprLinha = PrimaryExprLinha)?
 ;
 
 Selector: 
-	"." IDENTIFIER
+	"."  id = IDENTIFIER
 ;
 Index: 
-	"[" Expression "]"
+	"[" expression = Expression "]"
 ;
 Slice: 
-	"[" ( Expression )? ":" ( Expression )? "]" |
-     "[" ( Expression )? ":" Expression ":" Expression "]" 
+	{Slice}("[" ( expression = Expression )? ":" ( expression1 = Expression )? "]" |
+     "[" ( expression = Expression )? ":" expression1 = Expression ":" expression2 = Expression "]") 
 ;
 TypeAssertion: 
-	"." "(" Type ")" 
+	"." "(" type= Type ")" 
 ;
+
 Arguments: 
-	"(" ( ( (=>ExpressionList) | Type ( "," ExpressionList )? ) ( "..." )? ( "," )? )? ")" 
+	{Arguments}"(" ( ( ( expressionList = ExpressionList) | type = Type ( "," expressionList = ExpressionList )? ) ( "..." )? ( "," )? )? ")" 
 ;
 
 MethodExpr: 
-	ReceiverType "." MethodName
+	receiverType = ReceiverType "." methodName = MethodName
 ;
 
 ReceiverType:
-	Type
+	type = Type
 ;
 
 Expression: 
-	UnaryExpr Expression_Linha
+	unaryExpr = UnaryExpr expression_Linha = Expression_Linha
 ;
 
 Expression_Linha: 
-	BINARY_OP Expression Expression_Linha | ANY_OTHER
+	{Expression_Linha}(BINARY_OP = BINARY_OP expression = Expression expression_Linha = Expression_Linha)? //| ANY_OTHER
 ;
 
 UnaryExpr: 
-	PrimaryExpr | UNARY_OP UnaryExpr
+	primaryExpr = PrimaryExpr | UNARY_OP unaryExpr = UnaryExpr
 ;
 
 BINARY_OP: 
-	"||" | "&&" | REL_OP | ADD_OP | MUL_OP
+	or = "||" | and = "&&" | rEL_OP= REL_OP | aDD_OP = ADD_OP | mUL_OP = MUL_OP
 ;
 
 terminal REL_OP : 
@@ -629,32 +500,33 @@ terminal UNARY_OP:
 ;
 
 Conversion: 
-	Type "(" Expression ( "," )? ")"
+	type = Type "(" expression = Expression ( "," )? ")"
 ;
 
 Statement:
-	Declaration | LabeledStmt | SimpleStmt |
-	GoStmt | ReturnStmt | BreakStmt | ContinueStmt | GotoStmt |
-	FallthroughStmt | Block | IfStmt | SwitchStmt | SelectStmt | ForStmt |
-	DeferStmt
+	declaration = Declaration | labeledStmt = LabeledStmt | simpleStmt = SimpleStmt |
+	goStmt = GoStmt | returnStmt = ReturnStmt | breakStmt = BreakStmt | continueStmt = ContinueStmt | gotoStmt = GotoStmt |
+	fallthroughStmt = FallthroughStmt | block = Block | ifStmt = IfStmt | switchStmt = SwitchStmt | selectStmt = SelectStmt | forStmt = ForStmt |
+	deferStmt = DeferStmt
 ;
 
 SimpleStmt:
-	 EmptyStmt | Expression SimpleStmtLinha | ShortVarDecl;
+	 emptyStmt = EmptyStmt | expression = Expression simpleStmtLinha = SimpleStmtLinha | shortVarDecl = ShortVarDecl;
 
 SimpleStmtLinha:
-	"<-" Expression | ( "++" | "--" ) | ("," Expression)* assign_op ExpressionList | ANY_OTHER
+	"<-" expression = Expression | ( "++" | "--" ) | ("," expression1 += Expression)* assign_op = assign_op expressionList = ExpressionList | aNY_OTHER = ANY_OTHER
 ;
+
 EmptyStmt:
-	ANY_OTHER
+	aNY_OTHER = ANY_OTHER
 ;
 
 LabeledStmt:
-	Label ":" Statement 
+	label = Label ":" statement = Statement 
 ;
 
 Label:
-	IDENTIFIER
+	id = IDENTIFIER
 ;
 
 /*ExpressionStmt: 
@@ -678,30 +550,31 @@ Assignment:
 ;*/
 
 assign_op: 
-	( ADD_OP | MUL_OP )? "="
+	( aDD_OP = ADD_OP | mUL_OP = MUL_OP )? "="
 ;
 
 IfStmt:
-	IF Expression IfStmtLinha| 
-	IF (( EmptyStmt | ShortVarDecl)";") Expression Block (ELSE (IfStmt | Block))?
+	if = IF expression = Expression ifStmtLinha = IfStmtLinha| 
+	if = IF (( emptyStmt = EmptyStmt | shortVarDecl = ShortVarDecl)";") expression = Expression block = Block (else = ELSE (ifStmt = IfStmt | block1 = Block))?
 ;
 
 IfStmtLinha:
-	SimpleStmtLinha ";" Expression Block (ELSE (IfStmt | Block))? | Block (ELSE (IfStmt | Block))?
+	simpleStmtLinha = SimpleStmtLinha ";" expression = Expression block = Block (else = ELSE (ifStmt = IfStmt | block1 = Block))? | 
+	block = Block (else = ELSE (ifStmt = IfStmt | block1 = Block))?
 ;
 
 SwitchStmt:
-	SWITCH (=>SimpleStmt ";")? SwitchStmtLinha
+	switch = SWITCH ( simpleStmt = SimpleStmt ";")? switchStmtLinha = SwitchStmtLinha
 ;
 
 SwitchStmtLinha:
-	PrimaryExpr SwitchStmtLinhaLinha |
-	((UNARY_OP UnaryExpr) Expression_Linha)? "{" ( ExprCaseClause )* "}" | 
-	(IDENTIFIER ":=") PrimaryExpr "." "(" TYPEKEYWORD ")" "{" (TypeCaseClause)* "}"
+	primaryExpr = PrimaryExpr switchStmtLinhaLinha = SwitchStmtLinhaLinha |
+	((unary_op = UNARY_OP unaryExpr = UnaryExpr) expression = Expression_Linha)? "{" exprCaseClause += ( ExprCaseClause )* "}" | 
+	(id = IDENTIFIER ":=") primaryExpr = PrimaryExpr "." "(" typekeyword = 'type' ")" "{" typeCaseClause += (TypeCaseClause)* "}"
 ;
 
 SwitchStmtLinhaLinha:
-	"{" ( ExprCaseClause )* "}" | "." "(" TYPEKEYWORD ")" "{" (TypeCaseClause)* "}"
+	"{" exprCaseClause += ( ExprCaseClause )* "}" | "." "(" typekeyword = 'type' ")" "{"  typeCaseClause += (TypeCaseClause)* "}"
 ;
 
 /*ExprSwitchStmt:
@@ -709,11 +582,11 @@ SwitchStmtLinhaLinha:
 ;*/
 
 ExprCaseClause:
-	ExprSwitchCase ":" StatementList
+	exprSwitchCase = ExprSwitchCase ":" statementList = StatementList
 ;
 
 ExprSwitchCase:
-	CASE ExpressionList | DEFAULT
+	case = CASE expressionList = ExpressionList | default = DEFAULT
 ;
 
 /*TypeSwitchStmt:
@@ -724,32 +597,34 @@ ExprSwitchCase:
 	(IDENTIFIER ":=")? PrimaryExpr "." "(" TYPEKEYWORD ")"
 ;*/
 
+
 TypeCaseClause:
-	TypeSwitchCase ":" StatementList
+	typeSwitchCase = TypeSwitchCase ":" statementList = StatementList
 ;
 
 TypeSwitchCase:
-	CASE TypeList | DEFAULT	
+	case = CASE typeList = TypeList | default = DEFAULT	
 ;
 
 TypeList:
-	Type ("," Type)*
+	type = Type ("," type1 += Type)*
 ;
 
 ForStmt: 
-	FOR (Expression ForStmtLinha| (EmptyStmt | ShortVarDecl) ";" ( Condition ) ";" ( PostStmt ) | IdentifierList ":="  RANGE Expression)? Block
+	for = FOR (expression = Expression forStmtLinha = ForStmtLinha| (emptyStmt = EmptyStmt | shortVarDecl = ShortVarDecl) ";" ( condition = Condition ) ";" ( postStmt = PostStmt ) | identifierList = IdentifierList ":="  range = RANGE expression = Expression)? block = Block
 ;
 
 ForStmtLinha:
-	ANY_OTHER | ("," Expression)* ForStmtLinhaLinha | ("<-" Expression | ( "++" | "--" ) | ANY_OTHER) ";" ( Condition ) ";" ( PostStmt )
+	vazio = ANY_OTHER | ("," expression += Expression)* forStmtLinhaLinha = ForStmtLinhaLinha | 
+	("<-" expression1 = Expression | ( "++" | "--" ) | vazio = ANY_OTHER) ";" ( condition = Condition ) ";" ( postStmt = PostStmt )
 ;
 
 ForStmtLinhaLinha:
-	assign_op ExpressionList ";" ( Condition ) ";" ( PostStmt ) | "=" RANGE Expression
+	assign_op = assign_op expressionList = ExpressionList ";" ( condition = Condition ) ";" ( postStmt = PostStmt ) | "=" range = RANGE expression = Expression
 ;
 
 Condition:
-	Expression
+	expression = Expression
 ;
 
 /*ForClause:
@@ -757,7 +632,7 @@ Condition:
 ;*/
 
 PostStmt:
-	SimpleStmt
+	simpleStmt = SimpleStmt
 ;
 
 /*InitStmt:
@@ -769,23 +644,23 @@ PostStmt:
 ;*/
 
 GoStmt:
-	GO Expression
+	go = GO expression = Expression
 ;
 
 SelectStmt:
-	SELECT "{" ( CommClause )* "}"
+	select = SELECT "{" commClause += ( CommClause )* "}"
 ;
 
 CommClause:
-	CommCase ":" StatementList
+	commCase = CommCase ":" statementList = StatementList
 ;
 
 CommCase:
-	CASE ( Expression CommCaseLinha) | DEFAULT
+	case = CASE ( expression = Expression commCaseLinha= CommCaseLinha) | default = DEFAULT
 ;
 
 CommCaseLinha:
-	"<-" Expression | (("," Expression)* "=" | IdentifierList ":=" ) RecvExpr
+	"<-" expression = Expression | (("," expression1 += Expression)* "=" | identifierList = IdentifierList ":=" ) recvExpr = RecvExpr
 ;
 
 /*RecvStmt:
@@ -793,53 +668,53 @@ CommCaseLinha:
 ;*/
 
 RecvExpr:
-	Expression
+	expression = Expression
 ;
 
 ReturnStmt:
-	RETURN ( ExpressionList )
+	return = RETURN ( expressionList = ExpressionList )
 ;
 
 BreakStmt:
-	BREAK ( Label )
+	break = BREAK ( label = Label )
 ;
 
 ContinueStmt:
-	CONTINUE ( Label )
+	continue = CONTINUE ( label = Label )
 ;
 
 GotoStmt:
-	GOTO Label
+	goto = GOTO label = Label
 ;
 
 FallthroughStmt:
-	FALLTHROUGH
+	fallthrough = FALLTHROUGH
 ;
 
 DeferStmt:
-	DEFER Expression	
+	defer = DEFER expression = Expression	
 ;
 
 SourceFile: 
-	PackageClause ";" ( ImportDecl ";" )* ( TopLevelDecl ";" )*
+	{SourceFile}packageClause = PackageClause importDecl +=(ImportDecl)* topLevelDecl += (TopLevelDecl)*
 ;
 
 PackageClause: 
-	PACKAGE PackageName
+	package = "package" packageName = PackageName
 ;
 
 PackageName: 
-	IDENTIFIER
+	id = IDENTIFIER
 ;
 
 ImportDecl:
-	IMPORT (ImportSpec | "(" ( ImportSpec ";" )* ")")
+	importt = "import"  (importSpec = ImportSpec |  "(" (importSpec1 += ImportSpec)* ")")
 ;
 
 ImportSpec:
-	("." | PackageName )? ImportPath
+	("." | packageName = PackageName)? sTRING_LIT = STRING_LIT
 ;
 
-ImportPath: 
+/*ImportPath: 
 	STRING_LIT
-;
+;*/

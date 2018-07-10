@@ -10,6 +10,9 @@ import org.eclipse.xtext.IGrammarAccess;
 import org.eclipse.xtext.RuleCall;
 import org.eclipse.xtext.nodemodel.INode;
 import org.eclipse.xtext.serializer.analysis.GrammarAlias.AbstractElementAlias;
+import org.eclipse.xtext.serializer.analysis.GrammarAlias.AlternativeAlias;
+import org.eclipse.xtext.serializer.analysis.GrammarAlias.TokenAlias;
+import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynNavigable;
 import org.eclipse.xtext.serializer.analysis.ISyntacticSequencerPDAProvider.ISynTransition;
 import org.eclipse.xtext.serializer.sequencer.AbstractSyntacticSequencer;
 import org.xtext.example.mydsl.services.MyDslGrammarAccess;
@@ -18,17 +21,60 @@ import org.xtext.example.mydsl.services.MyDslGrammarAccess;
 public class MyDslSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected MyDslGrammarAccess grammarAccess;
+	protected AbstractElementAlias match_Arguments_CommaKeyword_2_2_q;
+	protected AbstractElementAlias match_Arguments_FullStopFullStopFullStopKeyword_2_1_q;
+	protected AbstractElementAlias match_Conversion_CommaKeyword_3_q;
+	protected AbstractElementAlias match_EmbeddedField_AsteriskKeyword_0_q;
+	protected AbstractElementAlias match_ForStmtLinha_HyphenMinusHyphenMinusKeyword_2_0_1_1_or_PlusSignPlusSignKeyword_2_0_1_0;
+	protected AbstractElementAlias match_ImportSpec_FullStopKeyword_0_0_q;
+	protected AbstractElementAlias match_LiteralValue_CommaKeyword_2_1_q;
+	protected AbstractElementAlias match_ParameterDecl_FullStopFullStopFullStopKeyword_1_q;
+	protected AbstractElementAlias match_SimpleStmtLinha_HyphenMinusHyphenMinusKeyword_1_1_or_PlusSignPlusSignKeyword_1_0;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (MyDslGrammarAccess) access;
+		match_Arguments_CommaKeyword_2_2_q = new TokenAlias(false, true, grammarAccess.getArgumentsAccess().getCommaKeyword_2_2());
+		match_Arguments_FullStopFullStopFullStopKeyword_2_1_q = new TokenAlias(false, true, grammarAccess.getArgumentsAccess().getFullStopFullStopFullStopKeyword_2_1());
+		match_Conversion_CommaKeyword_3_q = new TokenAlias(false, true, grammarAccess.getConversionAccess().getCommaKeyword_3());
+		match_EmbeddedField_AsteriskKeyword_0_q = new TokenAlias(false, true, grammarAccess.getEmbeddedFieldAccess().getAsteriskKeyword_0());
+		match_ForStmtLinha_HyphenMinusHyphenMinusKeyword_2_0_1_1_or_PlusSignPlusSignKeyword_2_0_1_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getForStmtLinhaAccess().getHyphenMinusHyphenMinusKeyword_2_0_1_1()), new TokenAlias(false, false, grammarAccess.getForStmtLinhaAccess().getPlusSignPlusSignKeyword_2_0_1_0()));
+		match_ImportSpec_FullStopKeyword_0_0_q = new TokenAlias(false, true, grammarAccess.getImportSpecAccess().getFullStopKeyword_0_0());
+		match_LiteralValue_CommaKeyword_2_1_q = new TokenAlias(false, true, grammarAccess.getLiteralValueAccess().getCommaKeyword_2_1());
+		match_ParameterDecl_FullStopFullStopFullStopKeyword_1_q = new TokenAlias(false, true, grammarAccess.getParameterDeclAccess().getFullStopFullStopFullStopKeyword_1());
+		match_SimpleStmtLinha_HyphenMinusHyphenMinusKeyword_1_1_or_PlusSignPlusSignKeyword_1_0 = new AlternativeAlias(false, false, new TokenAlias(false, false, grammarAccess.getSimpleStmtLinhaAccess().getHyphenMinusHyphenMinusKeyword_1_1()), new TokenAlias(false, false, grammarAccess.getSimpleStmtLinhaAccess().getPlusSignPlusSignKeyword_1_0()));
 	}
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (ruleCall.getRule() == grammarAccess.getUNARY_OPRule())
+			return getUNARY_OPToken(semanticObject, ruleCall, node);
+		else if (ruleCall.getRule() == grammarAccess.getVARRule())
+			return getVARToken(semanticObject, ruleCall, node);
 		return "";
 	}
 	
+	/**
+	 * terminal UNARY_OP: 
+	 * 	"+" | "-" | "!" | "^" | "*" | "&" | "<-" 
+	 * ;
+	 */
+	protected String getUNARY_OPToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "+";
+	}
+	
+	/**
+	 * terminal VAR: 
+	 * 	"var"
+	 * ;
+	 */
+	protected String getVARToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+		if (node != null)
+			return getTokenText(node);
+		return "var";
+	}
 	
 	@Override
 	protected void emitUnassignedTokens(EObject semanticObject, ISynTransition transition, INode fromNode, INode toNode) {
@@ -36,8 +82,128 @@ public class MyDslSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			acceptNodes(getLastNavigableState(), syntaxNodes);
+			if (match_Arguments_CommaKeyword_2_2_q.equals(syntax))
+				emit_Arguments_CommaKeyword_2_2_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Arguments_FullStopFullStopFullStopKeyword_2_1_q.equals(syntax))
+				emit_Arguments_FullStopFullStopFullStopKeyword_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Conversion_CommaKeyword_3_q.equals(syntax))
+				emit_Conversion_CommaKeyword_3_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_EmbeddedField_AsteriskKeyword_0_q.equals(syntax))
+				emit_EmbeddedField_AsteriskKeyword_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ForStmtLinha_HyphenMinusHyphenMinusKeyword_2_0_1_1_or_PlusSignPlusSignKeyword_2_0_1_0.equals(syntax))
+				emit_ForStmtLinha_HyphenMinusHyphenMinusKeyword_2_0_1_1_or_PlusSignPlusSignKeyword_2_0_1_0(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ImportSpec_FullStopKeyword_0_0_q.equals(syntax))
+				emit_ImportSpec_FullStopKeyword_0_0_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_LiteralValue_CommaKeyword_2_1_q.equals(syntax))
+				emit_LiteralValue_CommaKeyword_2_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_ParameterDecl_FullStopFullStopFullStopKeyword_1_q.equals(syntax))
+				emit_ParameterDecl_FullStopFullStopFullStopKeyword_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_SimpleStmtLinha_HyphenMinusHyphenMinusKeyword_1_1_or_PlusSignPlusSignKeyword_1_0.equals(syntax))
+				emit_SimpleStmtLinha_HyphenMinusHyphenMinusKeyword_1_1_or_PlusSignPlusSignKeyword_1_0(semanticObject, getLastNavigableState(), syntaxNodes);
+			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
 
+	/**
+	 * Ambiguous syntax:
+	 *     ','?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     expressionList=ExpressionList '...'? (ambiguity) ')' (rule end)
+	 *     type=Type '...'? (ambiguity) ')' (rule end)
+	 */
+	protected void emit_Arguments_CommaKeyword_2_2_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     '...'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     expressionList=ExpressionList (ambiguity) ','? ')' (rule end)
+	 *     type=Type (ambiguity) ','? ')' (rule end)
+	 */
+	protected void emit_Arguments_FullStopFullStopFullStopKeyword_2_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ','?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     expression=Expression (ambiguity) ')' (rule end)
+	 */
+	protected void emit_Conversion_CommaKeyword_3_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     '*'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) typeName=TypeName
+	 */
+	protected void emit_EmbeddedField_AsteriskKeyword_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     '++' | '--'
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) ';' condition=Condition
+	 */
+	protected void emit_ForStmtLinha_HyphenMinusHyphenMinusKeyword_2_0_1_1_or_PlusSignPlusSignKeyword_2_0_1_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     '.'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) sTRING_LIT=STRING_LIT
+	 */
+	protected void emit_ImportSpec_FullStopKeyword_0_0_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     ','?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     elementList=ElementList (ambiguity) '}' (rule end)
+	 */
+	protected void emit_LiteralValue_CommaKeyword_2_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     '...'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) type=Type
+	 *     identifierList=IdentifierList (ambiguity) type=Type
+	 */
+	protected void emit_ParameterDecl_FullStopFullStopFullStopKeyword_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
+	/**
+	 * Ambiguous syntax:
+	 *     '++' | '--'
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) (rule start)
+	 */
+	protected void emit_SimpleStmtLinha_HyphenMinusHyphenMinusKeyword_1_1_or_PlusSignPlusSignKeyword_1_0(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
 }

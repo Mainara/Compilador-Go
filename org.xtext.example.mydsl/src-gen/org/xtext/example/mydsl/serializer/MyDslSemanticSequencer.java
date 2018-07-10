@@ -11,9 +11,127 @@ import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Parameter;
 import org.eclipse.xtext.ParserRule;
 import org.eclipse.xtext.serializer.ISerializationContext;
+import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
+import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
+import org.xtext.example.mydsl.myDsl.AliasDecl;
+import org.xtext.example.mydsl.myDsl.Arguments;
+import org.xtext.example.mydsl.myDsl.ArrayLength;
+import org.xtext.example.mydsl.myDsl.BINARY_OP;
+import org.xtext.example.mydsl.myDsl.BaseType;
+import org.xtext.example.mydsl.myDsl.BasicLit;
+import org.xtext.example.mydsl.myDsl.Block;
+import org.xtext.example.mydsl.myDsl.BreakStmt;
+import org.xtext.example.mydsl.myDsl.ChannelType;
+import org.xtext.example.mydsl.myDsl.ChannelTypeLinha;
+import org.xtext.example.mydsl.myDsl.CommCase;
+import org.xtext.example.mydsl.myDsl.CommCaseLinha;
+import org.xtext.example.mydsl.myDsl.CommClause;
+import org.xtext.example.mydsl.myDsl.CompositeLit;
+import org.xtext.example.mydsl.myDsl.Condition;
+import org.xtext.example.mydsl.myDsl.ConstDecl;
+import org.xtext.example.mydsl.myDsl.ConstSpec;
+import org.xtext.example.mydsl.myDsl.ContinueStmt;
+import org.xtext.example.mydsl.myDsl.Conversion;
+import org.xtext.example.mydsl.myDsl.Declaration;
+import org.xtext.example.mydsl.myDsl.DeferStmt;
+import org.xtext.example.mydsl.myDsl.Element;
+import org.xtext.example.mydsl.myDsl.ElementList;
+import org.xtext.example.mydsl.myDsl.ElementType;
+import org.xtext.example.mydsl.myDsl.EmbeddedField;
+import org.xtext.example.mydsl.myDsl.EmptyStmt;
+import org.xtext.example.mydsl.myDsl.ExprCaseClause;
+import org.xtext.example.mydsl.myDsl.ExprSwitchCase;
+import org.xtext.example.mydsl.myDsl.Expression;
+import org.xtext.example.mydsl.myDsl.ExpressionList;
+import org.xtext.example.mydsl.myDsl.Expression_Linha;
+import org.xtext.example.mydsl.myDsl.FLOAT_LIT;
+import org.xtext.example.mydsl.myDsl.FallthroughStmt;
+import org.xtext.example.mydsl.myDsl.FieldDecl;
+import org.xtext.example.mydsl.myDsl.FieldName;
+import org.xtext.example.mydsl.myDsl.ForStmt;
+import org.xtext.example.mydsl.myDsl.ForStmtLinha;
+import org.xtext.example.mydsl.myDsl.ForStmtLinhaLinha;
+import org.xtext.example.mydsl.myDsl.FunctionBody;
+import org.xtext.example.mydsl.myDsl.FunctionDecl;
+import org.xtext.example.mydsl.myDsl.FunctionLit;
+import org.xtext.example.mydsl.myDsl.FunctionName;
+import org.xtext.example.mydsl.myDsl.FunctionType;
+import org.xtext.example.mydsl.myDsl.GoStmt;
+import org.xtext.example.mydsl.myDsl.GotoStmt;
+import org.xtext.example.mydsl.myDsl.IMAGINARY_LIT;
+import org.xtext.example.mydsl.myDsl.IdentifierList;
+import org.xtext.example.mydsl.myDsl.IfStmt;
+import org.xtext.example.mydsl.myDsl.IfStmtLinha;
+import org.xtext.example.mydsl.myDsl.ImportDecl;
+import org.xtext.example.mydsl.myDsl.ImportSpec;
+import org.xtext.example.mydsl.myDsl.Index;
+import org.xtext.example.mydsl.myDsl.InterfaceType;
+import org.xtext.example.mydsl.myDsl.InterfaceTypeName;
+import org.xtext.example.mydsl.myDsl.Key;
+import org.xtext.example.mydsl.myDsl.KeyType;
+import org.xtext.example.mydsl.myDsl.KeyedElement;
+import org.xtext.example.mydsl.myDsl.Label;
+import org.xtext.example.mydsl.myDsl.LabeledStmt;
+import org.xtext.example.mydsl.myDsl.Literal;
+import org.xtext.example.mydsl.myDsl.LiteralType;
+import org.xtext.example.mydsl.myDsl.LiteralTypeLinha;
+import org.xtext.example.mydsl.myDsl.LiteralValue;
+import org.xtext.example.mydsl.myDsl.MapType;
+import org.xtext.example.mydsl.myDsl.MethodDecl;
+import org.xtext.example.mydsl.myDsl.MethodExpr;
+import org.xtext.example.mydsl.myDsl.MethodName;
+import org.xtext.example.mydsl.myDsl.MethodSpec;
 import org.xtext.example.mydsl.myDsl.Model;
 import org.xtext.example.mydsl.myDsl.MyDslPackage;
+import org.xtext.example.mydsl.myDsl.Operand;
+import org.xtext.example.mydsl.myDsl.OperandName;
+import org.xtext.example.mydsl.myDsl.PackageClause;
+import org.xtext.example.mydsl.myDsl.PackageName;
+import org.xtext.example.mydsl.myDsl.ParameterDecl;
+import org.xtext.example.mydsl.myDsl.ParameterList;
+import org.xtext.example.mydsl.myDsl.Parameters;
+import org.xtext.example.mydsl.myDsl.PointerType;
+import org.xtext.example.mydsl.myDsl.PostStmt;
+import org.xtext.example.mydsl.myDsl.PrimaryExpr;
+import org.xtext.example.mydsl.myDsl.PrimaryExprLinha;
+import org.xtext.example.mydsl.myDsl.Receiver;
+import org.xtext.example.mydsl.myDsl.ReceiverType;
+import org.xtext.example.mydsl.myDsl.RecvExpr;
+import org.xtext.example.mydsl.myDsl.Result;
+import org.xtext.example.mydsl.myDsl.ReturnStmt;
+import org.xtext.example.mydsl.myDsl.SelectStmt;
+import org.xtext.example.mydsl.myDsl.Selector;
+import org.xtext.example.mydsl.myDsl.ShortVarDecl;
+import org.xtext.example.mydsl.myDsl.Signature;
+import org.xtext.example.mydsl.myDsl.SimpleStmt;
+import org.xtext.example.mydsl.myDsl.SimpleStmtLinha;
+import org.xtext.example.mydsl.myDsl.Slice;
+import org.xtext.example.mydsl.myDsl.SourceFile;
+import org.xtext.example.mydsl.myDsl.Statement;
+import org.xtext.example.mydsl.myDsl.StatementList;
+import org.xtext.example.mydsl.myDsl.StructType;
+import org.xtext.example.mydsl.myDsl.SwitchStmt;
+import org.xtext.example.mydsl.myDsl.SwitchStmtLinha;
+import org.xtext.example.mydsl.myDsl.SwitchStmtLinhaLinha;
+import org.xtext.example.mydsl.myDsl.Tag;
+import org.xtext.example.mydsl.myDsl.TopLevelDecl;
+import org.xtext.example.mydsl.myDsl.Type;
+import org.xtext.example.mydsl.myDsl.TypeAssertion;
+import org.xtext.example.mydsl.myDsl.TypeCaseClause;
+import org.xtext.example.mydsl.myDsl.TypeDecl;
+import org.xtext.example.mydsl.myDsl.TypeDef;
+import org.xtext.example.mydsl.myDsl.TypeList;
+import org.xtext.example.mydsl.myDsl.TypeLit;
+import org.xtext.example.mydsl.myDsl.TypeLitLinha;
+import org.xtext.example.mydsl.myDsl.TypeName;
+import org.xtext.example.mydsl.myDsl.TypeNameLinha;
+import org.xtext.example.mydsl.myDsl.TypeSpec;
+import org.xtext.example.mydsl.myDsl.TypeSwitchCase;
+import org.xtext.example.mydsl.myDsl.UnaryExpr;
+import org.xtext.example.mydsl.myDsl.VarDecl;
+import org.xtext.example.mydsl.myDsl.VarSpec;
+import org.xtext.example.mydsl.myDsl.assign_op;
 import org.xtext.example.mydsl.services.MyDslGrammarAccess;
 
 @SuppressWarnings("all")
@@ -30,8 +148,356 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == MyDslPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case MyDslPackage.ALIAS_DECL:
+				sequence_AliasDecl(context, (AliasDecl) semanticObject); 
+				return; 
+			case MyDslPackage.ARGUMENTS:
+				sequence_Arguments(context, (Arguments) semanticObject); 
+				return; 
+			case MyDslPackage.ARRAY_LENGTH:
+				sequence_ArrayLength(context, (ArrayLength) semanticObject); 
+				return; 
+			case MyDslPackage.BINARY_OP:
+				sequence_BINARY_OP(context, (BINARY_OP) semanticObject); 
+				return; 
+			case MyDslPackage.BASE_TYPE:
+				sequence_BaseType(context, (BaseType) semanticObject); 
+				return; 
+			case MyDslPackage.BASIC_LIT:
+				sequence_BasicLit(context, (BasicLit) semanticObject); 
+				return; 
+			case MyDslPackage.BLOCK:
+				sequence_Block(context, (Block) semanticObject); 
+				return; 
+			case MyDslPackage.BREAK_STMT:
+				sequence_BreakStmt(context, (BreakStmt) semanticObject); 
+				return; 
+			case MyDslPackage.CHANNEL_TYPE:
+				sequence_ChannelType(context, (ChannelType) semanticObject); 
+				return; 
+			case MyDslPackage.CHANNEL_TYPE_LINHA:
+				sequence_ChannelTypeLinha(context, (ChannelTypeLinha) semanticObject); 
+				return; 
+			case MyDslPackage.COMM_CASE:
+				sequence_CommCase(context, (CommCase) semanticObject); 
+				return; 
+			case MyDslPackage.COMM_CASE_LINHA:
+				sequence_CommCaseLinha(context, (CommCaseLinha) semanticObject); 
+				return; 
+			case MyDslPackage.COMM_CLAUSE:
+				sequence_CommClause(context, (CommClause) semanticObject); 
+				return; 
+			case MyDslPackage.COMPOSITE_LIT:
+				sequence_CompositeLit(context, (CompositeLit) semanticObject); 
+				return; 
+			case MyDslPackage.CONDITION:
+				sequence_Condition(context, (Condition) semanticObject); 
+				return; 
+			case MyDslPackage.CONST_DECL:
+				sequence_ConstDecl(context, (ConstDecl) semanticObject); 
+				return; 
+			case MyDslPackage.CONST_SPEC:
+				sequence_ConstSpec(context, (ConstSpec) semanticObject); 
+				return; 
+			case MyDslPackage.CONTINUE_STMT:
+				sequence_ContinueStmt(context, (ContinueStmt) semanticObject); 
+				return; 
+			case MyDslPackage.CONVERSION:
+				sequence_Conversion(context, (Conversion) semanticObject); 
+				return; 
+			case MyDslPackage.DECLARATION:
+				sequence_Declaration(context, (Declaration) semanticObject); 
+				return; 
+			case MyDslPackage.DEFER_STMT:
+				sequence_DeferStmt(context, (DeferStmt) semanticObject); 
+				return; 
+			case MyDslPackage.ELEMENT:
+				sequence_Element(context, (Element) semanticObject); 
+				return; 
+			case MyDslPackage.ELEMENT_LIST:
+				sequence_ElementList(context, (ElementList) semanticObject); 
+				return; 
+			case MyDslPackage.ELEMENT_TYPE:
+				sequence_ElementType(context, (ElementType) semanticObject); 
+				return; 
+			case MyDslPackage.EMBEDDED_FIELD:
+				sequence_EmbeddedField(context, (EmbeddedField) semanticObject); 
+				return; 
+			case MyDslPackage.EMPTY_STMT:
+				sequence_EmptyStmt(context, (EmptyStmt) semanticObject); 
+				return; 
+			case MyDslPackage.EXPR_CASE_CLAUSE:
+				sequence_ExprCaseClause(context, (ExprCaseClause) semanticObject); 
+				return; 
+			case MyDslPackage.EXPR_SWITCH_CASE:
+				sequence_ExprSwitchCase(context, (ExprSwitchCase) semanticObject); 
+				return; 
+			case MyDslPackage.EXPRESSION:
+				sequence_Expression(context, (Expression) semanticObject); 
+				return; 
+			case MyDslPackage.EXPRESSION_LIST:
+				sequence_ExpressionList(context, (ExpressionList) semanticObject); 
+				return; 
+			case MyDslPackage.EXPRESSION_LINHA:
+				sequence_Expression_Linha(context, (Expression_Linha) semanticObject); 
+				return; 
+			case MyDslPackage.FLOAT_LIT:
+				sequence_FLOAT_LIT(context, (FLOAT_LIT) semanticObject); 
+				return; 
+			case MyDslPackage.FALLTHROUGH_STMT:
+				sequence_FallthroughStmt(context, (FallthroughStmt) semanticObject); 
+				return; 
+			case MyDslPackage.FIELD_DECL:
+				sequence_FieldDecl(context, (FieldDecl) semanticObject); 
+				return; 
+			case MyDslPackage.FIELD_NAME:
+				sequence_FieldName(context, (FieldName) semanticObject); 
+				return; 
+			case MyDslPackage.FOR_STMT:
+				sequence_ForStmt(context, (ForStmt) semanticObject); 
+				return; 
+			case MyDslPackage.FOR_STMT_LINHA:
+				sequence_ForStmtLinha(context, (ForStmtLinha) semanticObject); 
+				return; 
+			case MyDslPackage.FOR_STMT_LINHA_LINHA:
+				sequence_ForStmtLinhaLinha(context, (ForStmtLinhaLinha) semanticObject); 
+				return; 
+			case MyDslPackage.FUNCTION_BODY:
+				sequence_FunctionBody(context, (FunctionBody) semanticObject); 
+				return; 
+			case MyDslPackage.FUNCTION_DECL:
+				sequence_FunctionDecl(context, (FunctionDecl) semanticObject); 
+				return; 
+			case MyDslPackage.FUNCTION_LIT:
+				sequence_FunctionLit(context, (FunctionLit) semanticObject); 
+				return; 
+			case MyDslPackage.FUNCTION_NAME:
+				sequence_FunctionName(context, (FunctionName) semanticObject); 
+				return; 
+			case MyDslPackage.FUNCTION_TYPE:
+				sequence_FunctionType(context, (FunctionType) semanticObject); 
+				return; 
+			case MyDslPackage.GO_STMT:
+				sequence_GoStmt(context, (GoStmt) semanticObject); 
+				return; 
+			case MyDslPackage.GOTO_STMT:
+				sequence_GotoStmt(context, (GotoStmt) semanticObject); 
+				return; 
+			case MyDslPackage.IMAGINARY_LIT:
+				sequence_IMAGINARY_LIT(context, (IMAGINARY_LIT) semanticObject); 
+				return; 
+			case MyDslPackage.IDENTIFIER_LIST:
+				sequence_IdentifierList(context, (IdentifierList) semanticObject); 
+				return; 
+			case MyDslPackage.IF_STMT:
+				sequence_IfStmt(context, (IfStmt) semanticObject); 
+				return; 
+			case MyDslPackage.IF_STMT_LINHA:
+				sequence_IfStmtLinha(context, (IfStmtLinha) semanticObject); 
+				return; 
+			case MyDslPackage.IMPORT_DECL:
+				sequence_ImportDecl(context, (ImportDecl) semanticObject); 
+				return; 
+			case MyDslPackage.IMPORT_SPEC:
+				sequence_ImportSpec(context, (ImportSpec) semanticObject); 
+				return; 
+			case MyDslPackage.INDEX:
+				sequence_Index(context, (Index) semanticObject); 
+				return; 
+			case MyDslPackage.INTERFACE_TYPE:
+				sequence_InterfaceType(context, (InterfaceType) semanticObject); 
+				return; 
+			case MyDslPackage.INTERFACE_TYPE_NAME:
+				sequence_InterfaceTypeName(context, (InterfaceTypeName) semanticObject); 
+				return; 
+			case MyDslPackage.KEY:
+				sequence_Key(context, (Key) semanticObject); 
+				return; 
+			case MyDslPackage.KEY_TYPE:
+				sequence_KeyType(context, (KeyType) semanticObject); 
+				return; 
+			case MyDslPackage.KEYED_ELEMENT:
+				sequence_KeyedElement(context, (KeyedElement) semanticObject); 
+				return; 
+			case MyDslPackage.LABEL:
+				sequence_Label(context, (Label) semanticObject); 
+				return; 
+			case MyDslPackage.LABELED_STMT:
+				sequence_LabeledStmt(context, (LabeledStmt) semanticObject); 
+				return; 
+			case MyDslPackage.LITERAL:
+				sequence_Literal(context, (Literal) semanticObject); 
+				return; 
+			case MyDslPackage.LITERAL_TYPE:
+				sequence_LiteralType(context, (LiteralType) semanticObject); 
+				return; 
+			case MyDslPackage.LITERAL_TYPE_LINHA:
+				sequence_LiteralTypeLinha(context, (LiteralTypeLinha) semanticObject); 
+				return; 
+			case MyDslPackage.LITERAL_VALUE:
+				sequence_LiteralValue(context, (LiteralValue) semanticObject); 
+				return; 
+			case MyDslPackage.MAP_TYPE:
+				sequence_MapType(context, (MapType) semanticObject); 
+				return; 
+			case MyDslPackage.METHOD_DECL:
+				sequence_MethodDecl(context, (MethodDecl) semanticObject); 
+				return; 
+			case MyDslPackage.METHOD_EXPR:
+				sequence_MethodExpr(context, (MethodExpr) semanticObject); 
+				return; 
+			case MyDslPackage.METHOD_NAME:
+				sequence_MethodName(context, (MethodName) semanticObject); 
+				return; 
+			case MyDslPackage.METHOD_SPEC:
+				sequence_MethodSpec(context, (MethodSpec) semanticObject); 
+				return; 
 			case MyDslPackage.MODEL:
 				sequence_Model(context, (Model) semanticObject); 
+				return; 
+			case MyDslPackage.OPERAND:
+				sequence_Operand(context, (Operand) semanticObject); 
+				return; 
+			case MyDslPackage.OPERAND_NAME:
+				sequence_OperandName(context, (OperandName) semanticObject); 
+				return; 
+			case MyDslPackage.PACKAGE_CLAUSE:
+				sequence_PackageClause(context, (PackageClause) semanticObject); 
+				return; 
+			case MyDslPackage.PACKAGE_NAME:
+				sequence_PackageName(context, (PackageName) semanticObject); 
+				return; 
+			case MyDslPackage.PARAMETER_DECL:
+				sequence_ParameterDecl(context, (ParameterDecl) semanticObject); 
+				return; 
+			case MyDslPackage.PARAMETER_LIST:
+				sequence_ParameterList(context, (ParameterList) semanticObject); 
+				return; 
+			case MyDslPackage.PARAMETERS:
+				sequence_Parameters(context, (Parameters) semanticObject); 
+				return; 
+			case MyDslPackage.POINTER_TYPE:
+				sequence_PointerType(context, (PointerType) semanticObject); 
+				return; 
+			case MyDslPackage.POST_STMT:
+				sequence_PostStmt(context, (PostStmt) semanticObject); 
+				return; 
+			case MyDslPackage.PRIMARY_EXPR:
+				sequence_PrimaryExpr(context, (PrimaryExpr) semanticObject); 
+				return; 
+			case MyDslPackage.PRIMARY_EXPR_LINHA:
+				sequence_PrimaryExprLinha(context, (PrimaryExprLinha) semanticObject); 
+				return; 
+			case MyDslPackage.RECEIVER:
+				sequence_Receiver(context, (Receiver) semanticObject); 
+				return; 
+			case MyDslPackage.RECEIVER_TYPE:
+				sequence_ReceiverType(context, (ReceiverType) semanticObject); 
+				return; 
+			case MyDslPackage.RECV_EXPR:
+				sequence_RecvExpr(context, (RecvExpr) semanticObject); 
+				return; 
+			case MyDslPackage.RESULT:
+				sequence_Result(context, (Result) semanticObject); 
+				return; 
+			case MyDslPackage.RETURN_STMT:
+				sequence_ReturnStmt(context, (ReturnStmt) semanticObject); 
+				return; 
+			case MyDslPackage.SELECT_STMT:
+				sequence_SelectStmt(context, (SelectStmt) semanticObject); 
+				return; 
+			case MyDslPackage.SELECTOR:
+				sequence_Selector(context, (Selector) semanticObject); 
+				return; 
+			case MyDslPackage.SHORT_VAR_DECL:
+				sequence_ShortVarDecl(context, (ShortVarDecl) semanticObject); 
+				return; 
+			case MyDslPackage.SIGNATURE:
+				sequence_Signature(context, (Signature) semanticObject); 
+				return; 
+			case MyDslPackage.SIMPLE_STMT:
+				sequence_SimpleStmt(context, (SimpleStmt) semanticObject); 
+				return; 
+			case MyDslPackage.SIMPLE_STMT_LINHA:
+				sequence_SimpleStmtLinha(context, (SimpleStmtLinha) semanticObject); 
+				return; 
+			case MyDslPackage.SLICE:
+				sequence_Slice(context, (Slice) semanticObject); 
+				return; 
+			case MyDslPackage.SOURCE_FILE:
+				sequence_SourceFile(context, (SourceFile) semanticObject); 
+				return; 
+			case MyDslPackage.STATEMENT:
+				sequence_Statement(context, (Statement) semanticObject); 
+				return; 
+			case MyDslPackage.STATEMENT_LIST:
+				sequence_StatementList(context, (StatementList) semanticObject); 
+				return; 
+			case MyDslPackage.STRUCT_TYPE:
+				sequence_StructType(context, (StructType) semanticObject); 
+				return; 
+			case MyDslPackage.SWITCH_STMT:
+				sequence_SwitchStmt(context, (SwitchStmt) semanticObject); 
+				return; 
+			case MyDslPackage.SWITCH_STMT_LINHA:
+				sequence_SwitchStmtLinha(context, (SwitchStmtLinha) semanticObject); 
+				return; 
+			case MyDslPackage.SWITCH_STMT_LINHA_LINHA:
+				sequence_SwitchStmtLinhaLinha(context, (SwitchStmtLinhaLinha) semanticObject); 
+				return; 
+			case MyDslPackage.TAG:
+				sequence_Tag(context, (Tag) semanticObject); 
+				return; 
+			case MyDslPackage.TOP_LEVEL_DECL:
+				sequence_TopLevelDecl(context, (TopLevelDecl) semanticObject); 
+				return; 
+			case MyDslPackage.TYPE:
+				sequence_Type(context, (Type) semanticObject); 
+				return; 
+			case MyDslPackage.TYPE_ASSERTION:
+				sequence_TypeAssertion(context, (TypeAssertion) semanticObject); 
+				return; 
+			case MyDslPackage.TYPE_CASE_CLAUSE:
+				sequence_TypeCaseClause(context, (TypeCaseClause) semanticObject); 
+				return; 
+			case MyDslPackage.TYPE_DECL:
+				sequence_TypeDecl(context, (TypeDecl) semanticObject); 
+				return; 
+			case MyDslPackage.TYPE_DEF:
+				sequence_TypeDef(context, (TypeDef) semanticObject); 
+				return; 
+			case MyDslPackage.TYPE_LIST:
+				sequence_TypeList(context, (TypeList) semanticObject); 
+				return; 
+			case MyDslPackage.TYPE_LIT:
+				sequence_TypeLit(context, (TypeLit) semanticObject); 
+				return; 
+			case MyDslPackage.TYPE_LIT_LINHA:
+				sequence_TypeLitLinha(context, (TypeLitLinha) semanticObject); 
+				return; 
+			case MyDslPackage.TYPE_NAME:
+				sequence_TypeName(context, (TypeName) semanticObject); 
+				return; 
+			case MyDslPackage.TYPE_NAME_LINHA:
+				sequence_TypeNameLinha(context, (TypeNameLinha) semanticObject); 
+				return; 
+			case MyDslPackage.TYPE_SPEC:
+				sequence_TypeSpec(context, (TypeSpec) semanticObject); 
+				return; 
+			case MyDslPackage.TYPE_SWITCH_CASE:
+				sequence_TypeSwitchCase(context, (TypeSwitchCase) semanticObject); 
+				return; 
+			case MyDslPackage.UNARY_EXPR:
+				sequence_UnaryExpr(context, (UnaryExpr) semanticObject); 
+				return; 
+			case MyDslPackage.VAR_DECL:
+				sequence_VarDecl(context, (VarDecl) semanticObject); 
+				return; 
+			case MyDslPackage.VAR_SPEC:
+				sequence_VarSpec(context, (VarSpec) semanticObject); 
+				return; 
+			case MyDslPackage.ASSIGN_OP:
+				sequence_assign_op(context, (assign_op) semanticObject); 
 				return; 
 			}
 		if (errorAcceptor != null)
@@ -40,12 +506,1829 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	
 	/**
 	 * Contexts:
+	 *     AliasDecl returns AliasDecl
+	 *
+	 * Constraint:
+	 *     (id=IDENTIFIER type=Type)
+	 */
+	protected void sequence_AliasDecl(ISerializationContext context, AliasDecl semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.ALIAS_DECL__ID) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.ALIAS_DECL__ID));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.ALIAS_DECL__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.ALIAS_DECL__TYPE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getAliasDeclAccess().getIdIDENTIFIERTerminalRuleCall_0_0(), semanticObject.getId());
+		feeder.accept(grammarAccess.getAliasDeclAccess().getTypeTypeParserRuleCall_2_0(), semanticObject.getType());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Arguments returns Arguments
+	 *
+	 * Constraint:
+	 *     (expressionList=ExpressionList | (type=Type expressionList=ExpressionList?))?
+	 */
+	protected void sequence_Arguments(ISerializationContext context, Arguments semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ArrayLength returns ArrayLength
+	 *
+	 * Constraint:
+	 *     expression=Expression
+	 */
+	protected void sequence_ArrayLength(ISerializationContext context, ArrayLength semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.ARRAY_LENGTH__EXPRESSION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.ARRAY_LENGTH__EXPRESSION));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getArrayLengthAccess().getExpressionExpressionParserRuleCall_0(), semanticObject.getExpression());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     BINARY_OP returns BINARY_OP
+	 *
+	 * Constraint:
+	 *     (or='||' | and='&&' | rEL_OP=REL_OP | aDD_OP=ADD_OP | mUL_OP=MUL_OP)
+	 */
+	protected void sequence_BINARY_OP(ISerializationContext context, BINARY_OP semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     BaseType returns BaseType
+	 *
+	 * Constraint:
+	 *     type=Type
+	 */
+	protected void sequence_BaseType(ISerializationContext context, BaseType semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.BASE_TYPE__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.BASE_TYPE__TYPE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getBaseTypeAccess().getTypeTypeParserRuleCall_0(), semanticObject.getType());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     BasicLit returns BasicLit
+	 *
+	 * Constraint:
+	 *     (int_lit=INT_LIT | float_lit=FLOAT_LIT | imaginary_lit=IMAGINARY_LIT | rune_lit=RUNE_LIT | string_lit=STRING_LIT)
+	 */
+	protected void sequence_BasicLit(ISerializationContext context, BasicLit semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Block returns Block
+	 *
+	 * Constraint:
+	 *     statementList=StatementList
+	 */
+	protected void sequence_Block(ISerializationContext context, Block semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.BLOCK__STATEMENT_LIST) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.BLOCK__STATEMENT_LIST));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getBlockAccess().getStatementListStatementListParserRuleCall_1_0(), semanticObject.getStatementList());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     BreakStmt returns BreakStmt
+	 *
+	 * Constraint:
+	 *     (break=BREAK label=Label)
+	 */
+	protected void sequence_BreakStmt(ISerializationContext context, BreakStmt semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.BREAK_STMT__BREAK) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.BREAK_STMT__BREAK));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.BREAK_STMT__LABEL) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.BREAK_STMT__LABEL));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getBreakStmtAccess().getBreakBREAKTerminalRuleCall_0_0(), semanticObject.getBreak());
+		feeder.accept(grammarAccess.getBreakStmtAccess().getLabelLabelParserRuleCall_1_0(), semanticObject.getLabel());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ChannelTypeLinha returns ChannelTypeLinha
+	 *
+	 * Constraint:
+	 *     aNY_OTHER=ANY_OTHER
+	 */
+	protected void sequence_ChannelTypeLinha(ISerializationContext context, ChannelTypeLinha semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.CHANNEL_TYPE_LINHA__ANY_OTHER) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.CHANNEL_TYPE_LINHA__ANY_OTHER));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getChannelTypeLinhaAccess().getANY_OTHERANY_OTHERTerminalRuleCall_1_0(), semanticObject.getANY_OTHER());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ChannelType returns ChannelType
+	 *
+	 * Constraint:
+	 *     (((chan=CHAN channelTypeLinha=ChannelTypeLinha) | chan=CHAN) elementType=ElementType)
+	 */
+	protected void sequence_ChannelType(ISerializationContext context, ChannelType semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     CommCaseLinha returns CommCaseLinha
+	 *
+	 * Constraint:
+	 *     (expression=Expression | ((expression1+=Expression+ | identifierList=IdentifierList)? recvExpr=RecvExpr))
+	 */
+	protected void sequence_CommCaseLinha(ISerializationContext context, CommCaseLinha semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     CommCase returns CommCase
+	 *
+	 * Constraint:
+	 *     ((case=CASE expression=Expression commCaseLinha=CommCaseLinha) | default=DEFAULT)
+	 */
+	protected void sequence_CommCase(ISerializationContext context, CommCase semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     CommClause returns CommClause
+	 *
+	 * Constraint:
+	 *     (commCase=CommCase statementList=StatementList)
+	 */
+	protected void sequence_CommClause(ISerializationContext context, CommClause semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.COMM_CLAUSE__COMM_CASE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.COMM_CLAUSE__COMM_CASE));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.COMM_CLAUSE__STATEMENT_LIST) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.COMM_CLAUSE__STATEMENT_LIST));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getCommClauseAccess().getCommCaseCommCaseParserRuleCall_0_0(), semanticObject.getCommCase());
+		feeder.accept(grammarAccess.getCommClauseAccess().getStatementListStatementListParserRuleCall_2_0(), semanticObject.getStatementList());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     CompositeLit returns CompositeLit
+	 *
+	 * Constraint:
+	 *     (literalType=LiteralType literalValue=LiteralValue)
+	 */
+	protected void sequence_CompositeLit(ISerializationContext context, CompositeLit semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.COMPOSITE_LIT__LITERAL_TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.COMPOSITE_LIT__LITERAL_TYPE));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.COMPOSITE_LIT__LITERAL_VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.COMPOSITE_LIT__LITERAL_VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getCompositeLitAccess().getLiteralTypeLiteralTypeParserRuleCall_0_0(), semanticObject.getLiteralType());
+		feeder.accept(grammarAccess.getCompositeLitAccess().getLiteralValueLiteralValueParserRuleCall_1_0(), semanticObject.getLiteralValue());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Condition returns Condition
+	 *
+	 * Constraint:
+	 *     expression=Expression
+	 */
+	protected void sequence_Condition(ISerializationContext context, Condition semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.CONDITION__EXPRESSION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.CONDITION__EXPRESSION));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getConditionAccess().getExpressionExpressionParserRuleCall_0(), semanticObject.getExpression());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ConstDecl returns ConstDecl
+	 *
+	 * Constraint:
+	 *     (const='const' (constSpec=ConstSpec | constSpec1+=ConstSpec+)?)
+	 */
+	protected void sequence_ConstDecl(ISerializationContext context, ConstDecl semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ConstSpec returns ConstSpec
+	 *
+	 * Constraint:
+	 *     (identifierList=IdentifierList (type=Type? expressionList=ExpressionList)?)
+	 */
+	protected void sequence_ConstSpec(ISerializationContext context, ConstSpec semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ContinueStmt returns ContinueStmt
+	 *
+	 * Constraint:
+	 *     (continue=CONTINUE label=Label)
+	 */
+	protected void sequence_ContinueStmt(ISerializationContext context, ContinueStmt semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.CONTINUE_STMT__CONTINUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.CONTINUE_STMT__CONTINUE));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.CONTINUE_STMT__LABEL) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.CONTINUE_STMT__LABEL));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getContinueStmtAccess().getContinueCONTINUETerminalRuleCall_0_0(), semanticObject.getContinue());
+		feeder.accept(grammarAccess.getContinueStmtAccess().getLabelLabelParserRuleCall_1_0(), semanticObject.getLabel());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Conversion returns Conversion
+	 *
+	 * Constraint:
+	 *     (type=Type expression=Expression)
+	 */
+	protected void sequence_Conversion(ISerializationContext context, Conversion semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.CONVERSION__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.CONVERSION__TYPE));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.CONVERSION__EXPRESSION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.CONVERSION__EXPRESSION));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getConversionAccess().getTypeTypeParserRuleCall_0_0(), semanticObject.getType());
+		feeder.accept(grammarAccess.getConversionAccess().getExpressionExpressionParserRuleCall_2_0(), semanticObject.getExpression());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Declaration returns Declaration
+	 *
+	 * Constraint:
+	 *     (constDecl=ConstDecl | typeDecl=TypeDecl | varDecl=VarDecl)
+	 */
+	protected void sequence_Declaration(ISerializationContext context, Declaration semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     DeferStmt returns DeferStmt
+	 *
+	 * Constraint:
+	 *     (defer=DEFER expression=Expression)
+	 */
+	protected void sequence_DeferStmt(ISerializationContext context, DeferStmt semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.DEFER_STMT__DEFER) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.DEFER_STMT__DEFER));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.DEFER_STMT__EXPRESSION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.DEFER_STMT__EXPRESSION));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getDeferStmtAccess().getDeferDEFERTerminalRuleCall_0_0(), semanticObject.getDefer());
+		feeder.accept(grammarAccess.getDeferStmtAccess().getExpressionExpressionParserRuleCall_1_0(), semanticObject.getExpression());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ElementList returns ElementList
+	 *
+	 * Constraint:
+	 *     (keyedElement=KeyedElement keyedElement1+=KeyedElement*)
+	 */
+	protected void sequence_ElementList(ISerializationContext context, ElementList semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ElementType returns ElementType
+	 *
+	 * Constraint:
+	 *     type=Type
+	 */
+	protected void sequence_ElementType(ISerializationContext context, ElementType semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.ELEMENT_TYPE__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.ELEMENT_TYPE__TYPE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getElementTypeAccess().getTypeTypeParserRuleCall_0(), semanticObject.getType());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Element returns Element
+	 *
+	 * Constraint:
+	 *     (expression=Expression | literalValue=LiteralValue)
+	 */
+	protected void sequence_Element(ISerializationContext context, Element semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     EmbeddedField returns EmbeddedField
+	 *
+	 * Constraint:
+	 *     typeName=TypeName
+	 */
+	protected void sequence_EmbeddedField(ISerializationContext context, EmbeddedField semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.EMBEDDED_FIELD__TYPE_NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.EMBEDDED_FIELD__TYPE_NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getEmbeddedFieldAccess().getTypeNameTypeNameParserRuleCall_1_0(), semanticObject.getTypeName());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     EmptyStmt returns EmptyStmt
+	 *
+	 * Constraint:
+	 *     aNY_OTHER=ANY_OTHER
+	 */
+	protected void sequence_EmptyStmt(ISerializationContext context, EmptyStmt semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.EMPTY_STMT__ANY_OTHER) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.EMPTY_STMT__ANY_OTHER));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getEmptyStmtAccess().getANY_OTHERANY_OTHERTerminalRuleCall_0(), semanticObject.getANY_OTHER());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ExprCaseClause returns ExprCaseClause
+	 *
+	 * Constraint:
+	 *     (exprSwitchCase=ExprSwitchCase statementList=StatementList)
+	 */
+	protected void sequence_ExprCaseClause(ISerializationContext context, ExprCaseClause semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.EXPR_CASE_CLAUSE__EXPR_SWITCH_CASE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.EXPR_CASE_CLAUSE__EXPR_SWITCH_CASE));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.EXPR_CASE_CLAUSE__STATEMENT_LIST) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.EXPR_CASE_CLAUSE__STATEMENT_LIST));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getExprCaseClauseAccess().getExprSwitchCaseExprSwitchCaseParserRuleCall_0_0(), semanticObject.getExprSwitchCase());
+		feeder.accept(grammarAccess.getExprCaseClauseAccess().getStatementListStatementListParserRuleCall_2_0(), semanticObject.getStatementList());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ExprSwitchCase returns ExprSwitchCase
+	 *
+	 * Constraint:
+	 *     ((case=CASE expressionList=ExpressionList) | default=DEFAULT)
+	 */
+	protected void sequence_ExprSwitchCase(ISerializationContext context, ExprSwitchCase semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ExpressionList returns ExpressionList
+	 *
+	 * Constraint:
+	 *     (expression=Expression expression1+=Expression*)
+	 */
+	protected void sequence_ExpressionList(ISerializationContext context, ExpressionList semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Expression returns Expression
+	 *
+	 * Constraint:
+	 *     (unaryExpr=UnaryExpr expression_Linha=Expression_Linha)
+	 */
+	protected void sequence_Expression(ISerializationContext context, Expression semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.EXPRESSION__UNARY_EXPR) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.EXPRESSION__UNARY_EXPR));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.EXPRESSION__EXPRESSION_LINHA) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.EXPRESSION__EXPRESSION_LINHA));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getExpressionAccess().getUnaryExprUnaryExprParserRuleCall_0_0(), semanticObject.getUnaryExpr());
+		feeder.accept(grammarAccess.getExpressionAccess().getExpression_LinhaExpression_LinhaParserRuleCall_1_0(), semanticObject.getExpression_Linha());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Expression_Linha returns Expression_Linha
+	 *
+	 * Constraint:
+	 *     (BINARY_OP=BINARY_OP expression=Expression expression_Linha=Expression_Linha)?
+	 */
+	protected void sequence_Expression_Linha(ISerializationContext context, Expression_Linha semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     FLOAT_LIT returns FLOAT_LIT
+	 *
+	 * Constraint:
+	 *     ((dECIMALS=DECIMALS dECIMALS1=DECIMALS? eXPONENT=EXPONENT?) | (dECIMALS=DECIMALS eXPONENT=EXPONENT) | (dECIMALS=DECIMALS eXPONENT=EXPONENT?))
+	 */
+	protected void sequence_FLOAT_LIT(ISerializationContext context, FLOAT_LIT semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     FallthroughStmt returns FallthroughStmt
+	 *
+	 * Constraint:
+	 *     fallthrough=FALLTHROUGH
+	 */
+	protected void sequence_FallthroughStmt(ISerializationContext context, FallthroughStmt semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.FALLTHROUGH_STMT__FALLTHROUGH) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.FALLTHROUGH_STMT__FALLTHROUGH));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getFallthroughStmtAccess().getFallthroughFALLTHROUGHTerminalRuleCall_0(), semanticObject.getFallthrough());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     FieldDecl returns FieldDecl
+	 *
+	 * Constraint:
+	 *     (((identifierList=IdentifierList type=Type) | embeddedField=EmbeddedField) tag=Tag?)
+	 */
+	protected void sequence_FieldDecl(ISerializationContext context, FieldDecl semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     FieldName returns FieldName
+	 *
+	 * Constraint:
+	 *     id=IDENTIFIER
+	 */
+	protected void sequence_FieldName(ISerializationContext context, FieldName semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.FIELD_NAME__ID) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.FIELD_NAME__ID));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getFieldNameAccess().getIdIDENTIFIERTerminalRuleCall_0(), semanticObject.getId());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ForStmtLinhaLinha returns ForStmtLinhaLinha
+	 *
+	 * Constraint:
+	 *     ((assign_op=assign_op expressionList=ExpressionList condition=Condition postStmt=PostStmt) | (range=RANGE expression=Expression))
+	 */
+	protected void sequence_ForStmtLinhaLinha(ISerializationContext context, ForStmtLinhaLinha semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ForStmtLinha returns ForStmtLinha
+	 *
+	 * Constraint:
+	 *     (
+	 *         vazio=ANY_OTHER | 
+	 *         (expression+=Expression* forStmtLinhaLinha=ForStmtLinhaLinha) | 
+	 *         ((expression1=Expression | vazio=ANY_OTHER)? condition=Condition postStmt=PostStmt)
+	 *     )
+	 */
+	protected void sequence_ForStmtLinha(ISerializationContext context, ForStmtLinha semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ForStmt returns ForStmt
+	 *
+	 * Constraint:
+	 *     (
+	 *         for=FOR 
+	 *         (
+	 *             (expression=Expression forStmtLinha=ForStmtLinha) | 
+	 *             ((emptyStmt=EmptyStmt | shortVarDecl=ShortVarDecl) condition=Condition postStmt=PostStmt) | 
+	 *             (identifierList=IdentifierList range=RANGE expression=Expression)
+	 *         )? 
+	 *         block=Block
+	 *     )
+	 */
+	protected void sequence_ForStmt(ISerializationContext context, ForStmt semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     FunctionBody returns FunctionBody
+	 *
+	 * Constraint:
+	 *     block=Block
+	 */
+	protected void sequence_FunctionBody(ISerializationContext context, FunctionBody semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.FUNCTION_BODY__BLOCK) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.FUNCTION_BODY__BLOCK));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getFunctionBodyAccess().getBlockBlockParserRuleCall_0(), semanticObject.getBlock());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     FunctionDecl returns FunctionDecl
+	 *
+	 * Constraint:
+	 *     (functionName=FunctionName signature=Signature functionBody=FunctionBody?)
+	 */
+	protected void sequence_FunctionDecl(ISerializationContext context, FunctionDecl semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     FunctionLit returns FunctionLit
+	 *
+	 * Constraint:
+	 *     (func='func' signature=Signature functionBody=FunctionBody)
+	 */
+	protected void sequence_FunctionLit(ISerializationContext context, FunctionLit semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.FUNCTION_LIT__FUNC) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.FUNCTION_LIT__FUNC));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.FUNCTION_LIT__SIGNATURE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.FUNCTION_LIT__SIGNATURE));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.FUNCTION_LIT__FUNCTION_BODY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.FUNCTION_LIT__FUNCTION_BODY));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getFunctionLitAccess().getFuncFuncKeyword_0_0(), semanticObject.getFunc());
+		feeder.accept(grammarAccess.getFunctionLitAccess().getSignatureSignatureParserRuleCall_1_0(), semanticObject.getSignature());
+		feeder.accept(grammarAccess.getFunctionLitAccess().getFunctionBodyFunctionBodyParserRuleCall_2_0(), semanticObject.getFunctionBody());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     FunctionName returns FunctionName
+	 *
+	 * Constraint:
+	 *     id=IDENTIFIER
+	 */
+	protected void sequence_FunctionName(ISerializationContext context, FunctionName semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.FUNCTION_NAME__ID) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.FUNCTION_NAME__ID));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getFunctionNameAccess().getIdIDENTIFIERTerminalRuleCall_0(), semanticObject.getId());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     FunctionType returns FunctionType
+	 *
+	 * Constraint:
+	 *     (func='func' signature=Signature)
+	 */
+	protected void sequence_FunctionType(ISerializationContext context, FunctionType semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.FUNCTION_TYPE__FUNC) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.FUNCTION_TYPE__FUNC));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.FUNCTION_TYPE__SIGNATURE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.FUNCTION_TYPE__SIGNATURE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getFunctionTypeAccess().getFuncFuncKeyword_0_0(), semanticObject.getFunc());
+		feeder.accept(grammarAccess.getFunctionTypeAccess().getSignatureSignatureParserRuleCall_1_0(), semanticObject.getSignature());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     GoStmt returns GoStmt
+	 *
+	 * Constraint:
+	 *     (go=GO expression=Expression)
+	 */
+	protected void sequence_GoStmt(ISerializationContext context, GoStmt semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.GO_STMT__GO) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.GO_STMT__GO));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.GO_STMT__EXPRESSION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.GO_STMT__EXPRESSION));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getGoStmtAccess().getGoGOTerminalRuleCall_0_0(), semanticObject.getGo());
+		feeder.accept(grammarAccess.getGoStmtAccess().getExpressionExpressionParserRuleCall_1_0(), semanticObject.getExpression());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     GotoStmt returns GotoStmt
+	 *
+	 * Constraint:
+	 *     (goto=GOTO label=Label)
+	 */
+	protected void sequence_GotoStmt(ISerializationContext context, GotoStmt semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.GOTO_STMT__GOTO) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.GOTO_STMT__GOTO));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.GOTO_STMT__LABEL) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.GOTO_STMT__LABEL));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getGotoStmtAccess().getGotoGOTOTerminalRuleCall_0_0(), semanticObject.getGoto());
+		feeder.accept(grammarAccess.getGotoStmtAccess().getLabelLabelParserRuleCall_1_0(), semanticObject.getLabel());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     IMAGINARY_LIT returns IMAGINARY_LIT
+	 *
+	 * Constraint:
+	 *     (dECIMALS=DECIMALS | fLOAT_LIT=FLOAT_LIT)
+	 */
+	protected void sequence_IMAGINARY_LIT(ISerializationContext context, IMAGINARY_LIT semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     IdentifierList returns IdentifierList
+	 *
+	 * Constraint:
+	 *     (id=IDENTIFIER id1+=IDENTIFIER*)
+	 */
+	protected void sequence_IdentifierList(ISerializationContext context, IdentifierList semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     IfStmtLinha returns IfStmtLinha
+	 *
+	 * Constraint:
+	 *     (
+	 *         (simpleStmtLinha=SimpleStmtLinha expression=Expression block=Block (else=ELSE (ifStmt=IfStmt | block1=Block))?) | 
+	 *         (block=Block (else=ELSE (ifStmt=IfStmt | block1=Block))?)
+	 *     )
+	 */
+	protected void sequence_IfStmtLinha(ISerializationContext context, IfStmtLinha semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     IfStmt returns IfStmt
+	 *
+	 * Constraint:
+	 *     (
+	 *         (if=IF expression=Expression ifStmtLinha=IfStmtLinha) | 
+	 *         (if=IF (emptyStmt=EmptyStmt | shortVarDecl=ShortVarDecl) expression=Expression block=Block (else=ELSE (ifStmt=IfStmt | block1=Block))?)
+	 *     )
+	 */
+	protected void sequence_IfStmt(ISerializationContext context, IfStmt semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ImportDecl returns ImportDecl
+	 *
+	 * Constraint:
+	 *     (importt='import' (importSpec=ImportSpec | importSpec1+=ImportSpec+)?)
+	 */
+	protected void sequence_ImportDecl(ISerializationContext context, ImportDecl semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ImportSpec returns ImportSpec
+	 *
+	 * Constraint:
+	 *     (packageName=PackageName? sTRING_LIT=STRING_LIT)
+	 */
+	protected void sequence_ImportSpec(ISerializationContext context, ImportSpec semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Index returns Index
+	 *
+	 * Constraint:
+	 *     expression=Expression
+	 */
+	protected void sequence_Index(ISerializationContext context, Index semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.INDEX__EXPRESSION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.INDEX__EXPRESSION));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getIndexAccess().getExpressionExpressionParserRuleCall_1_0(), semanticObject.getExpression());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     InterfaceTypeName returns InterfaceTypeName
+	 *
+	 * Constraint:
+	 *     typeName=TypeName
+	 */
+	protected void sequence_InterfaceTypeName(ISerializationContext context, InterfaceTypeName semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.INTERFACE_TYPE_NAME__TYPE_NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.INTERFACE_TYPE_NAME__TYPE_NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getInterfaceTypeNameAccess().getTypeNameTypeNameParserRuleCall_0(), semanticObject.getTypeName());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     InterfaceType returns InterfaceType
+	 *
+	 * Constraint:
+	 *     (interface=INTERFACE methodSpec+=MethodSpec*)
+	 */
+	protected void sequence_InterfaceType(ISerializationContext context, InterfaceType semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     KeyType returns KeyType
+	 *
+	 * Constraint:
+	 *     type=Type
+	 */
+	protected void sequence_KeyType(ISerializationContext context, KeyType semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.KEY_TYPE__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.KEY_TYPE__TYPE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getKeyTypeAccess().getTypeTypeParserRuleCall_0(), semanticObject.getType());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Key returns Key
+	 *
+	 * Constraint:
+	 *     (fieldName=FieldName | expression=Expression | literalValue=LiteralValue)
+	 */
+	protected void sequence_Key(ISerializationContext context, Key semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     KeyedElement returns KeyedElement
+	 *
+	 * Constraint:
+	 *     (key=Key? element=Element)
+	 */
+	protected void sequence_KeyedElement(ISerializationContext context, KeyedElement semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Label returns Label
+	 *
+	 * Constraint:
+	 *     id=IDENTIFIER
+	 */
+	protected void sequence_Label(ISerializationContext context, Label semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.LABEL__ID) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.LABEL__ID));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getLabelAccess().getIdIDENTIFIERTerminalRuleCall_0(), semanticObject.getId());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     LabeledStmt returns LabeledStmt
+	 *
+	 * Constraint:
+	 *     (label=Label statement=Statement)
+	 */
+	protected void sequence_LabeledStmt(ISerializationContext context, LabeledStmt semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.LABELED_STMT__LABEL) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.LABELED_STMT__LABEL));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.LABELED_STMT__STATEMENT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.LABELED_STMT__STATEMENT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getLabeledStmtAccess().getLabelLabelParserRuleCall_0_0(), semanticObject.getLabel());
+		feeder.accept(grammarAccess.getLabeledStmtAccess().getStatementStatementParserRuleCall_2_0(), semanticObject.getStatement());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     LiteralTypeLinha returns LiteralTypeLinha
+	 *
+	 * Constraint:
+	 *     ((arrayLength=ArrayLength elementType=ElementType) | elementType=ElementType | elementType=ElementType)
+	 */
+	protected void sequence_LiteralTypeLinha(ISerializationContext context, LiteralTypeLinha semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     LiteralType returns LiteralType
+	 *
+	 * Constraint:
+	 *     (structType=StructType | mapType=MapType | typeName=TypeName | literalTypeLinha=LiteralTypeLinha)
+	 */
+	protected void sequence_LiteralType(ISerializationContext context, LiteralType semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     LiteralValue returns LiteralValue
+	 *
+	 * Constraint:
+	 *     elementList=ElementList?
+	 */
+	protected void sequence_LiteralValue(ISerializationContext context, LiteralValue semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Literal returns Literal
+	 *
+	 * Constraint:
+	 *     (basicLit=BasicLit | compositeLit=CompositeLit | functionLit=FunctionLit)
+	 */
+	protected void sequence_Literal(ISerializationContext context, Literal semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     MapType returns MapType
+	 *
+	 * Constraint:
+	 *     (map=MAP keyType=KeyType elementType=ElementType)
+	 */
+	protected void sequence_MapType(ISerializationContext context, MapType semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.MAP_TYPE__MAP) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.MAP_TYPE__MAP));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.MAP_TYPE__KEY_TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.MAP_TYPE__KEY_TYPE));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.MAP_TYPE__ELEMENT_TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.MAP_TYPE__ELEMENT_TYPE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getMapTypeAccess().getMapMAPTerminalRuleCall_0_0(), semanticObject.getMap());
+		feeder.accept(grammarAccess.getMapTypeAccess().getKeyTypeKeyTypeParserRuleCall_2_0(), semanticObject.getKeyType());
+		feeder.accept(grammarAccess.getMapTypeAccess().getElementTypeElementTypeParserRuleCall_4_0(), semanticObject.getElementType());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     MethodDecl returns MethodDecl
+	 *
+	 * Constraint:
+	 *     (receiver=Receiver methodName=MethodName signature=Signature functionBody=FunctionBody?)
+	 */
+	protected void sequence_MethodDecl(ISerializationContext context, MethodDecl semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     MethodExpr returns MethodExpr
+	 *
+	 * Constraint:
+	 *     (receiverType=ReceiverType methodName=MethodName)
+	 */
+	protected void sequence_MethodExpr(ISerializationContext context, MethodExpr semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.METHOD_EXPR__RECEIVER_TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.METHOD_EXPR__RECEIVER_TYPE));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.METHOD_EXPR__METHOD_NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.METHOD_EXPR__METHOD_NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getMethodExprAccess().getReceiverTypeReceiverTypeParserRuleCall_0_0(), semanticObject.getReceiverType());
+		feeder.accept(grammarAccess.getMethodExprAccess().getMethodNameMethodNameParserRuleCall_2_0(), semanticObject.getMethodName());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     MethodName returns MethodName
+	 *
+	 * Constraint:
+	 *     id=IDENTIFIER
+	 */
+	protected void sequence_MethodName(ISerializationContext context, MethodName semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.METHOD_NAME__ID) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.METHOD_NAME__ID));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getMethodNameAccess().getIdIDENTIFIERTerminalRuleCall_0(), semanticObject.getId());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     MethodSpec returns MethodSpec
+	 *
+	 * Constraint:
+	 *     ((methodName=MethodName Signature=Signature) | interfaceTypeName=InterfaceTypeName)
+	 */
+	protected void sequence_MethodSpec(ISerializationContext context, MethodSpec semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Model returns Model
 	 *
 	 * Constraint:
-	 *     greetings+=Greeting+
+	 *     greetings+=SourceFile+
 	 */
 	protected void sequence_Model(ISerializationContext context, Model semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     OperandName returns OperandName
+	 *
+	 * Constraint:
+	 *     id=IDENTIFIER
+	 */
+	protected void sequence_OperandName(ISerializationContext context, OperandName semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.OPERAND_NAME__ID) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.OPERAND_NAME__ID));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getOperandNameAccess().getIdIDENTIFIERTerminalRuleCall_0(), semanticObject.getId());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Operand returns Operand
+	 *
+	 * Constraint:
+	 *     (literal=Literal | operandName=OperandName | expression=Expression)
+	 */
+	protected void sequence_Operand(ISerializationContext context, Operand semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PackageClause returns PackageClause
+	 *
+	 * Constraint:
+	 *     (package='package' packageName=PackageName)
+	 */
+	protected void sequence_PackageClause(ISerializationContext context, PackageClause semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.PACKAGE_CLAUSE__PACKAGE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.PACKAGE_CLAUSE__PACKAGE));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.PACKAGE_CLAUSE__PACKAGE_NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.PACKAGE_CLAUSE__PACKAGE_NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getPackageClauseAccess().getPackagePackageKeyword_0_0(), semanticObject.getPackage());
+		feeder.accept(grammarAccess.getPackageClauseAccess().getPackageNamePackageNameParserRuleCall_1_0(), semanticObject.getPackageName());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PackageName returns PackageName
+	 *
+	 * Constraint:
+	 *     id=IDENTIFIER
+	 */
+	protected void sequence_PackageName(ISerializationContext context, PackageName semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.PACKAGE_NAME__ID) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.PACKAGE_NAME__ID));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getPackageNameAccess().getIdIDENTIFIERTerminalRuleCall_0(), semanticObject.getId());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ParameterDecl returns ParameterDecl
+	 *
+	 * Constraint:
+	 *     (identifierList=IdentifierList? type=Type)
+	 */
+	protected void sequence_ParameterDecl(ISerializationContext context, ParameterDecl semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ParameterList returns ParameterList
+	 *
+	 * Constraint:
+	 *     (parameterDecl=ParameterDecl parameterDecl1+=ParameterDecl*)
+	 */
+	protected void sequence_ParameterList(ISerializationContext context, ParameterList semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Parameters returns Parameters
+	 *
+	 * Constraint:
+	 *     parameterList=ParameterList?
+	 */
+	protected void sequence_Parameters(ISerializationContext context, Parameters semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PointerType returns PointerType
+	 *
+	 * Constraint:
+	 *     baseType=BaseType
+	 */
+	protected void sequence_PointerType(ISerializationContext context, PointerType semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.POINTER_TYPE__BASE_TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.POINTER_TYPE__BASE_TYPE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getPointerTypeAccess().getBaseTypeBaseTypeParserRuleCall_1_0(), semanticObject.getBaseType());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PostStmt returns PostStmt
+	 *
+	 * Constraint:
+	 *     simpleStmt=SimpleStmt
+	 */
+	protected void sequence_PostStmt(ISerializationContext context, PostStmt semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.POST_STMT__SIMPLE_STMT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.POST_STMT__SIMPLE_STMT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getPostStmtAccess().getSimpleStmtSimpleStmtParserRuleCall_0(), semanticObject.getSimpleStmt());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PrimaryExprLinha returns PrimaryExprLinha
+	 *
+	 * Constraint:
+	 *     (
+	 *         (selector=Selector primaryExprLinha=PrimaryExprLinha) | 
+	 *         (index=Index primaryExprLinha=PrimaryExprLinha) | 
+	 *         (slice=Slice primaryExprLinha=PrimaryExprLinha) | 
+	 *         (typeAssertion=TypeAssertion primaryExprLinha=PrimaryExprLinha) | 
+	 *         (arguments=Arguments primaryExprLinha=PrimaryExprLinha)
+	 *     )?
+	 */
+	protected void sequence_PrimaryExprLinha(ISerializationContext context, PrimaryExprLinha semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     PrimaryExpr returns PrimaryExpr
+	 *
+	 * Constraint:
+	 *     (
+	 *         (operand=Operand primaryExprLinha=PrimaryExprLinha) | 
+	 *         (conversion=Conversion primaryExprLinha=PrimaryExprLinha) | 
+	 *         (methodExpr=MethodExpr primaryExprLinha=PrimaryExprLinha)
+	 *     )
+	 */
+	protected void sequence_PrimaryExpr(ISerializationContext context, PrimaryExpr semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ReceiverType returns ReceiverType
+	 *
+	 * Constraint:
+	 *     type=Type
+	 */
+	protected void sequence_ReceiverType(ISerializationContext context, ReceiverType semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.RECEIVER_TYPE__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.RECEIVER_TYPE__TYPE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getReceiverTypeAccess().getTypeTypeParserRuleCall_0(), semanticObject.getType());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Receiver returns Receiver
+	 *
+	 * Constraint:
+	 *     parameters=Parameters
+	 */
+	protected void sequence_Receiver(ISerializationContext context, Receiver semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.RECEIVER__PARAMETERS) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.RECEIVER__PARAMETERS));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getReceiverAccess().getParametersParametersParserRuleCall_0(), semanticObject.getParameters());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     RecvExpr returns RecvExpr
+	 *
+	 * Constraint:
+	 *     expression=Expression
+	 */
+	protected void sequence_RecvExpr(ISerializationContext context, RecvExpr semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.RECV_EXPR__EXPRESSION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.RECV_EXPR__EXPRESSION));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getRecvExprAccess().getExpressionExpressionParserRuleCall_0(), semanticObject.getExpression());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Result returns Result
+	 *
+	 * Constraint:
+	 *     (parameters=Parameters | type=Type)
+	 */
+	protected void sequence_Result(ISerializationContext context, Result semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ReturnStmt returns ReturnStmt
+	 *
+	 * Constraint:
+	 *     (return=RETURN expressionList=ExpressionList)
+	 */
+	protected void sequence_ReturnStmt(ISerializationContext context, ReturnStmt semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.RETURN_STMT__RETURN) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.RETURN_STMT__RETURN));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.RETURN_STMT__EXPRESSION_LIST) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.RETURN_STMT__EXPRESSION_LIST));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getReturnStmtAccess().getReturnRETURNTerminalRuleCall_0_0(), semanticObject.getReturn());
+		feeder.accept(grammarAccess.getReturnStmtAccess().getExpressionListExpressionListParserRuleCall_1_0(), semanticObject.getExpressionList());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SelectStmt returns SelectStmt
+	 *
+	 * Constraint:
+	 *     (select=SELECT commClause+=CommClause*)
+	 */
+	protected void sequence_SelectStmt(ISerializationContext context, SelectStmt semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Selector returns Selector
+	 *
+	 * Constraint:
+	 *     id=IDENTIFIER
+	 */
+	protected void sequence_Selector(ISerializationContext context, Selector semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.SELECTOR__ID) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.SELECTOR__ID));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getSelectorAccess().getIdIDENTIFIERTerminalRuleCall_1_0(), semanticObject.getId());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ShortVarDecl returns ShortVarDecl
+	 *
+	 * Constraint:
+	 *     (identifierList=IdentifierList expressionList=ExpressionList)
+	 */
+	protected void sequence_ShortVarDecl(ISerializationContext context, ShortVarDecl semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.SHORT_VAR_DECL__IDENTIFIER_LIST) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.SHORT_VAR_DECL__IDENTIFIER_LIST));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.SHORT_VAR_DECL__EXPRESSION_LIST) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.SHORT_VAR_DECL__EXPRESSION_LIST));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getShortVarDeclAccess().getIdentifierListIdentifierListParserRuleCall_0_0(), semanticObject.getIdentifierList());
+		feeder.accept(grammarAccess.getShortVarDeclAccess().getExpressionListExpressionListParserRuleCall_2_0(), semanticObject.getExpressionList());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Signature returns Signature
+	 *
+	 * Constraint:
+	 *     (parameters=Parameters result=Result?)
+	 */
+	protected void sequence_Signature(ISerializationContext context, Signature semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SimpleStmtLinha returns SimpleStmtLinha
+	 *
+	 * Constraint:
+	 *     (expression=Expression | (expression1+=Expression* assign_op=assign_op expressionList=ExpressionList) | aNY_OTHER=ANY_OTHER)
+	 */
+	protected void sequence_SimpleStmtLinha(ISerializationContext context, SimpleStmtLinha semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SimpleStmt returns SimpleStmt
+	 *
+	 * Constraint:
+	 *     (emptyStmt=EmptyStmt | (expression=Expression simpleStmtLinha=SimpleStmtLinha) | shortVarDecl=ShortVarDecl)
+	 */
+	protected void sequence_SimpleStmt(ISerializationContext context, SimpleStmt semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Slice returns Slice
+	 *
+	 * Constraint:
+	 *     ((expression=Expression? expression1=Expression?) | (expression=Expression? expression1=Expression expression2=Expression))
+	 */
+	protected void sequence_Slice(ISerializationContext context, Slice semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SourceFile returns SourceFile
+	 *
+	 * Constraint:
+	 *     (packageClause=PackageClause importDecl+=ImportDecl* topLevelDecl+=TopLevelDecl*)
+	 */
+	protected void sequence_SourceFile(ISerializationContext context, SourceFile semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     StatementList returns StatementList
+	 *
+	 * Constraint:
+	 *     statements+=Statement*
+	 */
+	protected void sequence_StatementList(ISerializationContext context, StatementList semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Statement returns Statement
+	 *
+	 * Constraint:
+	 *     (
+	 *         declaration=Declaration | 
+	 *         labeledStmt=LabeledStmt | 
+	 *         simpleStmt=SimpleStmt | 
+	 *         goStmt=GoStmt | 
+	 *         returnStmt=ReturnStmt | 
+	 *         breakStmt=BreakStmt | 
+	 *         continueStmt=ContinueStmt | 
+	 *         gotoStmt=GotoStmt | 
+	 *         fallthroughStmt=FallthroughStmt | 
+	 *         block=Block | 
+	 *         ifStmt=IfStmt | 
+	 *         switchStmt=SwitchStmt | 
+	 *         selectStmt=SelectStmt | 
+	 *         forStmt=ForStmt | 
+	 *         deferStmt=DeferStmt
+	 *     )
+	 */
+	protected void sequence_Statement(ISerializationContext context, Statement semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     StructType returns StructType
+	 *
+	 * Constraint:
+	 *     (struct=STRUCT fieldDecl+=FieldDecl*)
+	 */
+	protected void sequence_StructType(ISerializationContext context, StructType semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SwitchStmtLinhaLinha returns SwitchStmtLinhaLinha
+	 *
+	 * Constraint:
+	 *     (exprCaseClause+=ExprCaseClause+ | (typekeyword='type' typeCaseClause+=TypeCaseClause*))
+	 */
+	protected void sequence_SwitchStmtLinhaLinha(ISerializationContext context, SwitchStmtLinhaLinha semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SwitchStmtLinha returns SwitchStmtLinha
+	 *
+	 * Constraint:
+	 *     (
+	 *         (primaryExpr=PrimaryExpr switchStmtLinhaLinha=SwitchStmtLinhaLinha) | 
+	 *         ((unary_op=UNARY_OP unaryExpr=UnaryExpr expression=Expression_Linha)? exprCaseClause+=ExprCaseClause*) | 
+	 *         (id=IDENTIFIER primaryExpr=PrimaryExpr typekeyword='type' typeCaseClause+=TypeCaseClause*)
+	 *     )
+	 */
+	protected void sequence_SwitchStmtLinha(ISerializationContext context, SwitchStmtLinha semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SwitchStmt returns SwitchStmt
+	 *
+	 * Constraint:
+	 *     (switch=SWITCH simpleStmt=SimpleStmt? switchStmtLinha=SwitchStmtLinha)
+	 */
+	protected void sequence_SwitchStmt(ISerializationContext context, SwitchStmt semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Tag returns Tag
+	 *
+	 * Constraint:
+	 *     string_lit=STRING_LIT
+	 */
+	protected void sequence_Tag(ISerializationContext context, Tag semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.TAG__STRING_LIT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.TAG__STRING_LIT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getTagAccess().getString_litSTRING_LITTerminalRuleCall_0(), semanticObject.getString_lit());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TopLevelDecl returns TopLevelDecl
+	 *
+	 * Constraint:
+	 *     (declaration=Declaration | functionDecl=FunctionDecl | methodDecl=MethodDecl)
+	 */
+	protected void sequence_TopLevelDecl(ISerializationContext context, TopLevelDecl semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeAssertion returns TypeAssertion
+	 *
+	 * Constraint:
+	 *     type=Type
+	 */
+	protected void sequence_TypeAssertion(ISerializationContext context, TypeAssertion semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.TYPE_ASSERTION__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.TYPE_ASSERTION__TYPE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getTypeAssertionAccess().getTypeTypeParserRuleCall_2_0(), semanticObject.getType());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeCaseClause returns TypeCaseClause
+	 *
+	 * Constraint:
+	 *     (typeSwitchCase=TypeSwitchCase statementList=StatementList)
+	 */
+	protected void sequence_TypeCaseClause(ISerializationContext context, TypeCaseClause semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.TYPE_CASE_CLAUSE__TYPE_SWITCH_CASE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.TYPE_CASE_CLAUSE__TYPE_SWITCH_CASE));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.TYPE_CASE_CLAUSE__STATEMENT_LIST) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.TYPE_CASE_CLAUSE__STATEMENT_LIST));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getTypeCaseClauseAccess().getTypeSwitchCaseTypeSwitchCaseParserRuleCall_0_0(), semanticObject.getTypeSwitchCase());
+		feeder.accept(grammarAccess.getTypeCaseClauseAccess().getStatementListStatementListParserRuleCall_2_0(), semanticObject.getStatementList());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeDecl returns TypeDecl
+	 *
+	 * Constraint:
+	 *     (typekeyword='type' (typeSpec=TypeSpec | typeSpec1+=TypeSpec+)?)
+	 */
+	protected void sequence_TypeDecl(ISerializationContext context, TypeDecl semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeDef returns TypeDef
+	 *
+	 * Constraint:
+	 *     (id=IDENTIFIER type=Type)
+	 */
+	protected void sequence_TypeDef(ISerializationContext context, TypeDef semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.TYPE_DEF__ID) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.TYPE_DEF__ID));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.TYPE_DEF__TYPE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.TYPE_DEF__TYPE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getTypeDefAccess().getIdIDENTIFIERTerminalRuleCall_0_0(), semanticObject.getId());
+		feeder.accept(grammarAccess.getTypeDefAccess().getTypeTypeParserRuleCall_1_0(), semanticObject.getType());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeList returns TypeList
+	 *
+	 * Constraint:
+	 *     (type=Type type1+=Type*)
+	 */
+	protected void sequence_TypeList(ISerializationContext context, TypeList semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeLitLinha returns TypeLitLinha
+	 *
+	 * Constraint:
+	 *     ((arrayLength=ArrayLength elementType=ElementType) | elementType=ElementType)
+	 */
+	protected void sequence_TypeLitLinha(ISerializationContext context, TypeLitLinha semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeLit returns TypeLit
+	 *
+	 * Constraint:
+	 *     (
+	 *         typeLitLinha=TypeLitLinha | 
+	 *         srtuctType=StructType | 
+	 *         pointerType=PointerType | 
+	 *         functionType=FunctionType | 
+	 *         interfaceType=InterfaceType | 
+	 *         mapType=MapType | 
+	 *         channelType=ChannelType
+	 *     )
+	 */
+	protected void sequence_TypeLit(ISerializationContext context, TypeLit semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeNameLinha returns TypeNameLinha
+	 *
+	 * Constraint:
+	 *     id=IDENTIFIER
+	 */
+	protected void sequence_TypeNameLinha(ISerializationContext context, TypeNameLinha semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.TYPE_NAME_LINHA__ID) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.TYPE_NAME_LINHA__ID));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getTypeNameLinhaAccess().getIdIDENTIFIERTerminalRuleCall_1_0(), semanticObject.getId());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeName returns TypeName
+	 *
+	 * Constraint:
+	 *     id=IDENTIFIER
+	 */
+	protected void sequence_TypeName(ISerializationContext context, TypeName semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.TYPE_NAME__ID) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.TYPE_NAME__ID));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getTypeNameAccess().getIdIDENTIFIERTerminalRuleCall_0(), semanticObject.getId());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeSpec returns TypeSpec
+	 *
+	 * Constraint:
+	 *     (aliasDecl=AliasDecl | typeDef=TypeDef)
+	 */
+	protected void sequence_TypeSpec(ISerializationContext context, TypeSpec semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeSwitchCase returns TypeSwitchCase
+	 *
+	 * Constraint:
+	 *     ((case=CASE typeList=TypeList) | default=DEFAULT)
+	 */
+	protected void sequence_TypeSwitchCase(ISerializationContext context, TypeSwitchCase semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Type returns Type
+	 *
+	 * Constraint:
+	 *     (typeName=TypeName | typeLit=TypeLit | type=Type)
+	 */
+	protected void sequence_Type(ISerializationContext context, Type semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     UnaryExpr returns UnaryExpr
+	 *
+	 * Constraint:
+	 *     (primaryExpr=PrimaryExpr | unaryExpr=UnaryExpr)
+	 */
+	protected void sequence_UnaryExpr(ISerializationContext context, UnaryExpr semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     VarDecl returns VarDecl
+	 *
+	 * Constraint:
+	 *     (varSpec=VarSpec | varSpec1+=VarSpec+)
+	 */
+	protected void sequence_VarDecl(ISerializationContext context, VarDecl semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     VarSpec returns VarSpec
+	 *
+	 * Constraint:
+	 *     (IdentifierList=IdentifierList ((type=Type expressionList=ExpressionList?) | expressionList=ExpressionList))
+	 */
+	protected void sequence_VarSpec(ISerializationContext context, VarSpec semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     assign_op returns assign_op
+	 *
+	 * Constraint:
+	 *     (aDD_OP=ADD_OP | mUL_OP=MUL_OP)
+	 */
+	protected void sequence_assign_op(ISerializationContext context, assign_op semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
