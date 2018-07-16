@@ -42,10 +42,10 @@ import org.xtext.example.mydsl.myDsl.EmbeddedField;
 import org.xtext.example.mydsl.myDsl.EmptyStmt;
 import org.xtext.example.mydsl.myDsl.ExprCaseClause;
 import org.xtext.example.mydsl.myDsl.ExprSwitchCase;
+import org.xtext.example.mydsl.myDsl.ExprSwitchStmt;
 import org.xtext.example.mydsl.myDsl.Expression;
 import org.xtext.example.mydsl.myDsl.ExpressionList;
 import org.xtext.example.mydsl.myDsl.Expression_Linha;
-import org.xtext.example.mydsl.myDsl.FLOAT_LIT;
 import org.xtext.example.mydsl.myDsl.FallthroughStmt;
 import org.xtext.example.mydsl.myDsl.FieldDecl;
 import org.xtext.example.mydsl.myDsl.FieldName;
@@ -59,7 +59,6 @@ import org.xtext.example.mydsl.myDsl.FunctionName;
 import org.xtext.example.mydsl.myDsl.FunctionType;
 import org.xtext.example.mydsl.myDsl.GoStmt;
 import org.xtext.example.mydsl.myDsl.GotoStmt;
-import org.xtext.example.mydsl.myDsl.IMAGINARY_LIT;
 import org.xtext.example.mydsl.myDsl.IdentifierList;
 import org.xtext.example.mydsl.myDsl.IfStmt;
 import org.xtext.example.mydsl.myDsl.IfStmtLinha;
@@ -112,8 +111,6 @@ import org.xtext.example.mydsl.myDsl.Statement;
 import org.xtext.example.mydsl.myDsl.StatementList;
 import org.xtext.example.mydsl.myDsl.StructType;
 import org.xtext.example.mydsl.myDsl.SwitchStmt;
-import org.xtext.example.mydsl.myDsl.SwitchStmtLinha;
-import org.xtext.example.mydsl.myDsl.SwitchStmtLinhaLinha;
 import org.xtext.example.mydsl.myDsl.Tag;
 import org.xtext.example.mydsl.myDsl.TopLevelDecl;
 import org.xtext.example.mydsl.myDsl.Type;
@@ -128,6 +125,8 @@ import org.xtext.example.mydsl.myDsl.TypeName;
 import org.xtext.example.mydsl.myDsl.TypeNameLinha;
 import org.xtext.example.mydsl.myDsl.TypeSpec;
 import org.xtext.example.mydsl.myDsl.TypeSwitchCase;
+import org.xtext.example.mydsl.myDsl.TypeSwitchGuard;
+import org.xtext.example.mydsl.myDsl.TypeSwitchStmt;
 import org.xtext.example.mydsl.myDsl.UnaryExpr;
 import org.xtext.example.mydsl.myDsl.VarDecl;
 import org.xtext.example.mydsl.myDsl.VarSpec;
@@ -232,6 +231,9 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 			case MyDslPackage.EXPR_SWITCH_CASE:
 				sequence_ExprSwitchCase(context, (ExprSwitchCase) semanticObject); 
 				return; 
+			case MyDslPackage.EXPR_SWITCH_STMT:
+				sequence_ExprSwitchStmt(context, (ExprSwitchStmt) semanticObject); 
+				return; 
 			case MyDslPackage.EXPRESSION:
 				sequence_Expression(context, (Expression) semanticObject); 
 				return; 
@@ -240,9 +242,6 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 				return; 
 			case MyDslPackage.EXPRESSION_LINHA:
 				sequence_Expression_Linha(context, (Expression_Linha) semanticObject); 
-				return; 
-			case MyDslPackage.FLOAT_LIT:
-				sequence_FLOAT_LIT(context, (FLOAT_LIT) semanticObject); 
 				return; 
 			case MyDslPackage.FALLTHROUGH_STMT:
 				sequence_FallthroughStmt(context, (FallthroughStmt) semanticObject); 
@@ -282,9 +281,6 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 				return; 
 			case MyDslPackage.GOTO_STMT:
 				sequence_GotoStmt(context, (GotoStmt) semanticObject); 
-				return; 
-			case MyDslPackage.IMAGINARY_LIT:
-				sequence_IMAGINARY_LIT(context, (IMAGINARY_LIT) semanticObject); 
 				return; 
 			case MyDslPackage.IDENTIFIER_LIST:
 				sequence_IdentifierList(context, (IdentifierList) semanticObject); 
@@ -439,12 +435,6 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 			case MyDslPackage.SWITCH_STMT:
 				sequence_SwitchStmt(context, (SwitchStmt) semanticObject); 
 				return; 
-			case MyDslPackage.SWITCH_STMT_LINHA:
-				sequence_SwitchStmtLinha(context, (SwitchStmtLinha) semanticObject); 
-				return; 
-			case MyDslPackage.SWITCH_STMT_LINHA_LINHA:
-				sequence_SwitchStmtLinhaLinha(context, (SwitchStmtLinhaLinha) semanticObject); 
-				return; 
 			case MyDslPackage.TAG:
 				sequence_Tag(context, (Tag) semanticObject); 
 				return; 
@@ -486,6 +476,12 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 				return; 
 			case MyDslPackage.TYPE_SWITCH_CASE:
 				sequence_TypeSwitchCase(context, (TypeSwitchCase) semanticObject); 
+				return; 
+			case MyDslPackage.TYPE_SWITCH_GUARD:
+				sequence_TypeSwitchGuard(context, (TypeSwitchGuard) semanticObject); 
+				return; 
+			case MyDslPackage.TYPE_SWITCH_STMT:
+				sequence_TypeSwitchStmt(context, (TypeSwitchStmt) semanticObject); 
 				return; 
 			case MyDslPackage.UNARY_EXPR:
 				sequence_UnaryExpr(context, (UnaryExpr) semanticObject); 
@@ -962,6 +958,18 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	
 	/**
 	 * Contexts:
+	 *     ExprSwitchStmt returns ExprSwitchStmt
+	 *
+	 * Constraint:
+	 *     (switch=SWITCH simpleStmt=SimpleStmt? expression=Expression? exprCaseClause+=ExprCaseClause*)
+	 */
+	protected void sequence_ExprSwitchStmt(ISerializationContext context, ExprSwitchStmt semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     ExpressionList returns ExpressionList
 	 *
 	 * Constraint:
@@ -1001,18 +1009,6 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     (BINARY_OP=BINARY_OP expression=Expression expression_Linha=Expression_Linha)?
 	 */
 	protected void sequence_Expression_Linha(ISerializationContext context, Expression_Linha semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     FLOAT_LIT returns FLOAT_LIT
-	 *
-	 * Constraint:
-	 *     ((dECIMALS=DECIMALS dECIMALS1=DECIMALS? eXPONENT=EXPONENT?) | (dECIMALS=DECIMALS eXPONENT=EXPONENT) | (dECIMALS=DECIMALS eXPONENT=EXPONENT?))
-	 */
-	protected void sequence_FLOAT_LIT(ISerializationContext context, FLOAT_LIT semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -1245,18 +1241,6 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 		feeder.accept(grammarAccess.getGotoStmtAccess().getGotoGOTOTerminalRuleCall_0_0(), semanticObject.getGoto());
 		feeder.accept(grammarAccess.getGotoStmtAccess().getLabelLabelParserRuleCall_1_0(), semanticObject.getLabel());
 		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     IMAGINARY_LIT returns IMAGINARY_LIT
-	 *
-	 * Constraint:
-	 *     (dECIMALS=DECIMALS | fLOAT_LIT=FLOAT_LIT)
-	 */
-	protected void sequence_IMAGINARY_LIT(ISerializationContext context, IMAGINARY_LIT semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -2029,38 +2013,10 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	
 	/**
 	 * Contexts:
-	 *     SwitchStmtLinhaLinha returns SwitchStmtLinhaLinha
-	 *
-	 * Constraint:
-	 *     (exprCaseClause+=ExprCaseClause+ | (typekeyword='type' typeCaseClause+=TypeCaseClause*))
-	 */
-	protected void sequence_SwitchStmtLinhaLinha(ISerializationContext context, SwitchStmtLinhaLinha semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     SwitchStmtLinha returns SwitchStmtLinha
-	 *
-	 * Constraint:
-	 *     (
-	 *         (primaryExpr=PrimaryExpr switchStmtLinhaLinha=SwitchStmtLinhaLinha) | 
-	 *         ((unary_op=UNARY_OP unaryExpr=UnaryExpr expression=Expression_Linha)? exprCaseClause+=ExprCaseClause*) | 
-	 *         (id=IDENTIFIER primaryExpr=PrimaryExpr typekeyword='type' typeCaseClause+=TypeCaseClause*)
-	 *     )
-	 */
-	protected void sequence_SwitchStmtLinha(ISerializationContext context, SwitchStmtLinha semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
 	 *     SwitchStmt returns SwitchStmt
 	 *
 	 * Constraint:
-	 *     (switch=SWITCH simpleStmt=SimpleStmt? switchStmtLinha=SwitchStmtLinha)
+	 *     (exprSwitchStmt=ExprSwitchStmt | typeSwitchStmt=TypeSwitchStmt)
 	 */
 	protected void sequence_SwitchStmt(ISerializationContext context, SwitchStmt semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2275,6 +2231,30 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	
 	/**
 	 * Contexts:
+	 *     TypeSwitchGuard returns TypeSwitchGuard
+	 *
+	 * Constraint:
+	 *     (id=IDENTIFIER? primaryExpr=PrimaryExpr type='type')
+	 */
+	protected void sequence_TypeSwitchGuard(ISerializationContext context, TypeSwitchGuard semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     TypeSwitchStmt returns TypeSwitchStmt
+	 *
+	 * Constraint:
+	 *     (simpleStmt=SimpleStmt? typeSwitchGuard=TypeSwitchGuard typeCaseClause+=TypeCaseClause*)
+	 */
+	protected void sequence_TypeSwitchStmt(ISerializationContext context, TypeSwitchStmt semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Type returns Type
 	 *
 	 * Constraint:
@@ -2290,7 +2270,21 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     UnaryExpr returns UnaryExpr
 	 *
 	 * Constraint:
-	 *     (primaryExpr=PrimaryExpr | unaryExpr=UnaryExpr)
+	 *     (
+	 *         (
+	 *             (
+	 *                 unary_op+='+' | 
+	 *                 unary_op+='-' | 
+	 *                 unary_op+='!' | 
+	 *                 unary_op+='^' | 
+	 *                 unary_op+='*' | 
+	 *                 unary_op+='&' | 
+	 *                 unary_op+='<-'
+	 *             )+ 
+	 *             primaryExpr=PrimaryExpr
+	 *         ) | 
+	 *         primaryExpr=PrimaryExpr
+	 *     )
 	 */
 	protected void sequence_UnaryExpr(ISerializationContext context, UnaryExpr semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2302,7 +2296,7 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     VarDecl returns VarDecl
 	 *
 	 * Constraint:
-	 *     (varSpec=VarSpec | varSpec1+=VarSpec+)
+	 *     (var='var' (varSpec=VarSpec | varSpec1+=VarSpec+)?)
 	 */
 	protected void sequence_VarDecl(ISerializationContext context, VarDecl semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

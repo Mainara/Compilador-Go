@@ -37,6 +37,7 @@ import org.xtext.example.mydsl.myDsl.EmbeddedField;
 import org.xtext.example.mydsl.myDsl.EmptyStmt;
 import org.xtext.example.mydsl.myDsl.ExprCaseClause;
 import org.xtext.example.mydsl.myDsl.ExprSwitchCase;
+import org.xtext.example.mydsl.myDsl.ExprSwitchStmt;
 import org.xtext.example.mydsl.myDsl.Expression;
 import org.xtext.example.mydsl.myDsl.ExpressionList;
 import org.xtext.example.mydsl.myDsl.Expression_Linha;
@@ -106,8 +107,6 @@ import org.xtext.example.mydsl.myDsl.Statement;
 import org.xtext.example.mydsl.myDsl.StatementList;
 import org.xtext.example.mydsl.myDsl.StructType;
 import org.xtext.example.mydsl.myDsl.SwitchStmt;
-import org.xtext.example.mydsl.myDsl.SwitchStmtLinha;
-import org.xtext.example.mydsl.myDsl.SwitchStmtLinhaLinha;
 import org.xtext.example.mydsl.myDsl.Tag;
 import org.xtext.example.mydsl.myDsl.TopLevelDecl;
 import org.xtext.example.mydsl.myDsl.Type;
@@ -122,6 +121,8 @@ import org.xtext.example.mydsl.myDsl.TypeName;
 import org.xtext.example.mydsl.myDsl.TypeNameLinha;
 import org.xtext.example.mydsl.myDsl.TypeSpec;
 import org.xtext.example.mydsl.myDsl.TypeSwitchCase;
+import org.xtext.example.mydsl.myDsl.TypeSwitchGuard;
+import org.xtext.example.mydsl.myDsl.TypeSwitchStmt;
 import org.xtext.example.mydsl.myDsl.UnaryExpr;
 import org.xtext.example.mydsl.myDsl.VarDecl;
 import org.xtext.example.mydsl.myDsl.VarSpec;
@@ -141,20 +142,6 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * @generated
    */
   private EClass modelEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass floaT_LITEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass imaginarY_LITEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -756,14 +743,7 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass switchStmtLinhaEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass switchStmtLinhaLinhaEClass = null;
+  private EClass exprSwitchStmtEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -778,6 +758,20 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * @generated
    */
   private EClass exprSwitchCaseEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass typeSwitchStmtEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass typeSwitchGuardEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1035,76 +1029,6 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
   public EReference getModel_Greetings()
   {
     return (EReference)modelEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getFLOAT_LIT()
-  {
-    return floaT_LITEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getFLOAT_LIT_DECIMALS()
-  {
-    return (EAttribute)floaT_LITEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getFLOAT_LIT_DECIMALS1()
-  {
-    return (EAttribute)floaT_LITEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getFLOAT_LIT_EXPONENT()
-  {
-    return (EAttribute)floaT_LITEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getIMAGINARY_LIT()
-  {
-    return imaginarY_LITEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getIMAGINARY_LIT_DECIMALS()
-  {
-    return (EAttribute)imaginarY_LITEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getIMAGINARY_LIT_FLOAT_LIT()
-  {
-    return (EReference)imaginarY_LITEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -2302,9 +2226,19 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EAttribute getVarDecl_Var()
+  {
+    return (EAttribute)varDeclEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EReference getVarDecl_VarSpec()
   {
-    return (EReference)varDeclEClass.getEStructuralFeatures().get(0);
+    return (EReference)varDeclEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -2314,7 +2248,7 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    */
   public EReference getVarDecl_VarSpec1()
   {
-    return (EReference)varDeclEClass.getEStructuralFeatures().get(1);
+    return (EReference)varDeclEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -2642,9 +2576,9 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getBasicLit_Float_lit()
+  public EAttribute getBasicLit_Float_lit()
   {
-    return (EReference)basicLitEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)basicLitEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -2652,9 +2586,9 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getBasicLit_Imaginary_lit()
+  public EAttribute getBasicLit_Imaginary_lit()
   {
-    return (EReference)basicLitEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)basicLitEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -3402,9 +3336,9 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getUnaryExpr_PrimaryExpr()
+  public EAttribute getUnaryExpr_Unary_op()
   {
-    return (EReference)unaryExprEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)unaryExprEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -3412,7 +3346,7 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getUnaryExpr_UnaryExpr()
+  public EReference getUnaryExpr_PrimaryExpr()
   {
     return (EReference)unaryExprEClass.getEStructuralFeatures().get(1);
   }
@@ -4062,9 +3996,9 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getSwitchStmt_Switch()
+  public EReference getSwitchStmt_ExprSwitchStmt()
   {
-    return (EAttribute)switchStmtEClass.getEStructuralFeatures().get(0);
+    return (EReference)switchStmtEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -4072,7 +4006,7 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSwitchStmt_SimpleStmt()
+  public EReference getSwitchStmt_TypeSwitchStmt()
   {
     return (EReference)switchStmtEClass.getEStructuralFeatures().get(1);
   }
@@ -4082,9 +4016,9 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSwitchStmt_SwitchStmtLinha()
+  public EClass getExprSwitchStmt()
   {
-    return (EReference)switchStmtEClass.getEStructuralFeatures().get(2);
+    return exprSwitchStmtEClass;
   }
 
   /**
@@ -4092,9 +4026,9 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EClass getSwitchStmtLinha()
+  public EAttribute getExprSwitchStmt_Switch()
   {
-    return switchStmtLinhaEClass;
+    return (EAttribute)exprSwitchStmtEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -4102,9 +4036,9 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSwitchStmtLinha_PrimaryExpr()
+  public EReference getExprSwitchStmt_SimpleStmt()
   {
-    return (EReference)switchStmtLinhaEClass.getEStructuralFeatures().get(0);
+    return (EReference)exprSwitchStmtEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -4112,9 +4046,9 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getSwitchStmtLinha_SwitchStmtLinhaLinha()
+  public EReference getExprSwitchStmt_Expression()
   {
-    return (EReference)switchStmtLinhaEClass.getEStructuralFeatures().get(1);
+    return (EReference)exprSwitchStmtEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -4122,109 +4056,9 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getSwitchStmtLinha_Unary_op()
+  public EReference getExprSwitchStmt_ExprCaseClause()
   {
-    return (EAttribute)switchStmtLinhaEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSwitchStmtLinha_UnaryExpr()
-  {
-    return (EReference)switchStmtLinhaEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSwitchStmtLinha_Expression()
-  {
-    return (EReference)switchStmtLinhaEClass.getEStructuralFeatures().get(4);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSwitchStmtLinha_ExprCaseClause()
-  {
-    return (EReference)switchStmtLinhaEClass.getEStructuralFeatures().get(5);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getSwitchStmtLinha_Id()
-  {
-    return (EAttribute)switchStmtLinhaEClass.getEStructuralFeatures().get(6);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getSwitchStmtLinha_Typekeyword()
-  {
-    return (EAttribute)switchStmtLinhaEClass.getEStructuralFeatures().get(7);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSwitchStmtLinha_TypeCaseClause()
-  {
-    return (EReference)switchStmtLinhaEClass.getEStructuralFeatures().get(8);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EClass getSwitchStmtLinhaLinha()
-  {
-    return switchStmtLinhaLinhaEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSwitchStmtLinhaLinha_ExprCaseClause()
-  {
-    return (EReference)switchStmtLinhaLinhaEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getSwitchStmtLinhaLinha_Typekeyword()
-  {
-    return (EAttribute)switchStmtLinhaLinhaEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EReference getSwitchStmtLinhaLinha_TypeCaseClause()
-  {
-    return (EReference)switchStmtLinhaLinhaEClass.getEStructuralFeatures().get(2);
+    return (EReference)exprSwitchStmtEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -4295,6 +4129,86 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
   public EAttribute getExprSwitchCase_Default()
   {
     return (EAttribute)exprSwitchCaseEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTypeSwitchStmt()
+  {
+    return typeSwitchStmtEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeSwitchStmt_SimpleStmt()
+  {
+    return (EReference)typeSwitchStmtEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeSwitchStmt_TypeSwitchGuard()
+  {
+    return (EReference)typeSwitchStmtEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeSwitchStmt_TypeCaseClause()
+  {
+    return (EReference)typeSwitchStmtEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EClass getTypeSwitchGuard()
+  {
+    return typeSwitchGuardEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getTypeSwitchGuard_Id()
+  {
+    return (EAttribute)typeSwitchGuardEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeSwitchGuard_PrimaryExpr()
+  {
+    return (EReference)typeSwitchGuardEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EAttribute getTypeSwitchGuard_Type()
+  {
+    return (EAttribute)typeSwitchGuardEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -5260,15 +5174,6 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
     modelEClass = createEClass(MODEL);
     createEReference(modelEClass, MODEL__GREETINGS);
 
-    floaT_LITEClass = createEClass(FLOAT_LIT);
-    createEAttribute(floaT_LITEClass, FLOAT_LIT__DECIMALS);
-    createEAttribute(floaT_LITEClass, FLOAT_LIT__DECIMALS1);
-    createEAttribute(floaT_LITEClass, FLOAT_LIT__EXPONENT);
-
-    imaginarY_LITEClass = createEClass(IMAGINARY_LIT);
-    createEAttribute(imaginarY_LITEClass, IMAGINARY_LIT__DECIMALS);
-    createEReference(imaginarY_LITEClass, IMAGINARY_LIT__FLOAT_LIT);
-
     typeEClass = createEClass(TYPE);
     createEReference(typeEClass, TYPE__TYPE_NAME);
     createEReference(typeEClass, TYPE__TYPE_LIT);
@@ -5427,6 +5332,7 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
     createEReference(typeDefEClass, TYPE_DEF__TYPE);
 
     varDeclEClass = createEClass(VAR_DECL);
+    createEAttribute(varDeclEClass, VAR_DECL__VAR);
     createEReference(varDeclEClass, VAR_DECL__VAR_SPEC);
     createEReference(varDeclEClass, VAR_DECL__VAR_SPEC1);
 
@@ -5471,8 +5377,8 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
 
     basicLitEClass = createEClass(BASIC_LIT);
     createEAttribute(basicLitEClass, BASIC_LIT__INT_LIT);
-    createEReference(basicLitEClass, BASIC_LIT__FLOAT_LIT);
-    createEReference(basicLitEClass, BASIC_LIT__IMAGINARY_LIT);
+    createEAttribute(basicLitEClass, BASIC_LIT__FLOAT_LIT);
+    createEAttribute(basicLitEClass, BASIC_LIT__IMAGINARY_LIT);
     createEAttribute(basicLitEClass, BASIC_LIT__RUNE_LIT);
     createEAttribute(basicLitEClass, BASIC_LIT__STRING_LIT);
 
@@ -5570,8 +5476,8 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
     createEReference(expression_LinhaEClass, EXPRESSION_LINHA__EXPRESSION_LINHA);
 
     unaryExprEClass = createEClass(UNARY_EXPR);
+    createEAttribute(unaryExprEClass, UNARY_EXPR__UNARY_OP);
     createEReference(unaryExprEClass, UNARY_EXPR__PRIMARY_EXPR);
-    createEReference(unaryExprEClass, UNARY_EXPR__UNARY_EXPR);
 
     binarY_OPEClass = createEClass(BINARY_OP);
     createEAttribute(binarY_OPEClass, BINARY_OP__OR);
@@ -5648,25 +5554,14 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
     createEReference(ifStmtLinhaEClass, IF_STMT_LINHA__BLOCK1);
 
     switchStmtEClass = createEClass(SWITCH_STMT);
-    createEAttribute(switchStmtEClass, SWITCH_STMT__SWITCH);
-    createEReference(switchStmtEClass, SWITCH_STMT__SIMPLE_STMT);
-    createEReference(switchStmtEClass, SWITCH_STMT__SWITCH_STMT_LINHA);
+    createEReference(switchStmtEClass, SWITCH_STMT__EXPR_SWITCH_STMT);
+    createEReference(switchStmtEClass, SWITCH_STMT__TYPE_SWITCH_STMT);
 
-    switchStmtLinhaEClass = createEClass(SWITCH_STMT_LINHA);
-    createEReference(switchStmtLinhaEClass, SWITCH_STMT_LINHA__PRIMARY_EXPR);
-    createEReference(switchStmtLinhaEClass, SWITCH_STMT_LINHA__SWITCH_STMT_LINHA_LINHA);
-    createEAttribute(switchStmtLinhaEClass, SWITCH_STMT_LINHA__UNARY_OP);
-    createEReference(switchStmtLinhaEClass, SWITCH_STMT_LINHA__UNARY_EXPR);
-    createEReference(switchStmtLinhaEClass, SWITCH_STMT_LINHA__EXPRESSION);
-    createEReference(switchStmtLinhaEClass, SWITCH_STMT_LINHA__EXPR_CASE_CLAUSE);
-    createEAttribute(switchStmtLinhaEClass, SWITCH_STMT_LINHA__ID);
-    createEAttribute(switchStmtLinhaEClass, SWITCH_STMT_LINHA__TYPEKEYWORD);
-    createEReference(switchStmtLinhaEClass, SWITCH_STMT_LINHA__TYPE_CASE_CLAUSE);
-
-    switchStmtLinhaLinhaEClass = createEClass(SWITCH_STMT_LINHA_LINHA);
-    createEReference(switchStmtLinhaLinhaEClass, SWITCH_STMT_LINHA_LINHA__EXPR_CASE_CLAUSE);
-    createEAttribute(switchStmtLinhaLinhaEClass, SWITCH_STMT_LINHA_LINHA__TYPEKEYWORD);
-    createEReference(switchStmtLinhaLinhaEClass, SWITCH_STMT_LINHA_LINHA__TYPE_CASE_CLAUSE);
+    exprSwitchStmtEClass = createEClass(EXPR_SWITCH_STMT);
+    createEAttribute(exprSwitchStmtEClass, EXPR_SWITCH_STMT__SWITCH);
+    createEReference(exprSwitchStmtEClass, EXPR_SWITCH_STMT__SIMPLE_STMT);
+    createEReference(exprSwitchStmtEClass, EXPR_SWITCH_STMT__EXPRESSION);
+    createEReference(exprSwitchStmtEClass, EXPR_SWITCH_STMT__EXPR_CASE_CLAUSE);
 
     exprCaseClauseEClass = createEClass(EXPR_CASE_CLAUSE);
     createEReference(exprCaseClauseEClass, EXPR_CASE_CLAUSE__EXPR_SWITCH_CASE);
@@ -5676,6 +5571,16 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
     createEAttribute(exprSwitchCaseEClass, EXPR_SWITCH_CASE__CASE);
     createEReference(exprSwitchCaseEClass, EXPR_SWITCH_CASE__EXPRESSION_LIST);
     createEAttribute(exprSwitchCaseEClass, EXPR_SWITCH_CASE__DEFAULT);
+
+    typeSwitchStmtEClass = createEClass(TYPE_SWITCH_STMT);
+    createEReference(typeSwitchStmtEClass, TYPE_SWITCH_STMT__SIMPLE_STMT);
+    createEReference(typeSwitchStmtEClass, TYPE_SWITCH_STMT__TYPE_SWITCH_GUARD);
+    createEReference(typeSwitchStmtEClass, TYPE_SWITCH_STMT__TYPE_CASE_CLAUSE);
+
+    typeSwitchGuardEClass = createEClass(TYPE_SWITCH_GUARD);
+    createEAttribute(typeSwitchGuardEClass, TYPE_SWITCH_GUARD__ID);
+    createEReference(typeSwitchGuardEClass, TYPE_SWITCH_GUARD__PRIMARY_EXPR);
+    createEAttribute(typeSwitchGuardEClass, TYPE_SWITCH_GUARD__TYPE);
 
     typeCaseClauseEClass = createEClass(TYPE_CASE_CLAUSE);
     createEReference(typeCaseClauseEClass, TYPE_CASE_CLAUSE__TYPE_SWITCH_CASE);
@@ -5829,15 +5734,6 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
     // Initialize classes and features; add operations and parameters
     initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getModel_Greetings(), this.getSourceFile(), null, "greetings", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(floaT_LITEClass, org.xtext.example.mydsl.myDsl.FLOAT_LIT.class, "FLOAT_LIT", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getFLOAT_LIT_DECIMALS(), ecorePackage.getEString(), "dECIMALS", null, 0, 1, org.xtext.example.mydsl.myDsl.FLOAT_LIT.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getFLOAT_LIT_DECIMALS1(), ecorePackage.getEString(), "dECIMALS1", null, 0, 1, org.xtext.example.mydsl.myDsl.FLOAT_LIT.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getFLOAT_LIT_EXPONENT(), ecorePackage.getEString(), "eXPONENT", null, 0, 1, org.xtext.example.mydsl.myDsl.FLOAT_LIT.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(imaginarY_LITEClass, org.xtext.example.mydsl.myDsl.IMAGINARY_LIT.class, "IMAGINARY_LIT", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getIMAGINARY_LIT_DECIMALS(), ecorePackage.getEString(), "dECIMALS", null, 0, 1, org.xtext.example.mydsl.myDsl.IMAGINARY_LIT.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getIMAGINARY_LIT_FLOAT_LIT(), this.getFLOAT_LIT(), null, "fLOAT_LIT", null, 0, 1, org.xtext.example.mydsl.myDsl.IMAGINARY_LIT.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(typeEClass, Type.class, "Type", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getType_TypeName(), this.getTypeName(), null, "typeName", null, 0, 1, Type.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -5997,6 +5893,7 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
     initEReference(getTypeDef_Type(), this.getType(), null, "type", null, 0, 1, TypeDef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(varDeclEClass, VarDecl.class, "VarDecl", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getVarDecl_Var(), ecorePackage.getEString(), "var", null, 0, 1, VarDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getVarDecl_VarSpec(), this.getVarSpec(), null, "varSpec", null, 0, 1, VarDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getVarDecl_VarSpec1(), this.getVarSpec(), null, "varSpec1", null, 0, -1, VarDecl.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -6041,8 +5938,8 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
 
     initEClass(basicLitEClass, BasicLit.class, "BasicLit", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getBasicLit_Int_lit(), ecorePackage.getEString(), "int_lit", null, 0, 1, BasicLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getBasicLit_Float_lit(), this.getFLOAT_LIT(), null, "float_lit", null, 0, 1, BasicLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getBasicLit_Imaginary_lit(), this.getIMAGINARY_LIT(), null, "imaginary_lit", null, 0, 1, BasicLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBasicLit_Float_lit(), ecorePackage.getEString(), "float_lit", null, 0, 1, BasicLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getBasicLit_Imaginary_lit(), ecorePackage.getEString(), "imaginary_lit", null, 0, 1, BasicLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getBasicLit_Rune_lit(), ecorePackage.getEString(), "rune_lit", null, 0, 1, BasicLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getBasicLit_String_lit(), ecorePackage.getEString(), "string_lit", null, 0, 1, BasicLit.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
@@ -6140,8 +6037,8 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
     initEReference(getExpression_Linha_Expression_Linha(), this.getExpression_Linha(), null, "expression_Linha", null, 0, 1, Expression_Linha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(unaryExprEClass, UnaryExpr.class, "UnaryExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getUnaryExpr_Unary_op(), ecorePackage.getEString(), "unary_op", null, 0, -1, UnaryExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getUnaryExpr_PrimaryExpr(), this.getPrimaryExpr(), null, "primaryExpr", null, 0, 1, UnaryExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getUnaryExpr_UnaryExpr(), this.getUnaryExpr(), null, "unaryExpr", null, 0, 1, UnaryExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(binarY_OPEClass, org.xtext.example.mydsl.myDsl.BINARY_OP.class, "BINARY_OP", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getBINARY_OP_Or(), ecorePackage.getEString(), "or", null, 0, 1, org.xtext.example.mydsl.myDsl.BINARY_OP.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -6218,25 +6115,14 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
     initEReference(getIfStmtLinha_Block1(), this.getBlock(), null, "block1", null, 0, 1, IfStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(switchStmtEClass, SwitchStmt.class, "SwitchStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getSwitchStmt_Switch(), ecorePackage.getEString(), "switch", null, 0, 1, SwitchStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSwitchStmt_SimpleStmt(), this.getSimpleStmt(), null, "simpleStmt", null, 0, 1, SwitchStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSwitchStmt_SwitchStmtLinha(), this.getSwitchStmtLinha(), null, "switchStmtLinha", null, 0, 1, SwitchStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSwitchStmt_ExprSwitchStmt(), this.getExprSwitchStmt(), null, "exprSwitchStmt", null, 0, 1, SwitchStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSwitchStmt_TypeSwitchStmt(), this.getTypeSwitchStmt(), null, "typeSwitchStmt", null, 0, 1, SwitchStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(switchStmtLinhaEClass, SwitchStmtLinha.class, "SwitchStmtLinha", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getSwitchStmtLinha_PrimaryExpr(), this.getPrimaryExpr(), null, "primaryExpr", null, 0, 1, SwitchStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSwitchStmtLinha_SwitchStmtLinhaLinha(), this.getSwitchStmtLinhaLinha(), null, "switchStmtLinhaLinha", null, 0, 1, SwitchStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getSwitchStmtLinha_Unary_op(), ecorePackage.getEString(), "unary_op", null, 0, 1, SwitchStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSwitchStmtLinha_UnaryExpr(), this.getUnaryExpr(), null, "unaryExpr", null, 0, 1, SwitchStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSwitchStmtLinha_Expression(), this.getExpression_Linha(), null, "expression", null, 0, 1, SwitchStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSwitchStmtLinha_ExprCaseClause(), this.getExprCaseClause(), null, "exprCaseClause", null, 0, -1, SwitchStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getSwitchStmtLinha_Id(), ecorePackage.getEString(), "id", null, 0, 1, SwitchStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getSwitchStmtLinha_Typekeyword(), ecorePackage.getEString(), "typekeyword", null, 0, 1, SwitchStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSwitchStmtLinha_TypeCaseClause(), this.getTypeCaseClause(), null, "typeCaseClause", null, 0, -1, SwitchStmtLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(switchStmtLinhaLinhaEClass, SwitchStmtLinhaLinha.class, "SwitchStmtLinhaLinha", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getSwitchStmtLinhaLinha_ExprCaseClause(), this.getExprCaseClause(), null, "exprCaseClause", null, 0, -1, SwitchStmtLinhaLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getSwitchStmtLinhaLinha_Typekeyword(), ecorePackage.getEString(), "typekeyword", null, 0, 1, SwitchStmtLinhaLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSwitchStmtLinhaLinha_TypeCaseClause(), this.getTypeCaseClause(), null, "typeCaseClause", null, 0, -1, SwitchStmtLinhaLinha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(exprSwitchStmtEClass, ExprSwitchStmt.class, "ExprSwitchStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getExprSwitchStmt_Switch(), ecorePackage.getEString(), "switch", null, 0, 1, ExprSwitchStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExprSwitchStmt_SimpleStmt(), this.getSimpleStmt(), null, "simpleStmt", null, 0, 1, ExprSwitchStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExprSwitchStmt_Expression(), this.getExpression(), null, "expression", null, 0, 1, ExprSwitchStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExprSwitchStmt_ExprCaseClause(), this.getExprCaseClause(), null, "exprCaseClause", null, 0, -1, ExprSwitchStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(exprCaseClauseEClass, ExprCaseClause.class, "ExprCaseClause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getExprCaseClause_ExprSwitchCase(), this.getExprSwitchCase(), null, "exprSwitchCase", null, 0, 1, ExprCaseClause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -6246,6 +6132,16 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
     initEAttribute(getExprSwitchCase_Case(), ecorePackage.getEString(), "case", null, 0, 1, ExprSwitchCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getExprSwitchCase_ExpressionList(), this.getExpressionList(), null, "expressionList", null, 0, 1, ExprSwitchCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getExprSwitchCase_Default(), ecorePackage.getEString(), "default", null, 0, 1, ExprSwitchCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(typeSwitchStmtEClass, TypeSwitchStmt.class, "TypeSwitchStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getTypeSwitchStmt_SimpleStmt(), this.getSimpleStmt(), null, "simpleStmt", null, 0, 1, TypeSwitchStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTypeSwitchStmt_TypeSwitchGuard(), this.getTypeSwitchGuard(), null, "typeSwitchGuard", null, 0, 1, TypeSwitchStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTypeSwitchStmt_TypeCaseClause(), this.getTypeCaseClause(), null, "typeCaseClause", null, 0, -1, TypeSwitchStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(typeSwitchGuardEClass, TypeSwitchGuard.class, "TypeSwitchGuard", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getTypeSwitchGuard_Id(), ecorePackage.getEString(), "id", null, 0, 1, TypeSwitchGuard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getTypeSwitchGuard_PrimaryExpr(), this.getPrimaryExpr(), null, "primaryExpr", null, 0, 1, TypeSwitchGuard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getTypeSwitchGuard_Type(), ecorePackage.getEString(), "type", null, 0, 1, TypeSwitchGuard.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(typeCaseClauseEClass, TypeCaseClause.class, "TypeCaseClause", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getTypeCaseClause_TypeSwitchCase(), this.getTypeSwitchCase(), null, "typeSwitchCase", null, 0, 1, TypeCaseClause.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

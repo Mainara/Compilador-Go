@@ -14,9 +14,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.xtext.example.mydsl.myDsl.SwitchStmt#getSwitch <em>Switch</em>}</li>
- *   <li>{@link org.xtext.example.mydsl.myDsl.SwitchStmt#getSimpleStmt <em>Simple Stmt</em>}</li>
- *   <li>{@link org.xtext.example.mydsl.myDsl.SwitchStmt#getSwitchStmtLinha <em>Switch Stmt Linha</em>}</li>
+ *   <li>{@link org.xtext.example.mydsl.myDsl.SwitchStmt#getExprSwitchStmt <em>Expr Switch Stmt</em>}</li>
+ *   <li>{@link org.xtext.example.mydsl.myDsl.SwitchStmt#getTypeSwitchStmt <em>Type Switch Stmt</em>}</li>
  * </ul>
  *
  * @see org.xtext.example.mydsl.myDsl.MyDslPackage#getSwitchStmt()
@@ -26,81 +25,55 @@ import org.eclipse.emf.ecore.EObject;
 public interface SwitchStmt extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Switch</b></em>' attribute.
+   * Returns the value of the '<em><b>Expr Switch Stmt</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Switch</em>' attribute isn't clear,
+   * If the meaning of the '<em>Expr Switch Stmt</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Switch</em>' attribute.
-   * @see #setSwitch(String)
-   * @see org.xtext.example.mydsl.myDsl.MyDslPackage#getSwitchStmt_Switch()
-   * @model
-   * @generated
-   */
-  String getSwitch();
-
-  /**
-   * Sets the value of the '{@link org.xtext.example.mydsl.myDsl.SwitchStmt#getSwitch <em>Switch</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Switch</em>' attribute.
-   * @see #getSwitch()
-   * @generated
-   */
-  void setSwitch(String value);
-
-  /**
-   * Returns the value of the '<em><b>Simple Stmt</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Simple Stmt</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Simple Stmt</em>' containment reference.
-   * @see #setSimpleStmt(SimpleStmt)
-   * @see org.xtext.example.mydsl.myDsl.MyDslPackage#getSwitchStmt_SimpleStmt()
+   * @return the value of the '<em>Expr Switch Stmt</em>' containment reference.
+   * @see #setExprSwitchStmt(ExprSwitchStmt)
+   * @see org.xtext.example.mydsl.myDsl.MyDslPackage#getSwitchStmt_ExprSwitchStmt()
    * @model containment="true"
    * @generated
    */
-  SimpleStmt getSimpleStmt();
+  ExprSwitchStmt getExprSwitchStmt();
 
   /**
-   * Sets the value of the '{@link org.xtext.example.mydsl.myDsl.SwitchStmt#getSimpleStmt <em>Simple Stmt</em>}' containment reference.
+   * Sets the value of the '{@link org.xtext.example.mydsl.myDsl.SwitchStmt#getExprSwitchStmt <em>Expr Switch Stmt</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Simple Stmt</em>' containment reference.
-   * @see #getSimpleStmt()
+   * @param value the new value of the '<em>Expr Switch Stmt</em>' containment reference.
+   * @see #getExprSwitchStmt()
    * @generated
    */
-  void setSimpleStmt(SimpleStmt value);
+  void setExprSwitchStmt(ExprSwitchStmt value);
 
   /**
-   * Returns the value of the '<em><b>Switch Stmt Linha</b></em>' containment reference.
+   * Returns the value of the '<em><b>Type Switch Stmt</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Switch Stmt Linha</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Type Switch Stmt</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Switch Stmt Linha</em>' containment reference.
-   * @see #setSwitchStmtLinha(SwitchStmtLinha)
-   * @see org.xtext.example.mydsl.myDsl.MyDslPackage#getSwitchStmt_SwitchStmtLinha()
+   * @return the value of the '<em>Type Switch Stmt</em>' containment reference.
+   * @see #setTypeSwitchStmt(TypeSwitchStmt)
+   * @see org.xtext.example.mydsl.myDsl.MyDslPackage#getSwitchStmt_TypeSwitchStmt()
    * @model containment="true"
    * @generated
    */
-  SwitchStmtLinha getSwitchStmtLinha();
+  TypeSwitchStmt getTypeSwitchStmt();
 
   /**
-   * Sets the value of the '{@link org.xtext.example.mydsl.myDsl.SwitchStmt#getSwitchStmtLinha <em>Switch Stmt Linha</em>}' containment reference.
+   * Sets the value of the '{@link org.xtext.example.mydsl.myDsl.SwitchStmt#getTypeSwitchStmt <em>Type Switch Stmt</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Switch Stmt Linha</em>' containment reference.
-   * @see #getSwitchStmtLinha()
+   * @param value the new value of the '<em>Type Switch Stmt</em>' containment reference.
+   * @see #getTypeSwitchStmt()
    * @generated
    */
-  void setSwitchStmtLinha(SwitchStmtLinha value);
+  void setTypeSwitchStmt(TypeSwitchStmt value);
 
 } // SwitchStmt

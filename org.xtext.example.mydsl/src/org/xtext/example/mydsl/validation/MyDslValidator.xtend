@@ -3,21 +3,15 @@
  */
 package org.xtext.example.mydsl.validation
 
-import java.util.ArrayList
-import java.util.List
 import org.eclipse.xtext.validation.Check
 import org.xtext.example.mydsl.myDsl.Declaration
 import org.xtext.example.mydsl.myDsl.Expression
-import org.xtext.example.mydsl.myDsl.MyDslPackage
 import org.xtext.example.mydsl.myDsl.MethodDecl
-import java.lang.reflect.Array
-import org.xtext.example.mydsl.myDsl.PointerType
-import org.xtext.example.mydsl.myDsl.ParameterDecl
-import org.xtext.example.mydsl.myDsl.MethodName
-import org.xtext.example.mydsl.myDsl.TypeLit
-import org.xtext.example.mydsl.myDsl.Type
-import java.util.Set
-import java.util.HashSet
+import org.xtext.example.mydsl.myDsl.MyDslPackage
+import java.util.Map
+import java.util.HashMap
+import java.util.List
+import java.util.ArrayList
 
 /**
  * This class contains custom validation rules. 
@@ -28,6 +22,11 @@ class MyDslValidator extends AbstractMyDslValidator {
 	
 	ConstDeclValidator constDeclValidator = new ConstDeclValidator();
 	MethodDeclValidator methodDeclValidator = new MethodDeclValidator();
+	VarDeclValidator varDeclValidator = new VarDeclValidator();
+	TypeDeclValidator typeDeclValidator = new TypeDeclValidator();
+	Map<String, String> idsTypes = new HashMap<String,String>;
+	List<MethodDecl> methodDeclList = new ArrayList;
+	Map<String, String> typeDefs = new HashMap;
 	
 //	public static val INVALID_NAME = 'invalidName'
 //S
@@ -45,7 +44,10 @@ class MyDslValidator extends AbstractMyDslValidator {
 	
 	@Check
 	def checkMethodDecl(MethodDecl methodDecl){
-		methodDeclValidator.checkMethodDecl(methodDecl);
+		if(methodDeclValidator.checkMethodDecl(methodDecl, methodDeclList, typeDefs) != null){
+			var String erro = methodDeclValidator.checkMethodDecl(methodDecl, methodDeclList, typeDefs);
+			error(erro, MyDslPackage.Literals.METHOD_DECL__RECEIVER);
+		}
 	}
 	
 	@Check
@@ -56,14 +58,20 @@ class MyDslValidator extends AbstractMyDslValidator {
 				error(erro, MyDslPackage.Literals.DECLARATION__CONST_DECL)
 			}
 		}else if(decl.typeDecl != null){
+			typeDeclValidator.addIdsTypes(decl.typeDecl, idsTypes, typeDefs);
+		}else{
+			if(varDeclValidator.validaVarDecl(decl.varDecl,idsTypes) != null){
+				var String erro = varDeclValidator.validaVarDecl(decl.varDecl, idsTypes);
+				error(erro, MyDslPackage.Literals.DECLARATION__VAR_DECL)
+			}
 		}
 	}
 	
-	@Check
+	/*@Check
 	def checkExpression(Expression exp){
 		if(exp != null){
 			
 		}
-	}
+	}*/
 	
 }

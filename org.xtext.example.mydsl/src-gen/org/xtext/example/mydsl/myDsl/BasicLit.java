@@ -54,56 +54,56 @@ public interface BasicLit extends EObject
   void setInt_lit(String value);
 
   /**
-   * Returns the value of the '<em><b>Float lit</b></em>' containment reference.
+   * Returns the value of the '<em><b>Float lit</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Float lit</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Float lit</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Float lit</em>' containment reference.
-   * @see #setFloat_lit(FLOAT_LIT)
+   * @return the value of the '<em>Float lit</em>' attribute.
+   * @see #setFloat_lit(String)
    * @see org.xtext.example.mydsl.myDsl.MyDslPackage#getBasicLit_Float_lit()
-   * @model containment="true"
+   * @model
    * @generated
    */
-  FLOAT_LIT getFloat_lit();
+  String getFloat_lit();
 
   /**
-   * Sets the value of the '{@link org.xtext.example.mydsl.myDsl.BasicLit#getFloat_lit <em>Float lit</em>}' containment reference.
+   * Sets the value of the '{@link org.xtext.example.mydsl.myDsl.BasicLit#getFloat_lit <em>Float lit</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Float lit</em>' containment reference.
+   * @param value the new value of the '<em>Float lit</em>' attribute.
    * @see #getFloat_lit()
    * @generated
    */
-  void setFloat_lit(FLOAT_LIT value);
+  void setFloat_lit(String value);
 
   /**
-   * Returns the value of the '<em><b>Imaginary lit</b></em>' containment reference.
+   * Returns the value of the '<em><b>Imaginary lit</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Imaginary lit</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Imaginary lit</em>' attribute isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Imaginary lit</em>' containment reference.
-   * @see #setImaginary_lit(IMAGINARY_LIT)
+   * @return the value of the '<em>Imaginary lit</em>' attribute.
+   * @see #setImaginary_lit(String)
    * @see org.xtext.example.mydsl.myDsl.MyDslPackage#getBasicLit_Imaginary_lit()
-   * @model containment="true"
+   * @model
    * @generated
    */
-  IMAGINARY_LIT getImaginary_lit();
+  String getImaginary_lit();
 
   /**
-   * Sets the value of the '{@link org.xtext.example.mydsl.myDsl.BasicLit#getImaginary_lit <em>Imaginary lit</em>}' containment reference.
+   * Sets the value of the '{@link org.xtext.example.mydsl.myDsl.BasicLit#getImaginary_lit <em>Imaginary lit</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Imaginary lit</em>' containment reference.
+   * @param value the new value of the '<em>Imaginary lit</em>' attribute.
    * @see #getImaginary_lit()
    * @generated
    */
-  void setImaginary_lit(IMAGINARY_LIT value);
+  void setImaginary_lit(String value);
 
   /**
    * Returns the value of the '<em><b>Rune lit</b></em>' attribute.

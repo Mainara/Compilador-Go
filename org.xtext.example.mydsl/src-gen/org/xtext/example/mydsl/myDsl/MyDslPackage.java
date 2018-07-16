@@ -86,89 +86,6 @@ public interface MyDslPackage extends EPackage
   int MODEL_FEATURE_COUNT = 1;
 
   /**
-   * The meta object id for the '{@link org.xtext.example.mydsl.myDsl.impl.FLOAT_LITImpl <em>FLOAT LIT</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.xtext.example.mydsl.myDsl.impl.FLOAT_LITImpl
-   * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getFLOAT_LIT()
-   * @generated
-   */
-  int FLOAT_LIT = 1;
-
-  /**
-   * The feature id for the '<em><b>DECIMALS</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int FLOAT_LIT__DECIMALS = 0;
-
-  /**
-   * The feature id for the '<em><b>DECIMALS1</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int FLOAT_LIT__DECIMALS1 = 1;
-
-  /**
-   * The feature id for the '<em><b>EXPONENT</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int FLOAT_LIT__EXPONENT = 2;
-
-  /**
-   * The number of structural features of the '<em>FLOAT LIT</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int FLOAT_LIT_FEATURE_COUNT = 3;
-
-  /**
-   * The meta object id for the '{@link org.xtext.example.mydsl.myDsl.impl.IMAGINARY_LITImpl <em>IMAGINARY LIT</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.xtext.example.mydsl.myDsl.impl.IMAGINARY_LITImpl
-   * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getIMAGINARY_LIT()
-   * @generated
-   */
-  int IMAGINARY_LIT = 2;
-
-  /**
-   * The feature id for the '<em><b>DECIMALS</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int IMAGINARY_LIT__DECIMALS = 0;
-
-  /**
-   * The feature id for the '<em><b>FLOAT LIT</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int IMAGINARY_LIT__FLOAT_LIT = 1;
-
-  /**
-   * The number of structural features of the '<em>IMAGINARY LIT</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int IMAGINARY_LIT_FEATURE_COUNT = 2;
-
-  /**
    * The meta object id for the '{@link org.xtext.example.mydsl.myDsl.impl.TypeImpl <em>Type</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -176,7 +93,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getType()
    * @generated
    */
-  int TYPE = 3;
+  int TYPE = 1;
 
   /**
    * The feature id for the '<em><b>Type Name</b></em>' containment reference.
@@ -222,7 +139,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getTypeName()
    * @generated
    */
-  int TYPE_NAME = 4;
+  int TYPE_NAME = 2;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -250,7 +167,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getTypeNameLinha()
    * @generated
    */
-  int TYPE_NAME_LINHA = 5;
+  int TYPE_NAME_LINHA = 3;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -278,7 +195,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getTypeLit()
    * @generated
    */
-  int TYPE_LIT = 6;
+  int TYPE_LIT = 4;
 
   /**
    * The feature id for the '<em><b>Type Lit Linha</b></em>' containment reference.
@@ -360,7 +277,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getTypeLitLinha()
    * @generated
    */
-  int TYPE_LIT_LINHA = 7;
+  int TYPE_LIT_LINHA = 5;
 
   /**
    * The feature id for the '<em><b>Array Length</b></em>' containment reference.
@@ -397,7 +314,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getArrayLength()
    * @generated
    */
-  int ARRAY_LENGTH = 8;
+  int ARRAY_LENGTH = 6;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -425,7 +342,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getElementType()
    * @generated
    */
-  int ELEMENT_TYPE = 9;
+  int ELEMENT_TYPE = 7;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' containment reference.
@@ -453,7 +370,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getStructType()
    * @generated
    */
-  int STRUCT_TYPE = 10;
+  int STRUCT_TYPE = 8;
 
   /**
    * The feature id for the '<em><b>Struct</b></em>' attribute.
@@ -490,7 +407,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getFieldDecl()
    * @generated
    */
-  int FIELD_DECL = 11;
+  int FIELD_DECL = 9;
 
   /**
    * The feature id for the '<em><b>Identifier List</b></em>' containment reference.
@@ -545,7 +462,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getEmbeddedField()
    * @generated
    */
-  int EMBEDDED_FIELD = 12;
+  int EMBEDDED_FIELD = 10;
 
   /**
    * The feature id for the '<em><b>Type Name</b></em>' containment reference.
@@ -573,7 +490,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getTag()
    * @generated
    */
-  int TAG = 13;
+  int TAG = 11;
 
   /**
    * The feature id for the '<em><b>String lit</b></em>' attribute.
@@ -601,7 +518,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getPointerType()
    * @generated
    */
-  int POINTER_TYPE = 14;
+  int POINTER_TYPE = 12;
 
   /**
    * The feature id for the '<em><b>Base Type</b></em>' containment reference.
@@ -629,7 +546,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getBaseType()
    * @generated
    */
-  int BASE_TYPE = 15;
+  int BASE_TYPE = 13;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' containment reference.
@@ -657,7 +574,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getFunctionType()
    * @generated
    */
-  int FUNCTION_TYPE = 16;
+  int FUNCTION_TYPE = 14;
 
   /**
    * The feature id for the '<em><b>Func</b></em>' attribute.
@@ -694,7 +611,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getSignature()
    * @generated
    */
-  int SIGNATURE = 17;
+  int SIGNATURE = 15;
 
   /**
    * The feature id for the '<em><b>Parameters</b></em>' containment reference.
@@ -731,7 +648,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getResult()
    * @generated
    */
-  int RESULT = 18;
+  int RESULT = 16;
 
   /**
    * The feature id for the '<em><b>Parameters</b></em>' containment reference.
@@ -768,7 +685,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getParameters()
    * @generated
    */
-  int PARAMETERS = 19;
+  int PARAMETERS = 17;
 
   /**
    * The feature id for the '<em><b>Parameter List</b></em>' containment reference.
@@ -796,7 +713,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getParameterList()
    * @generated
    */
-  int PARAMETER_LIST = 20;
+  int PARAMETER_LIST = 18;
 
   /**
    * The feature id for the '<em><b>Parameter Decl</b></em>' containment reference.
@@ -833,7 +750,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getParameterDecl()
    * @generated
    */
-  int PARAMETER_DECL = 21;
+  int PARAMETER_DECL = 19;
 
   /**
    * The feature id for the '<em><b>Identifier List</b></em>' containment reference.
@@ -870,7 +787,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getInterfaceType()
    * @generated
    */
-  int INTERFACE_TYPE = 22;
+  int INTERFACE_TYPE = 20;
 
   /**
    * The feature id for the '<em><b>Interface</b></em>' attribute.
@@ -907,7 +824,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getMethodSpec()
    * @generated
    */
-  int METHOD_SPEC = 23;
+  int METHOD_SPEC = 21;
 
   /**
    * The feature id for the '<em><b>Method Name</b></em>' containment reference.
@@ -953,7 +870,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getMethodName()
    * @generated
    */
-  int METHOD_NAME = 24;
+  int METHOD_NAME = 22;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -981,7 +898,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getInterfaceTypeName()
    * @generated
    */
-  int INTERFACE_TYPE_NAME = 25;
+  int INTERFACE_TYPE_NAME = 23;
 
   /**
    * The feature id for the '<em><b>Type Name</b></em>' containment reference.
@@ -1009,7 +926,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getMapType()
    * @generated
    */
-  int MAP_TYPE = 26;
+  int MAP_TYPE = 24;
 
   /**
    * The feature id for the '<em><b>Map</b></em>' attribute.
@@ -1055,7 +972,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getKeyType()
    * @generated
    */
-  int KEY_TYPE = 27;
+  int KEY_TYPE = 25;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' containment reference.
@@ -1083,7 +1000,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getChannelType()
    * @generated
    */
-  int CHANNEL_TYPE = 28;
+  int CHANNEL_TYPE = 26;
 
   /**
    * The feature id for the '<em><b>Chan</b></em>' attribute.
@@ -1129,7 +1046,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getChannelTypeLinha()
    * @generated
    */
-  int CHANNEL_TYPE_LINHA = 29;
+  int CHANNEL_TYPE_LINHA = 27;
 
   /**
    * The feature id for the '<em><b>ANY OTHER</b></em>' attribute.
@@ -1157,7 +1074,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getBlock()
    * @generated
    */
-  int BLOCK = 30;
+  int BLOCK = 28;
 
   /**
    * The feature id for the '<em><b>Statement List</b></em>' containment reference.
@@ -1185,7 +1102,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getStatementList()
    * @generated
    */
-  int STATEMENT_LIST = 31;
+  int STATEMENT_LIST = 29;
 
   /**
    * The feature id for the '<em><b>Statements</b></em>' containment reference list.
@@ -1213,7 +1130,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getDeclaration()
    * @generated
    */
-  int DECLARATION = 32;
+  int DECLARATION = 30;
 
   /**
    * The feature id for the '<em><b>Const Decl</b></em>' containment reference.
@@ -1259,7 +1176,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getTopLevelDecl()
    * @generated
    */
-  int TOP_LEVEL_DECL = 33;
+  int TOP_LEVEL_DECL = 31;
 
   /**
    * The feature id for the '<em><b>Declaration</b></em>' containment reference.
@@ -1305,7 +1222,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getConstDecl()
    * @generated
    */
-  int CONST_DECL = 34;
+  int CONST_DECL = 32;
 
   /**
    * The feature id for the '<em><b>Const</b></em>' attribute.
@@ -1351,7 +1268,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getConstSpec()
    * @generated
    */
-  int CONST_SPEC = 35;
+  int CONST_SPEC = 33;
 
   /**
    * The feature id for the '<em><b>Identifier List</b></em>' containment reference.
@@ -1397,7 +1314,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getIdentifierList()
    * @generated
    */
-  int IDENTIFIER_LIST = 36;
+  int IDENTIFIER_LIST = 34;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1434,7 +1351,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getExpressionList()
    * @generated
    */
-  int EXPRESSION_LIST = 37;
+  int EXPRESSION_LIST = 35;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -1471,7 +1388,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getTypeDecl()
    * @generated
    */
-  int TYPE_DECL = 38;
+  int TYPE_DECL = 36;
 
   /**
    * The feature id for the '<em><b>Typekeyword</b></em>' attribute.
@@ -1517,7 +1434,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getTypeSpec()
    * @generated
    */
-  int TYPE_SPEC = 39;
+  int TYPE_SPEC = 37;
 
   /**
    * The feature id for the '<em><b>Alias Decl</b></em>' containment reference.
@@ -1554,7 +1471,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getAliasDecl()
    * @generated
    */
-  int ALIAS_DECL = 40;
+  int ALIAS_DECL = 38;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1591,7 +1508,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getTypeDef()
    * @generated
    */
-  int TYPE_DEF = 41;
+  int TYPE_DEF = 39;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1628,7 +1545,16 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getVarDecl()
    * @generated
    */
-  int VAR_DECL = 42;
+  int VAR_DECL = 40;
+
+  /**
+   * The feature id for the '<em><b>Var</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VAR_DECL__VAR = 0;
 
   /**
    * The feature id for the '<em><b>Var Spec</b></em>' containment reference.
@@ -1637,7 +1563,7 @@ public interface MyDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VAR_DECL__VAR_SPEC = 0;
+  int VAR_DECL__VAR_SPEC = 1;
 
   /**
    * The feature id for the '<em><b>Var Spec1</b></em>' containment reference list.
@@ -1646,7 +1572,7 @@ public interface MyDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VAR_DECL__VAR_SPEC1 = 1;
+  int VAR_DECL__VAR_SPEC1 = 2;
 
   /**
    * The number of structural features of the '<em>Var Decl</em>' class.
@@ -1655,7 +1581,7 @@ public interface MyDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int VAR_DECL_FEATURE_COUNT = 2;
+  int VAR_DECL_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link org.xtext.example.mydsl.myDsl.impl.VarSpecImpl <em>Var Spec</em>}' class.
@@ -1665,7 +1591,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getVarSpec()
    * @generated
    */
-  int VAR_SPEC = 43;
+  int VAR_SPEC = 41;
 
   /**
    * The feature id for the '<em><b>Identifier List</b></em>' containment reference.
@@ -1711,7 +1637,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getShortVarDecl()
    * @generated
    */
-  int SHORT_VAR_DECL = 44;
+  int SHORT_VAR_DECL = 42;
 
   /**
    * The feature id for the '<em><b>Identifier List</b></em>' containment reference.
@@ -1748,7 +1674,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getFunctionDecl()
    * @generated
    */
-  int FUNCTION_DECL = 45;
+  int FUNCTION_DECL = 43;
 
   /**
    * The feature id for the '<em><b>Function Name</b></em>' containment reference.
@@ -1794,7 +1720,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getFunctionName()
    * @generated
    */
-  int FUNCTION_NAME = 46;
+  int FUNCTION_NAME = 44;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1822,7 +1748,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getFunctionBody()
    * @generated
    */
-  int FUNCTION_BODY = 47;
+  int FUNCTION_BODY = 45;
 
   /**
    * The feature id for the '<em><b>Block</b></em>' containment reference.
@@ -1850,7 +1776,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getMethodDecl()
    * @generated
    */
-  int METHOD_DECL = 48;
+  int METHOD_DECL = 46;
 
   /**
    * The feature id for the '<em><b>Receiver</b></em>' containment reference.
@@ -1905,7 +1831,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getReceiver()
    * @generated
    */
-  int RECEIVER = 49;
+  int RECEIVER = 47;
 
   /**
    * The feature id for the '<em><b>Parameters</b></em>' containment reference.
@@ -1933,7 +1859,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getOperand()
    * @generated
    */
-  int OPERAND = 50;
+  int OPERAND = 48;
 
   /**
    * The feature id for the '<em><b>Literal</b></em>' containment reference.
@@ -1979,7 +1905,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getLiteral()
    * @generated
    */
-  int LITERAL = 51;
+  int LITERAL = 49;
 
   /**
    * The feature id for the '<em><b>Basic Lit</b></em>' containment reference.
@@ -2025,7 +1951,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getBasicLit()
    * @generated
    */
-  int BASIC_LIT = 52;
+  int BASIC_LIT = 50;
 
   /**
    * The feature id for the '<em><b>Int lit</b></em>' attribute.
@@ -2037,7 +1963,7 @@ public interface MyDslPackage extends EPackage
   int BASIC_LIT__INT_LIT = 0;
 
   /**
-   * The feature id for the '<em><b>Float lit</b></em>' containment reference.
+   * The feature id for the '<em><b>Float lit</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -2046,7 +1972,7 @@ public interface MyDslPackage extends EPackage
   int BASIC_LIT__FLOAT_LIT = 1;
 
   /**
-   * The feature id for the '<em><b>Imaginary lit</b></em>' containment reference.
+   * The feature id for the '<em><b>Imaginary lit</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -2089,7 +2015,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getOperandName()
    * @generated
    */
-  int OPERAND_NAME = 53;
+  int OPERAND_NAME = 51;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -2117,7 +2043,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getCompositeLit()
    * @generated
    */
-  int COMPOSITE_LIT = 54;
+  int COMPOSITE_LIT = 52;
 
   /**
    * The feature id for the '<em><b>Literal Type</b></em>' containment reference.
@@ -2154,7 +2080,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getLiteralType()
    * @generated
    */
-  int LITERAL_TYPE = 55;
+  int LITERAL_TYPE = 53;
 
   /**
    * The feature id for the '<em><b>Struct Type</b></em>' containment reference.
@@ -2209,7 +2135,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getLiteralTypeLinha()
    * @generated
    */
-  int LITERAL_TYPE_LINHA = 56;
+  int LITERAL_TYPE_LINHA = 54;
 
   /**
    * The feature id for the '<em><b>Array Length</b></em>' containment reference.
@@ -2246,7 +2172,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getLiteralValue()
    * @generated
    */
-  int LITERAL_VALUE = 57;
+  int LITERAL_VALUE = 55;
 
   /**
    * The feature id for the '<em><b>Element List</b></em>' containment reference.
@@ -2274,7 +2200,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getElementList()
    * @generated
    */
-  int ELEMENT_LIST = 58;
+  int ELEMENT_LIST = 56;
 
   /**
    * The feature id for the '<em><b>Keyed Element</b></em>' containment reference.
@@ -2311,7 +2237,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getKeyedElement()
    * @generated
    */
-  int KEYED_ELEMENT = 59;
+  int KEYED_ELEMENT = 57;
 
   /**
    * The feature id for the '<em><b>Key</b></em>' containment reference.
@@ -2348,7 +2274,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getKey()
    * @generated
    */
-  int KEY = 60;
+  int KEY = 58;
 
   /**
    * The feature id for the '<em><b>Field Name</b></em>' containment reference.
@@ -2394,7 +2320,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getFieldName()
    * @generated
    */
-  int FIELD_NAME = 61;
+  int FIELD_NAME = 59;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -2422,7 +2348,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getElement()
    * @generated
    */
-  int ELEMENT = 62;
+  int ELEMENT = 60;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -2459,7 +2385,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getFunctionLit()
    * @generated
    */
-  int FUNCTION_LIT = 63;
+  int FUNCTION_LIT = 61;
 
   /**
    * The feature id for the '<em><b>Func</b></em>' attribute.
@@ -2505,7 +2431,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getPrimaryExpr()
    * @generated
    */
-  int PRIMARY_EXPR = 64;
+  int PRIMARY_EXPR = 62;
 
   /**
    * The feature id for the '<em><b>Operand</b></em>' containment reference.
@@ -2560,7 +2486,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getPrimaryExprLinha()
    * @generated
    */
-  int PRIMARY_EXPR_LINHA = 65;
+  int PRIMARY_EXPR_LINHA = 63;
 
   /**
    * The feature id for the '<em><b>Selector</b></em>' containment reference.
@@ -2633,7 +2559,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getSelector()
    * @generated
    */
-  int SELECTOR = 66;
+  int SELECTOR = 64;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -2661,7 +2587,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getIndex()
    * @generated
    */
-  int INDEX = 67;
+  int INDEX = 65;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -2689,7 +2615,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getSlice()
    * @generated
    */
-  int SLICE = 68;
+  int SLICE = 66;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -2735,7 +2661,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getTypeAssertion()
    * @generated
    */
-  int TYPE_ASSERTION = 69;
+  int TYPE_ASSERTION = 67;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' containment reference.
@@ -2763,7 +2689,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getArguments()
    * @generated
    */
-  int ARGUMENTS = 70;
+  int ARGUMENTS = 68;
 
   /**
    * The feature id for the '<em><b>Expression List</b></em>' containment reference.
@@ -2800,7 +2726,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getMethodExpr()
    * @generated
    */
-  int METHOD_EXPR = 71;
+  int METHOD_EXPR = 69;
 
   /**
    * The feature id for the '<em><b>Receiver Type</b></em>' containment reference.
@@ -2837,7 +2763,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getReceiverType()
    * @generated
    */
-  int RECEIVER_TYPE = 72;
+  int RECEIVER_TYPE = 70;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' containment reference.
@@ -2865,7 +2791,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getExpression()
    * @generated
    */
-  int EXPRESSION = 73;
+  int EXPRESSION = 71;
 
   /**
    * The feature id for the '<em><b>Unary Expr</b></em>' containment reference.
@@ -2902,7 +2828,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getExpression_Linha()
    * @generated
    */
-  int EXPRESSION_LINHA = 74;
+  int EXPRESSION_LINHA = 72;
 
   /**
    * The feature id for the '<em><b>BINARY OP</b></em>' containment reference.
@@ -2948,7 +2874,16 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getUnaryExpr()
    * @generated
    */
-  int UNARY_EXPR = 75;
+  int UNARY_EXPR = 73;
+
+  /**
+   * The feature id for the '<em><b>Unary op</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNARY_EXPR__UNARY_OP = 0;
 
   /**
    * The feature id for the '<em><b>Primary Expr</b></em>' containment reference.
@@ -2957,16 +2892,7 @@ public interface MyDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int UNARY_EXPR__PRIMARY_EXPR = 0;
-
-  /**
-   * The feature id for the '<em><b>Unary Expr</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int UNARY_EXPR__UNARY_EXPR = 1;
+  int UNARY_EXPR__PRIMARY_EXPR = 1;
 
   /**
    * The number of structural features of the '<em>Unary Expr</em>' class.
@@ -2985,7 +2911,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getBINARY_OP()
    * @generated
    */
-  int BINARY_OP = 76;
+  int BINARY_OP = 74;
 
   /**
    * The feature id for the '<em><b>Or</b></em>' attribute.
@@ -3049,7 +2975,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getConversion()
    * @generated
    */
-  int CONVERSION = 77;
+  int CONVERSION = 75;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' containment reference.
@@ -3086,7 +3012,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getStatement()
    * @generated
    */
-  int STATEMENT = 78;
+  int STATEMENT = 76;
 
   /**
    * The feature id for the '<em><b>Declaration</b></em>' containment reference.
@@ -3240,7 +3166,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getSimpleStmt()
    * @generated
    */
-  int SIMPLE_STMT = 79;
+  int SIMPLE_STMT = 77;
 
   /**
    * The feature id for the '<em><b>Empty Stmt</b></em>' containment reference.
@@ -3295,7 +3221,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getSimpleStmtLinha()
    * @generated
    */
-  int SIMPLE_STMT_LINHA = 80;
+  int SIMPLE_STMT_LINHA = 78;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -3359,7 +3285,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getEmptyStmt()
    * @generated
    */
-  int EMPTY_STMT = 81;
+  int EMPTY_STMT = 79;
 
   /**
    * The feature id for the '<em><b>ANY OTHER</b></em>' attribute.
@@ -3387,7 +3313,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getLabeledStmt()
    * @generated
    */
-  int LABELED_STMT = 82;
+  int LABELED_STMT = 80;
 
   /**
    * The feature id for the '<em><b>Label</b></em>' containment reference.
@@ -3424,7 +3350,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getLabel()
    * @generated
    */
-  int LABEL = 83;
+  int LABEL = 81;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -3452,7 +3378,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getassign_op()
    * @generated
    */
-  int ASSIGN_OP = 84;
+  int ASSIGN_OP = 82;
 
   /**
    * The feature id for the '<em><b>ADD OP</b></em>' attribute.
@@ -3489,7 +3415,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getIfStmt()
    * @generated
    */
-  int IF_STMT = 85;
+  int IF_STMT = 83;
 
   /**
    * The feature id for the '<em><b>If</b></em>' attribute.
@@ -3589,7 +3515,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getIfStmtLinha()
    * @generated
    */
-  int IF_STMT_LINHA = 86;
+  int IF_STMT_LINHA = 84;
 
   /**
    * The feature id for the '<em><b>Simple Stmt Linha</b></em>' containment reference.
@@ -3662,34 +3588,25 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getSwitchStmt()
    * @generated
    */
-  int SWITCH_STMT = 87;
+  int SWITCH_STMT = 85;
 
   /**
-   * The feature id for the '<em><b>Switch</b></em>' attribute.
+   * The feature id for the '<em><b>Expr Switch Stmt</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SWITCH_STMT__SWITCH = 0;
+  int SWITCH_STMT__EXPR_SWITCH_STMT = 0;
 
   /**
-   * The feature id for the '<em><b>Simple Stmt</b></em>' containment reference.
+   * The feature id for the '<em><b>Type Switch Stmt</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SWITCH_STMT__SIMPLE_STMT = 1;
-
-  /**
-   * The feature id for the '<em><b>Switch Stmt Linha</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SWITCH_STMT__SWITCH_STMT_LINHA = 2;
+  int SWITCH_STMT__TYPE_SWITCH_STMT = 1;
 
   /**
    * The number of structural features of the '<em>Switch Stmt</em>' class.
@@ -3698,53 +3615,35 @@ public interface MyDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SWITCH_STMT_FEATURE_COUNT = 3;
+  int SWITCH_STMT_FEATURE_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link org.xtext.example.mydsl.myDsl.impl.SwitchStmtLinhaImpl <em>Switch Stmt Linha</em>}' class.
+   * The meta object id for the '{@link org.xtext.example.mydsl.myDsl.impl.ExprSwitchStmtImpl <em>Expr Switch Stmt</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.xtext.example.mydsl.myDsl.impl.SwitchStmtLinhaImpl
-   * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getSwitchStmtLinha()
+   * @see org.xtext.example.mydsl.myDsl.impl.ExprSwitchStmtImpl
+   * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getExprSwitchStmt()
    * @generated
    */
-  int SWITCH_STMT_LINHA = 88;
+  int EXPR_SWITCH_STMT = 86;
 
   /**
-   * The feature id for the '<em><b>Primary Expr</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SWITCH_STMT_LINHA__PRIMARY_EXPR = 0;
-
-  /**
-   * The feature id for the '<em><b>Switch Stmt Linha Linha</b></em>' containment reference.
+   * The feature id for the '<em><b>Switch</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SWITCH_STMT_LINHA__SWITCH_STMT_LINHA_LINHA = 1;
+  int EXPR_SWITCH_STMT__SWITCH = 0;
 
   /**
-   * The feature id for the '<em><b>Unary op</b></em>' attribute.
+   * The feature id for the '<em><b>Simple Stmt</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SWITCH_STMT_LINHA__UNARY_OP = 2;
-
-  /**
-   * The feature id for the '<em><b>Unary Expr</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SWITCH_STMT_LINHA__UNARY_EXPR = 3;
+  int EXPR_SWITCH_STMT__SIMPLE_STMT = 1;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -3753,7 +3652,7 @@ public interface MyDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SWITCH_STMT_LINHA__EXPRESSION = 4;
+  int EXPR_SWITCH_STMT__EXPRESSION = 2;
 
   /**
    * The feature id for the '<em><b>Expr Case Clause</b></em>' containment reference list.
@@ -3762,89 +3661,16 @@ public interface MyDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int SWITCH_STMT_LINHA__EXPR_CASE_CLAUSE = 5;
+  int EXPR_SWITCH_STMT__EXPR_CASE_CLAUSE = 3;
 
   /**
-   * The feature id for the '<em><b>Id</b></em>' attribute.
+   * The number of structural features of the '<em>Expr Switch Stmt</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int SWITCH_STMT_LINHA__ID = 6;
-
-  /**
-   * The feature id for the '<em><b>Typekeyword</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SWITCH_STMT_LINHA__TYPEKEYWORD = 7;
-
-  /**
-   * The feature id for the '<em><b>Type Case Clause</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SWITCH_STMT_LINHA__TYPE_CASE_CLAUSE = 8;
-
-  /**
-   * The number of structural features of the '<em>Switch Stmt Linha</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SWITCH_STMT_LINHA_FEATURE_COUNT = 9;
-
-  /**
-   * The meta object id for the '{@link org.xtext.example.mydsl.myDsl.impl.SwitchStmtLinhaLinhaImpl <em>Switch Stmt Linha Linha</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.xtext.example.mydsl.myDsl.impl.SwitchStmtLinhaLinhaImpl
-   * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getSwitchStmtLinhaLinha()
-   * @generated
-   */
-  int SWITCH_STMT_LINHA_LINHA = 89;
-
-  /**
-   * The feature id for the '<em><b>Expr Case Clause</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SWITCH_STMT_LINHA_LINHA__EXPR_CASE_CLAUSE = 0;
-
-  /**
-   * The feature id for the '<em><b>Typekeyword</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SWITCH_STMT_LINHA_LINHA__TYPEKEYWORD = 1;
-
-  /**
-   * The feature id for the '<em><b>Type Case Clause</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SWITCH_STMT_LINHA_LINHA__TYPE_CASE_CLAUSE = 2;
-
-  /**
-   * The number of structural features of the '<em>Switch Stmt Linha Linha</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SWITCH_STMT_LINHA_LINHA_FEATURE_COUNT = 3;
+  int EXPR_SWITCH_STMT_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link org.xtext.example.mydsl.myDsl.impl.ExprCaseClauseImpl <em>Expr Case Clause</em>}' class.
@@ -3854,7 +3680,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getExprCaseClause()
    * @generated
    */
-  int EXPR_CASE_CLAUSE = 90;
+  int EXPR_CASE_CLAUSE = 87;
 
   /**
    * The feature id for the '<em><b>Expr Switch Case</b></em>' containment reference.
@@ -3891,7 +3717,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getExprSwitchCase()
    * @generated
    */
-  int EXPR_SWITCH_CASE = 91;
+  int EXPR_SWITCH_CASE = 88;
 
   /**
    * The feature id for the '<em><b>Case</b></em>' attribute.
@@ -3930,6 +3756,98 @@ public interface MyDslPackage extends EPackage
   int EXPR_SWITCH_CASE_FEATURE_COUNT = 3;
 
   /**
+   * The meta object id for the '{@link org.xtext.example.mydsl.myDsl.impl.TypeSwitchStmtImpl <em>Type Switch Stmt</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.xtext.example.mydsl.myDsl.impl.TypeSwitchStmtImpl
+   * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getTypeSwitchStmt()
+   * @generated
+   */
+  int TYPE_SWITCH_STMT = 89;
+
+  /**
+   * The feature id for the '<em><b>Simple Stmt</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TYPE_SWITCH_STMT__SIMPLE_STMT = 0;
+
+  /**
+   * The feature id for the '<em><b>Type Switch Guard</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TYPE_SWITCH_STMT__TYPE_SWITCH_GUARD = 1;
+
+  /**
+   * The feature id for the '<em><b>Type Case Clause</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TYPE_SWITCH_STMT__TYPE_CASE_CLAUSE = 2;
+
+  /**
+   * The number of structural features of the '<em>Type Switch Stmt</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TYPE_SWITCH_STMT_FEATURE_COUNT = 3;
+
+  /**
+   * The meta object id for the '{@link org.xtext.example.mydsl.myDsl.impl.TypeSwitchGuardImpl <em>Type Switch Guard</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.xtext.example.mydsl.myDsl.impl.TypeSwitchGuardImpl
+   * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getTypeSwitchGuard()
+   * @generated
+   */
+  int TYPE_SWITCH_GUARD = 90;
+
+  /**
+   * The feature id for the '<em><b>Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TYPE_SWITCH_GUARD__ID = 0;
+
+  /**
+   * The feature id for the '<em><b>Primary Expr</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TYPE_SWITCH_GUARD__PRIMARY_EXPR = 1;
+
+  /**
+   * The feature id for the '<em><b>Type</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TYPE_SWITCH_GUARD__TYPE = 2;
+
+  /**
+   * The number of structural features of the '<em>Type Switch Guard</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TYPE_SWITCH_GUARD_FEATURE_COUNT = 3;
+
+  /**
    * The meta object id for the '{@link org.xtext.example.mydsl.myDsl.impl.TypeCaseClauseImpl <em>Type Case Clause</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -3937,7 +3855,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getTypeCaseClause()
    * @generated
    */
-  int TYPE_CASE_CLAUSE = 92;
+  int TYPE_CASE_CLAUSE = 91;
 
   /**
    * The feature id for the '<em><b>Type Switch Case</b></em>' containment reference.
@@ -3974,7 +3892,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getTypeSwitchCase()
    * @generated
    */
-  int TYPE_SWITCH_CASE = 93;
+  int TYPE_SWITCH_CASE = 92;
 
   /**
    * The feature id for the '<em><b>Case</b></em>' attribute.
@@ -4020,7 +3938,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getTypeList()
    * @generated
    */
-  int TYPE_LIST = 94;
+  int TYPE_LIST = 93;
 
   /**
    * The feature id for the '<em><b>Type</b></em>' containment reference.
@@ -4057,7 +3975,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getForStmt()
    * @generated
    */
-  int FOR_STMT = 95;
+  int FOR_STMT = 94;
 
   /**
    * The feature id for the '<em><b>For</b></em>' attribute.
@@ -4166,7 +4084,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getForStmtLinha()
    * @generated
    */
-  int FOR_STMT_LINHA = 96;
+  int FOR_STMT_LINHA = 95;
 
   /**
    * The feature id for the '<em><b>Vazio</b></em>' attribute.
@@ -4239,7 +4157,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getForStmtLinhaLinha()
    * @generated
    */
-  int FOR_STMT_LINHA_LINHA = 97;
+  int FOR_STMT_LINHA_LINHA = 96;
 
   /**
    * The feature id for the '<em><b>Assign op</b></em>' containment reference.
@@ -4312,7 +4230,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getCondition()
    * @generated
    */
-  int CONDITION = 98;
+  int CONDITION = 97;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -4340,7 +4258,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getPostStmt()
    * @generated
    */
-  int POST_STMT = 99;
+  int POST_STMT = 98;
 
   /**
    * The feature id for the '<em><b>Simple Stmt</b></em>' containment reference.
@@ -4368,7 +4286,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getGoStmt()
    * @generated
    */
-  int GO_STMT = 100;
+  int GO_STMT = 99;
 
   /**
    * The feature id for the '<em><b>Go</b></em>' attribute.
@@ -4405,7 +4323,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getSelectStmt()
    * @generated
    */
-  int SELECT_STMT = 101;
+  int SELECT_STMT = 100;
 
   /**
    * The feature id for the '<em><b>Select</b></em>' attribute.
@@ -4442,7 +4360,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getCommClause()
    * @generated
    */
-  int COMM_CLAUSE = 102;
+  int COMM_CLAUSE = 101;
 
   /**
    * The feature id for the '<em><b>Comm Case</b></em>' containment reference.
@@ -4479,7 +4397,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getCommCase()
    * @generated
    */
-  int COMM_CASE = 103;
+  int COMM_CASE = 102;
 
   /**
    * The feature id for the '<em><b>Case</b></em>' attribute.
@@ -4534,7 +4452,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getCommCaseLinha()
    * @generated
    */
-  int COMM_CASE_LINHA = 104;
+  int COMM_CASE_LINHA = 103;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -4589,7 +4507,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getRecvExpr()
    * @generated
    */
-  int RECV_EXPR = 105;
+  int RECV_EXPR = 104;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -4617,7 +4535,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getReturnStmt()
    * @generated
    */
-  int RETURN_STMT = 106;
+  int RETURN_STMT = 105;
 
   /**
    * The feature id for the '<em><b>Return</b></em>' attribute.
@@ -4654,7 +4572,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getBreakStmt()
    * @generated
    */
-  int BREAK_STMT = 107;
+  int BREAK_STMT = 106;
 
   /**
    * The feature id for the '<em><b>Break</b></em>' attribute.
@@ -4691,7 +4609,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getContinueStmt()
    * @generated
    */
-  int CONTINUE_STMT = 108;
+  int CONTINUE_STMT = 107;
 
   /**
    * The feature id for the '<em><b>Continue</b></em>' attribute.
@@ -4728,7 +4646,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getGotoStmt()
    * @generated
    */
-  int GOTO_STMT = 109;
+  int GOTO_STMT = 108;
 
   /**
    * The feature id for the '<em><b>Goto</b></em>' attribute.
@@ -4765,7 +4683,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getFallthroughStmt()
    * @generated
    */
-  int FALLTHROUGH_STMT = 110;
+  int FALLTHROUGH_STMT = 109;
 
   /**
    * The feature id for the '<em><b>Fallthrough</b></em>' attribute.
@@ -4793,7 +4711,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getDeferStmt()
    * @generated
    */
-  int DEFER_STMT = 111;
+  int DEFER_STMT = 110;
 
   /**
    * The feature id for the '<em><b>Defer</b></em>' attribute.
@@ -4830,7 +4748,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getSourceFile()
    * @generated
    */
-  int SOURCE_FILE = 112;
+  int SOURCE_FILE = 111;
 
   /**
    * The feature id for the '<em><b>Package Clause</b></em>' containment reference.
@@ -4876,7 +4794,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getPackageClause()
    * @generated
    */
-  int PACKAGE_CLAUSE = 113;
+  int PACKAGE_CLAUSE = 112;
 
   /**
    * The feature id for the '<em><b>Package</b></em>' attribute.
@@ -4913,7 +4831,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getPackageName()
    * @generated
    */
-  int PACKAGE_NAME = 114;
+  int PACKAGE_NAME = 113;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -4941,7 +4859,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getImportDecl()
    * @generated
    */
-  int IMPORT_DECL = 115;
+  int IMPORT_DECL = 114;
 
   /**
    * The feature id for the '<em><b>Importt</b></em>' attribute.
@@ -4987,7 +4905,7 @@ public interface MyDslPackage extends EPackage
    * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getImportSpec()
    * @generated
    */
-  int IMPORT_SPEC = 116;
+  int IMPORT_SPEC = 115;
 
   /**
    * The feature id for the '<em><b>Package Name</b></em>' containment reference.
@@ -5037,81 +4955,6 @@ public interface MyDslPackage extends EPackage
    * @generated
    */
   EReference getModel_Greetings();
-
-  /**
-   * Returns the meta object for class '{@link org.xtext.example.mydsl.myDsl.FLOAT_LIT <em>FLOAT LIT</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>FLOAT LIT</em>'.
-   * @see org.xtext.example.mydsl.myDsl.FLOAT_LIT
-   * @generated
-   */
-  EClass getFLOAT_LIT();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.FLOAT_LIT#getDECIMALS <em>DECIMALS</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>DECIMALS</em>'.
-   * @see org.xtext.example.mydsl.myDsl.FLOAT_LIT#getDECIMALS()
-   * @see #getFLOAT_LIT()
-   * @generated
-   */
-  EAttribute getFLOAT_LIT_DECIMALS();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.FLOAT_LIT#getDECIMALS1 <em>DECIMALS1</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>DECIMALS1</em>'.
-   * @see org.xtext.example.mydsl.myDsl.FLOAT_LIT#getDECIMALS1()
-   * @see #getFLOAT_LIT()
-   * @generated
-   */
-  EAttribute getFLOAT_LIT_DECIMALS1();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.FLOAT_LIT#getEXPONENT <em>EXPONENT</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>EXPONENT</em>'.
-   * @see org.xtext.example.mydsl.myDsl.FLOAT_LIT#getEXPONENT()
-   * @see #getFLOAT_LIT()
-   * @generated
-   */
-  EAttribute getFLOAT_LIT_EXPONENT();
-
-  /**
-   * Returns the meta object for class '{@link org.xtext.example.mydsl.myDsl.IMAGINARY_LIT <em>IMAGINARY LIT</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>IMAGINARY LIT</em>'.
-   * @see org.xtext.example.mydsl.myDsl.IMAGINARY_LIT
-   * @generated
-   */
-  EClass getIMAGINARY_LIT();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.IMAGINARY_LIT#getDECIMALS <em>DECIMALS</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>DECIMALS</em>'.
-   * @see org.xtext.example.mydsl.myDsl.IMAGINARY_LIT#getDECIMALS()
-   * @see #getIMAGINARY_LIT()
-   * @generated
-   */
-  EAttribute getIMAGINARY_LIT_DECIMALS();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.xtext.example.mydsl.myDsl.IMAGINARY_LIT#getFLOAT_LIT <em>FLOAT LIT</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>FLOAT LIT</em>'.
-   * @see org.xtext.example.mydsl.myDsl.IMAGINARY_LIT#getFLOAT_LIT()
-   * @see #getIMAGINARY_LIT()
-   * @generated
-   */
-  EReference getIMAGINARY_LIT_FLOAT_LIT();
 
   /**
    * Returns the meta object for class '{@link org.xtext.example.mydsl.myDsl.Type <em>Type</em>}'.
@@ -6383,6 +6226,17 @@ public interface MyDslPackage extends EPackage
   EClass getVarDecl();
 
   /**
+   * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.VarDecl#getVar <em>Var</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Var</em>'.
+   * @see org.xtext.example.mydsl.myDsl.VarDecl#getVar()
+   * @see #getVarDecl()
+   * @generated
+   */
+  EAttribute getVarDecl_Var();
+
+  /**
    * Returns the meta object for the containment reference '{@link org.xtext.example.mydsl.myDsl.VarDecl#getVarSpec <em>Var Spec</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -6747,26 +6601,26 @@ public interface MyDslPackage extends EPackage
   EAttribute getBasicLit_Int_lit();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.xtext.example.mydsl.myDsl.BasicLit#getFloat_lit <em>Float lit</em>}'.
+   * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.BasicLit#getFloat_lit <em>Float lit</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Float lit</em>'.
+   * @return the meta object for the attribute '<em>Float lit</em>'.
    * @see org.xtext.example.mydsl.myDsl.BasicLit#getFloat_lit()
    * @see #getBasicLit()
    * @generated
    */
-  EReference getBasicLit_Float_lit();
+  EAttribute getBasicLit_Float_lit();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.xtext.example.mydsl.myDsl.BasicLit#getImaginary_lit <em>Imaginary lit</em>}'.
+   * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.BasicLit#getImaginary_lit <em>Imaginary lit</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Imaginary lit</em>'.
+   * @return the meta object for the attribute '<em>Imaginary lit</em>'.
    * @see org.xtext.example.mydsl.myDsl.BasicLit#getImaginary_lit()
    * @see #getBasicLit()
    * @generated
    */
-  EReference getBasicLit_Imaginary_lit();
+  EAttribute getBasicLit_Imaginary_lit();
 
   /**
    * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.BasicLit#getRune_lit <em>Rune lit</em>}'.
@@ -7560,6 +7414,17 @@ public interface MyDslPackage extends EPackage
   EClass getUnaryExpr();
 
   /**
+   * Returns the meta object for the attribute list '{@link org.xtext.example.mydsl.myDsl.UnaryExpr#getUnary_op <em>Unary op</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Unary op</em>'.
+   * @see org.xtext.example.mydsl.myDsl.UnaryExpr#getUnary_op()
+   * @see #getUnaryExpr()
+   * @generated
+   */
+  EAttribute getUnaryExpr_Unary_op();
+
+  /**
    * Returns the meta object for the containment reference '{@link org.xtext.example.mydsl.myDsl.UnaryExpr#getPrimaryExpr <em>Primary Expr</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -7569,17 +7434,6 @@ public interface MyDslPackage extends EPackage
    * @generated
    */
   EReference getUnaryExpr_PrimaryExpr();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.xtext.example.mydsl.myDsl.UnaryExpr#getUnaryExpr <em>Unary Expr</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Unary Expr</em>'.
-   * @see org.xtext.example.mydsl.myDsl.UnaryExpr#getUnaryExpr()
-   * @see #getUnaryExpr()
-   * @generated
-   */
-  EReference getUnaryExpr_UnaryExpr();
 
   /**
    * Returns the meta object for class '{@link org.xtext.example.mydsl.myDsl.BINARY_OP <em>BINARY OP</em>}'.
@@ -8274,189 +8128,80 @@ public interface MyDslPackage extends EPackage
   EClass getSwitchStmt();
 
   /**
-   * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.SwitchStmt#getSwitch <em>Switch</em>}'.
+   * Returns the meta object for the containment reference '{@link org.xtext.example.mydsl.myDsl.SwitchStmt#getExprSwitchStmt <em>Expr Switch Stmt</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Expr Switch Stmt</em>'.
+   * @see org.xtext.example.mydsl.myDsl.SwitchStmt#getExprSwitchStmt()
+   * @see #getSwitchStmt()
+   * @generated
+   */
+  EReference getSwitchStmt_ExprSwitchStmt();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.xtext.example.mydsl.myDsl.SwitchStmt#getTypeSwitchStmt <em>Type Switch Stmt</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Type Switch Stmt</em>'.
+   * @see org.xtext.example.mydsl.myDsl.SwitchStmt#getTypeSwitchStmt()
+   * @see #getSwitchStmt()
+   * @generated
+   */
+  EReference getSwitchStmt_TypeSwitchStmt();
+
+  /**
+   * Returns the meta object for class '{@link org.xtext.example.mydsl.myDsl.ExprSwitchStmt <em>Expr Switch Stmt</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Expr Switch Stmt</em>'.
+   * @see org.xtext.example.mydsl.myDsl.ExprSwitchStmt
+   * @generated
+   */
+  EClass getExprSwitchStmt();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.ExprSwitchStmt#getSwitch <em>Switch</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Switch</em>'.
-   * @see org.xtext.example.mydsl.myDsl.SwitchStmt#getSwitch()
-   * @see #getSwitchStmt()
+   * @see org.xtext.example.mydsl.myDsl.ExprSwitchStmt#getSwitch()
+   * @see #getExprSwitchStmt()
    * @generated
    */
-  EAttribute getSwitchStmt_Switch();
+  EAttribute getExprSwitchStmt_Switch();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.xtext.example.mydsl.myDsl.SwitchStmt#getSimpleStmt <em>Simple Stmt</em>}'.
+   * Returns the meta object for the containment reference '{@link org.xtext.example.mydsl.myDsl.ExprSwitchStmt#getSimpleStmt <em>Simple Stmt</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Simple Stmt</em>'.
-   * @see org.xtext.example.mydsl.myDsl.SwitchStmt#getSimpleStmt()
-   * @see #getSwitchStmt()
+   * @see org.xtext.example.mydsl.myDsl.ExprSwitchStmt#getSimpleStmt()
+   * @see #getExprSwitchStmt()
    * @generated
    */
-  EReference getSwitchStmt_SimpleStmt();
+  EReference getExprSwitchStmt_SimpleStmt();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.xtext.example.mydsl.myDsl.SwitchStmt#getSwitchStmtLinha <em>Switch Stmt Linha</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Switch Stmt Linha</em>'.
-   * @see org.xtext.example.mydsl.myDsl.SwitchStmt#getSwitchStmtLinha()
-   * @see #getSwitchStmt()
-   * @generated
-   */
-  EReference getSwitchStmt_SwitchStmtLinha();
-
-  /**
-   * Returns the meta object for class '{@link org.xtext.example.mydsl.myDsl.SwitchStmtLinha <em>Switch Stmt Linha</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Switch Stmt Linha</em>'.
-   * @see org.xtext.example.mydsl.myDsl.SwitchStmtLinha
-   * @generated
-   */
-  EClass getSwitchStmtLinha();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.xtext.example.mydsl.myDsl.SwitchStmtLinha#getPrimaryExpr <em>Primary Expr</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Primary Expr</em>'.
-   * @see org.xtext.example.mydsl.myDsl.SwitchStmtLinha#getPrimaryExpr()
-   * @see #getSwitchStmtLinha()
-   * @generated
-   */
-  EReference getSwitchStmtLinha_PrimaryExpr();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.xtext.example.mydsl.myDsl.SwitchStmtLinha#getSwitchStmtLinhaLinha <em>Switch Stmt Linha Linha</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Switch Stmt Linha Linha</em>'.
-   * @see org.xtext.example.mydsl.myDsl.SwitchStmtLinha#getSwitchStmtLinhaLinha()
-   * @see #getSwitchStmtLinha()
-   * @generated
-   */
-  EReference getSwitchStmtLinha_SwitchStmtLinhaLinha();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.SwitchStmtLinha#getUnary_op <em>Unary op</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Unary op</em>'.
-   * @see org.xtext.example.mydsl.myDsl.SwitchStmtLinha#getUnary_op()
-   * @see #getSwitchStmtLinha()
-   * @generated
-   */
-  EAttribute getSwitchStmtLinha_Unary_op();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.xtext.example.mydsl.myDsl.SwitchStmtLinha#getUnaryExpr <em>Unary Expr</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Unary Expr</em>'.
-   * @see org.xtext.example.mydsl.myDsl.SwitchStmtLinha#getUnaryExpr()
-   * @see #getSwitchStmtLinha()
-   * @generated
-   */
-  EReference getSwitchStmtLinha_UnaryExpr();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.xtext.example.mydsl.myDsl.SwitchStmtLinha#getExpression <em>Expression</em>}'.
+   * Returns the meta object for the containment reference '{@link org.xtext.example.mydsl.myDsl.ExprSwitchStmt#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference '<em>Expression</em>'.
-   * @see org.xtext.example.mydsl.myDsl.SwitchStmtLinha#getExpression()
-   * @see #getSwitchStmtLinha()
+   * @see org.xtext.example.mydsl.myDsl.ExprSwitchStmt#getExpression()
+   * @see #getExprSwitchStmt()
    * @generated
    */
-  EReference getSwitchStmtLinha_Expression();
+  EReference getExprSwitchStmt_Expression();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.xtext.example.mydsl.myDsl.SwitchStmtLinha#getExprCaseClause <em>Expr Case Clause</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.xtext.example.mydsl.myDsl.ExprSwitchStmt#getExprCaseClause <em>Expr Case Clause</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Expr Case Clause</em>'.
-   * @see org.xtext.example.mydsl.myDsl.SwitchStmtLinha#getExprCaseClause()
-   * @see #getSwitchStmtLinha()
+   * @see org.xtext.example.mydsl.myDsl.ExprSwitchStmt#getExprCaseClause()
+   * @see #getExprSwitchStmt()
    * @generated
    */
-  EReference getSwitchStmtLinha_ExprCaseClause();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.SwitchStmtLinha#getId <em>Id</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Id</em>'.
-   * @see org.xtext.example.mydsl.myDsl.SwitchStmtLinha#getId()
-   * @see #getSwitchStmtLinha()
-   * @generated
-   */
-  EAttribute getSwitchStmtLinha_Id();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.SwitchStmtLinha#getTypekeyword <em>Typekeyword</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Typekeyword</em>'.
-   * @see org.xtext.example.mydsl.myDsl.SwitchStmtLinha#getTypekeyword()
-   * @see #getSwitchStmtLinha()
-   * @generated
-   */
-  EAttribute getSwitchStmtLinha_Typekeyword();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link org.xtext.example.mydsl.myDsl.SwitchStmtLinha#getTypeCaseClause <em>Type Case Clause</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Type Case Clause</em>'.
-   * @see org.xtext.example.mydsl.myDsl.SwitchStmtLinha#getTypeCaseClause()
-   * @see #getSwitchStmtLinha()
-   * @generated
-   */
-  EReference getSwitchStmtLinha_TypeCaseClause();
-
-  /**
-   * Returns the meta object for class '{@link org.xtext.example.mydsl.myDsl.SwitchStmtLinhaLinha <em>Switch Stmt Linha Linha</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Switch Stmt Linha Linha</em>'.
-   * @see org.xtext.example.mydsl.myDsl.SwitchStmtLinhaLinha
-   * @generated
-   */
-  EClass getSwitchStmtLinhaLinha();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link org.xtext.example.mydsl.myDsl.SwitchStmtLinhaLinha#getExprCaseClause <em>Expr Case Clause</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Expr Case Clause</em>'.
-   * @see org.xtext.example.mydsl.myDsl.SwitchStmtLinhaLinha#getExprCaseClause()
-   * @see #getSwitchStmtLinhaLinha()
-   * @generated
-   */
-  EReference getSwitchStmtLinhaLinha_ExprCaseClause();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.SwitchStmtLinhaLinha#getTypekeyword <em>Typekeyword</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Typekeyword</em>'.
-   * @see org.xtext.example.mydsl.myDsl.SwitchStmtLinhaLinha#getTypekeyword()
-   * @see #getSwitchStmtLinhaLinha()
-   * @generated
-   */
-  EAttribute getSwitchStmtLinhaLinha_Typekeyword();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link org.xtext.example.mydsl.myDsl.SwitchStmtLinhaLinha#getTypeCaseClause <em>Type Case Clause</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Type Case Clause</em>'.
-   * @see org.xtext.example.mydsl.myDsl.SwitchStmtLinhaLinha#getTypeCaseClause()
-   * @see #getSwitchStmtLinhaLinha()
-   * @generated
-   */
-  EReference getSwitchStmtLinhaLinha_TypeCaseClause();
+  EReference getExprSwitchStmt_ExprCaseClause();
 
   /**
    * Returns the meta object for class '{@link org.xtext.example.mydsl.myDsl.ExprCaseClause <em>Expr Case Clause</em>}'.
@@ -8532,6 +8277,92 @@ public interface MyDslPackage extends EPackage
    * @generated
    */
   EAttribute getExprSwitchCase_Default();
+
+  /**
+   * Returns the meta object for class '{@link org.xtext.example.mydsl.myDsl.TypeSwitchStmt <em>Type Switch Stmt</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Type Switch Stmt</em>'.
+   * @see org.xtext.example.mydsl.myDsl.TypeSwitchStmt
+   * @generated
+   */
+  EClass getTypeSwitchStmt();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.xtext.example.mydsl.myDsl.TypeSwitchStmt#getSimpleStmt <em>Simple Stmt</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Simple Stmt</em>'.
+   * @see org.xtext.example.mydsl.myDsl.TypeSwitchStmt#getSimpleStmt()
+   * @see #getTypeSwitchStmt()
+   * @generated
+   */
+  EReference getTypeSwitchStmt_SimpleStmt();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.xtext.example.mydsl.myDsl.TypeSwitchStmt#getTypeSwitchGuard <em>Type Switch Guard</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Type Switch Guard</em>'.
+   * @see org.xtext.example.mydsl.myDsl.TypeSwitchStmt#getTypeSwitchGuard()
+   * @see #getTypeSwitchStmt()
+   * @generated
+   */
+  EReference getTypeSwitchStmt_TypeSwitchGuard();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.xtext.example.mydsl.myDsl.TypeSwitchStmt#getTypeCaseClause <em>Type Case Clause</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Type Case Clause</em>'.
+   * @see org.xtext.example.mydsl.myDsl.TypeSwitchStmt#getTypeCaseClause()
+   * @see #getTypeSwitchStmt()
+   * @generated
+   */
+  EReference getTypeSwitchStmt_TypeCaseClause();
+
+  /**
+   * Returns the meta object for class '{@link org.xtext.example.mydsl.myDsl.TypeSwitchGuard <em>Type Switch Guard</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Type Switch Guard</em>'.
+   * @see org.xtext.example.mydsl.myDsl.TypeSwitchGuard
+   * @generated
+   */
+  EClass getTypeSwitchGuard();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.TypeSwitchGuard#getId <em>Id</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Id</em>'.
+   * @see org.xtext.example.mydsl.myDsl.TypeSwitchGuard#getId()
+   * @see #getTypeSwitchGuard()
+   * @generated
+   */
+  EAttribute getTypeSwitchGuard_Id();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.xtext.example.mydsl.myDsl.TypeSwitchGuard#getPrimaryExpr <em>Primary Expr</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Primary Expr</em>'.
+   * @see org.xtext.example.mydsl.myDsl.TypeSwitchGuard#getPrimaryExpr()
+   * @see #getTypeSwitchGuard()
+   * @generated
+   */
+  EReference getTypeSwitchGuard_PrimaryExpr();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.TypeSwitchGuard#getType <em>Type</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Type</em>'.
+   * @see org.xtext.example.mydsl.myDsl.TypeSwitchGuard#getType()
+   * @see #getTypeSwitchGuard()
+   * @generated
+   */
+  EAttribute getTypeSwitchGuard_Type();
 
   /**
    * Returns the meta object for class '{@link org.xtext.example.mydsl.myDsl.TypeCaseClause <em>Type Case Clause</em>}'.
@@ -9573,66 +9404,6 @@ public interface MyDslPackage extends EPackage
     EReference MODEL__GREETINGS = eINSTANCE.getModel_Greetings();
 
     /**
-     * The meta object literal for the '{@link org.xtext.example.mydsl.myDsl.impl.FLOAT_LITImpl <em>FLOAT LIT</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.xtext.example.mydsl.myDsl.impl.FLOAT_LITImpl
-     * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getFLOAT_LIT()
-     * @generated
-     */
-    EClass FLOAT_LIT = eINSTANCE.getFLOAT_LIT();
-
-    /**
-     * The meta object literal for the '<em><b>DECIMALS</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute FLOAT_LIT__DECIMALS = eINSTANCE.getFLOAT_LIT_DECIMALS();
-
-    /**
-     * The meta object literal for the '<em><b>DECIMALS1</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute FLOAT_LIT__DECIMALS1 = eINSTANCE.getFLOAT_LIT_DECIMALS1();
-
-    /**
-     * The meta object literal for the '<em><b>EXPONENT</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute FLOAT_LIT__EXPONENT = eINSTANCE.getFLOAT_LIT_EXPONENT();
-
-    /**
-     * The meta object literal for the '{@link org.xtext.example.mydsl.myDsl.impl.IMAGINARY_LITImpl <em>IMAGINARY LIT</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.xtext.example.mydsl.myDsl.impl.IMAGINARY_LITImpl
-     * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getIMAGINARY_LIT()
-     * @generated
-     */
-    EClass IMAGINARY_LIT = eINSTANCE.getIMAGINARY_LIT();
-
-    /**
-     * The meta object literal for the '<em><b>DECIMALS</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute IMAGINARY_LIT__DECIMALS = eINSTANCE.getIMAGINARY_LIT_DECIMALS();
-
-    /**
-     * The meta object literal for the '<em><b>FLOAT LIT</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference IMAGINARY_LIT__FLOAT_LIT = eINSTANCE.getIMAGINARY_LIT_FLOAT_LIT();
-
-    /**
      * The meta object literal for the '{@link org.xtext.example.mydsl.myDsl.impl.TypeImpl <em>Type</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -10665,6 +10436,14 @@ public interface MyDslPackage extends EPackage
     EClass VAR_DECL = eINSTANCE.getVarDecl();
 
     /**
+     * The meta object literal for the '<em><b>Var</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute VAR_DECL__VAR = eINSTANCE.getVarDecl_Var();
+
+    /**
      * The meta object literal for the '<em><b>Var Spec</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -10957,20 +10736,20 @@ public interface MyDslPackage extends EPackage
     EAttribute BASIC_LIT__INT_LIT = eINSTANCE.getBasicLit_Int_lit();
 
     /**
-     * The meta object literal for the '<em><b>Float lit</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Float lit</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference BASIC_LIT__FLOAT_LIT = eINSTANCE.getBasicLit_Float_lit();
+    EAttribute BASIC_LIT__FLOAT_LIT = eINSTANCE.getBasicLit_Float_lit();
 
     /**
-     * The meta object literal for the '<em><b>Imaginary lit</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Imaginary lit</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference BASIC_LIT__IMAGINARY_LIT = eINSTANCE.getBasicLit_Imaginary_lit();
+    EAttribute BASIC_LIT__IMAGINARY_LIT = eINSTANCE.getBasicLit_Imaginary_lit();
 
     /**
      * The meta object literal for the '<em><b>Rune lit</b></em>' attribute feature.
@@ -11611,20 +11390,20 @@ public interface MyDslPackage extends EPackage
     EClass UNARY_EXPR = eINSTANCE.getUnaryExpr();
 
     /**
+     * The meta object literal for the '<em><b>Unary op</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute UNARY_EXPR__UNARY_OP = eINSTANCE.getUnaryExpr_Unary_op();
+
+    /**
      * The meta object literal for the '<em><b>Primary Expr</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EReference UNARY_EXPR__PRIMARY_EXPR = eINSTANCE.getUnaryExpr_PrimaryExpr();
-
-    /**
-     * The meta object literal for the '<em><b>Unary Expr</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference UNARY_EXPR__UNARY_EXPR = eINSTANCE.getUnaryExpr_UnaryExpr();
 
     /**
      * The meta object literal for the '{@link org.xtext.example.mydsl.myDsl.impl.BINARY_OPImpl <em>BINARY OP</em>}' class.
@@ -12163,12 +11942,38 @@ public interface MyDslPackage extends EPackage
     EClass SWITCH_STMT = eINSTANCE.getSwitchStmt();
 
     /**
+     * The meta object literal for the '<em><b>Expr Switch Stmt</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SWITCH_STMT__EXPR_SWITCH_STMT = eINSTANCE.getSwitchStmt_ExprSwitchStmt();
+
+    /**
+     * The meta object literal for the '<em><b>Type Switch Stmt</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference SWITCH_STMT__TYPE_SWITCH_STMT = eINSTANCE.getSwitchStmt_TypeSwitchStmt();
+
+    /**
+     * The meta object literal for the '{@link org.xtext.example.mydsl.myDsl.impl.ExprSwitchStmtImpl <em>Expr Switch Stmt</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.xtext.example.mydsl.myDsl.impl.ExprSwitchStmtImpl
+     * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getExprSwitchStmt()
+     * @generated
+     */
+    EClass EXPR_SWITCH_STMT = eINSTANCE.getExprSwitchStmt();
+
+    /**
      * The meta object literal for the '<em><b>Switch</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute SWITCH_STMT__SWITCH = eINSTANCE.getSwitchStmt_Switch();
+    EAttribute EXPR_SWITCH_STMT__SWITCH = eINSTANCE.getExprSwitchStmt_Switch();
 
     /**
      * The meta object literal for the '<em><b>Simple Stmt</b></em>' containment reference feature.
@@ -12176,57 +11981,7 @@ public interface MyDslPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference SWITCH_STMT__SIMPLE_STMT = eINSTANCE.getSwitchStmt_SimpleStmt();
-
-    /**
-     * The meta object literal for the '<em><b>Switch Stmt Linha</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference SWITCH_STMT__SWITCH_STMT_LINHA = eINSTANCE.getSwitchStmt_SwitchStmtLinha();
-
-    /**
-     * The meta object literal for the '{@link org.xtext.example.mydsl.myDsl.impl.SwitchStmtLinhaImpl <em>Switch Stmt Linha</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.xtext.example.mydsl.myDsl.impl.SwitchStmtLinhaImpl
-     * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getSwitchStmtLinha()
-     * @generated
-     */
-    EClass SWITCH_STMT_LINHA = eINSTANCE.getSwitchStmtLinha();
-
-    /**
-     * The meta object literal for the '<em><b>Primary Expr</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference SWITCH_STMT_LINHA__PRIMARY_EXPR = eINSTANCE.getSwitchStmtLinha_PrimaryExpr();
-
-    /**
-     * The meta object literal for the '<em><b>Switch Stmt Linha Linha</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference SWITCH_STMT_LINHA__SWITCH_STMT_LINHA_LINHA = eINSTANCE.getSwitchStmtLinha_SwitchStmtLinhaLinha();
-
-    /**
-     * The meta object literal for the '<em><b>Unary op</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute SWITCH_STMT_LINHA__UNARY_OP = eINSTANCE.getSwitchStmtLinha_Unary_op();
-
-    /**
-     * The meta object literal for the '<em><b>Unary Expr</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference SWITCH_STMT_LINHA__UNARY_EXPR = eINSTANCE.getSwitchStmtLinha_UnaryExpr();
+    EReference EXPR_SWITCH_STMT__SIMPLE_STMT = eINSTANCE.getExprSwitchStmt_SimpleStmt();
 
     /**
      * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
@@ -12234,7 +11989,7 @@ public interface MyDslPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference SWITCH_STMT_LINHA__EXPRESSION = eINSTANCE.getSwitchStmtLinha_Expression();
+    EReference EXPR_SWITCH_STMT__EXPRESSION = eINSTANCE.getExprSwitchStmt_Expression();
 
     /**
      * The meta object literal for the '<em><b>Expr Case Clause</b></em>' containment reference list feature.
@@ -12242,65 +11997,7 @@ public interface MyDslPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference SWITCH_STMT_LINHA__EXPR_CASE_CLAUSE = eINSTANCE.getSwitchStmtLinha_ExprCaseClause();
-
-    /**
-     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute SWITCH_STMT_LINHA__ID = eINSTANCE.getSwitchStmtLinha_Id();
-
-    /**
-     * The meta object literal for the '<em><b>Typekeyword</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute SWITCH_STMT_LINHA__TYPEKEYWORD = eINSTANCE.getSwitchStmtLinha_Typekeyword();
-
-    /**
-     * The meta object literal for the '<em><b>Type Case Clause</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference SWITCH_STMT_LINHA__TYPE_CASE_CLAUSE = eINSTANCE.getSwitchStmtLinha_TypeCaseClause();
-
-    /**
-     * The meta object literal for the '{@link org.xtext.example.mydsl.myDsl.impl.SwitchStmtLinhaLinhaImpl <em>Switch Stmt Linha Linha</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.xtext.example.mydsl.myDsl.impl.SwitchStmtLinhaLinhaImpl
-     * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getSwitchStmtLinhaLinha()
-     * @generated
-     */
-    EClass SWITCH_STMT_LINHA_LINHA = eINSTANCE.getSwitchStmtLinhaLinha();
-
-    /**
-     * The meta object literal for the '<em><b>Expr Case Clause</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference SWITCH_STMT_LINHA_LINHA__EXPR_CASE_CLAUSE = eINSTANCE.getSwitchStmtLinhaLinha_ExprCaseClause();
-
-    /**
-     * The meta object literal for the '<em><b>Typekeyword</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute SWITCH_STMT_LINHA_LINHA__TYPEKEYWORD = eINSTANCE.getSwitchStmtLinhaLinha_Typekeyword();
-
-    /**
-     * The meta object literal for the '<em><b>Type Case Clause</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference SWITCH_STMT_LINHA_LINHA__TYPE_CASE_CLAUSE = eINSTANCE.getSwitchStmtLinhaLinha_TypeCaseClause();
+    EReference EXPR_SWITCH_STMT__EXPR_CASE_CLAUSE = eINSTANCE.getExprSwitchStmt_ExprCaseClause();
 
     /**
      * The meta object literal for the '{@link org.xtext.example.mydsl.myDsl.impl.ExprCaseClauseImpl <em>Expr Case Clause</em>}' class.
@@ -12361,6 +12058,74 @@ public interface MyDslPackage extends EPackage
      * @generated
      */
     EAttribute EXPR_SWITCH_CASE__DEFAULT = eINSTANCE.getExprSwitchCase_Default();
+
+    /**
+     * The meta object literal for the '{@link org.xtext.example.mydsl.myDsl.impl.TypeSwitchStmtImpl <em>Type Switch Stmt</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.xtext.example.mydsl.myDsl.impl.TypeSwitchStmtImpl
+     * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getTypeSwitchStmt()
+     * @generated
+     */
+    EClass TYPE_SWITCH_STMT = eINSTANCE.getTypeSwitchStmt();
+
+    /**
+     * The meta object literal for the '<em><b>Simple Stmt</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TYPE_SWITCH_STMT__SIMPLE_STMT = eINSTANCE.getTypeSwitchStmt_SimpleStmt();
+
+    /**
+     * The meta object literal for the '<em><b>Type Switch Guard</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TYPE_SWITCH_STMT__TYPE_SWITCH_GUARD = eINSTANCE.getTypeSwitchStmt_TypeSwitchGuard();
+
+    /**
+     * The meta object literal for the '<em><b>Type Case Clause</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TYPE_SWITCH_STMT__TYPE_CASE_CLAUSE = eINSTANCE.getTypeSwitchStmt_TypeCaseClause();
+
+    /**
+     * The meta object literal for the '{@link org.xtext.example.mydsl.myDsl.impl.TypeSwitchGuardImpl <em>Type Switch Guard</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.xtext.example.mydsl.myDsl.impl.TypeSwitchGuardImpl
+     * @see org.xtext.example.mydsl.myDsl.impl.MyDslPackageImpl#getTypeSwitchGuard()
+     * @generated
+     */
+    EClass TYPE_SWITCH_GUARD = eINSTANCE.getTypeSwitchGuard();
+
+    /**
+     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TYPE_SWITCH_GUARD__ID = eINSTANCE.getTypeSwitchGuard_Id();
+
+    /**
+     * The meta object literal for the '<em><b>Primary Expr</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TYPE_SWITCH_GUARD__PRIMARY_EXPR = eINSTANCE.getTypeSwitchGuard_PrimaryExpr();
+
+    /**
+     * The meta object literal for the '<em><b>Type</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TYPE_SWITCH_GUARD__TYPE = eINSTANCE.getTypeSwitchGuard_Type();
 
     /**
      * The meta object literal for the '{@link org.xtext.example.mydsl.myDsl.impl.TypeCaseClauseImpl <em>Type Case Clause</em>}' class.

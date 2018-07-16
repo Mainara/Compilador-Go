@@ -12,10 +12,10 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
+import org.xtext.example.mydsl.myDsl.ExprSwitchStmt;
 import org.xtext.example.mydsl.myDsl.MyDslPackage;
-import org.xtext.example.mydsl.myDsl.SimpleStmt;
 import org.xtext.example.mydsl.myDsl.SwitchStmt;
-import org.xtext.example.mydsl.myDsl.SwitchStmtLinha;
+import org.xtext.example.mydsl.myDsl.TypeSwitchStmt;
 
 /**
  * <!-- begin-user-doc -->
@@ -25,9 +25,8 @@ import org.xtext.example.mydsl.myDsl.SwitchStmtLinha;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.xtext.example.mydsl.myDsl.impl.SwitchStmtImpl#getSwitch <em>Switch</em>}</li>
- *   <li>{@link org.xtext.example.mydsl.myDsl.impl.SwitchStmtImpl#getSimpleStmt <em>Simple Stmt</em>}</li>
- *   <li>{@link org.xtext.example.mydsl.myDsl.impl.SwitchStmtImpl#getSwitchStmtLinha <em>Switch Stmt Linha</em>}</li>
+ *   <li>{@link org.xtext.example.mydsl.myDsl.impl.SwitchStmtImpl#getExprSwitchStmt <em>Expr Switch Stmt</em>}</li>
+ *   <li>{@link org.xtext.example.mydsl.myDsl.impl.SwitchStmtImpl#getTypeSwitchStmt <em>Type Switch Stmt</em>}</li>
  * </ul>
  *
  * @generated
@@ -35,44 +34,24 @@ import org.xtext.example.mydsl.myDsl.SwitchStmtLinha;
 public class SwitchStmtImpl extends MinimalEObjectImpl.Container implements SwitchStmt
 {
   /**
-   * The default value of the '{@link #getSwitch() <em>Switch</em>}' attribute.
+   * The cached value of the '{@link #getExprSwitchStmt() <em>Expr Switch Stmt</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getSwitch()
+   * @see #getExprSwitchStmt()
    * @generated
    * @ordered
    */
-  protected static final String SWITCH_EDEFAULT = null;
+  protected ExprSwitchStmt exprSwitchStmt;
 
   /**
-   * The cached value of the '{@link #getSwitch() <em>Switch</em>}' attribute.
+   * The cached value of the '{@link #getTypeSwitchStmt() <em>Type Switch Stmt</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getSwitch()
+   * @see #getTypeSwitchStmt()
    * @generated
    * @ordered
    */
-  protected String switch_ = SWITCH_EDEFAULT;
-
-  /**
-   * The cached value of the '{@link #getSimpleStmt() <em>Simple Stmt</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getSimpleStmt()
-   * @generated
-   * @ordered
-   */
-  protected SimpleStmt simpleStmt;
-
-  /**
-   * The cached value of the '{@link #getSwitchStmtLinha() <em>Switch Stmt Linha</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getSwitchStmtLinha()
-   * @generated
-   * @ordered
-   */
-  protected SwitchStmtLinha switchStmtLinha;
+  protected TypeSwitchStmt typeSwitchStmt;
 
   /**
    * <!-- begin-user-doc -->
@@ -100,9 +79,9 @@ public class SwitchStmtImpl extends MinimalEObjectImpl.Container implements Swit
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getSwitch()
+  public ExprSwitchStmt getExprSwitchStmt()
   {
-    return switch_;
+    return exprSwitchStmt;
   }
 
   /**
@@ -110,36 +89,13 @@ public class SwitchStmtImpl extends MinimalEObjectImpl.Container implements Swit
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setSwitch(String newSwitch)
+  public NotificationChain basicSetExprSwitchStmt(ExprSwitchStmt newExprSwitchStmt, NotificationChain msgs)
   {
-    String oldSwitch = switch_;
-    switch_ = newSwitch;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MyDslPackage.SWITCH_STMT__SWITCH, oldSwitch, switch_));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public SimpleStmt getSimpleStmt()
-  {
-    return simpleStmt;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public NotificationChain basicSetSimpleStmt(SimpleStmt newSimpleStmt, NotificationChain msgs)
-  {
-    SimpleStmt oldSimpleStmt = simpleStmt;
-    simpleStmt = newSimpleStmt;
+    ExprSwitchStmt oldExprSwitchStmt = exprSwitchStmt;
+    exprSwitchStmt = newExprSwitchStmt;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MyDslPackage.SWITCH_STMT__SIMPLE_STMT, oldSimpleStmt, newSimpleStmt);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MyDslPackage.SWITCH_STMT__EXPR_SWITCH_STMT, oldExprSwitchStmt, newExprSwitchStmt);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -150,20 +106,20 @@ public class SwitchStmtImpl extends MinimalEObjectImpl.Container implements Swit
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setSimpleStmt(SimpleStmt newSimpleStmt)
+  public void setExprSwitchStmt(ExprSwitchStmt newExprSwitchStmt)
   {
-    if (newSimpleStmt != simpleStmt)
+    if (newExprSwitchStmt != exprSwitchStmt)
     {
       NotificationChain msgs = null;
-      if (simpleStmt != null)
-        msgs = ((InternalEObject)simpleStmt).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MyDslPackage.SWITCH_STMT__SIMPLE_STMT, null, msgs);
-      if (newSimpleStmt != null)
-        msgs = ((InternalEObject)newSimpleStmt).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MyDslPackage.SWITCH_STMT__SIMPLE_STMT, null, msgs);
-      msgs = basicSetSimpleStmt(newSimpleStmt, msgs);
+      if (exprSwitchStmt != null)
+        msgs = ((InternalEObject)exprSwitchStmt).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MyDslPackage.SWITCH_STMT__EXPR_SWITCH_STMT, null, msgs);
+      if (newExprSwitchStmt != null)
+        msgs = ((InternalEObject)newExprSwitchStmt).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MyDslPackage.SWITCH_STMT__EXPR_SWITCH_STMT, null, msgs);
+      msgs = basicSetExprSwitchStmt(newExprSwitchStmt, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MyDslPackage.SWITCH_STMT__SIMPLE_STMT, newSimpleStmt, newSimpleStmt));
+      eNotify(new ENotificationImpl(this, Notification.SET, MyDslPackage.SWITCH_STMT__EXPR_SWITCH_STMT, newExprSwitchStmt, newExprSwitchStmt));
   }
 
   /**
@@ -171,9 +127,9 @@ public class SwitchStmtImpl extends MinimalEObjectImpl.Container implements Swit
    * <!-- end-user-doc -->
    * @generated
    */
-  public SwitchStmtLinha getSwitchStmtLinha()
+  public TypeSwitchStmt getTypeSwitchStmt()
   {
-    return switchStmtLinha;
+    return typeSwitchStmt;
   }
 
   /**
@@ -181,13 +137,13 @@ public class SwitchStmtImpl extends MinimalEObjectImpl.Container implements Swit
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetSwitchStmtLinha(SwitchStmtLinha newSwitchStmtLinha, NotificationChain msgs)
+  public NotificationChain basicSetTypeSwitchStmt(TypeSwitchStmt newTypeSwitchStmt, NotificationChain msgs)
   {
-    SwitchStmtLinha oldSwitchStmtLinha = switchStmtLinha;
-    switchStmtLinha = newSwitchStmtLinha;
+    TypeSwitchStmt oldTypeSwitchStmt = typeSwitchStmt;
+    typeSwitchStmt = newTypeSwitchStmt;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MyDslPackage.SWITCH_STMT__SWITCH_STMT_LINHA, oldSwitchStmtLinha, newSwitchStmtLinha);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MyDslPackage.SWITCH_STMT__TYPE_SWITCH_STMT, oldTypeSwitchStmt, newTypeSwitchStmt);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -198,20 +154,20 @@ public class SwitchStmtImpl extends MinimalEObjectImpl.Container implements Swit
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setSwitchStmtLinha(SwitchStmtLinha newSwitchStmtLinha)
+  public void setTypeSwitchStmt(TypeSwitchStmt newTypeSwitchStmt)
   {
-    if (newSwitchStmtLinha != switchStmtLinha)
+    if (newTypeSwitchStmt != typeSwitchStmt)
     {
       NotificationChain msgs = null;
-      if (switchStmtLinha != null)
-        msgs = ((InternalEObject)switchStmtLinha).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MyDslPackage.SWITCH_STMT__SWITCH_STMT_LINHA, null, msgs);
-      if (newSwitchStmtLinha != null)
-        msgs = ((InternalEObject)newSwitchStmtLinha).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MyDslPackage.SWITCH_STMT__SWITCH_STMT_LINHA, null, msgs);
-      msgs = basicSetSwitchStmtLinha(newSwitchStmtLinha, msgs);
+      if (typeSwitchStmt != null)
+        msgs = ((InternalEObject)typeSwitchStmt).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MyDslPackage.SWITCH_STMT__TYPE_SWITCH_STMT, null, msgs);
+      if (newTypeSwitchStmt != null)
+        msgs = ((InternalEObject)newTypeSwitchStmt).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MyDslPackage.SWITCH_STMT__TYPE_SWITCH_STMT, null, msgs);
+      msgs = basicSetTypeSwitchStmt(newTypeSwitchStmt, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MyDslPackage.SWITCH_STMT__SWITCH_STMT_LINHA, newSwitchStmtLinha, newSwitchStmtLinha));
+      eNotify(new ENotificationImpl(this, Notification.SET, MyDslPackage.SWITCH_STMT__TYPE_SWITCH_STMT, newTypeSwitchStmt, newTypeSwitchStmt));
   }
 
   /**
@@ -224,10 +180,10 @@ public class SwitchStmtImpl extends MinimalEObjectImpl.Container implements Swit
   {
     switch (featureID)
     {
-      case MyDslPackage.SWITCH_STMT__SIMPLE_STMT:
-        return basicSetSimpleStmt(null, msgs);
-      case MyDslPackage.SWITCH_STMT__SWITCH_STMT_LINHA:
-        return basicSetSwitchStmtLinha(null, msgs);
+      case MyDslPackage.SWITCH_STMT__EXPR_SWITCH_STMT:
+        return basicSetExprSwitchStmt(null, msgs);
+      case MyDslPackage.SWITCH_STMT__TYPE_SWITCH_STMT:
+        return basicSetTypeSwitchStmt(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -242,12 +198,10 @@ public class SwitchStmtImpl extends MinimalEObjectImpl.Container implements Swit
   {
     switch (featureID)
     {
-      case MyDslPackage.SWITCH_STMT__SWITCH:
-        return getSwitch();
-      case MyDslPackage.SWITCH_STMT__SIMPLE_STMT:
-        return getSimpleStmt();
-      case MyDslPackage.SWITCH_STMT__SWITCH_STMT_LINHA:
-        return getSwitchStmtLinha();
+      case MyDslPackage.SWITCH_STMT__EXPR_SWITCH_STMT:
+        return getExprSwitchStmt();
+      case MyDslPackage.SWITCH_STMT__TYPE_SWITCH_STMT:
+        return getTypeSwitchStmt();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -262,14 +216,11 @@ public class SwitchStmtImpl extends MinimalEObjectImpl.Container implements Swit
   {
     switch (featureID)
     {
-      case MyDslPackage.SWITCH_STMT__SWITCH:
-        setSwitch((String)newValue);
+      case MyDslPackage.SWITCH_STMT__EXPR_SWITCH_STMT:
+        setExprSwitchStmt((ExprSwitchStmt)newValue);
         return;
-      case MyDslPackage.SWITCH_STMT__SIMPLE_STMT:
-        setSimpleStmt((SimpleStmt)newValue);
-        return;
-      case MyDslPackage.SWITCH_STMT__SWITCH_STMT_LINHA:
-        setSwitchStmtLinha((SwitchStmtLinha)newValue);
+      case MyDslPackage.SWITCH_STMT__TYPE_SWITCH_STMT:
+        setTypeSwitchStmt((TypeSwitchStmt)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -285,14 +236,11 @@ public class SwitchStmtImpl extends MinimalEObjectImpl.Container implements Swit
   {
     switch (featureID)
     {
-      case MyDslPackage.SWITCH_STMT__SWITCH:
-        setSwitch(SWITCH_EDEFAULT);
+      case MyDslPackage.SWITCH_STMT__EXPR_SWITCH_STMT:
+        setExprSwitchStmt((ExprSwitchStmt)null);
         return;
-      case MyDslPackage.SWITCH_STMT__SIMPLE_STMT:
-        setSimpleStmt((SimpleStmt)null);
-        return;
-      case MyDslPackage.SWITCH_STMT__SWITCH_STMT_LINHA:
-        setSwitchStmtLinha((SwitchStmtLinha)null);
+      case MyDslPackage.SWITCH_STMT__TYPE_SWITCH_STMT:
+        setTypeSwitchStmt((TypeSwitchStmt)null);
         return;
     }
     super.eUnset(featureID);
@@ -308,31 +256,12 @@ public class SwitchStmtImpl extends MinimalEObjectImpl.Container implements Swit
   {
     switch (featureID)
     {
-      case MyDslPackage.SWITCH_STMT__SWITCH:
-        return SWITCH_EDEFAULT == null ? switch_ != null : !SWITCH_EDEFAULT.equals(switch_);
-      case MyDslPackage.SWITCH_STMT__SIMPLE_STMT:
-        return simpleStmt != null;
-      case MyDslPackage.SWITCH_STMT__SWITCH_STMT_LINHA:
-        return switchStmtLinha != null;
+      case MyDslPackage.SWITCH_STMT__EXPR_SWITCH_STMT:
+        return exprSwitchStmt != null;
+      case MyDslPackage.SWITCH_STMT__TYPE_SWITCH_STMT:
+        return typeSwitchStmt != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (switch: ");
-    result.append(switch_);
-    result.append(')');
-    return result.toString();
   }
 
 } //SwitchStmtImpl

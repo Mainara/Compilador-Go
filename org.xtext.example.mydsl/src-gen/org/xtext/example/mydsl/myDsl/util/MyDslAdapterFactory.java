@@ -81,16 +81,6 @@ public class MyDslAdapterFactory extends AdapterFactoryImpl
         return createModelAdapter();
       }
       @Override
-      public Adapter caseFLOAT_LIT(FLOAT_LIT object)
-      {
-        return createFLOAT_LITAdapter();
-      }
-      @Override
-      public Adapter caseIMAGINARY_LIT(IMAGINARY_LIT object)
-      {
-        return createIMAGINARY_LITAdapter();
-      }
-      @Override
       public Adapter caseType(Type object)
       {
         return createTypeAdapter();
@@ -516,14 +506,9 @@ public class MyDslAdapterFactory extends AdapterFactoryImpl
         return createSwitchStmtAdapter();
       }
       @Override
-      public Adapter caseSwitchStmtLinha(SwitchStmtLinha object)
+      public Adapter caseExprSwitchStmt(ExprSwitchStmt object)
       {
-        return createSwitchStmtLinhaAdapter();
-      }
-      @Override
-      public Adapter caseSwitchStmtLinhaLinha(SwitchStmtLinhaLinha object)
-      {
-        return createSwitchStmtLinhaLinhaAdapter();
+        return createExprSwitchStmtAdapter();
       }
       @Override
       public Adapter caseExprCaseClause(ExprCaseClause object)
@@ -534,6 +519,16 @@ public class MyDslAdapterFactory extends AdapterFactoryImpl
       public Adapter caseExprSwitchCase(ExprSwitchCase object)
       {
         return createExprSwitchCaseAdapter();
+      }
+      @Override
+      public Adapter caseTypeSwitchStmt(TypeSwitchStmt object)
+      {
+        return createTypeSwitchStmtAdapter();
+      }
+      @Override
+      public Adapter caseTypeSwitchGuard(TypeSwitchGuard object)
+      {
+        return createTypeSwitchGuardAdapter();
       }
       @Override
       public Adapter caseTypeCaseClause(TypeCaseClause object)
@@ -693,36 +688,6 @@ public class MyDslAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createModelAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.mydsl.myDsl.FLOAT_LIT <em>FLOAT LIT</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.mydsl.myDsl.FLOAT_LIT
-   * @generated
-   */
-  public Adapter createFLOAT_LITAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.mydsl.myDsl.IMAGINARY_LIT <em>IMAGINARY LIT</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.mydsl.myDsl.IMAGINARY_LIT
-   * @generated
-   */
-  public Adapter createIMAGINARY_LITAdapter()
   {
     return null;
   }
@@ -2003,31 +1968,16 @@ public class MyDslAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.mydsl.myDsl.SwitchStmtLinha <em>Switch Stmt Linha</em>}'.
+   * Creates a new adapter for an object of class '{@link org.xtext.example.mydsl.myDsl.ExprSwitchStmt <em>Expr Switch Stmt</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.xtext.example.mydsl.myDsl.SwitchStmtLinha
+   * @see org.xtext.example.mydsl.myDsl.ExprSwitchStmt
    * @generated
    */
-  public Adapter createSwitchStmtLinhaAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.xtext.example.mydsl.myDsl.SwitchStmtLinhaLinha <em>Switch Stmt Linha Linha</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.xtext.example.mydsl.myDsl.SwitchStmtLinhaLinha
-   * @generated
-   */
-  public Adapter createSwitchStmtLinhaLinhaAdapter()
+  public Adapter createExprSwitchStmtAdapter()
   {
     return null;
   }
@@ -2058,6 +2008,36 @@ public class MyDslAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createExprSwitchCaseAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.mydsl.myDsl.TypeSwitchStmt <em>Type Switch Stmt</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.mydsl.myDsl.TypeSwitchStmt
+   * @generated
+   */
+  public Adapter createTypeSwitchStmtAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.mydsl.myDsl.TypeSwitchGuard <em>Type Switch Guard</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.mydsl.myDsl.TypeSwitchGuard
+   * @generated
+   */
+  public Adapter createTypeSwitchGuardAdapter()
   {
     return null;
   }

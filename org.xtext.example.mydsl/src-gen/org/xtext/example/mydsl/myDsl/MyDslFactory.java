@@ -33,24 +33,6 @@ public interface MyDslFactory extends EFactory
   Model createModel();
 
   /**
-   * Returns a new object of class '<em>FLOAT LIT</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>FLOAT LIT</em>'.
-   * @generated
-   */
-  FLOAT_LIT createFLOAT_LIT();
-
-  /**
-   * Returns a new object of class '<em>IMAGINARY LIT</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>IMAGINARY LIT</em>'.
-   * @generated
-   */
-  IMAGINARY_LIT createIMAGINARY_LIT();
-
-  /**
    * Returns a new object of class '<em>Type</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -816,22 +798,13 @@ public interface MyDslFactory extends EFactory
   SwitchStmt createSwitchStmt();
 
   /**
-   * Returns a new object of class '<em>Switch Stmt Linha</em>'.
+   * Returns a new object of class '<em>Expr Switch Stmt</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Switch Stmt Linha</em>'.
+   * @return a new object of class '<em>Expr Switch Stmt</em>'.
    * @generated
    */
-  SwitchStmtLinha createSwitchStmtLinha();
-
-  /**
-   * Returns a new object of class '<em>Switch Stmt Linha Linha</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Switch Stmt Linha Linha</em>'.
-   * @generated
-   */
-  SwitchStmtLinhaLinha createSwitchStmtLinhaLinha();
+  ExprSwitchStmt createExprSwitchStmt();
 
   /**
    * Returns a new object of class '<em>Expr Case Clause</em>'.
@@ -850,6 +823,24 @@ public interface MyDslFactory extends EFactory
    * @generated
    */
   ExprSwitchCase createExprSwitchCase();
+
+  /**
+   * Returns a new object of class '<em>Type Switch Stmt</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Type Switch Stmt</em>'.
+   * @generated
+   */
+  TypeSwitchStmt createTypeSwitchStmt();
+
+  /**
+   * Returns a new object of class '<em>Type Switch Guard</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Type Switch Guard</em>'.
+   * @generated
+   */
+  TypeSwitchGuard createTypeSwitchGuard();
 
   /**
    * Returns a new object of class '<em>Type Case Clause</em>'.

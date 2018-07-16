@@ -3,6 +3,8 @@
  */
 package org.xtext.example.mydsl.myDsl;
 
+import org.eclipse.emf.common.util.EList;
+
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -14,8 +16,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.xtext.example.mydsl.myDsl.UnaryExpr#getUnary_op <em>Unary op</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.UnaryExpr#getPrimaryExpr <em>Primary Expr</em>}</li>
- *   <li>{@link org.xtext.example.mydsl.myDsl.UnaryExpr#getUnaryExpr <em>Unary Expr</em>}</li>
  * </ul>
  *
  * @see org.xtext.example.mydsl.myDsl.MyDslPackage#getUnaryExpr()
@@ -24,6 +26,22 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface UnaryExpr extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>Unary op</b></em>' attribute list.
+   * The list contents are of type {@link java.lang.String}.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Unary op</em>' attribute list isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Unary op</em>' attribute list.
+   * @see org.xtext.example.mydsl.myDsl.MyDslPackage#getUnaryExpr_Unary_op()
+   * @model unique="false"
+   * @generated
+   */
+  EList<String> getUnary_op();
+
   /**
    * Returns the value of the '<em><b>Primary Expr</b></em>' containment reference.
    * <!-- begin-user-doc -->
@@ -49,31 +67,5 @@ public interface UnaryExpr extends EObject
    * @generated
    */
   void setPrimaryExpr(PrimaryExpr value);
-
-  /**
-   * Returns the value of the '<em><b>Unary Expr</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Unary Expr</em>' containment reference isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Unary Expr</em>' containment reference.
-   * @see #setUnaryExpr(UnaryExpr)
-   * @see org.xtext.example.mydsl.myDsl.MyDslPackage#getUnaryExpr_UnaryExpr()
-   * @model containment="true"
-   * @generated
-   */
-  UnaryExpr getUnaryExpr();
-
-  /**
-   * Sets the value of the '{@link org.xtext.example.mydsl.myDsl.UnaryExpr#getUnaryExpr <em>Unary Expr</em>}' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Unary Expr</em>' containment reference.
-   * @see #getUnaryExpr()
-   * @generated
-   */
-  void setUnaryExpr(UnaryExpr value);
 
 } // UnaryExpr

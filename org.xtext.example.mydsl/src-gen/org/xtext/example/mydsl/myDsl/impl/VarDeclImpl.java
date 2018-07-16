@@ -31,6 +31,7 @@ import org.xtext.example.mydsl.myDsl.VarSpec;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.xtext.example.mydsl.myDsl.impl.VarDeclImpl#getVar <em>Var</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.impl.VarDeclImpl#getVarSpec <em>Var Spec</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.impl.VarDeclImpl#getVarSpec1 <em>Var Spec1</em>}</li>
  * </ul>
@@ -39,6 +40,26 @@ import org.xtext.example.mydsl.myDsl.VarSpec;
  */
 public class VarDeclImpl extends MinimalEObjectImpl.Container implements VarDecl
 {
+  /**
+   * The default value of the '{@link #getVar() <em>Var</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getVar()
+   * @generated
+   * @ordered
+   */
+  protected static final String VAR_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getVar() <em>Var</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getVar()
+   * @generated
+   * @ordered
+   */
+  protected String var = VAR_EDEFAULT;
+
   /**
    * The cached value of the '{@link #getVarSpec() <em>Var Spec</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -78,6 +99,29 @@ public class VarDeclImpl extends MinimalEObjectImpl.Container implements VarDecl
   protected EClass eStaticClass()
   {
     return MyDslPackage.Literals.VAR_DECL;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getVar()
+  {
+    return var;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setVar(String newVar)
+  {
+    String oldVar = var;
+    var = newVar;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, MyDslPackage.VAR_DECL__VAR, oldVar, var));
   }
 
   /**
@@ -170,6 +214,8 @@ public class VarDeclImpl extends MinimalEObjectImpl.Container implements VarDecl
   {
     switch (featureID)
     {
+      case MyDslPackage.VAR_DECL__VAR:
+        return getVar();
       case MyDslPackage.VAR_DECL__VAR_SPEC:
         return getVarSpec();
       case MyDslPackage.VAR_DECL__VAR_SPEC1:
@@ -189,6 +235,9 @@ public class VarDeclImpl extends MinimalEObjectImpl.Container implements VarDecl
   {
     switch (featureID)
     {
+      case MyDslPackage.VAR_DECL__VAR:
+        setVar((String)newValue);
+        return;
       case MyDslPackage.VAR_DECL__VAR_SPEC:
         setVarSpec((VarSpec)newValue);
         return;
@@ -210,6 +259,9 @@ public class VarDeclImpl extends MinimalEObjectImpl.Container implements VarDecl
   {
     switch (featureID)
     {
+      case MyDslPackage.VAR_DECL__VAR:
+        setVar(VAR_EDEFAULT);
+        return;
       case MyDslPackage.VAR_DECL__VAR_SPEC:
         setVarSpec((VarSpec)null);
         return;
@@ -230,12 +282,31 @@ public class VarDeclImpl extends MinimalEObjectImpl.Container implements VarDecl
   {
     switch (featureID)
     {
+      case MyDslPackage.VAR_DECL__VAR:
+        return VAR_EDEFAULT == null ? var != null : !VAR_EDEFAULT.equals(var);
       case MyDslPackage.VAR_DECL__VAR_SPEC:
         return varSpec != null;
       case MyDslPackage.VAR_DECL__VAR_SPEC1:
         return varSpec1 != null && !varSpec1.isEmpty();
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (var: ");
+    result.append(var);
+    result.append(')');
+    return result.toString();
   }
 
 } //VarDeclImpl

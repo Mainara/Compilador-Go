@@ -9,36 +9,6 @@ ruleModel:
 	*
 ;
 
-// Rule FLOAT_LIT
-ruleFLOAT_LIT:
-	(
-		RULE_DECIMALS
-		'.'
-		RULE_DECIMALS
-		?
-		RULE_EXPONENT
-		?
-		    |
-		RULE_DECIMALS
-		RULE_EXPONENT
-		    |
-		'.'
-		RULE_DECIMALS
-		RULE_EXPONENT
-		?
-	)
-;
-
-// Rule IMAGINARY_LIT
-ruleIMAGINARY_LIT:
-	(
-		RULE_DECIMALS
-		    |
-		ruleFLOAT_LIT
-	)
-	'i'
-;
-
 // Rule Type
 ruleType:
 	(
@@ -369,7 +339,7 @@ ruleTypeDef:
 
 // Rule VarDecl
 ruleVarDecl:
-	RULE_VAR
+	'var'
 	(
 		ruleVarSpec
 		    |
@@ -465,9 +435,9 @@ ruleBasicLit:
 	(
 		RULE_INT_LIT
 		    |
-		ruleFLOAT_LIT
+		RULE_FLOAT_LIT
 		    |
-		ruleIMAGINARY_LIT
+		RULE_IMAGINARY_LIT
 		    |
 		RULE_RUNE_LIT
 		    |
@@ -702,10 +672,24 @@ ruleExpression_Linha:
 // Rule UnaryExpr
 ruleUnaryExpr:
 	(
+		(
+			'+'
+			    |
+			'-'
+			    |
+			'!'
+			    |
+			'^'
+			    |
+			'*'
+			    |
+			'&'
+			    |
+			'<-'
+		)+
 		rulePrimaryExpr
 		    |
-		RULE_UNARY_OP
-		ruleUnaryExpr
+		rulePrimaryExpr
 	)
 ;
 
@@ -887,61 +871,26 @@ ruleIfStmtLinha:
 
 // Rule SwitchStmt
 ruleSwitchStmt:
+	(
+		ruleExprSwitchStmt
+		    |
+		ruleTypeSwitchStmt
+	)
+;
+
+// Rule ExprSwitchStmt
+ruleExprSwitchStmt:
 	RULE_SWITCH
 	(
 		ruleSimpleStmt
 		';'
 	)?
-	ruleSwitchStmtLinha
-;
-
-// Rule SwitchStmtLinha
-ruleSwitchStmtLinha:
-	(
-		rulePrimaryExpr
-		ruleSwitchStmtLinhaLinha
-		    |
-		(
-			RULE_UNARY_OP
-			ruleUnaryExpr
-			ruleExpression_Linha
-		)?
-		'{'
-		ruleExprCaseClause
-		*
-		'}'
-		    |
-		RULE_IDENTIFIER
-		':='
-		rulePrimaryExpr
-		'.'
-		'('
-		'type'
-		')'
-		'{'
-		ruleTypeCaseClause
-		*
-		'}'
-	)
-;
-
-// Rule SwitchStmtLinhaLinha
-ruleSwitchStmtLinhaLinha:
-	(
-		'{'
-		ruleExprCaseClause
-		*
-		'}'
-		    |
-		'.'
-		'('
-		'type'
-		')'
-		'{'
-		ruleTypeCaseClause
-		*
-		'}'
-	)
+	ruleExpression
+	?
+	'{'
+	ruleExprCaseClause
+	*
+	'}'
 ;
 
 // Rule ExprCaseClause
@@ -959,6 +908,33 @@ ruleExprSwitchCase:
 		    |
 		RULE_DEFAULT
 	)
+;
+
+// Rule TypeSwitchStmt
+ruleTypeSwitchStmt:
+	RULE_SWITCH
+	(
+		ruleSimpleStmt
+		';'
+	)?
+	ruleTypeSwitchGuard
+	'{'
+	ruleTypeCaseClause
+	*
+	'}'
+;
+
+// Rule TypeSwitchGuard
+ruleTypeSwitchGuard:
+	(
+		RULE_IDENTIFIER
+		':='
+	)?
+	rulePrimaryExpr
+	'.'
+	'('
+	'type'
+	')'
 ;
 
 // Rule TypeCaseClause
@@ -1254,15 +1230,17 @@ RULE_FOR : 'for';
 
 RULE_RETURN : 'return';
 
-RULE_VAR : 'var';
-
 RULE_IDENTIFIER : RULE_LETTER (RULE_LETTER|'0'..'9')*;
 
 RULE_INT_LIT : ('1'..'9' RULE_DECIMAL_DIGIT*|'0' RULE_OCTAL_DIGIT*|'0' ('x'|'X') RULE_HEX_DIGIT+);
 
-RULE_DECIMALS : RULE_INT;
+RULE_FLOAT_LIT : (RULE_DECIMALS '.' RULE_DECIMALS? RULE_EXPONENT?|RULE_DECIMALS RULE_EXPONENT|'.' RULE_DECIMALS RULE_EXPONENT?);
 
-RULE_EXPONENT : ('e'|'E') ('+'|'-')? RULE_DECIMALS;
+fragment RULE_DECIMALS : RULE_INT;
+
+fragment RULE_EXPONENT : ('e'|'E') ('+'|'-')? RULE_DECIMALS;
+
+RULE_IMAGINARY_LIT : (RULE_DECIMALS|RULE_FLOAT_LIT) 'i';
 
 RULE_RUNE_LIT : '\'' (RULE_UNICODE_VALUE|RULE_BYTE_VALUE) '\'';
 
@@ -1293,8 +1271,6 @@ RULE_REL_OP : ('=='|'!='|'<'|'<='|'>'|'>=');
 RULE_ADD_OP : ('+'|'-'|'|'|'^');
 
 RULE_MUL_OP : ('*'|'/'|'%'|'<<'|'>>'|'&'|'&^');
-
-RULE_UNARY_OP : ('+'|'-'|'!'|'^'|'*'|'&'|'<-');
 
 RULE_ID : '^'? ('a'..'z'|'A'..'Z'|'_') ('a'..'z'|'A'..'Z'|'_'|'0'..'9')*;
 

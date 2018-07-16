@@ -14,6 +14,8 @@ public class ExpressionValidator {
 		}else if(exp.getUnaryExpr().getPrimaryExpr().getOperand().getLiteral().getBasicLit().getString_lit() != null){
 			return checaString(exp);
 			
+		}else if(exp.getUnaryExpr().getPrimaryExpr().getOperand().getLiteral().getCompositeLit().getLiteralType().getStructType() != null){
+			return checaStructType(exp);
 		}
 		
 		return null;
@@ -45,6 +47,18 @@ public class ExpressionValidator {
 		if(exp.getExpression_Linha().getExpression().getUnaryExpr().getPrimaryExpr().getOperand().getLiteral().getBasicLit().getString_lit() == null){
 			return "Erro semântico: incompatibilidade de tipos";
 		}
+		return null;
+	}
+	
+	public String checaStructType(Expression exp){
+		if(!exp.getExpression_Linha().getBINARY_OP().getREL_OP().equals("==") &&
+				exp.getExpression_Linha().getBINARY_OP().getREL_OP().equals("!=")){
+			return "Erro semântico: struct só podem ser aplicados aos operdaorses == e !=";
+		}else if(exp.getExpression_Linha().getExpression().getUnaryExpr().getPrimaryExpr().getOperand().getLiteral().getCompositeLit().getLiteralType().getStructType() == null){
+			return "Erro semântico: incompatiblidade de tipo";
+		}
+		
+		
 		return null;
 	}
 

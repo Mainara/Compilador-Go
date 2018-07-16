@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.xtext.example.mydsl.myDsl.VarDecl#getVar <em>Var</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.VarDecl#getVarSpec <em>Var Spec</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.VarDecl#getVarSpec1 <em>Var Spec1</em>}</li>
  * </ul>
@@ -26,6 +27,32 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface VarDecl extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>Var</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Var</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Var</em>' attribute.
+   * @see #setVar(String)
+   * @see org.xtext.example.mydsl.myDsl.MyDslPackage#getVarDecl_Var()
+   * @model
+   * @generated
+   */
+  String getVar();
+
+  /**
+   * Sets the value of the '{@link org.xtext.example.mydsl.myDsl.VarDecl#getVar <em>Var</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Var</em>' attribute.
+   * @see #getVar()
+   * @generated
+   */
+  void setVar(String value);
+
   /**
    * Returns the value of the '<em><b>Var Spec</b></em>' containment reference.
    * <!-- begin-user-doc -->

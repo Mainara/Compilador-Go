@@ -80,20 +80,6 @@ public class MyDslSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case MyDslPackage.FLOAT_LIT:
-      {
-        FLOAT_LIT floaT_LIT = (FLOAT_LIT)theEObject;
-        T result = caseFLOAT_LIT(floaT_LIT);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case MyDslPackage.IMAGINARY_LIT:
-      {
-        IMAGINARY_LIT imaginarY_LIT = (IMAGINARY_LIT)theEObject;
-        T result = caseIMAGINARY_LIT(imaginarY_LIT);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case MyDslPackage.TYPE:
       {
         Type type = (Type)theEObject;
@@ -689,17 +675,10 @@ public class MyDslSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case MyDslPackage.SWITCH_STMT_LINHA:
+      case MyDslPackage.EXPR_SWITCH_STMT:
       {
-        SwitchStmtLinha switchStmtLinha = (SwitchStmtLinha)theEObject;
-        T result = caseSwitchStmtLinha(switchStmtLinha);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case MyDslPackage.SWITCH_STMT_LINHA_LINHA:
-      {
-        SwitchStmtLinhaLinha switchStmtLinhaLinha = (SwitchStmtLinhaLinha)theEObject;
-        T result = caseSwitchStmtLinhaLinha(switchStmtLinhaLinha);
+        ExprSwitchStmt exprSwitchStmt = (ExprSwitchStmt)theEObject;
+        T result = caseExprSwitchStmt(exprSwitchStmt);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -714,6 +693,20 @@ public class MyDslSwitch<T> extends Switch<T>
       {
         ExprSwitchCase exprSwitchCase = (ExprSwitchCase)theEObject;
         T result = caseExprSwitchCase(exprSwitchCase);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MyDslPackage.TYPE_SWITCH_STMT:
+      {
+        TypeSwitchStmt typeSwitchStmt = (TypeSwitchStmt)theEObject;
+        T result = caseTypeSwitchStmt(typeSwitchStmt);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MyDslPackage.TYPE_SWITCH_GUARD:
+      {
+        TypeSwitchGuard typeSwitchGuard = (TypeSwitchGuard)theEObject;
+        T result = caseTypeSwitchGuard(typeSwitchGuard);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -908,38 +901,6 @@ public class MyDslSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseModel(Model object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>FLOAT LIT</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>FLOAT LIT</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseFLOAT_LIT(FLOAT_LIT object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>IMAGINARY LIT</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>IMAGINARY LIT</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseIMAGINARY_LIT(IMAGINARY_LIT object)
   {
     return null;
   }
@@ -2305,33 +2266,17 @@ public class MyDslSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Switch Stmt Linha</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Expr Switch Stmt</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Switch Stmt Linha</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Expr Switch Stmt</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseSwitchStmtLinha(SwitchStmtLinha object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Switch Stmt Linha Linha</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Switch Stmt Linha Linha</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSwitchStmtLinhaLinha(SwitchStmtLinhaLinha object)
+  public T caseExprSwitchStmt(ExprSwitchStmt object)
   {
     return null;
   }
@@ -2364,6 +2309,38 @@ public class MyDslSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseExprSwitchCase(ExprSwitchCase object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Type Switch Stmt</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Type Switch Stmt</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTypeSwitchStmt(TypeSwitchStmt object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Type Switch Guard</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Type Switch Guard</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTypeSwitchGuard(TypeSwitchGuard object)
   {
     return null;
   }

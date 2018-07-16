@@ -4,16 +4,22 @@
 package org.xtext.example.mydsl.validation;
 
 import com.google.common.base.Objects;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.eclipse.xtext.validation.Check;
 import org.xtext.example.mydsl.myDsl.ConstDecl;
 import org.xtext.example.mydsl.myDsl.Declaration;
-import org.xtext.example.mydsl.myDsl.Expression;
 import org.xtext.example.mydsl.myDsl.MethodDecl;
 import org.xtext.example.mydsl.myDsl.MyDslPackage;
 import org.xtext.example.mydsl.myDsl.TypeDecl;
+import org.xtext.example.mydsl.myDsl.VarDecl;
 import org.xtext.example.mydsl.validation.AbstractMyDslValidator;
 import org.xtext.example.mydsl.validation.ConstDeclValidator;
 import org.xtext.example.mydsl.validation.MethodDeclValidator;
+import org.xtext.example.mydsl.validation.TypeDeclValidator;
+import org.xtext.example.mydsl.validation.VarDeclValidator;
 
 /**
  * This class contains custom validation rules.
@@ -26,14 +32,28 @@ public class MyDslValidator extends AbstractMyDslValidator {
   
   private MethodDeclValidator methodDeclValidator = new MethodDeclValidator();
   
+  private VarDeclValidator varDeclValidator = new VarDeclValidator();
+  
+  private TypeDeclValidator typeDeclValidator = new TypeDeclValidator();
+  
+  private Map<String, String> idsTypes = new HashMap<String, String>();
+  
+  private List<MethodDecl> methodDeclList = new ArrayList<MethodDecl>();
+  
+  private Map<String, String> typeDefs = new HashMap<String, String>();
+  
   @Check
-  public String checkMethodDecl(final MethodDecl methodDecl) {
-    return this.methodDeclValidator.checkMethodDecl(methodDecl);
+  public void checkMethodDecl(final MethodDecl methodDecl) {
+    String _checkMethodDecl = this.methodDeclValidator.checkMethodDecl(methodDecl, this.methodDeclList, this.typeDefs);
+    boolean _notEquals = (!Objects.equal(_checkMethodDecl, null));
+    if (_notEquals) {
+      String erro = this.methodDeclValidator.checkMethodDecl(methodDecl, this.methodDeclList, this.typeDefs);
+      this.error(erro, MyDslPackage.Literals.METHOD_DECL__RECEIVER);
+    }
   }
   
   @Check
-  public Object checkDecl(final Declaration decl) {
-    Object _xifexpression = null;
+  public void checkDecl(final Declaration decl) {
     ConstDecl _constDecl = decl.getConstDecl();
     boolean _notEquals = (!Objects.equal(_constDecl, null));
     if (_notEquals) {
@@ -46,24 +66,21 @@ public class MyDslValidator extends AbstractMyDslValidator {
         this.error(erro, MyDslPackage.Literals.DECLARATION__CONST_DECL);
       }
     } else {
-      Object _xifexpression_1 = null;
       TypeDecl _typeDecl = decl.getTypeDecl();
       boolean _notEquals_2 = (!Objects.equal(_typeDecl, null));
       if (_notEquals_2) {
-        _xifexpression_1 = null;
+        TypeDecl _typeDecl_1 = decl.getTypeDecl();
+        this.typeDeclValidator.addIdsTypes(_typeDecl_1, this.idsTypes, this.typeDefs);
+      } else {
+        VarDecl _varDecl = decl.getVarDecl();
+        String _validaVarDecl = this.varDeclValidator.validaVarDecl(_varDecl, this.idsTypes);
+        boolean _notEquals_3 = (!Objects.equal(_validaVarDecl, null));
+        if (_notEquals_3) {
+          VarDecl _varDecl_1 = decl.getVarDecl();
+          String erro_1 = this.varDeclValidator.validaVarDecl(_varDecl_1, this.idsTypes);
+          this.error(erro_1, MyDslPackage.Literals.DECLARATION__VAR_DECL);
+        }
       }
-      _xifexpression = _xifexpression_1;
     }
-    return _xifexpression;
-  }
-  
-  @Check
-  public Object checkExpression(final Expression exp) {
-    Object _xifexpression = null;
-    boolean _notEquals = (!Objects.equal(exp, null));
-    if (_notEquals) {
-      _xifexpression = null;
-    }
-    return _xifexpression;
   }
 }

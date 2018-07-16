@@ -47,33 +47,20 @@ public class MyDslSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (ruleCall.getRule() == grammarAccess.getUNARY_OPRule())
-			return getUNARY_OPToken(semanticObject, ruleCall, node);
-		else if (ruleCall.getRule() == grammarAccess.getVARRule())
-			return getVARToken(semanticObject, ruleCall, node);
+		if (ruleCall.getRule() == grammarAccess.getSWITCHRule())
+			return getSWITCHToken(semanticObject, ruleCall, node);
 		return "";
 	}
 	
 	/**
-	 * terminal UNARY_OP: 
-	 * 	"+" | "-" | "!" | "^" | "*" | "&" | "<-" 
+	 * terminal SWITCH:
+	 * 	"switch"
 	 * ;
 	 */
-	protected String getUNARY_OPToken(EObject semanticObject, RuleCall ruleCall, INode node) {
+	protected String getSWITCHToken(EObject semanticObject, RuleCall ruleCall, INode node) {
 		if (node != null)
 			return getTokenText(node);
-		return "+";
-	}
-	
-	/**
-	 * terminal VAR: 
-	 * 	"var"
-	 * ;
-	 */
-	protected String getVARToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "var";
+		return "switch";
 	}
 	
 	@Override

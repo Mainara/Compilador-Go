@@ -102,9 +102,9 @@ terminal FOR:
 terminal RETURN: 
 	"return"
 ;
-terminal VAR: 
+/*terminal VAR: 
 	"var"
-;
+;*/
 terminal IDENTIFIER:
 	LETTER (LETTER|("0".."9"))*
 ;
@@ -115,10 +115,10 @@ terminal INT_LIT:
     | ( '0' ('x'|"X") HEX_DIGIT+)
 ;
 
-FLOAT_LIT:
-	dECIMALS = DECIMALS "." (dECIMALS1 = DECIMALS )? ( eXPONENT = EXPONENT )? |
-    dECIMALS = DECIMALS eXPONENT = EXPONENT |
-   "." dECIMALS = DECIMALS ( eXPONENT = EXPONENT )? 
+terminal FLOAT_LIT:
+	DECIMALS "." (DECIMALS)? (EXPONENT)? |
+    DECIMALS EXPONENT |
+   "." DECIMALS (EXPONENT)? 
 ;
 
 terminal DECIMALS:
@@ -129,8 +129,8 @@ terminal EXPONENT:
     ("e"|"E")('+'|'-')? DECIMALS
 ;
 
-IMAGINARY_LIT:
-	(dECIMALS = DECIMALS | fLOAT_LIT = FLOAT_LIT) "i" 
+terminal IMAGINARY_LIT:
+	(DECIMALS |FLOAT_LIT)"i"
 ;
 
 terminal RUNE_LIT:
@@ -339,7 +339,7 @@ TypeDef:
 ;
 
 VarDecl: 
-	VAR ( varSpec = VarSpec | "(" varSpec1 += (VarSpec)* ")" )
+	var = "var" ( varSpec = VarSpec | "(" varSpec1 += (VarSpec)* ")" )
 ;
 
 VarSpec: 
@@ -479,7 +479,7 @@ Expression_Linha:
 ;
 
 UnaryExpr: 
-	primaryExpr = PrimaryExpr | UNARY_OP unaryExpr = UnaryExpr
+	unary_op += ("+" | "-" | "!" | "^" | "*" | "&" | "<-" )+ primaryExpr = PrimaryExpr | primaryExpr = PrimaryExpr
 ;
 
 BINARY_OP: 
@@ -495,9 +495,9 @@ terminal ADD_OP :
 terminal MUL_OP :
 	"*" | "/" | "%" | "<<" | ">>" | "&" | "&^"
 ;
-terminal UNARY_OP: 
-	"+" | "-" | "!" | "^" | "*" | "&" | "<-" 
-;
+//terminal UNARY_OP: 
+	//"+" | "-" | "!" | "^" | "*" | "&" | "<-" 
+//;
 
 Conversion: 
 	type = Type "(" expression = Expression ( "," )? ")"
@@ -564,22 +564,22 @@ IfStmtLinha:
 ;
 
 SwitchStmt:
-	switch = SWITCH ( simpleStmt = SimpleStmt ";")? switchStmtLinha = SwitchStmtLinha
+	exprSwitchStmt =  ExprSwitchStmt | typeSwitchStmt= TypeSwitchStmt
 ;
 
-SwitchStmtLinha:
+/*SwitchStmtLinha:
 	primaryExpr = PrimaryExpr switchStmtLinhaLinha = SwitchStmtLinhaLinha |
-	((unary_op = UNARY_OP unaryExpr = UnaryExpr) expression = Expression_Linha)? "{" exprCaseClause += ( ExprCaseClause )* "}" | 
+	((unary_op = ("+" | "-" | "!" | "^" | "*" | "&" | "<-" ) unaryExpr = UnaryExpr) expression = Expression_Linha)? "{" exprCaseClause += ( ExprCaseClause )* "}" | 
 	(id = IDENTIFIER ":=") primaryExpr = PrimaryExpr "." "(" typekeyword = 'type' ")" "{" typeCaseClause += (TypeCaseClause)* "}"
 ;
 
 SwitchStmtLinhaLinha:
 	"{" exprCaseClause += ( ExprCaseClause )* "}" | "." "(" typekeyword = 'type' ")" "{"  typeCaseClause += (TypeCaseClause)* "}"
-;
-
-/*ExprSwitchStmt:
-	SWITCH (SimpleStmt ";")? (Expression)? "{" ( ExprCaseClause )* "}"
 ;*/
+
+ExprSwitchStmt:
+	switch = SWITCH (simpleStmt = SimpleStmt ";")? (expression= Expression)? "{" ( exprCaseClause += ExprCaseClause )* "}"
+;
 
 ExprCaseClause:
 	exprSwitchCase = ExprSwitchCase ":" statementList = StatementList
@@ -589,13 +589,13 @@ ExprSwitchCase:
 	case = CASE expressionList = ExpressionList | default = DEFAULT
 ;
 
-/*TypeSwitchStmt:
-	SWITCH (SimpleStmt ";")? TypeSwitchGuard "{" (TypeCaseClause)* "}"	
-;*/
+TypeSwitchStmt:
+	SWITCH (simpleStmt = SimpleStmt ";")? typeSwitchGuard = TypeSwitchGuard "{" (typeCaseClause += TypeCaseClause)* "}"	
+;
 
-/*TypeSwitchGuard:
-	(IDENTIFIER ":=")? PrimaryExpr "." "(" TYPEKEYWORD ")"
-;*/
+TypeSwitchGuard:
+	(id = IDENTIFIER ":=")? primaryExpr = PrimaryExpr "." "(" type = "type" ")"
+;
 
 
 TypeCaseClause:

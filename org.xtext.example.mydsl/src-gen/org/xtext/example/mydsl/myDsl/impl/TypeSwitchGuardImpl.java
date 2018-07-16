@@ -3,12 +3,8 @@
  */
 package org.xtext.example.mydsl.myDsl.impl;
 
-import java.util.Collection;
-
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
@@ -16,37 +12,46 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EDataTypeEList;
-
 import org.xtext.example.mydsl.myDsl.MyDslPackage;
 import org.xtext.example.mydsl.myDsl.PrimaryExpr;
-import org.xtext.example.mydsl.myDsl.UnaryExpr;
+import org.xtext.example.mydsl.myDsl.TypeSwitchGuard;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Unary Expr</b></em>'.
+ * An implementation of the model object '<em><b>Type Switch Guard</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.xtext.example.mydsl.myDsl.impl.UnaryExprImpl#getUnary_op <em>Unary op</em>}</li>
- *   <li>{@link org.xtext.example.mydsl.myDsl.impl.UnaryExprImpl#getPrimaryExpr <em>Primary Expr</em>}</li>
+ *   <li>{@link org.xtext.example.mydsl.myDsl.impl.TypeSwitchGuardImpl#getId <em>Id</em>}</li>
+ *   <li>{@link org.xtext.example.mydsl.myDsl.impl.TypeSwitchGuardImpl#getPrimaryExpr <em>Primary Expr</em>}</li>
+ *   <li>{@link org.xtext.example.mydsl.myDsl.impl.TypeSwitchGuardImpl#getType <em>Type</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class UnaryExprImpl extends MinimalEObjectImpl.Container implements UnaryExpr
+public class TypeSwitchGuardImpl extends MinimalEObjectImpl.Container implements TypeSwitchGuard
 {
   /**
-   * The cached value of the '{@link #getUnary_op() <em>Unary op</em>}' attribute list.
+   * The default value of the '{@link #getId() <em>Id</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getUnary_op()
+   * @see #getId()
    * @generated
    * @ordered
    */
-  protected EList<String> unary_op;
+  protected static final String ID_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getId() <em>Id</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getId()
+   * @generated
+   * @ordered
+   */
+  protected String id = ID_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getPrimaryExpr() <em>Primary Expr</em>}' containment reference.
@@ -59,11 +64,31 @@ public class UnaryExprImpl extends MinimalEObjectImpl.Container implements Unary
   protected PrimaryExpr primaryExpr;
 
   /**
+   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getType()
+   * @generated
+   * @ordered
+   */
+  protected static final String TYPE_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getType() <em>Type</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getType()
+   * @generated
+   * @ordered
+   */
+  protected String type = TYPE_EDEFAULT;
+
+  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected UnaryExprImpl()
+  protected TypeSwitchGuardImpl()
   {
     super();
   }
@@ -76,7 +101,7 @@ public class UnaryExprImpl extends MinimalEObjectImpl.Container implements Unary
   @Override
   protected EClass eStaticClass()
   {
-    return MyDslPackage.Literals.UNARY_EXPR;
+    return MyDslPackage.Literals.TYPE_SWITCH_GUARD;
   }
 
   /**
@@ -84,13 +109,22 @@ public class UnaryExprImpl extends MinimalEObjectImpl.Container implements Unary
    * <!-- end-user-doc -->
    * @generated
    */
-  public EList<String> getUnary_op()
+  public String getId()
   {
-    if (unary_op == null)
-    {
-      unary_op = new EDataTypeEList<String>(String.class, this, MyDslPackage.UNARY_EXPR__UNARY_OP);
-    }
-    return unary_op;
+    return id;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setId(String newId)
+  {
+    String oldId = id;
+    id = newId;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, MyDslPackage.TYPE_SWITCH_GUARD__ID, oldId, id));
   }
 
   /**
@@ -114,7 +148,7 @@ public class UnaryExprImpl extends MinimalEObjectImpl.Container implements Unary
     primaryExpr = newPrimaryExpr;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MyDslPackage.UNARY_EXPR__PRIMARY_EXPR, oldPrimaryExpr, newPrimaryExpr);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MyDslPackage.TYPE_SWITCH_GUARD__PRIMARY_EXPR, oldPrimaryExpr, newPrimaryExpr);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -131,14 +165,37 @@ public class UnaryExprImpl extends MinimalEObjectImpl.Container implements Unary
     {
       NotificationChain msgs = null;
       if (primaryExpr != null)
-        msgs = ((InternalEObject)primaryExpr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MyDslPackage.UNARY_EXPR__PRIMARY_EXPR, null, msgs);
+        msgs = ((InternalEObject)primaryExpr).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MyDslPackage.TYPE_SWITCH_GUARD__PRIMARY_EXPR, null, msgs);
       if (newPrimaryExpr != null)
-        msgs = ((InternalEObject)newPrimaryExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MyDslPackage.UNARY_EXPR__PRIMARY_EXPR, null, msgs);
+        msgs = ((InternalEObject)newPrimaryExpr).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MyDslPackage.TYPE_SWITCH_GUARD__PRIMARY_EXPR, null, msgs);
       msgs = basicSetPrimaryExpr(newPrimaryExpr, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MyDslPackage.UNARY_EXPR__PRIMARY_EXPR, newPrimaryExpr, newPrimaryExpr));
+      eNotify(new ENotificationImpl(this, Notification.SET, MyDslPackage.TYPE_SWITCH_GUARD__PRIMARY_EXPR, newPrimaryExpr, newPrimaryExpr));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getType()
+  {
+    return type;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setType(String newType)
+  {
+    String oldType = type;
+    type = newType;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, MyDslPackage.TYPE_SWITCH_GUARD__TYPE, oldType, type));
   }
 
   /**
@@ -151,7 +208,7 @@ public class UnaryExprImpl extends MinimalEObjectImpl.Container implements Unary
   {
     switch (featureID)
     {
-      case MyDslPackage.UNARY_EXPR__PRIMARY_EXPR:
+      case MyDslPackage.TYPE_SWITCH_GUARD__PRIMARY_EXPR:
         return basicSetPrimaryExpr(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -167,10 +224,12 @@ public class UnaryExprImpl extends MinimalEObjectImpl.Container implements Unary
   {
     switch (featureID)
     {
-      case MyDslPackage.UNARY_EXPR__UNARY_OP:
-        return getUnary_op();
-      case MyDslPackage.UNARY_EXPR__PRIMARY_EXPR:
+      case MyDslPackage.TYPE_SWITCH_GUARD__ID:
+        return getId();
+      case MyDslPackage.TYPE_SWITCH_GUARD__PRIMARY_EXPR:
         return getPrimaryExpr();
+      case MyDslPackage.TYPE_SWITCH_GUARD__TYPE:
+        return getType();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -180,18 +239,19 @@ public class UnaryExprImpl extends MinimalEObjectImpl.Container implements Unary
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case MyDslPackage.UNARY_EXPR__UNARY_OP:
-        getUnary_op().clear();
-        getUnary_op().addAll((Collection<? extends String>)newValue);
+      case MyDslPackage.TYPE_SWITCH_GUARD__ID:
+        setId((String)newValue);
         return;
-      case MyDslPackage.UNARY_EXPR__PRIMARY_EXPR:
+      case MyDslPackage.TYPE_SWITCH_GUARD__PRIMARY_EXPR:
         setPrimaryExpr((PrimaryExpr)newValue);
+        return;
+      case MyDslPackage.TYPE_SWITCH_GUARD__TYPE:
+        setType((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -207,11 +267,14 @@ public class UnaryExprImpl extends MinimalEObjectImpl.Container implements Unary
   {
     switch (featureID)
     {
-      case MyDslPackage.UNARY_EXPR__UNARY_OP:
-        getUnary_op().clear();
+      case MyDslPackage.TYPE_SWITCH_GUARD__ID:
+        setId(ID_EDEFAULT);
         return;
-      case MyDslPackage.UNARY_EXPR__PRIMARY_EXPR:
+      case MyDslPackage.TYPE_SWITCH_GUARD__PRIMARY_EXPR:
         setPrimaryExpr((PrimaryExpr)null);
+        return;
+      case MyDslPackage.TYPE_SWITCH_GUARD__TYPE:
+        setType(TYPE_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -227,10 +290,12 @@ public class UnaryExprImpl extends MinimalEObjectImpl.Container implements Unary
   {
     switch (featureID)
     {
-      case MyDslPackage.UNARY_EXPR__UNARY_OP:
-        return unary_op != null && !unary_op.isEmpty();
-      case MyDslPackage.UNARY_EXPR__PRIMARY_EXPR:
+      case MyDslPackage.TYPE_SWITCH_GUARD__ID:
+        return ID_EDEFAULT == null ? id != null : !ID_EDEFAULT.equals(id);
+      case MyDslPackage.TYPE_SWITCH_GUARD__PRIMARY_EXPR:
         return primaryExpr != null;
+      case MyDslPackage.TYPE_SWITCH_GUARD__TYPE:
+        return TYPE_EDEFAULT == null ? type != null : !TYPE_EDEFAULT.equals(type);
     }
     return super.eIsSet(featureID);
   }
@@ -246,10 +311,12 @@ public class UnaryExprImpl extends MinimalEObjectImpl.Container implements Unary
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (unary_op: ");
-    result.append(unary_op);
+    result.append(" (id: ");
+    result.append(id);
+    result.append(", type: ");
+    result.append(type);
     result.append(')');
     return result.toString();
   }
 
-} //UnaryExprImpl
+} //TypeSwitchGuardImpl

@@ -66,8 +66,6 @@ public class MyDslFactoryImpl extends EFactoryImpl implements MyDslFactory
     switch (eClass.getClassifierID())
     {
       case MyDslPackage.MODEL: return createModel();
-      case MyDslPackage.FLOAT_LIT: return createFLOAT_LIT();
-      case MyDslPackage.IMAGINARY_LIT: return createIMAGINARY_LIT();
       case MyDslPackage.TYPE: return createType();
       case MyDslPackage.TYPE_NAME: return createTypeName();
       case MyDslPackage.TYPE_NAME_LINHA: return createTypeNameLinha();
@@ -153,10 +151,11 @@ public class MyDslFactoryImpl extends EFactoryImpl implements MyDslFactory
       case MyDslPackage.IF_STMT: return createIfStmt();
       case MyDslPackage.IF_STMT_LINHA: return createIfStmtLinha();
       case MyDslPackage.SWITCH_STMT: return createSwitchStmt();
-      case MyDslPackage.SWITCH_STMT_LINHA: return createSwitchStmtLinha();
-      case MyDslPackage.SWITCH_STMT_LINHA_LINHA: return createSwitchStmtLinhaLinha();
+      case MyDslPackage.EXPR_SWITCH_STMT: return createExprSwitchStmt();
       case MyDslPackage.EXPR_CASE_CLAUSE: return createExprCaseClause();
       case MyDslPackage.EXPR_SWITCH_CASE: return createExprSwitchCase();
+      case MyDslPackage.TYPE_SWITCH_STMT: return createTypeSwitchStmt();
+      case MyDslPackage.TYPE_SWITCH_GUARD: return createTypeSwitchGuard();
       case MyDslPackage.TYPE_CASE_CLAUSE: return createTypeCaseClause();
       case MyDslPackage.TYPE_SWITCH_CASE: return createTypeSwitchCase();
       case MyDslPackage.TYPE_LIST: return createTypeList();
@@ -196,28 +195,6 @@ public class MyDslFactoryImpl extends EFactoryImpl implements MyDslFactory
   {
     ModelImpl model = new ModelImpl();
     return model;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public FLOAT_LIT createFLOAT_LIT()
-  {
-    FLOAT_LITImpl floaT_LIT = new FLOAT_LITImpl();
-    return floaT_LIT;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public IMAGINARY_LIT createIMAGINARY_LIT()
-  {
-    IMAGINARY_LITImpl imaginarY_LIT = new IMAGINARY_LITImpl();
-    return imaginarY_LIT;
   }
 
   /**
@@ -1160,21 +1137,10 @@ public class MyDslFactoryImpl extends EFactoryImpl implements MyDslFactory
    * <!-- end-user-doc -->
    * @generated
    */
-  public SwitchStmtLinha createSwitchStmtLinha()
+  public ExprSwitchStmt createExprSwitchStmt()
   {
-    SwitchStmtLinhaImpl switchStmtLinha = new SwitchStmtLinhaImpl();
-    return switchStmtLinha;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public SwitchStmtLinhaLinha createSwitchStmtLinhaLinha()
-  {
-    SwitchStmtLinhaLinhaImpl switchStmtLinhaLinha = new SwitchStmtLinhaLinhaImpl();
-    return switchStmtLinhaLinha;
+    ExprSwitchStmtImpl exprSwitchStmt = new ExprSwitchStmtImpl();
+    return exprSwitchStmt;
   }
 
   /**
@@ -1197,6 +1163,28 @@ public class MyDslFactoryImpl extends EFactoryImpl implements MyDslFactory
   {
     ExprSwitchCaseImpl exprSwitchCase = new ExprSwitchCaseImpl();
     return exprSwitchCase;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TypeSwitchStmt createTypeSwitchStmt()
+  {
+    TypeSwitchStmtImpl typeSwitchStmt = new TypeSwitchStmtImpl();
+    return typeSwitchStmt;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public TypeSwitchGuard createTypeSwitchGuard()
+  {
+    TypeSwitchGuardImpl typeSwitchGuard = new TypeSwitchGuardImpl();
+    return typeSwitchGuard;
   }
 
   /**

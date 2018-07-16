@@ -4,17 +4,13 @@
 package org.xtext.example.mydsl.myDsl.impl;
 
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
-import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.xtext.example.mydsl.myDsl.BasicLit;
-import org.xtext.example.mydsl.myDsl.FLOAT_LIT;
-import org.xtext.example.mydsl.myDsl.IMAGINARY_LIT;
 import org.xtext.example.mydsl.myDsl.MyDslPackage;
 
 /**
@@ -57,24 +53,44 @@ public class BasicLitImpl extends MinimalEObjectImpl.Container implements BasicL
   protected String int_lit = INT_LIT_EDEFAULT;
 
   /**
-   * The cached value of the '{@link #getFloat_lit() <em>Float lit</em>}' containment reference.
+   * The default value of the '{@link #getFloat_lit() <em>Float lit</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getFloat_lit()
    * @generated
    * @ordered
    */
-  protected FLOAT_LIT float_lit;
+  protected static final String FLOAT_LIT_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getImaginary_lit() <em>Imaginary lit</em>}' containment reference.
+   * The cached value of the '{@link #getFloat_lit() <em>Float lit</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getFloat_lit()
+   * @generated
+   * @ordered
+   */
+  protected String float_lit = FLOAT_LIT_EDEFAULT;
+
+  /**
+   * The default value of the '{@link #getImaginary_lit() <em>Imaginary lit</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see #getImaginary_lit()
    * @generated
    * @ordered
    */
-  protected IMAGINARY_LIT imaginary_lit;
+  protected static final String IMAGINARY_LIT_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getImaginary_lit() <em>Imaginary lit</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getImaginary_lit()
+   * @generated
+   * @ordered
+   */
+  protected String imaginary_lit = IMAGINARY_LIT_EDEFAULT;
 
   /**
    * The default value of the '{@link #getRune_lit() <em>Rune lit</em>}' attribute.
@@ -165,7 +181,7 @@ public class BasicLitImpl extends MinimalEObjectImpl.Container implements BasicL
    * <!-- end-user-doc -->
    * @generated
    */
-  public FLOAT_LIT getFloat_lit()
+  public String getFloat_lit()
   {
     return float_lit;
   }
@@ -175,16 +191,12 @@ public class BasicLitImpl extends MinimalEObjectImpl.Container implements BasicL
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetFloat_lit(FLOAT_LIT newFloat_lit, NotificationChain msgs)
+  public void setFloat_lit(String newFloat_lit)
   {
-    FLOAT_LIT oldFloat_lit = float_lit;
+    String oldFloat_lit = float_lit;
     float_lit = newFloat_lit;
     if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MyDslPackage.BASIC_LIT__FLOAT_LIT, oldFloat_lit, newFloat_lit);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
+      eNotify(new ENotificationImpl(this, Notification.SET, MyDslPackage.BASIC_LIT__FLOAT_LIT, oldFloat_lit, float_lit));
   }
 
   /**
@@ -192,28 +204,7 @@ public class BasicLitImpl extends MinimalEObjectImpl.Container implements BasicL
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setFloat_lit(FLOAT_LIT newFloat_lit)
-  {
-    if (newFloat_lit != float_lit)
-    {
-      NotificationChain msgs = null;
-      if (float_lit != null)
-        msgs = ((InternalEObject)float_lit).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MyDslPackage.BASIC_LIT__FLOAT_LIT, null, msgs);
-      if (newFloat_lit != null)
-        msgs = ((InternalEObject)newFloat_lit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MyDslPackage.BASIC_LIT__FLOAT_LIT, null, msgs);
-      msgs = basicSetFloat_lit(newFloat_lit, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MyDslPackage.BASIC_LIT__FLOAT_LIT, newFloat_lit, newFloat_lit));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public IMAGINARY_LIT getImaginary_lit()
+  public String getImaginary_lit()
   {
     return imaginary_lit;
   }
@@ -223,37 +214,12 @@ public class BasicLitImpl extends MinimalEObjectImpl.Container implements BasicL
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetImaginary_lit(IMAGINARY_LIT newImaginary_lit, NotificationChain msgs)
+  public void setImaginary_lit(String newImaginary_lit)
   {
-    IMAGINARY_LIT oldImaginary_lit = imaginary_lit;
+    String oldImaginary_lit = imaginary_lit;
     imaginary_lit = newImaginary_lit;
     if (eNotificationRequired())
-    {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MyDslPackage.BASIC_LIT__IMAGINARY_LIT, oldImaginary_lit, newImaginary_lit);
-      if (msgs == null) msgs = notification; else msgs.add(notification);
-    }
-    return msgs;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setImaginary_lit(IMAGINARY_LIT newImaginary_lit)
-  {
-    if (newImaginary_lit != imaginary_lit)
-    {
-      NotificationChain msgs = null;
-      if (imaginary_lit != null)
-        msgs = ((InternalEObject)imaginary_lit).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MyDslPackage.BASIC_LIT__IMAGINARY_LIT, null, msgs);
-      if (newImaginary_lit != null)
-        msgs = ((InternalEObject)newImaginary_lit).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MyDslPackage.BASIC_LIT__IMAGINARY_LIT, null, msgs);
-      msgs = basicSetImaginary_lit(newImaginary_lit, msgs);
-      if (msgs != null) msgs.dispatch();
-    }
-    else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MyDslPackage.BASIC_LIT__IMAGINARY_LIT, newImaginary_lit, newImaginary_lit));
+      eNotify(new ENotificationImpl(this, Notification.SET, MyDslPackage.BASIC_LIT__IMAGINARY_LIT, oldImaginary_lit, imaginary_lit));
   }
 
   /**
@@ -308,24 +274,6 @@ public class BasicLitImpl extends MinimalEObjectImpl.Container implements BasicL
    * @generated
    */
   @Override
-  public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
-  {
-    switch (featureID)
-    {
-      case MyDslPackage.BASIC_LIT__FLOAT_LIT:
-        return basicSetFloat_lit(null, msgs);
-      case MyDslPackage.BASIC_LIT__IMAGINARY_LIT:
-        return basicSetImaginary_lit(null, msgs);
-    }
-    return super.eInverseRemove(otherEnd, featureID, msgs);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
@@ -358,10 +306,10 @@ public class BasicLitImpl extends MinimalEObjectImpl.Container implements BasicL
         setInt_lit((String)newValue);
         return;
       case MyDslPackage.BASIC_LIT__FLOAT_LIT:
-        setFloat_lit((FLOAT_LIT)newValue);
+        setFloat_lit((String)newValue);
         return;
       case MyDslPackage.BASIC_LIT__IMAGINARY_LIT:
-        setImaginary_lit((IMAGINARY_LIT)newValue);
+        setImaginary_lit((String)newValue);
         return;
       case MyDslPackage.BASIC_LIT__RUNE_LIT:
         setRune_lit((String)newValue);
@@ -387,10 +335,10 @@ public class BasicLitImpl extends MinimalEObjectImpl.Container implements BasicL
         setInt_lit(INT_LIT_EDEFAULT);
         return;
       case MyDslPackage.BASIC_LIT__FLOAT_LIT:
-        setFloat_lit((FLOAT_LIT)null);
+        setFloat_lit(FLOAT_LIT_EDEFAULT);
         return;
       case MyDslPackage.BASIC_LIT__IMAGINARY_LIT:
-        setImaginary_lit((IMAGINARY_LIT)null);
+        setImaginary_lit(IMAGINARY_LIT_EDEFAULT);
         return;
       case MyDslPackage.BASIC_LIT__RUNE_LIT:
         setRune_lit(RUNE_LIT_EDEFAULT);
@@ -415,9 +363,9 @@ public class BasicLitImpl extends MinimalEObjectImpl.Container implements BasicL
       case MyDslPackage.BASIC_LIT__INT_LIT:
         return INT_LIT_EDEFAULT == null ? int_lit != null : !INT_LIT_EDEFAULT.equals(int_lit);
       case MyDslPackage.BASIC_LIT__FLOAT_LIT:
-        return float_lit != null;
+        return FLOAT_LIT_EDEFAULT == null ? float_lit != null : !FLOAT_LIT_EDEFAULT.equals(float_lit);
       case MyDslPackage.BASIC_LIT__IMAGINARY_LIT:
-        return imaginary_lit != null;
+        return IMAGINARY_LIT_EDEFAULT == null ? imaginary_lit != null : !IMAGINARY_LIT_EDEFAULT.equals(imaginary_lit);
       case MyDslPackage.BASIC_LIT__RUNE_LIT:
         return RUNE_LIT_EDEFAULT == null ? rune_lit != null : !RUNE_LIT_EDEFAULT.equals(rune_lit);
       case MyDslPackage.BASIC_LIT__STRING_LIT:
@@ -439,6 +387,10 @@ public class BasicLitImpl extends MinimalEObjectImpl.Container implements BasicL
     StringBuffer result = new StringBuffer(super.toString());
     result.append(" (int_lit: ");
     result.append(int_lit);
+    result.append(", float_lit: ");
+    result.append(float_lit);
+    result.append(", imaginary_lit: ");
+    result.append(imaginary_lit);
     result.append(", rune_lit: ");
     result.append(rune_lit);
     result.append(", string_lit: ");

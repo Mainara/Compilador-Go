@@ -5,16 +5,6 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="greetings" upperBound="-1"
         eType="#//SourceFile" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FLOAT_LIT">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dECIMALS" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dECIMALS1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="eXPONENT" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IMAGINARY_LIT">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dECIMALS" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="fLOAT_LIT" eType="#//FLOAT_LIT"
-        containment="true"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Type">
     <eStructuralFeatures xsi:type="ecore:EReference" name="typeName" eType="#//TypeName"
         containment="true"/>
@@ -226,6 +216,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//Type" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="VarDecl">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="var" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="varSpec" eType="#//VarSpec"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="varSpec1" upperBound="-1"
@@ -291,10 +282,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BasicLit">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="int_lit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="float_lit" eType="#//FLOAT_LIT"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="imaginary_lit" eType="#//IMAGINARY_LIT"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="float_lit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="imaginary_lit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="rune_lit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="string_lit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
@@ -433,9 +422,9 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="UnaryExpr">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unary_op" unique="false"
+        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="primaryExpr" eType="#//PrimaryExpr"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="unaryExpr" eType="#//UnaryExpr"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BINARY_OP">
@@ -551,35 +540,19 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="SwitchStmt">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="exprSwitchStmt" eType="#//ExprSwitchStmt"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="typeSwitchStmt" eType="#//TypeSwitchStmt"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExprSwitchStmt">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="switch" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="simpleStmt" eType="#//SimpleStmt"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="switchStmtLinha" eType="#//SwitchStmtLinha"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SwitchStmtLinha">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="primaryExpr" eType="#//PrimaryExpr"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="switchStmtLinhaLinha" eType="#//SwitchStmtLinhaLinha"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unary_op" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="unaryExpr" eType="#//UnaryExpr"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//Expression_Linha"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//Expression"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="exprCaseClause" upperBound="-1"
         eType="#//ExprCaseClause" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="typekeyword" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="typeCaseClause" upperBound="-1"
-        eType="#//TypeCaseClause" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SwitchStmtLinhaLinha">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="exprCaseClause" upperBound="-1"
-        eType="#//ExprCaseClause" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="typekeyword" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="typeCaseClause" upperBound="-1"
-        eType="#//TypeCaseClause" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ExprCaseClause">
     <eStructuralFeatures xsi:type="ecore:EReference" name="exprSwitchCase" eType="#//ExprSwitchCase"
@@ -592,6 +565,20 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="expressionList" eType="#//ExpressionList"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="default" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TypeSwitchStmt">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="simpleStmt" eType="#//SimpleStmt"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="typeSwitchGuard" eType="#//TypeSwitchGuard"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="typeCaseClause" upperBound="-1"
+        eType="#//TypeCaseClause" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TypeSwitchGuard">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="primaryExpr" eType="#//PrimaryExpr"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TypeCaseClause">
     <eStructuralFeatures xsi:type="ecore:EReference" name="typeSwitchCase" eType="#//TypeSwitchCase"
