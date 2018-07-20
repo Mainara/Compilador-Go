@@ -3,15 +3,16 @@
  */
 package org.xtext.example.mydsl.validation
 
-import org.eclipse.xtext.validation.Check
-import org.xtext.example.mydsl.myDsl.Declaration
-import org.xtext.example.mydsl.myDsl.Expression
-import org.xtext.example.mydsl.myDsl.MethodDecl
-import org.xtext.example.mydsl.myDsl.MyDslPackage
-import java.util.Map
+import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
-import java.util.ArrayList
+import java.util.Map
+import org.eclipse.xtext.validation.Check
+import org.xtext.example.mydsl.myDsl.Declaration
+import org.xtext.example.mydsl.myDsl.ExprSwitchStmt
+import org.xtext.example.mydsl.myDsl.MethodDecl
+import org.xtext.example.mydsl.myDsl.MyDslPackage
+import org.xtext.example.mydsl.myDsl.SwitchStmt
 
 /**
  * This class contains custom validation rules. 
@@ -20,6 +21,7 @@ import java.util.ArrayList
  */
 class MyDslValidator extends AbstractMyDslValidator {
 	
+	SwitchValidator switchValidator = new SwitchValidator();
 	ConstDeclValidator constDeclValidator = new ConstDeclValidator();
 	MethodDeclValidator methodDeclValidator = new MethodDeclValidator();
 	VarDeclValidator varDeclValidator = new VarDeclValidator();
@@ -73,5 +75,13 @@ class MyDslValidator extends AbstractMyDslValidator {
 			
 		}
 	}*/
+	
+	@Check
+	def checkSwitchStmt(SwitchStmt switchStmt){
+		if (switchValidator.validaSwitchStmt(switchStmt) != null){
+			var String erro = switchValidator.validaSwitchStmt(switchStmt);
+			error(erro, MyDslPackage.Literals.SWITCH_STMT__TYPE_SWITCH_STMT);
+		}
+	}
 	
 }
