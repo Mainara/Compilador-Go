@@ -9,7 +9,6 @@ import org.xtext.example.mydsl.myDsl.TypeSwitchStmt;
 public class SwitchValidator {
 
 	public String validaSwitchStmt(SwitchStmt switchStmt) {
-		
 
 		if (switchStmt.getTypeSwitchStmt() != null) {
 			System.out.println("dentro type");
@@ -46,14 +45,20 @@ public class SwitchValidator {
 			tipo_tag = "int";
 		}
 
-
 		EList<ExprCaseClause> caseClauses = switchStmt.getExprCaseClause();
-
+		
 		for (int i = 0; i < caseClauses.size(); i++) {
-			System.out.println(caseClauses.get(i).getExprSwitchCase().getExpressionList().getExpression().getUnaryExpr()
-					.getPrimaryExpr().getOperand().getLiteral().getBasicLit().getFloat_lit());
 			String tipo_case = "";
-			if (caseClauses.get(i).getExprSwitchCase().getExpressionList().getExpression().getUnaryExpr()
+			if (caseClauses.get(i).getExprSwitchCase().getExpressionList().getExpression().getUnaryExpr().getPrimaryExpr().getOperand().getLiteral() == null) {
+				if (caseClauses.get(i).getExprSwitchCase().getExpressionList().getExpression().getUnaryExpr().getPrimaryExpr().getOperand().getOperandName().getId()
+						.equals("true")
+						|| caseClauses.get(i).getExprSwitchCase().getExpressionList().getExpression().getUnaryExpr().getPrimaryExpr().getOperand().getOperandName()
+								.getId().equals("false")) {
+					System.out.println("entrou em bool");
+					tipo_case = "bool";
+
+				}
+			} else if (caseClauses.get(i).getExprSwitchCase().getExpressionList().getExpression().getUnaryExpr()
 					.getPrimaryExpr().getOperand().getLiteral().getBasicLit().getFloat_lit() != null) {
 				tipo_case = "float";
 			} else if (caseClauses.get(i).getExprSwitchCase().getExpressionList().getExpression().getUnaryExpr()
