@@ -18,6 +18,7 @@ import org.xtext.example.mydsl.myDsl.TypeDef
 import org.xtext.example.mydsl.myDsl.TypeSpec
 import org.xtext.example.mydsl.myDsl.VarDecl
 import org.xtext.example.mydsl.myDsl.VarSpec
+import org.xtext.example.mydsl.myDsl.Expression
 
 /**
  * Generates code from your model files on save.
@@ -25,34 +26,34 @@ import org.xtext.example.mydsl.myDsl.VarSpec
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
  */
 class MyDslGenerator extends AbstractGenerator {
-	
+
 	Integer countVar = 1;
 	Integer countaddr = 0;
-	
+
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		countVar = 1;
 		countaddr = 0;
 		for (e : resource.allContents.toIterable.filter(TopLevelDecl)) {
-                fsa.generateFile(e.declaration.toString() + ".txt", e.compile)
-        }
+			fsa.generateFile(e.declaration.toString() + ".txt", e.compile)
+		}
 //		fsa.generateFile('greetings.txt', 'People to greet: ' + 
 //			resource.allContents
 //				.filter(typeof(Greeting))
 //				.map[name]
 //				.join(', '))
 	}
-	
-	def compile(TopLevelDecl topDecl)'''
+
+	def compile(TopLevelDecl topDecl) '''
 		«countaddr»: LD SP, 1000
 		«nextAddress»
 		«IF topDecl.declaration instanceof Declaration»
-				«(topDecl.declaration as Declaration).genDeclaration»
+			«(topDecl.declaration as Declaration).genDeclaration»
 		«ELSEIF topDecl.methodDecl instanceof MethodDecl»
-				«(topDecl.declaration.constDecl as ConstDecl).genConst»
+			«(topDecl.declaration.constDecl as ConstDecl).genConst»
 		«ENDIF»	
 	'''
-	
-	def genType(TypeDecl typeDecl)'''
+
+	def genType(TypeDecl typeDecl) '''
 		«IF typeDecl.typeSpec != null»
 			«(typeDecl.typeSpec as TypeSpec).genTypeSpec»
 		«ELSEIF typeDecl.typeSpec1 != null»
@@ -61,41 +62,42 @@ class MyDslGenerator extends AbstractGenerator {
 			«ENDFOR»
 		«ENDIF»
 	'''
-	
-	def genTypeSpec(TypeSpec typeSpec)'''
+
+	def genTypeSpec(TypeSpec typeSpec) '''
 		«IF typeSpec.aliasDecl != null»
 			«(typeSpec.aliasDecl as AliasDecl).genAliasDecl»
-		«ELSEIF(typeSpec.typeDef != null)»
+		«ELSEIF (typeSpec.typeDef != null)»
 			«(typeSpec.typeDef as TypeDef).genTypeDef»
 		«ENDIF»
 	'''
-	
-	def genAliasDecl(AliasDecl aliasDecl)'''
+
+	def genAliasDecl(AliasDecl aliasDecl) '''
 		«IF !aliasDecl.id.empty»
 			«countaddr.toString()»: LD R«countVar.toString()», «aliasDecl.id»
 			«increment»
 			«nextAddress»
 		«ENDIF»
 	'''
-	
-	def genTypeDef(TypeDef typeDef)'''
+
+	def genTypeDef(TypeDef typeDef) '''
 		«IF !typeDef.id.empty»
-				«countaddr.toString()»: LD R«countVar.toString()», «typeDef.id»
-				«increment»
-				«nextAddress»
+			«countaddr.toString()»: LD R«countVar.toString()», «typeDef.id»
+			«increment»
+			«nextAddress»
 		«ENDIF»
 	'''
-	def genDeclaration(Declaration decl)'''
+
+	def genDeclaration(Declaration decl) '''
 		«IF decl.constDecl instanceof ConstDecl»
 			«(decl.constDecl as ConstDecl).genConst»
 		«ELSEIF decl.typeDecl instanceof TypeDecl»
 			«(decl.typeDecl as TypeDecl).genType»
 		«ELSEIF decl.varDecl instanceof VarDecl»
 			«(decl.varDecl as VarDecl).genVar»
-	«ENDIF»
+		«ENDIF»
 	'''
-	
-	def genVar(VarDecl varDecl)'''
+
+	def genVar(VarDecl varDecl) '''
 		«IF varDecl.varSpec != null»
 			«(varDecl.varSpec as VarSpec).genVarSpec»
 		«ELSEIF varDecl.varSpec1 != null»
@@ -104,8 +106,8 @@ class MyDslGenerator extends AbstractGenerator {
 			«ENDFOR»
 		«ENDIF»
 	'''
-	
-	def genVarSpec(VarSpec varSpec)'''
+
+	def genVarSpec(VarSpec varSpec) '''
 		«IF varSpec.expressionList != null»
 			«IF !varSpec.identifierList.id.empty»
 				«countaddr.toString()»: LD R«countVar.toString()», #TRUE
@@ -140,8 +142,8 @@ class MyDslGenerator extends AbstractGenerator {
 			«ENDIF»
 		«ENDIF»
 	'''
-	
-	def genConst(ConstDecl constDecl)'''
+
+	def genConst(ConstDecl constDecl) '''
 		«IF constDecl.constSpec != null»
 			«(constDecl.constSpec as ConstSpec).genConstSpec»
 		«ELSEIF constDecl.constSpec1 != null»
@@ -150,33 +152,29 @@ class MyDslGenerator extends AbstractGenerator {
 			«ENDFOR»
 		«ENDIF»
 	'''
-	
+
 	def genConstSpec(ConstSpec spec) '''
 		«IF spec.expressionList != null»
 			«IF !spec.identifierList.id.empty»
-				«countaddr.toString()»: LD R«countVar.toString()», #TRUE
-				«increment»
-				«nextAddress»
-				«countaddr.toString()»: ST «spec.identifierList.id», R«new Integer(countVar-1).toString()»
-				«nextAddress»
+				«genExpression(spec.expressionList.expression, spec.identifierList.id)»
 			«ENDIF»
-		
-			«IF spec.identifierList.id1 != null»
-				«FOR id: spec.identifierList.id1»
-					«countaddr.toString()»: LD R«countVar.toString()», #TRUE
-					«increment»
-					«nextAddress»
-					«countaddr.toString()»: ST «id», R«new Integer(countVar-1).toString()»
-					«nextAddress»
-				«ENDFOR»
-			«ENDIF»
+			
+				«IF spec.identifierList.id1 != null»
+					«FOR id: spec.identifierList.id1»
+						«countaddr.toString()»: LD R«countVar.toString()», #TRUE
+						«increment»
+						«nextAddress»
+						«countaddr.toString()»: ST «id», R«new Integer(countVar-1).toString()»
+						«nextAddress»
+					«ENDFOR»
+				«ENDIF»
 		«ELSE»
 			«IF !spec.identifierList.id.empty»
 				«countaddr.toString()»: LD R«countVar.toString()», «spec.identifierList.id»
 				«increment»
 				«nextAddress»
 			«ENDIF»
-					
+			
 			«IF spec.identifierList.id1 != null»
 				«FOR id: spec.identifierList.id1»
 					«countaddr.toString()»: LD R«countVar.toString()», «id»
@@ -184,16 +182,341 @@ class MyDslGenerator extends AbstractGenerator {
 					«nextAddress»
 				«ENDFOR»
 			«ENDIF»
-	«ENDIF»
+		«ENDIF»
 	'''
-	
+
 	def void nextAddress() {
 		countaddr = countaddr + 8;
 	}
-	
+
 	def void increment() {
 		countVar++;
 	}
+
+	def genExpression(Expression exp, String name) '''
+		«IF exp.expression_Linha.BINARY_OP.REL_OP != null»
+			«genExpressionRelop(exp, name)»
+		«ENDIF»
+	'''
+
+	def genExpressionRelop(Expression exp, String name) '''
+		«IF exp.expression_Linha.BINARY_OP.REL_OP.equals("==")»
+			«genExpressionEquals(name, exp)»
+		«ELSEIF exp.expression_Linha.BINARY_OP.REL_OP.equals("!=")»
+			«genExpressionNotEquals(name, exp)»
+		«ELSEIF exp.expression_Linha.BINARY_OP.REL_OP.equals(">")»
+			«genExpressionMaior(name, exp)»
+		«ELSEIF exp.expression_Linha.BINARY_OP.REL_OP.equals("<")»
+			«genExpressionMenor(name, exp)»
+		«ELSEIF exp.expression_Linha.BINARY_OP.REL_OP.equals(">=")»
+			«genExpressionMaiorIgual(name, exp)»
+		«ELSE»
+			«genExpressionMenorIgual(name, exp)»
+		«ENDIF»
+			
+	'''
+	
+	def genExpressionMaior(String name, Expression exp)'''
+	«IF exp.unaryExpr.primaryExpr.operand.literal.basicLit.string_lit != null»
+				«countaddr.toString()»: LD R«countVar.toString()», «exp.unaryExpr.primaryExpr.operand.literal.basicLit.string_lit»
+				«increment»
+				«nextAddress»
+				«countaddr.toString()»: LD R«countVar.toString()», «exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand.literal.basicLit.string_lit»
+				«increment»
+				«nextAddress»
+				«countaddr.toString()»: SUB R«countVar.toString()», R«new Integer(countVar-1).toString()» , R«new Integer(countVar-2).toString()»
+				«increment»
+				«nextAddress»
+				«countaddr.toString()»: BGTZ R«(countVar-1).toString()», #ATRIBTRUE
+				«countaddr.toString()»: ST «name», false
+				 #ATRIBTRUE:
+				 	«countaddr.toString()»: ST «name», true
+			«ELSEIF exp.unaryExpr.primaryExpr.operand.literal.basicLit.int_lit != null»
+				«countaddr.toString()»: LD R«countVar.toString()», «exp.unaryExpr.primaryExpr.operand.literal.basicLit.int_lit»
+				«increment»
+				«nextAddress»
+				«countaddr.toString()»: LD R«countVar.toString()», «exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand.literal.basicLit.int_lit»
+				«increment»
+				«nextAddress»
+				«countaddr.toString()»: SUB R«countVar.toString()», R«new Integer(countVar-1).toString()» , R«new Integer(countVar-2).toString()»
+				«increment»
+				«nextAddress»
+				«countaddr.toString()»: BGTZ R«(countVar-1).toString()», #ATRIBTRUE
+				«countaddr.toString()»: ST «name», false
+				#ATRIBTRUE:
+					«countaddr.toString()»: ST «name», true
+			«ELSEIF exp.unaryExpr.primaryExpr.operand.literal.basicLit.float_lit != null»
+				«countaddr.toString()»: LD R«countVar.toString()», «exp.unaryExpr.primaryExpr.operand.literal.basicLit.float_lit»
+				«increment»
+				«nextAddress»
+				«countaddr.toString()»: LD R«countVar.toString()», «exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand.literal.basicLit.float_lit»
+				«increment»
+				«nextAddress»
+				«countaddr.toString()»: SUB R«countVar.toString()», R«new Integer(countVar-1).toString()» , R«new Integer(countVar-2).toString()»
+				«increment»
+				«nextAddress»
+				«countaddr.toString()»: BGTZ R«(countVar-1).toString()», #ATRIBTRUE
+				«countaddr.toString()»: ST «name», false
+				#ATRIBTRUE:
+				«countaddr.toString()»: ST «name», true
+			«ENDIF»
+	'''
+	
+	def genExpressionMenor(String name, Expression exp)'''
+		«IF exp.unaryExpr.primaryExpr.operand.literal.basicLit.string_lit != null»
+						«countaddr.toString()»: LD R«countVar.toString()», «exp.unaryExpr.primaryExpr.operand.literal.basicLit.string_lit»
+						«increment»
+						«nextAddress»
+						«countaddr.toString()»: LD R«countVar.toString()», «exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand.literal.basicLit.string_lit»
+						«increment»
+						«nextAddress»
+						«countaddr.toString()»: SUB R«countVar.toString()», R«new Integer(countVar-1).toString()» , R«new Integer(countVar-2).toString()»
+						«increment»
+						«nextAddress»
+						«countaddr.toString()»: BLTZ R«(countVar-1).toString()», #ATRIBTRUE
+						«countaddr.toString()»: ST «name», false
+						 #ATRIBTRUE:
+						 	«countaddr.toString()»: ST «name», true
+					«ELSEIF exp.unaryExpr.primaryExpr.operand.literal.basicLit.int_lit != null»
+						«countaddr.toString()»: LD R«countVar.toString()», «exp.unaryExpr.primaryExpr.operand.literal.basicLit.int_lit»
+						«increment»
+						«nextAddress»
+						«countaddr.toString()»: LD R«countVar.toString()», «exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand.literal.basicLit.int_lit»
+						«increment»
+						«nextAddress»
+						«countaddr.toString()»: SUB R«countVar.toString()», R«new Integer(countVar-1).toString()» , R«new Integer(countVar-2).toString()»
+						«increment»
+						«nextAddress»
+						«countaddr.toString()»: BLTZ R«(countVar-1).toString()», #ATRIBTRUE
+						«countaddr.toString()»: ST «name», false
+						#ATRIBTRUE:
+							«countaddr.toString()»: ST «name», true
+					«ELSEIF exp.unaryExpr.primaryExpr.operand.literal.basicLit.float_lit != null»
+						«countaddr.toString()»: LD R«countVar.toString()», «exp.unaryExpr.primaryExpr.operand.literal.basicLit.float_lit»
+						«increment»
+						«nextAddress»
+						«countaddr.toString()»: LD R«countVar.toString()», «exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand.literal.basicLit.float_lit»
+						«increment»
+						«nextAddress»
+						«countaddr.toString()»: SUB R«countVar.toString()», R«new Integer(countVar-1).toString()» , R«new Integer(countVar-2).toString()»
+						«increment»
+						«nextAddress»
+						«countaddr.toString()»: BLTZ R«(countVar-1).toString()», #ATRIBTRUE
+						«countaddr.toString()»: ST «name», false
+						#ATRIBTRUE:
+						«countaddr.toString()»: ST «name», true
+					«ENDIF»
+	'''
+	
+	def genExpressionMaiorIgual(String name, Expression exp)'''
+	«IF exp.unaryExpr.primaryExpr.operand.literal.basicLit.string_lit != null»
+					«countaddr.toString()»: LD R«countVar.toString()», «exp.unaryExpr.primaryExpr.operand.literal.basicLit.string_lit»
+					«increment»
+					«nextAddress»
+					«countaddr.toString()»: LD R«countVar.toString()», «exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand.literal.basicLit.string_lit»
+					«increment»
+					«nextAddress»
+					«countaddr.toString()»: SUB R«countVar.toString()», R«new Integer(countVar-1).toString()» , R«new Integer(countVar-2).toString()»
+					«increment»
+					«nextAddress»
+					«countaddr.toString()»: BGEZ R«(countVar-1).toString()», #ATRIBTRUE
+					«countaddr.toString()»: ST «name», false
+					 #ATRIBTRUE:
+					 	«countaddr.toString()»: ST «name», true
+				«ELSEIF exp.unaryExpr.primaryExpr.operand.literal.basicLit.int_lit != null»
+					«countaddr.toString()»: LD R«countVar.toString()», «exp.unaryExpr.primaryExpr.operand.literal.basicLit.int_lit»
+					«increment»
+					«nextAddress»
+					«countaddr.toString()»: LD R«countVar.toString()», «exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand.literal.basicLit.int_lit»
+					«increment»
+					«nextAddress»
+					«countaddr.toString()»: SUB R«countVar.toString()», R«new Integer(countVar-1).toString()» , R«new Integer(countVar-2).toString()»
+					«increment»
+					«nextAddress»
+					«countaddr.toString()»: BGEZ R«(countVar-1).toString()», #ATRIBTRUE
+					«countaddr.toString()»: ST «name», false
+					#ATRIBTRUE:
+						«countaddr.toString()»: ST «name», true
+				«ELSEIF exp.unaryExpr.primaryExpr.operand.literal.basicLit.float_lit != null»
+					«countaddr.toString()»: LD R«countVar.toString()», «exp.unaryExpr.primaryExpr.operand.literal.basicLit.float_lit»
+					«increment»
+					«nextAddress»
+					«countaddr.toString()»: LD R«countVar.toString()», «exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand.literal.basicLit.float_lit»
+					«increment»
+					«nextAddress»
+					«countaddr.toString()»: SUB R«countVar.toString()», R«new Integer(countVar-1).toString()» , R«new Integer(countVar-2).toString()»
+					«increment»
+					«nextAddress»
+					«countaddr.toString()»: BGEZ R«(countVar-1).toString()», #ATRIBTRUE
+					«countaddr.toString()»: ST «name», false
+					#ATRIBTRUE:
+					«countaddr.toString()»: ST «name», true
+				«ENDIF»
+	'''
+	
+	def genExpressionMenorIgual(String name, Expression exp)'''
+		«IF exp.unaryExpr.primaryExpr.operand.literal.basicLit.string_lit != null»
+						«countaddr.toString()»: LD R«countVar.toString()», «exp.unaryExpr.primaryExpr.operand.literal.basicLit.string_lit»
+						«increment»
+						«nextAddress»
+						«countaddr.toString()»: LD R«countVar.toString()», «exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand.literal.basicLit.string_lit»
+						«increment»
+						«nextAddress»
+						«countaddr.toString()»: SUB R«countVar.toString()», R«new Integer(countVar-1).toString()» , R«new Integer(countVar-2).toString()»
+						«increment»
+						«nextAddress»
+						«countaddr.toString()»: BLEZ R«(countVar-1).toString()», #ATRIBTRUE
+						«countaddr.toString()»: ST «name», false
+						 #ATRIBTRUE:
+						 	«countaddr.toString()»: ST «name», true
+					«ELSEIF exp.unaryExpr.primaryExpr.operand.literal.basicLit.int_lit != null»
+						«countaddr.toString()»: LD R«countVar.toString()», «exp.unaryExpr.primaryExpr.operand.literal.basicLit.int_lit»
+						«increment»
+						«nextAddress»
+						«countaddr.toString()»: LD R«countVar.toString()», «exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand.literal.basicLit.int_lit»
+						«increment»
+						«nextAddress»
+						«countaddr.toString()»: SUB R«countVar.toString()», R«new Integer(countVar-1).toString()» , R«new Integer(countVar-2).toString()»
+						«increment»
+						«nextAddress»
+						«countaddr.toString()»: BLEZ R«(countVar-1).toString()», #ATRIBTRUE
+						«countaddr.toString()»: ST «name», false
+						#ATRIBTRUE:
+							«countaddr.toString()»: ST «name», true
+					«ELSEIF exp.unaryExpr.primaryExpr.operand.literal.basicLit.float_lit != null»
+						«countaddr.toString()»: LD R«countVar.toString()», «exp.unaryExpr.primaryExpr.operand.literal.basicLit.float_lit»
+						«increment»
+						«nextAddress»
+						«countaddr.toString()»: LD R«countVar.toString()», «exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand.literal.basicLit.float_lit»
+						«increment»
+						«nextAddress»
+						«countaddr.toString()»: SUB R«countVar.toString()», R«new Integer(countVar-1).toString()» , R«new Integer(countVar-2).toString()»
+						«increment»
+						«nextAddress»
+						«countaddr.toString()»: BLEZ R«(countVar-1).toString()», #ATRIBTRUE
+						«countaddr.toString()»: ST «name», false
+						#ATRIBTRUE:
+						«countaddr.toString()»: ST «name», true
+					«ENDIF»
+	'''
+
+	def genExpressionEquals(String name, Expression exp) '''
+		«IF exp.unaryExpr.primaryExpr.operand.literal.basicLit.string_lit != null»
+			«countaddr.toString()»: LD R«countVar.toString()», «exp.unaryExpr.primaryExpr.operand.literal.basicLit.string_lit»
+			«increment»
+			«nextAddress»
+			«countaddr.toString()»: LD R«countVar.toString()», «exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand.literal.basicLit.string_lit»
+			«increment»
+			«nextAddress»
+			«countaddr.toString()»: BQE R«(countVar-1).toString()»,  R«(countVar-2).toString()», #ATRIBTRUE
+			«countaddr.toString()»: ST «name», false
+			 #ATRIBTRUE:
+			 	«countaddr.toString()»: ST «name», true
+		«ELSEIF exp.unaryExpr.primaryExpr.operand.literal.basicLit.int_lit != null»
+			«countaddr.toString()»: LD R«countVar.toString()», «exp.unaryExpr.primaryExpr.operand.literal.basicLit.int_lit»
+			«increment»
+			«nextAddress»
+			«countaddr.toString()»: LD R«countVar.toString()», «exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand.literal.basicLit.int_lit»
+			«increment»
+			«nextAddress»
+			«countaddr.toString()»: BQE R«(countVar-1).toString()»,  R«(countVar-2).toString()», #ATRIBTRUE
+			«countaddr.toString()»: ST «name», false
+			#ATRIBTRUE:
+				«countaddr.toString()»: ST «name», true
+		«ELSEIF exp.unaryExpr.primaryExpr.operand.literal.basicLit.float_lit != null»
+			«countaddr.toString()»: LD R«countVar.toString()», «exp.unaryExpr.primaryExpr.operand.literal.basicLit.float_lit»
+			«increment»
+			«nextAddress»
+			«countaddr.toString()»: LD R«countVar.toString()», «exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand.literal.basicLit.float_lit»
+			«increment»
+			«nextAddress»
+			«countaddr.toString()»: BQE R«(countVar-1).toString()»,  R«(countVar-2).toString()», #ATRIBTRUE
+			«countaddr.toString()»: ST «name», false
+			#ATRIBTRUE:
+				«countaddr.toString()»: ST «name», true
+		«ELSEIF exp.unaryExpr.primaryExpr.operand.operandName.id.equals("true")»
+			«countaddr.toString()»: LD R«countVar.toString()», «exp.unaryExpr.primaryExpr.operand.operandName.id»
+			«increment»
+			«nextAddress»
+			«countaddr.toString()»: LD R«countVar.toString()», «exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand.operandName.id»
+			«increment»
+			«nextAddress»
+			«countaddr.toString()»: BQE R«(countVar-1).toString()»,  R«(countVar-2).toString()», #ATRIBTRUE
+			«countaddr.toString()»: ST «name», false
+			#ATRIBTRUE:
+					«countaddr.toString()»: ST «name», true
+		«ELSEIF exp.unaryExpr.primaryExpr.operand.operandName.id.equals("false")»
+			«countaddr.toString()»: LD R«countVar.toString()», «exp.unaryExpr.primaryExpr.operand.operandName.id»
+			«increment»
+			«nextAddress»
+			«countaddr.toString()»: LD R«countVar.toString()», «exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand.operandName.id»
+			«increment»
+			«nextAddress»
+			«countaddr.toString()»: BQE R«(countVar-1).toString()»,  R«(countVar-2).toString()», #ATRIBTRUE
+			«countaddr.toString()»: ST «name», false
+			#ATRIBTRUE:
+					«countaddr.toString()»: ST «name», true
+		«ENDIF»
+	'''
+
+	def genExpressionNotEquals(String name, Expression exp) '''
+		«IF exp.unaryExpr.primaryExpr.operand.literal.basicLit.string_lit != null»
+			«countaddr.toString()»: LD R«countVar.toString()», «exp.unaryExpr.primaryExpr.operand.literal.basicLit.string_lit»
+			«increment»
+			«nextAddress»
+			«countaddr.toString()»: LD R«countVar.toString()», «exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand.literal.basicLit.string_lit»
+			«increment»
+			«nextAddress»
+			«countaddr.toString()»: BNE R«(countVar-1).toString()»,  R«(countVar-2).toString()», #ATRIBTRUE
+			«countaddr.toString()»: ST «name», false
+			#ATRIBTRUE:
+					«countaddr.toString()»: ST «name», true
+		«ELSEIF exp.unaryExpr.primaryExpr.operand.literal.basicLit.int_lit != null»
+			«countaddr.toString()»: LD R«countVar.toString()», «exp.unaryExpr.primaryExpr.operand.literal.basicLit.int_lit»
+			«increment»
+			«nextAddress»
+			«countaddr.toString()»: LD R«countVar.toString()», «exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand.literal.basicLit.int_lit»
+			«increment»
+			«nextAddress»
+			«countaddr.toString()»: BNE R«(countVar-1).toString()»,  R«(countVar-2).toString()», #ATRIBTRUE
+			«countaddr.toString()»: ST «name», false
+			#ATRIBTRUE:
+				«countaddr.toString()»: ST «name», true
+		«ELSEIF exp.unaryExpr.primaryExpr.operand.literal.basicLit.float_lit != null»
+			«countaddr.toString()»: LD R«countVar.toString()», «exp.unaryExpr.primaryExpr.operand.literal.basicLit.float_lit»
+			«increment»
+			«nextAddress»
+			«countaddr.toString()»: LD R«countVar.toString()», «exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand.literal.basicLit.float_lit»
+			«increment»
+			«nextAddress»
+			«countaddr.toString()»: BNE R«(countVar-1).toString()»,  R«(countVar-2).toString()», #ATRIBTRUE
+			«countaddr.toString()»: ST «name», false
+			#ATRIBTRUE:
+			«countaddr.toString()»: ST «name», true
+		«ELSEIF exp.unaryExpr.primaryExpr.operand.operandName.id.equals("true")»
+			«countaddr.toString()»: LD R«countVar.toString()», «exp.unaryExpr.primaryExpr.operand.operandName.id»
+			«increment»
+			«nextAddress»
+			«countaddr.toString()»: LD R«countVar.toString()», «exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand.operandName.id»
+			«increment»
+			«nextAddress»
+			«countaddr.toString()»: BNE R«(countVar-1).toString()»,  R«(countVar-2).toString()», #ATRIBTRUE
+			«countaddr.toString()»: ST «name», false
+			#ATRIBTRUE:
+				«countaddr.toString()»: ST «name», true
+		«ELSEIF exp.unaryExpr.primaryExpr.operand.operandName.id.equals("false")»
+			«countaddr.toString()»: LD R«countVar.toString()», «exp.unaryExpr.primaryExpr.operand.operandName.id»
+			«increment»
+			«nextAddress»
+			«countaddr.toString()»: LD R«countVar.toString()», «exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand.operandName.id»
+			«increment»
+			«nextAddress»
+			«countaddr.toString()»: BNE R«(countVar-1).toString()»,  R«(countVar-2).toString()», #ATRIBTRUE
+			«countaddr.toString()»: ST «name», false
+			#ATRIBTRUE:
+				«countaddr.toString()»: ST «name», true
+		«ENDIF»
+	'''
 	
 	
 	
