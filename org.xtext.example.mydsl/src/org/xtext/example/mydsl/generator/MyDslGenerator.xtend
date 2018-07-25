@@ -7,15 +7,17 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
-import org.xtext.example.mydsl.myDsl.TopLevelDecl
-import javax.inject.Inject
-import org.eclipse.xtext.naming.IQualifiedNameProvider
-import org.xtext.example.mydsl.myDsl.VarDecl
+import org.xtext.example.mydsl.myDsl.AliasDecl
 import org.xtext.example.mydsl.myDsl.ConstDecl
-import org.xtext.example.mydsl.myDsl.TypeDecl
-import org.xtext.example.mydsl.myDsl.MethodDecl
-import org.xtext.example.mydsl.myDsl.Declaration
 import org.xtext.example.mydsl.myDsl.ConstSpec
+import org.xtext.example.mydsl.myDsl.Declaration
+import org.xtext.example.mydsl.myDsl.MethodDecl
+import org.xtext.example.mydsl.myDsl.TopLevelDecl
+import org.xtext.example.mydsl.myDsl.TypeDecl
+import org.xtext.example.mydsl.myDsl.TypeDef
+import org.xtext.example.mydsl.myDsl.TypeSpec
+import org.xtext.example.mydsl.myDsl.VarDecl
+import org.xtext.example.mydsl.myDsl.VarSpec
 
 /**
  * Generates code from your model files on save.
@@ -41,6 +43,8 @@ class MyDslGenerator extends AbstractGenerator {
 	}
 	
 	def compile(TopLevelDecl topDecl)'''
+		«countaddr»: LD SP, 1000
+		«nextAddress»
 		«IF topDecl.declaration instanceof Declaration»
 				«(topDecl.declaration as Declaration).genDeclaration»
 		«ELSEIF topDecl.methodDecl instanceof MethodDecl»
@@ -48,13 +52,92 @@ class MyDslGenerator extends AbstractGenerator {
 		«ENDIF»	
 	'''
 	
-	def genType(TypeDecl decl)'''
-		«countaddr»: LD SP, 1000
+	def genType(TypeDecl typeDecl)'''
+		«IF typeDecl.typeSpec != null»
+			«(typeDecl.typeSpec as TypeSpec).genTypeSpec»
+		«ELSEIF typeDecl.typeSpec1 != null»
+			«FOR typeSpec: typeDecl.typeSpec1»
+				«genTypeSpec(typeSpec)»
+			«ENDFOR»
+		«ENDIF»
 	'''
 	
+	def genTypeSpec(TypeSpec typeSpec)'''
+		«IF typeSpec.aliasDecl != null»
+			«(typeSpec.aliasDecl as AliasDecl).genAliasDecl»
+		«ELSEIF(typeSpec.typeDef != null)»
+			«(typeSpec.typeDef as TypeDef).genTypeDef»
+		«ENDIF»
+	'''
+	
+	def genAliasDecl(AliasDecl aliasDecl)'''
+		«IF !aliasDecl.id.empty»
+			«countaddr.toString()»: LD R«countVar.toString()», «aliasDecl.id»
+			«increment»
+			«nextAddress»
+		«ENDIF»
+	'''
+	
+	def genTypeDef(TypeDef typeDef)'''
+		«IF !typeDef.id.empty»
+				«countaddr.toString()»: LD R«countVar.toString()», «typeDef.id»
+				«increment»
+				«nextAddress»
+		«ENDIF»
+	'''
 	def genDeclaration(Declaration decl)'''
 		«IF decl.constDecl instanceof ConstDecl»
 			«(decl.constDecl as ConstDecl).genConst»
+		«ELSEIF decl.typeDecl instanceof TypeDecl»
+			«(decl.typeDecl as TypeDecl).genType»
+		«ELSEIF decl.varDecl instanceof VarDecl»
+			«(decl.varDecl as VarDecl).genVar»
+	«ENDIF»
+	'''
+	
+	def genVar(VarDecl varDecl)'''
+		«IF varDecl.varSpec != null»
+			«(varDecl.varSpec as VarSpec).genVarSpec»
+		«ELSEIF varDecl.varSpec1 != null»
+			«FOR varSpec : varDecl.varSpec1»
+				«genVarSpec(varSpec)»
+			«ENDFOR»
+		«ENDIF»
+	'''
+	
+	def genVarSpec(VarSpec varSpec)'''
+		«IF varSpec.expressionList != null»
+			«IF !varSpec.identifierList.id.empty»
+				«countaddr.toString()»: LD R«countVar.toString()», #TRUE
+				«increment»
+				«nextAddress»
+				«countaddr.toString()»: ST «varSpec.identifierList.id», R«new Integer(countVar-1).toString()»
+				«nextAddress»
+			«ENDIF»
+			
+			«IF varSpec.identifierList.id1 != null»
+				«FOR id: varSpec.identifierList.id1»
+					«countaddr.toString()»: LD R«countVar.toString()», #TRUE
+					«increment»
+					«nextAddress»
+					«countaddr.toString()»: ST «varSpec.identifierList.id», R«new Integer(countVar-1).toString()»
+					«nextAddress»
+				«ENDFOR»
+			«ENDIF»
+		«ELSE»
+			«IF !varSpec.identifierList.id.empty»
+				«countaddr.toString()»: LD R«countVar.toString()», «varSpec.identifierList.id»
+				«increment»
+				«nextAddress»
+			«ENDIF»
+			
+			«IF varSpec.identifierList.id1 != null»
+				«FOR id: varSpec.identifierList.id1»
+					«countaddr.toString()»: LD R«countVar.toString()», «id»
+					«increment»
+					«nextAddress»
+				«ENDFOR»
+			«ENDIF»
 		«ENDIF»
 	'''
 	
@@ -71,16 +154,47 @@ class MyDslGenerator extends AbstractGenerator {
 	def genConstSpec(ConstSpec spec) '''
 		«IF spec.expressionList != null»
 			«IF !spec.identifierList.id.empty»
-				«countaddr.toString()»: ST «spec.identifierList.id», TRUE
+				«countaddr.toString()»: LD R«countVar.toString()», #TRUE
+				«increment»
+				«nextAddress»
+				«countaddr.toString()»: ST «spec.identifierList.id», R«new Integer(countVar-1).toString()»
+				«nextAddress»
 			«ENDIF»
 		
 			«IF spec.identifierList.id1 != null»
 				«FOR id: spec.identifierList.id1»
-					«countaddr.toString()»: ST «id», TRUE
+					«countaddr.toString()»: LD R«countVar.toString()», #TRUE
+					«increment»
+					«nextAddress»
+					«countaddr.toString()»: ST «id», R«new Integer(countVar-1).toString()»
+					«nextAddress»
+				«ENDFOR»
+			«ENDIF»
+		«ELSE»
+			«IF !spec.identifierList.id.empty»
+				«countaddr.toString()»: LD R«countVar.toString()», «spec.identifierList.id»
+				«increment»
+				«nextAddress»
+			«ENDIF»
+					
+			«IF spec.identifierList.id1 != null»
+				«FOR id: spec.identifierList.id1»
+					«countaddr.toString()»: LD R«countVar.toString()», «id»
+					«increment»
+					«nextAddress»
 				«ENDFOR»
 			«ENDIF»
 	«ENDIF»
 	'''
+	
+	def void nextAddress() {
+		countaddr = countaddr + 8;
+	}
+	
+	def void increment() {
+		countVar++;
+	}
+	
 	
 	
 }

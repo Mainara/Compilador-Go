@@ -17,14 +17,18 @@ public class ConstDeclValidator {
 	
 	
 	public Exception validaConstSpec(ConstSpec constSpec){
-		int contId = contIds(constSpec);
-		int contExp = contExp(constSpec);
+		if(constSpec.getExpressionList() != null){
+			int contId = contIds(constSpec);
+			int contExp = contExp(constSpec);
+			
+			if(contId > contExp){
+				return new Exception("Erro semântico: numero de ids diferentes do número de expressões", MyDslPackage.Literals.DECLARATION__CONST_DECL);
+			}else if(contExp > contId){
+				return new Exception("Erro semântico: numero de ids diferentes do número de expressões", MyDslPackage.Literals.DECLARATION__CONST_DECL);
+			}
+		}
 		
-		if(contId > contExp){
-			return new Exception("Erro semântico: numero de ids diferentes do número de expressões", MyDslPackage.Literals.DECLARATION__CONST_DECL);
-		}else if(contExp > contId){
-			return new Exception("Erro semântico: numero de ids diferentes do número de expressões", MyDslPackage.Literals.DECLARATION__CONST_DECL);
-		}else if(constSpec.getType() != null){
+		if(constSpec.getType() != null){
 			if(constSpec.getType().getTypeName() == null || !constSpec.getType().getTypeName().getId().equals("bool")){
 				return new Exception("Erro semântico: incompatibilidade de tipo, expressões relacionais relacionais só podem ser atribuíveis ao tipo bool", MyDslPackage.Literals.DECLARATION__CONST_DECL);
 			}
@@ -85,6 +89,8 @@ public class ConstDeclValidator {
 						if(contIds(constSpecs.get(i)) > contExp(constSpecs.get(j)) || contExp(constSpecs.get(j)) > contIds(constSpecs.get(i))){
 							return new Exception("Erro semântico: numero de ids diferentes do número de expressões", MyDslPackage.Literals.DECLARATION__CONST_DECL);
 						}
+						
+						break;
 					}
 				}
 			}else{

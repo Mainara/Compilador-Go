@@ -14,6 +14,7 @@ import org.eclipse.xtext.generator.AbstractGenerator;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.generator.IGeneratorContext;
 import org.eclipse.xtext.xbase.lib.IteratorExtensions;
+import org.xtext.example.mydsl.myDsl.AliasDecl;
 import org.xtext.example.mydsl.myDsl.ConstDecl;
 import org.xtext.example.mydsl.myDsl.ConstSpec;
 import org.xtext.example.mydsl.myDsl.Declaration;
@@ -22,6 +23,10 @@ import org.xtext.example.mydsl.myDsl.IdentifierList;
 import org.xtext.example.mydsl.myDsl.MethodDecl;
 import org.xtext.example.mydsl.myDsl.TopLevelDecl;
 import org.xtext.example.mydsl.myDsl.TypeDecl;
+import org.xtext.example.mydsl.myDsl.TypeDef;
+import org.xtext.example.mydsl.myDsl.TypeSpec;
+import org.xtext.example.mydsl.myDsl.VarDecl;
+import org.xtext.example.mydsl.myDsl.VarSpec;
 
 /**
  * Generates code from your model files on save.
@@ -52,6 +57,11 @@ public class MyDslGenerator extends AbstractGenerator {
   
   public CharSequence compile(final TopLevelDecl topDecl) {
     StringConcatenation _builder = new StringConcatenation();
+    _builder.append(this.countaddr, "");
+    _builder.append(": LD SP, 1000");
+    _builder.newLineIfNotEmpty();
+    this.nextAddress();
+    _builder.newLineIfNotEmpty();
     {
       Declaration _declaration = topDecl.getDeclaration();
       if ((_declaration instanceof Declaration)) {
@@ -73,11 +83,105 @@ public class MyDslGenerator extends AbstractGenerator {
     return _builder;
   }
   
-  public CharSequence genType(final TypeDecl decl) {
+  public CharSequence genType(final TypeDecl typeDecl) {
     StringConcatenation _builder = new StringConcatenation();
-    _builder.append(this.countaddr, "");
-    _builder.append(": LD SP, 1000");
-    _builder.newLineIfNotEmpty();
+    {
+      TypeSpec _typeSpec = typeDecl.getTypeSpec();
+      boolean _notEquals = (!Objects.equal(_typeSpec, null));
+      if (_notEquals) {
+        TypeSpec _typeSpec_1 = typeDecl.getTypeSpec();
+        CharSequence _genTypeSpec = this.genTypeSpec(((TypeSpec) _typeSpec_1));
+        _builder.append(_genTypeSpec, "");
+        _builder.newLineIfNotEmpty();
+      } else {
+        EList<TypeSpec> _typeSpec1 = typeDecl.getTypeSpec1();
+        boolean _notEquals_1 = (!Objects.equal(_typeSpec1, null));
+        if (_notEquals_1) {
+          {
+            EList<TypeSpec> _typeSpec1_1 = typeDecl.getTypeSpec1();
+            for(final TypeSpec typeSpec : _typeSpec1_1) {
+              CharSequence _genTypeSpec_1 = this.genTypeSpec(typeSpec);
+              _builder.append(_genTypeSpec_1, "");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+      }
+    }
+    return _builder;
+  }
+  
+  public CharSequence genTypeSpec(final TypeSpec typeSpec) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      AliasDecl _aliasDecl = typeSpec.getAliasDecl();
+      boolean _notEquals = (!Objects.equal(_aliasDecl, null));
+      if (_notEquals) {
+        AliasDecl _aliasDecl_1 = typeSpec.getAliasDecl();
+        CharSequence _genAliasDecl = this.genAliasDecl(((AliasDecl) _aliasDecl_1));
+        _builder.append(_genAliasDecl, "");
+        _builder.newLineIfNotEmpty();
+      } else {
+        TypeDef _typeDef = typeSpec.getTypeDef();
+        boolean _notEquals_1 = (!Objects.equal(_typeDef, null));
+        if (_notEquals_1) {
+          TypeDef _typeDef_1 = typeSpec.getTypeDef();
+          CharSequence _genTypeDef = this.genTypeDef(((TypeDef) _typeDef_1));
+          _builder.append(_genTypeDef, "");
+          _builder.newLineIfNotEmpty();
+        }
+      }
+    }
+    return _builder;
+  }
+  
+  public CharSequence genAliasDecl(final AliasDecl aliasDecl) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      String _id = aliasDecl.getId();
+      boolean _isEmpty = _id.isEmpty();
+      boolean _not = (!_isEmpty);
+      if (_not) {
+        String _string = this.countaddr.toString();
+        _builder.append(_string, "");
+        _builder.append(": LD R");
+        String _string_1 = this.countVar.toString();
+        _builder.append(_string_1, "");
+        _builder.append(", ");
+        String _id_1 = aliasDecl.getId();
+        _builder.append(_id_1, "");
+        _builder.newLineIfNotEmpty();
+        this.increment();
+        _builder.newLineIfNotEmpty();
+        this.nextAddress();
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    return _builder;
+  }
+  
+  public CharSequence genTypeDef(final TypeDef typeDef) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      String _id = typeDef.getId();
+      boolean _isEmpty = _id.isEmpty();
+      boolean _not = (!_isEmpty);
+      if (_not) {
+        String _string = this.countaddr.toString();
+        _builder.append(_string, "");
+        _builder.append(": LD R");
+        String _string_1 = this.countVar.toString();
+        _builder.append(_string_1, "");
+        _builder.append(", ");
+        String _id_1 = typeDef.getId();
+        _builder.append(_id_1, "");
+        _builder.newLineIfNotEmpty();
+        this.increment();
+        _builder.newLineIfNotEmpty();
+        this.nextAddress();
+        _builder.newLineIfNotEmpty();
+      }
+    }
     return _builder;
   }
   
@@ -90,6 +194,180 @@ public class MyDslGenerator extends AbstractGenerator {
         CharSequence _genConst = this.genConst(((ConstDecl) _constDecl_1));
         _builder.append(_genConst, "");
         _builder.newLineIfNotEmpty();
+      } else {
+        TypeDecl _typeDecl = decl.getTypeDecl();
+        if ((_typeDecl instanceof TypeDecl)) {
+          TypeDecl _typeDecl_1 = decl.getTypeDecl();
+          CharSequence _genType = this.genType(((TypeDecl) _typeDecl_1));
+          _builder.append(_genType, "");
+          _builder.newLineIfNotEmpty();
+        } else {
+          VarDecl _varDecl = decl.getVarDecl();
+          if ((_varDecl instanceof VarDecl)) {
+            VarDecl _varDecl_1 = decl.getVarDecl();
+            CharSequence _genVar = this.genVar(((VarDecl) _varDecl_1));
+            _builder.append(_genVar, "");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    return _builder;
+  }
+  
+  public CharSequence genVar(final VarDecl varDecl) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      VarSpec _varSpec = varDecl.getVarSpec();
+      boolean _notEquals = (!Objects.equal(_varSpec, null));
+      if (_notEquals) {
+        VarSpec _varSpec_1 = varDecl.getVarSpec();
+        CharSequence _genVarSpec = this.genVarSpec(((VarSpec) _varSpec_1));
+        _builder.append(_genVarSpec, "");
+        _builder.newLineIfNotEmpty();
+      } else {
+        EList<VarSpec> _varSpec1 = varDecl.getVarSpec1();
+        boolean _notEquals_1 = (!Objects.equal(_varSpec1, null));
+        if (_notEquals_1) {
+          {
+            EList<VarSpec> _varSpec1_1 = varDecl.getVarSpec1();
+            for(final VarSpec varSpec : _varSpec1_1) {
+              CharSequence _genVarSpec_1 = this.genVarSpec(varSpec);
+              _builder.append(_genVarSpec_1, "");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+      }
+    }
+    return _builder;
+  }
+  
+  public CharSequence genVarSpec(final VarSpec varSpec) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      ExpressionList _expressionList = varSpec.getExpressionList();
+      boolean _notEquals = (!Objects.equal(_expressionList, null));
+      if (_notEquals) {
+        {
+          IdentifierList _identifierList = varSpec.getIdentifierList();
+          String _id = _identifierList.getId();
+          boolean _isEmpty = _id.isEmpty();
+          boolean _not = (!_isEmpty);
+          if (_not) {
+            String _string = this.countaddr.toString();
+            _builder.append(_string, "");
+            _builder.append(": LD R");
+            String _string_1 = this.countVar.toString();
+            _builder.append(_string_1, "");
+            _builder.append(", #TRUE");
+            _builder.newLineIfNotEmpty();
+            this.increment();
+            _builder.newLineIfNotEmpty();
+            this.nextAddress();
+            _builder.newLineIfNotEmpty();
+            String _string_2 = this.countaddr.toString();
+            _builder.append(_string_2, "");
+            _builder.append(": ST ");
+            IdentifierList _identifierList_1 = varSpec.getIdentifierList();
+            String _id_1 = _identifierList_1.getId();
+            _builder.append(_id_1, "");
+            _builder.append(", R");
+            Integer _integer = new Integer(((this.countVar).intValue() - 1));
+            String _string_3 = _integer.toString();
+            _builder.append(_string_3, "");
+            _builder.newLineIfNotEmpty();
+            this.nextAddress();
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.newLine();
+        {
+          IdentifierList _identifierList_2 = varSpec.getIdentifierList();
+          EList<String> _id1 = _identifierList_2.getId1();
+          boolean _notEquals_1 = (!Objects.equal(_id1, null));
+          if (_notEquals_1) {
+            {
+              IdentifierList _identifierList_3 = varSpec.getIdentifierList();
+              EList<String> _id1_1 = _identifierList_3.getId1();
+              for(final String id : _id1_1) {
+                String _string_4 = this.countaddr.toString();
+                _builder.append(_string_4, "");
+                _builder.append(": LD R");
+                String _string_5 = this.countVar.toString();
+                _builder.append(_string_5, "");
+                _builder.append(", #TRUE");
+                _builder.newLineIfNotEmpty();
+                this.increment();
+                _builder.newLineIfNotEmpty();
+                this.nextAddress();
+                _builder.newLineIfNotEmpty();
+                String _string_6 = this.countaddr.toString();
+                _builder.append(_string_6, "");
+                _builder.append(": ST ");
+                IdentifierList _identifierList_4 = varSpec.getIdentifierList();
+                String _id_2 = _identifierList_4.getId();
+                _builder.append(_id_2, "");
+                _builder.append(", R");
+                Integer _integer_1 = new Integer(((this.countVar).intValue() - 1));
+                String _string_7 = _integer_1.toString();
+                _builder.append(_string_7, "");
+                _builder.newLineIfNotEmpty();
+                this.nextAddress();
+                _builder.newLineIfNotEmpty();
+              }
+            }
+          }
+        }
+      } else {
+        {
+          IdentifierList _identifierList_5 = varSpec.getIdentifierList();
+          String _id_3 = _identifierList_5.getId();
+          boolean _isEmpty_1 = _id_3.isEmpty();
+          boolean _not_1 = (!_isEmpty_1);
+          if (_not_1) {
+            String _string_8 = this.countaddr.toString();
+            _builder.append(_string_8, "");
+            _builder.append(": LD R");
+            String _string_9 = this.countVar.toString();
+            _builder.append(_string_9, "");
+            _builder.append(", ");
+            IdentifierList _identifierList_6 = varSpec.getIdentifierList();
+            String _id_4 = _identifierList_6.getId();
+            _builder.append(_id_4, "");
+            _builder.newLineIfNotEmpty();
+            this.increment();
+            _builder.newLineIfNotEmpty();
+            this.nextAddress();
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.newLine();
+        {
+          IdentifierList _identifierList_7 = varSpec.getIdentifierList();
+          EList<String> _id1_2 = _identifierList_7.getId1();
+          boolean _notEquals_2 = (!Objects.equal(_id1_2, null));
+          if (_notEquals_2) {
+            {
+              IdentifierList _identifierList_8 = varSpec.getIdentifierList();
+              EList<String> _id1_3 = _identifierList_8.getId1();
+              for(final String id_1 : _id1_3) {
+                String _string_10 = this.countaddr.toString();
+                _builder.append(_string_10, "");
+                _builder.append(": LD R");
+                String _string_11 = this.countVar.toString();
+                _builder.append(_string_11, "");
+                _builder.append(", ");
+                _builder.append(id_1, "");
+                _builder.newLineIfNotEmpty();
+                this.increment();
+                _builder.newLineIfNotEmpty();
+                this.nextAddress();
+                _builder.newLineIfNotEmpty();
+              }
+            }
+          }
+        }
       }
     }
     return _builder;
@@ -138,11 +416,31 @@ public class MyDslGenerator extends AbstractGenerator {
             _builder.append("\t");
             String _string = this.countaddr.toString();
             _builder.append(_string, "\t");
+            _builder.append(": LD R");
+            String _string_1 = this.countVar.toString();
+            _builder.append(_string_1, "\t");
+            _builder.append(", #TRUE");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            this.increment();
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            this.nextAddress();
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            String _string_2 = this.countaddr.toString();
+            _builder.append(_string_2, "\t");
             _builder.append(": ST ");
             IdentifierList _identifierList_1 = spec.getIdentifierList();
             String _id_1 = _identifierList_1.getId();
             _builder.append(_id_1, "\t");
-            _builder.append(", TRUE");
+            _builder.append(", R");
+            Integer _integer = new Integer(((this.countVar).intValue() - 1));
+            String _string_3 = _integer.toString();
+            _builder.append(_string_3, "\t");
+            _builder.newLineIfNotEmpty();
+            _builder.append("\t");
+            this.nextAddress();
             _builder.newLineIfNotEmpty();
           }
         }
@@ -157,11 +455,81 @@ public class MyDslGenerator extends AbstractGenerator {
               EList<String> _id1_1 = _identifierList_3.getId1();
               for(final String id : _id1_1) {
                 _builder.append("\t");
-                String _string_1 = this.countaddr.toString();
-                _builder.append(_string_1, "\t");
+                String _string_4 = this.countaddr.toString();
+                _builder.append(_string_4, "\t");
+                _builder.append(": LD R");
+                String _string_5 = this.countVar.toString();
+                _builder.append(_string_5, "\t");
+                _builder.append(", #TRUE");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                this.increment();
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                this.nextAddress();
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                String _string_6 = this.countaddr.toString();
+                _builder.append(_string_6, "\t");
                 _builder.append(": ST ");
                 _builder.append(id, "\t");
-                _builder.append(", TRUE");
+                _builder.append(", R");
+                Integer _integer_1 = new Integer(((this.countVar).intValue() - 1));
+                String _string_7 = _integer_1.toString();
+                _builder.append(_string_7, "\t");
+                _builder.newLineIfNotEmpty();
+                _builder.append("\t");
+                this.nextAddress();
+                _builder.newLineIfNotEmpty();
+              }
+            }
+          }
+        }
+      } else {
+        {
+          IdentifierList _identifierList_4 = spec.getIdentifierList();
+          String _id_2 = _identifierList_4.getId();
+          boolean _isEmpty_1 = _id_2.isEmpty();
+          boolean _not_1 = (!_isEmpty_1);
+          if (_not_1) {
+            String _string_8 = this.countaddr.toString();
+            _builder.append(_string_8, "");
+            _builder.append(": LD R");
+            String _string_9 = this.countVar.toString();
+            _builder.append(_string_9, "");
+            _builder.append(", ");
+            IdentifierList _identifierList_5 = spec.getIdentifierList();
+            String _id_3 = _identifierList_5.getId();
+            _builder.append(_id_3, "");
+            _builder.newLineIfNotEmpty();
+            this.increment();
+            _builder.newLineIfNotEmpty();
+            this.nextAddress();
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.append("\t\t");
+        _builder.newLine();
+        {
+          IdentifierList _identifierList_6 = spec.getIdentifierList();
+          EList<String> _id1_2 = _identifierList_6.getId1();
+          boolean _notEquals_2 = (!Objects.equal(_id1_2, null));
+          if (_notEquals_2) {
+            {
+              IdentifierList _identifierList_7 = spec.getIdentifierList();
+              EList<String> _id1_3 = _identifierList_7.getId1();
+              for(final String id_1 : _id1_3) {
+                String _string_10 = this.countaddr.toString();
+                _builder.append(_string_10, "");
+                _builder.append(": LD R");
+                String _string_11 = this.countVar.toString();
+                _builder.append(_string_11, "");
+                _builder.append(", ");
+                _builder.append(id_1, "");
+                _builder.newLineIfNotEmpty();
+                this.increment();
+                _builder.newLineIfNotEmpty();
+                this.nextAddress();
                 _builder.newLineIfNotEmpty();
               }
             }
@@ -170,5 +538,13 @@ public class MyDslGenerator extends AbstractGenerator {
       }
     }
     return _builder;
+  }
+  
+  public void nextAddress() {
+    this.countaddr = Integer.valueOf(((this.countaddr).intValue() + 8));
+  }
+  
+  public void increment() {
+    this.countVar++;
   }
 }
