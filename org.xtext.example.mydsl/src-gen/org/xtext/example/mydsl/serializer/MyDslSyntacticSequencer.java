@@ -47,21 +47,9 @@ public class MyDslSyntacticSequencer extends AbstractSyntacticSequencer {
 	
 	@Override
 	protected String getUnassignedRuleCallToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (ruleCall.getRule() == grammarAccess.getSWITCHRule())
-			return getSWITCHToken(semanticObject, ruleCall, node);
 		return "";
 	}
 	
-	/**
-	 * terminal SWITCH:
-	 * 	"switch"
-	 * ;
-	 */
-	protected String getSWITCHToken(EObject semanticObject, RuleCall ruleCall, INode node) {
-		if (node != null)
-			return getTokenText(node);
-		return "switch";
-	}
 	
 	@Override
 	protected void emitUnassignedTokens(EObject semanticObject, ISynTransition transition, INode fromNode, INode toNode) {

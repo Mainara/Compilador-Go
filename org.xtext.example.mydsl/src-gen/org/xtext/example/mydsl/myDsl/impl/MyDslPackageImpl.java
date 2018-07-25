@@ -39,6 +39,7 @@ import org.xtext.example.mydsl.myDsl.ExprCaseClause;
 import org.xtext.example.mydsl.myDsl.ExprSwitchCase;
 import org.xtext.example.mydsl.myDsl.ExprSwitchStmt;
 import org.xtext.example.mydsl.myDsl.Expression;
+import org.xtext.example.mydsl.myDsl.Expression1;
 import org.xtext.example.mydsl.myDsl.ExpressionList;
 import org.xtext.example.mydsl.myDsl.Expression_Linha;
 import org.xtext.example.mydsl.myDsl.FallthroughStmt;
@@ -639,6 +640,13 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * @generated
    */
   private EClass expressionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass expression1EClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -3286,6 +3294,36 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  public EClass getExpression1()
+  {
+    return expression1EClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression1_UnaryExpr()
+  {
+    return (EReference)expression1EClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getExpression1_Expression_Linha()
+  {
+    return (EReference)expression1EClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   public EClass getExpression_Linha()
   {
     return expression_LinhaEClass;
@@ -3306,7 +3344,7 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getExpression_Linha_Expression()
+  public EReference getExpression_Linha_Expression1()
   {
     return (EReference)expression_LinhaEClass.getEStructuralFeatures().get(1);
   }
@@ -3336,19 +3374,9 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getUnaryExpr_Unary_op()
-  {
-    return (EAttribute)unaryExprEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EReference getUnaryExpr_PrimaryExpr()
   {
-    return (EReference)unaryExprEClass.getEStructuralFeatures().get(1);
+    return (EReference)unaryExprEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -4146,9 +4174,9 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getTypeSwitchStmt_SimpleStmt()
+  public EAttribute getTypeSwitchStmt_Switch()
   {
-    return (EReference)typeSwitchStmtEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)typeSwitchStmtEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -4156,7 +4184,7 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getTypeSwitchStmt_TypeSwitchGuard()
+  public EReference getTypeSwitchStmt_SimpleStmt()
   {
     return (EReference)typeSwitchStmtEClass.getEStructuralFeatures().get(1);
   }
@@ -4166,9 +4194,19 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EReference getTypeSwitchStmt_TypeCaseClause()
+  public EReference getTypeSwitchStmt_TypeSwitchGuard()
   {
     return (EReference)typeSwitchStmtEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public EReference getTypeSwitchStmt_TypeCaseClause()
+  {
+    return (EReference)typeSwitchStmtEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -5470,13 +5508,16 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
     createEReference(expressionEClass, EXPRESSION__UNARY_EXPR);
     createEReference(expressionEClass, EXPRESSION__EXPRESSION_LINHA);
 
+    expression1EClass = createEClass(EXPRESSION1);
+    createEReference(expression1EClass, EXPRESSION1__UNARY_EXPR);
+    createEReference(expression1EClass, EXPRESSION1__EXPRESSION_LINHA);
+
     expression_LinhaEClass = createEClass(EXPRESSION_LINHA);
     createEReference(expression_LinhaEClass, EXPRESSION_LINHA__BINARY_OP);
-    createEReference(expression_LinhaEClass, EXPRESSION_LINHA__EXPRESSION);
+    createEReference(expression_LinhaEClass, EXPRESSION_LINHA__EXPRESSION1);
     createEReference(expression_LinhaEClass, EXPRESSION_LINHA__EXPRESSION_LINHA);
 
     unaryExprEClass = createEClass(UNARY_EXPR);
-    createEAttribute(unaryExprEClass, UNARY_EXPR__UNARY_OP);
     createEReference(unaryExprEClass, UNARY_EXPR__PRIMARY_EXPR);
 
     binarY_OPEClass = createEClass(BINARY_OP);
@@ -5573,6 +5614,7 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
     createEAttribute(exprSwitchCaseEClass, EXPR_SWITCH_CASE__DEFAULT);
 
     typeSwitchStmtEClass = createEClass(TYPE_SWITCH_STMT);
+    createEAttribute(typeSwitchStmtEClass, TYPE_SWITCH_STMT__SWITCH);
     createEReference(typeSwitchStmtEClass, TYPE_SWITCH_STMT__SIMPLE_STMT);
     createEReference(typeSwitchStmtEClass, TYPE_SWITCH_STMT__TYPE_SWITCH_GUARD);
     createEReference(typeSwitchStmtEClass, TYPE_SWITCH_STMT__TYPE_CASE_CLAUSE);
@@ -6031,13 +6073,16 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
     initEReference(getExpression_UnaryExpr(), this.getUnaryExpr(), null, "unaryExpr", null, 0, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getExpression_Expression_Linha(), this.getExpression_Linha(), null, "expression_Linha", null, 0, 1, Expression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(expression1EClass, Expression1.class, "Expression1", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getExpression1_UnaryExpr(), this.getUnaryExpr(), null, "unaryExpr", null, 0, 1, Expression1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression1_Expression_Linha(), this.getExpression_Linha(), null, "expression_Linha", null, 0, 1, Expression1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(expression_LinhaEClass, Expression_Linha.class, "Expression_Linha", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getExpression_Linha_BINARY_OP(), this.getBINARY_OP(), null, "BINARY_OP", null, 0, 1, Expression_Linha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getExpression_Linha_Expression(), this.getExpression(), null, "expression", null, 0, 1, Expression_Linha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getExpression_Linha_Expression1(), this.getExpression1(), null, "expression1", null, 0, 1, Expression_Linha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getExpression_Linha_Expression_Linha(), this.getExpression_Linha(), null, "expression_Linha", null, 0, 1, Expression_Linha.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(unaryExprEClass, UnaryExpr.class, "UnaryExpr", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getUnaryExpr_Unary_op(), ecorePackage.getEString(), "unary_op", null, 0, -1, UnaryExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getUnaryExpr_PrimaryExpr(), this.getPrimaryExpr(), null, "primaryExpr", null, 0, 1, UnaryExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(binarY_OPEClass, org.xtext.example.mydsl.myDsl.BINARY_OP.class, "BINARY_OP", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -6134,6 +6179,7 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
     initEAttribute(getExprSwitchCase_Default(), ecorePackage.getEString(), "default", null, 0, 1, ExprSwitchCase.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(typeSwitchStmtEClass, TypeSwitchStmt.class, "TypeSwitchStmt", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getTypeSwitchStmt_Switch(), ecorePackage.getEString(), "switch", null, 0, 1, TypeSwitchStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getTypeSwitchStmt_SimpleStmt(), this.getSimpleStmt(), null, "simpleStmt", null, 0, 1, TypeSwitchStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getTypeSwitchStmt_TypeSwitchGuard(), this.getTypeSwitchGuard(), null, "typeSwitchGuard", null, 0, 1, TypeSwitchStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getTypeSwitchStmt_TypeCaseClause(), this.getTypeCaseClause(), null, "typeCaseClause", null, 0, -1, TypeSwitchStmt.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -413,17 +413,21 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression_Linha" eType="#//Expression_Linha"
         containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Expression1">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="unaryExpr" eType="#//UnaryExpr"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression_Linha" eType="#//Expression_Linha"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Expression_Linha">
     <eStructuralFeatures xsi:type="ecore:EReference" name="BINARY_OP" eType="#//BINARY_OP"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//Expression"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="expression1" eType="#//Expression1"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression_Linha" eType="#//Expression_Linha"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="UnaryExpr">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unary_op" unique="false"
-        upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="primaryExpr" eType="#//PrimaryExpr"
         containment="true"/>
   </eClassifiers>
@@ -567,6 +571,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="default" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="TypeSwitchStmt">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="switch" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="simpleStmt" eType="#//SimpleStmt"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="typeSwitchGuard" eType="#//TypeSwitchGuard"

@@ -11,12 +11,15 @@ import java.util.Map;
 import org.eclipse.xtext.validation.Check;
 import org.xtext.example.mydsl.myDsl.ConstDecl;
 import org.xtext.example.mydsl.myDsl.Declaration;
+import org.xtext.example.mydsl.myDsl.Expression;
 import org.xtext.example.mydsl.myDsl.MethodDecl;
 import org.xtext.example.mydsl.myDsl.MyDslPackage;
+import org.xtext.example.mydsl.myDsl.SwitchStmt;
 import org.xtext.example.mydsl.myDsl.TypeDecl;
 import org.xtext.example.mydsl.myDsl.VarDecl;
 import org.xtext.example.mydsl.validation.AbstractMyDslValidator;
 import org.xtext.example.mydsl.validation.ConstDeclValidator;
+import org.xtext.example.mydsl.validation.ExpressionValidator;
 import org.xtext.example.mydsl.validation.MethodDeclValidator;
 import org.xtext.example.mydsl.validation.TypeDeclValidator;
 import org.xtext.example.mydsl.validation.VarDeclValidator;
@@ -36,6 +39,8 @@ public class MyDslValidator extends AbstractMyDslValidator {
   
   private TypeDeclValidator typeDeclValidator = new TypeDeclValidator();
   
+  private ExpressionValidator expressionValidator = new ExpressionValidator();
+  
   private Map<String, String> idsTypes = new HashMap<String, String>();
   
   private List<MethodDecl> methodDeclList = new ArrayList<MethodDecl>();
@@ -44,11 +49,11 @@ public class MyDslValidator extends AbstractMyDslValidator {
   
   @Check
   public void checkMethodDecl(final MethodDecl methodDecl) {
-    String _checkMethodDecl = this.methodDeclValidator.checkMethodDecl(methodDecl, this.methodDeclList, this.typeDefs);
+    org.xtext.example.mydsl.validation.Exception _checkMethodDecl = this.methodDeclValidator.checkMethodDecl(methodDecl, this.methodDeclList, this.typeDefs);
     boolean _notEquals = (!Objects.equal(_checkMethodDecl, null));
     if (_notEquals) {
-      String erro = this.methodDeclValidator.checkMethodDecl(methodDecl, this.methodDeclList, this.typeDefs);
-      this.error(erro, MyDslPackage.Literals.METHOD_DECL__RECEIVER);
+      org.xtext.example.mydsl.validation.Exception erro = this.methodDeclValidator.checkMethodDecl(methodDecl, this.methodDeclList, this.typeDefs);
+      this.error(erro.erro, erro.feature);
     }
   }
   
@@ -58,29 +63,50 @@ public class MyDslValidator extends AbstractMyDslValidator {
     boolean _notEquals = (!Objects.equal(_constDecl, null));
     if (_notEquals) {
       ConstDecl _constDecl_1 = decl.getConstDecl();
-      String _validaConstDecl = this.constDeclValidator.validaConstDecl(_constDecl_1);
+      org.xtext.example.mydsl.validation.Exception _validaConstDecl = this.constDeclValidator.validaConstDecl(_constDecl_1);
       boolean _notEquals_1 = (!Objects.equal(_validaConstDecl, null));
       if (_notEquals_1) {
         ConstDecl _constDecl_2 = decl.getConstDecl();
-        String erro = this.constDeclValidator.validaConstDecl(_constDecl_2);
-        this.error(erro, MyDslPackage.Literals.DECLARATION__CONST_DECL);
+        org.xtext.example.mydsl.validation.Exception erro = this.constDeclValidator.validaConstDecl(_constDecl_2);
+        this.error(erro.erro, erro.feature);
       }
     } else {
       TypeDecl _typeDecl = decl.getTypeDecl();
       boolean _notEquals_2 = (!Objects.equal(_typeDecl, null));
       if (_notEquals_2) {
         TypeDecl _typeDecl_1 = decl.getTypeDecl();
-        this.typeDeclValidator.addIdsTypes(_typeDecl_1, this.idsTypes, this.typeDefs);
+        String _addIdsTypes = this.typeDeclValidator.addIdsTypes(_typeDecl_1, this.idsTypes, this.typeDefs);
+        boolean _notEquals_3 = (!Objects.equal(_addIdsTypes, null));
+        if (_notEquals_3) {
+          TypeDecl _typeDecl_2 = decl.getTypeDecl();
+          String erro_1 = this.typeDeclValidator.addIdsTypes(_typeDecl_2, this.idsTypes, this.typeDefs);
+          this.error(erro_1, MyDslPackage.Literals.DECLARATION__TYPE_DECL);
+        }
       } else {
         VarDecl _varDecl = decl.getVarDecl();
-        String _validaVarDecl = this.varDeclValidator.validaVarDecl(_varDecl, this.idsTypes);
-        boolean _notEquals_3 = (!Objects.equal(_validaVarDecl, null));
-        if (_notEquals_3) {
+        org.xtext.example.mydsl.validation.Exception _validaVarDecl = this.varDeclValidator.validaVarDecl(_varDecl, this.idsTypes);
+        boolean _notEquals_4 = (!Objects.equal(_validaVarDecl, null));
+        if (_notEquals_4) {
           VarDecl _varDecl_1 = decl.getVarDecl();
-          String erro_1 = this.varDeclValidator.validaVarDecl(_varDecl_1, this.idsTypes);
-          this.error(erro_1, MyDslPackage.Literals.DECLARATION__VAR_DECL);
+          org.xtext.example.mydsl.validation.Exception erro_2 = this.varDeclValidator.validaVarDecl(_varDecl_1, this.idsTypes);
+          this.error(erro_2.erro, erro_2.feature);
         }
       }
     }
+  }
+  
+  @Check
+  public void checkExpression(final Expression exp) {
+    String _expressionValidator = this.expressionValidator.expressionValidator(exp);
+    boolean _notEquals = (!Objects.equal(_expressionValidator, null));
+    if (_notEquals) {
+      String erro = this.expressionValidator.expressionValidator(exp);
+      this.error(erro, MyDslPackage.Literals.EXPRESSION__UNARY_EXPR);
+    }
+  }
+  
+  @Check
+  public Object checkSwitch(final SwitchStmt switchStmt) {
+    return null;
   }
 }

@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.xtext.example.mydsl.myDsl.TypeSwitchStmt#getSwitch <em>Switch</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.TypeSwitchStmt#getSimpleStmt <em>Simple Stmt</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.TypeSwitchStmt#getTypeSwitchGuard <em>Type Switch Guard</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.TypeSwitchStmt#getTypeCaseClause <em>Type Case Clause</em>}</li>
@@ -27,6 +28,32 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface TypeSwitchStmt extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>Switch</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <p>
+   * If the meaning of the '<em>Switch</em>' attribute isn't clear,
+   * there really should be more of a description here...
+   * </p>
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Switch</em>' attribute.
+   * @see #setSwitch(String)
+   * @see org.xtext.example.mydsl.myDsl.MyDslPackage#getTypeSwitchStmt_Switch()
+   * @model
+   * @generated
+   */
+  String getSwitch();
+
+  /**
+   * Sets the value of the '{@link org.xtext.example.mydsl.myDsl.TypeSwitchStmt#getSwitch <em>Switch</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Switch</em>' attribute.
+   * @see #getSwitch()
+   * @generated
+   */
+  void setSwitch(String value);
+
   /**
    * Returns the value of the '<em><b>Simple Stmt</b></em>' containment reference.
    * <!-- begin-user-doc -->

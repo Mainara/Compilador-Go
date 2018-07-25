@@ -672,6 +672,15 @@ public interface MyDslFactory extends EFactory
   Expression createExpression();
 
   /**
+   * Returns a new object of class '<em>Expression1</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Expression1</em>'.
+   * @generated
+   */
+  Expression1 createExpression1();
+
+  /**
    * Returns a new object of class '<em>Expression Linha</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->

@@ -3,15 +3,16 @@
  */
 package org.xtext.example.mydsl.validation
 
-import org.eclipse.xtext.validation.Check
-import org.xtext.example.mydsl.myDsl.Declaration
-import org.xtext.example.mydsl.myDsl.Expression
-import org.xtext.example.mydsl.myDsl.MethodDecl
-import org.xtext.example.mydsl.myDsl.MyDslPackage
-import java.util.Map
+import java.util.ArrayList
 import java.util.HashMap
 import java.util.List
-import java.util.ArrayList
+import java.util.Map
+import org.eclipse.xtext.validation.Check
+import org.xtext.example.mydsl.myDsl.Declaration
+import org.xtext.example.mydsl.myDsl.MethodDecl
+import org.xtext.example.mydsl.myDsl.SwitchStmt
+import org.xtext.example.mydsl.myDsl.Expression
+import org.xtext.example.mydsl.myDsl.MyDslPackage
 
 /**
  * This class contains custom validation rules. 
@@ -24,6 +25,7 @@ class MyDslValidator extends AbstractMyDslValidator {
 	MethodDeclValidator methodDeclValidator = new MethodDeclValidator();
 	VarDeclValidator varDeclValidator = new VarDeclValidator();
 	TypeDeclValidator typeDeclValidator = new TypeDeclValidator();
+	ExpressionValidator expressionValidator = new ExpressionValidator();
 	Map<String, String> idsTypes = new HashMap<String,String>;
 	List<MethodDecl> methodDeclList = new ArrayList;
 	Map<String, String> typeDefs = new HashMap;
@@ -45,8 +47,8 @@ class MyDslValidator extends AbstractMyDslValidator {
 	@Check
 	def checkMethodDecl(MethodDecl methodDecl){
 		if(methodDeclValidator.checkMethodDecl(methodDecl, methodDeclList, typeDefs) != null){
-			var String erro = methodDeclValidator.checkMethodDecl(methodDecl, methodDeclList, typeDefs);
-			error(erro, MyDslPackage.Literals.METHOD_DECL__RECEIVER);
+			var Exception erro = methodDeclValidator.checkMethodDecl(methodDecl, methodDeclList, typeDefs);
+			error(erro.erro, erro.feature);
 		}
 	}
 	
@@ -54,24 +56,33 @@ class MyDslValidator extends AbstractMyDslValidator {
 	def checkDecl(Declaration decl){
 		if(decl.constDecl != null){
 			if(constDeclValidator.validaConstDecl(decl.constDecl) != null){
-				var String erro = constDeclValidator.validaConstDecl(decl.constDecl)
-				error(erro, MyDslPackage.Literals.DECLARATION__CONST_DECL)
+				var Exception erro = constDeclValidator.validaConstDecl(decl.constDecl)
+				error(erro.erro, erro.feature)
 			}
 		}else if(decl.typeDecl != null){
-			typeDeclValidator.addIdsTypes(decl.typeDecl, idsTypes, typeDefs);
+			if(typeDeclValidator.addIdsTypes(decl.typeDecl, idsTypes, typeDefs) != null){
+				var String erro = typeDeclValidator.addIdsTypes(decl.typeDecl, idsTypes, typeDefs)
+				error(erro, MyDslPackage.Literals.DECLARATION__TYPE_DECL);
+			}
 		}else{
 			if(varDeclValidator.validaVarDecl(decl.varDecl,idsTypes) != null){
-				var String erro = varDeclValidator.validaVarDecl(decl.varDecl, idsTypes);
-				error(erro, MyDslPackage.Literals.DECLARATION__VAR_DECL)
+				var Exception erro = varDeclValidator.validaVarDecl(decl.varDecl, idsTypes);
+				error(erro.erro, erro.feature)
 			}
 		}
 	}
 	
-	/*@Check
+	@Check
 	def checkExpression(Expression exp){
-		if(exp != null){
-			
+		if(expressionValidator.expressionValidator(exp) != null){
+			var String erro = expressionValidator.expressionValidator(exp);
+			error(erro, MyDslPackage.Literals.EXPRESSION__UNARY_EXPR);
 		}
-	}*/
+	}
+	
+	@Check
+	def checkSwitch(SwitchStmt switchStmt){
+		
+	}
 	
 }

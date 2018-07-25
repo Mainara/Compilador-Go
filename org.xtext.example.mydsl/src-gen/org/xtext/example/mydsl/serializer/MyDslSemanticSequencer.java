@@ -44,6 +44,7 @@ import org.xtext.example.mydsl.myDsl.ExprCaseClause;
 import org.xtext.example.mydsl.myDsl.ExprSwitchCase;
 import org.xtext.example.mydsl.myDsl.ExprSwitchStmt;
 import org.xtext.example.mydsl.myDsl.Expression;
+import org.xtext.example.mydsl.myDsl.Expression1;
 import org.xtext.example.mydsl.myDsl.ExpressionList;
 import org.xtext.example.mydsl.myDsl.Expression_Linha;
 import org.xtext.example.mydsl.myDsl.FallthroughStmt;
@@ -236,6 +237,9 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 				return; 
 			case MyDslPackage.EXPRESSION:
 				sequence_Expression(context, (Expression) semanticObject); 
+				return; 
+			case MyDslPackage.EXPRESSION1:
+				sequence_Expression1(context, (Expression1) semanticObject); 
 				return; 
 			case MyDslPackage.EXPRESSION_LIST:
 				sequence_ExpressionList(context, (ExpressionList) semanticObject); 
@@ -679,7 +683,7 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     CommCase returns CommCase
 	 *
 	 * Constraint:
-	 *     ((case=CASE expression=Expression commCaseLinha=CommCaseLinha) | default=DEFAULT)
+	 *     ((case='case' expression=Expression commCaseLinha=CommCaseLinha) | default='default')
 	 */
 	protected void sequence_CommCase(ISerializationContext context, CommCase semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -949,7 +953,7 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     ExprSwitchCase returns ExprSwitchCase
 	 *
 	 * Constraint:
-	 *     ((case=CASE expressionList=ExpressionList) | default=DEFAULT)
+	 *     ((case='case' expressionList=ExpressionList) | default='default')
 	 */
 	protected void sequence_ExprSwitchCase(ISerializationContext context, ExprSwitchCase semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -961,10 +965,31 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     ExprSwitchStmt returns ExprSwitchStmt
 	 *
 	 * Constraint:
-	 *     (switch=SWITCH simpleStmt=SimpleStmt? expression=Expression? exprCaseClause+=ExprCaseClause*)
+	 *     (switch='switch' simpleStmt=SimpleStmt? expression=Expression? exprCaseClause+=ExprCaseClause*)
 	 */
 	protected void sequence_ExprSwitchStmt(ISerializationContext context, ExprSwitchStmt semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Expression1 returns Expression1
+	 *
+	 * Constraint:
+	 *     (unaryExpr=UnaryExpr expression_Linha=Expression_Linha)
+	 */
+	protected void sequence_Expression1(ISerializationContext context, Expression1 semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.EXPRESSION1__UNARY_EXPR) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.EXPRESSION1__UNARY_EXPR));
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.EXPRESSION1__EXPRESSION_LINHA) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.EXPRESSION1__EXPRESSION_LINHA));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getExpression1Access().getUnaryExprUnaryExprParserRuleCall_0_0(), semanticObject.getUnaryExpr());
+		feeder.accept(grammarAccess.getExpression1Access().getExpression_LinhaExpression_LinhaParserRuleCall_1_0(), semanticObject.getExpression_Linha());
+		feeder.finish();
 	}
 	
 	
@@ -1006,7 +1031,7 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     Expression_Linha returns Expression_Linha
 	 *
 	 * Constraint:
-	 *     (BINARY_OP=BINARY_OP expression=Expression expression_Linha=Expression_Linha)?
+	 *     (BINARY_OP=BINARY_OP expression1=Expression1 expression_Linha=Expression_Linha)?
 	 */
 	protected void sequence_Expression_Linha(ISerializationContext context, Expression_Linha semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2222,7 +2247,7 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     TypeSwitchCase returns TypeSwitchCase
 	 *
 	 * Constraint:
-	 *     ((case=CASE typeList=TypeList) | default=DEFAULT)
+	 *     ((case='case' typeList=TypeList) | default='default')
 	 */
 	protected void sequence_TypeSwitchCase(ISerializationContext context, TypeSwitchCase semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2246,7 +2271,7 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     TypeSwitchStmt returns TypeSwitchStmt
 	 *
 	 * Constraint:
-	 *     (simpleStmt=SimpleStmt? typeSwitchGuard=TypeSwitchGuard typeCaseClause+=TypeCaseClause*)
+	 *     (switch='switch' simpleStmt=SimpleStmt? typeSwitchGuard=TypeSwitchGuard typeCaseClause+=TypeCaseClause*)
 	 */
 	protected void sequence_TypeSwitchStmt(ISerializationContext context, TypeSwitchStmt semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -2270,24 +2295,16 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     UnaryExpr returns UnaryExpr
 	 *
 	 * Constraint:
-	 *     (
-	 *         (
-	 *             (
-	 *                 unary_op+='+' | 
-	 *                 unary_op+='-' | 
-	 *                 unary_op+='!' | 
-	 *                 unary_op+='^' | 
-	 *                 unary_op+='*' | 
-	 *                 unary_op+='&' | 
-	 *                 unary_op+='<-'
-	 *             )+ 
-	 *             primaryExpr=PrimaryExpr
-	 *         ) | 
-	 *         primaryExpr=PrimaryExpr
-	 *     )
+	 *     primaryExpr=PrimaryExpr
 	 */
 	protected void sequence_UnaryExpr(ISerializationContext context, UnaryExpr semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MyDslPackage.Literals.UNARY_EXPR__PRIMARY_EXPR) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.UNARY_EXPR__PRIMARY_EXPR));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getUnaryExprAccess().getPrimaryExprPrimaryExprParserRuleCall_0(), semanticObject.getPrimaryExpr());
+		feeder.finish();
 	}
 	
 	

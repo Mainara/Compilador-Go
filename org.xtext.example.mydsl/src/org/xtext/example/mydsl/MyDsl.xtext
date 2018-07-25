@@ -11,7 +11,7 @@ terminal NEWLINE:
 ;
 
 terminal UNICODE_CHAR:
-	"nao seei"
+	LETTER
 ;
 
 terminal LETTER:
@@ -33,9 +33,9 @@ terminal HEX_DIGIT:
 terminal BREAK:
 	"break"
 ;
-terminal DEFAULT:
-	"default"
-;
+//terminal DEFAULT:
+	//"default"
+//;
 //terminal FUNC:
 	//"func"
 //;
@@ -45,9 +45,9 @@ terminal INTERFACE:
 terminal SELECT:
 	"select"
 ;
-terminal CASE:
-	"case"
-;
+//terminal CASE:
+	//"case"
+//;
 terminal DEFER:
 	"defer"
 ;
@@ -72,9 +72,9 @@ terminal GOTO:
 //terminal PACKAGE:
 	//"package"
 //;
-terminal SWITCH:
-	"switch"
-;
+//terminal SWITCH:
+	//"switch"
+//;
 //terminal CONST:
 	//"const"
 //;
@@ -474,12 +474,16 @@ Expression:
 	unaryExpr = UnaryExpr expression_Linha = Expression_Linha
 ;
 
+Expression1: 
+	unaryExpr = UnaryExpr expression_Linha = Expression_Linha
+;
+
 Expression_Linha: 
-	{Expression_Linha}(BINARY_OP = BINARY_OP expression = Expression expression_Linha = Expression_Linha)? //| ANY_OTHER
+	{Expression_Linha}(BINARY_OP = BINARY_OP expression1 = Expression1 expression_Linha = Expression_Linha)?
 ;
 
 UnaryExpr: 
-	unary_op += ("+" | "-" | "!" | "^" | "*" | "&" | "<-" )+ primaryExpr = PrimaryExpr | primaryExpr = PrimaryExpr
+	 primaryExpr = PrimaryExpr
 ;
 
 BINARY_OP: 
@@ -578,7 +582,7 @@ SwitchStmtLinhaLinha:
 ;*/
 
 ExprSwitchStmt:
-	switch = SWITCH (simpleStmt = SimpleStmt ";")? (expression= Expression)? "{" ( exprCaseClause += ExprCaseClause )* "}"
+	switch = "switch" (simpleStmt = SimpleStmt ";")? (expression= Expression)? "{" ( exprCaseClause += ExprCaseClause )* "}"
 ;
 
 ExprCaseClause:
@@ -586,11 +590,11 @@ ExprCaseClause:
 ;
 
 ExprSwitchCase:
-	case = CASE expressionList = ExpressionList | default = DEFAULT
+	case = "case" expressionList = ExpressionList | default = "default"
 ;
 
 TypeSwitchStmt:
-	SWITCH (simpleStmt = SimpleStmt ";")? typeSwitchGuard = TypeSwitchGuard "{" (typeCaseClause += TypeCaseClause)* "}"	
+	switch = "switch" (simpleStmt = SimpleStmt ";")? typeSwitchGuard = TypeSwitchGuard "{" (typeCaseClause += TypeCaseClause)* "}"	
 ;
 
 TypeSwitchGuard:
@@ -603,7 +607,7 @@ TypeCaseClause:
 ;
 
 TypeSwitchCase:
-	case = CASE typeList = TypeList | default = DEFAULT	
+	case = "case" typeList = TypeList | default = "default"	
 ;
 
 TypeList:
@@ -656,7 +660,7 @@ CommClause:
 ;
 
 CommCase:
-	case = CASE ( expression = Expression commCaseLinha= CommCaseLinha) | default = DEFAULT
+	case = "case" ( expression = Expression commCaseLinha= CommCaseLinha) | default = "default"
 ;
 
 CommCaseLinha:

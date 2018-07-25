@@ -3,10 +3,25 @@
  */
 package org.xtext.example.mydsl.generator;
 
+import com.google.common.base.Objects;
+import com.google.common.collect.Iterables;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.xtend2.lib.StringConcatenation;
 import org.eclipse.xtext.generator.AbstractGenerator;
 import org.eclipse.xtext.generator.IFileSystemAccess2;
 import org.eclipse.xtext.generator.IGeneratorContext;
+import org.eclipse.xtext.xbase.lib.IteratorExtensions;
+import org.xtext.example.mydsl.myDsl.ConstDecl;
+import org.xtext.example.mydsl.myDsl.ConstSpec;
+import org.xtext.example.mydsl.myDsl.Declaration;
+import org.xtext.example.mydsl.myDsl.ExpressionList;
+import org.xtext.example.mydsl.myDsl.IdentifierList;
+import org.xtext.example.mydsl.myDsl.MethodDecl;
+import org.xtext.example.mydsl.myDsl.TopLevelDecl;
+import org.xtext.example.mydsl.myDsl.TypeDecl;
 
 /**
  * Generates code from your model files on save.
@@ -15,7 +30,145 @@ import org.eclipse.xtext.generator.IGeneratorContext;
  */
 @SuppressWarnings("all")
 public class MyDslGenerator extends AbstractGenerator {
+  private Integer countVar = Integer.valueOf(1);
+  
+  private Integer countaddr = Integer.valueOf(0);
+  
   @Override
   public void doGenerate(final Resource resource, final IFileSystemAccess2 fsa, final IGeneratorContext context) {
+    this.countVar = Integer.valueOf(1);
+    this.countaddr = Integer.valueOf(0);
+    TreeIterator<EObject> _allContents = resource.getAllContents();
+    Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(_allContents);
+    Iterable<TopLevelDecl> _filter = Iterables.<TopLevelDecl>filter(_iterable, TopLevelDecl.class);
+    for (final TopLevelDecl e : _filter) {
+      Declaration _declaration = e.getDeclaration();
+      String _string = _declaration.toString();
+      String _plus = (_string + ".txt");
+      CharSequence _compile = this.compile(e);
+      fsa.generateFile(_plus, _compile);
+    }
+  }
+  
+  public CharSequence compile(final TopLevelDecl topDecl) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      Declaration _declaration = topDecl.getDeclaration();
+      if ((_declaration instanceof Declaration)) {
+        Declaration _declaration_1 = topDecl.getDeclaration();
+        CharSequence _genDeclaration = this.genDeclaration(((Declaration) _declaration_1));
+        _builder.append(_genDeclaration, "");
+        _builder.newLineIfNotEmpty();
+      } else {
+        MethodDecl _methodDecl = topDecl.getMethodDecl();
+        if ((_methodDecl instanceof MethodDecl)) {
+          Declaration _declaration_2 = topDecl.getDeclaration();
+          ConstDecl _constDecl = _declaration_2.getConstDecl();
+          CharSequence _genConst = this.genConst(((ConstDecl) _constDecl));
+          _builder.append(_genConst, "");
+          _builder.newLineIfNotEmpty();
+        }
+      }
+    }
+    return _builder;
+  }
+  
+  public CharSequence genType(final TypeDecl decl) {
+    StringConcatenation _builder = new StringConcatenation();
+    _builder.append(this.countaddr, "");
+    _builder.append(": LD SP, 1000");
+    _builder.newLineIfNotEmpty();
+    return _builder;
+  }
+  
+  public CharSequence genDeclaration(final Declaration decl) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      ConstDecl _constDecl = decl.getConstDecl();
+      if ((_constDecl instanceof ConstDecl)) {
+        ConstDecl _constDecl_1 = decl.getConstDecl();
+        CharSequence _genConst = this.genConst(((ConstDecl) _constDecl_1));
+        _builder.append(_genConst, "");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    return _builder;
+  }
+  
+  public CharSequence genConst(final ConstDecl constDecl) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      ConstSpec _constSpec = constDecl.getConstSpec();
+      boolean _notEquals = (!Objects.equal(_constSpec, null));
+      if (_notEquals) {
+        ConstSpec _constSpec_1 = constDecl.getConstSpec();
+        CharSequence _genConstSpec = this.genConstSpec(((ConstSpec) _constSpec_1));
+        _builder.append(_genConstSpec, "");
+        _builder.newLineIfNotEmpty();
+      } else {
+        EList<ConstSpec> _constSpec1 = constDecl.getConstSpec1();
+        boolean _notEquals_1 = (!Objects.equal(_constSpec1, null));
+        if (_notEquals_1) {
+          {
+            EList<ConstSpec> _constSpec1_1 = constDecl.getConstSpec1();
+            for(final ConstSpec constSpec : _constSpec1_1) {
+              CharSequence _genConstSpec_1 = this.genConstSpec(constSpec);
+              _builder.append(_genConstSpec_1, "");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+      }
+    }
+    return _builder;
+  }
+  
+  public CharSequence genConstSpec(final ConstSpec spec) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      ExpressionList _expressionList = spec.getExpressionList();
+      boolean _notEquals = (!Objects.equal(_expressionList, null));
+      if (_notEquals) {
+        {
+          IdentifierList _identifierList = spec.getIdentifierList();
+          String _id = _identifierList.getId();
+          boolean _isEmpty = _id.isEmpty();
+          boolean _not = (!_isEmpty);
+          if (_not) {
+            _builder.append("\t");
+            String _string = this.countaddr.toString();
+            _builder.append(_string, "\t");
+            _builder.append(": ST ");
+            IdentifierList _identifierList_1 = spec.getIdentifierList();
+            String _id_1 = _identifierList_1.getId();
+            _builder.append(_id_1, "\t");
+            _builder.append(", TRUE");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+        _builder.newLine();
+        {
+          IdentifierList _identifierList_2 = spec.getIdentifierList();
+          EList<String> _id1 = _identifierList_2.getId1();
+          boolean _notEquals_1 = (!Objects.equal(_id1, null));
+          if (_notEquals_1) {
+            {
+              IdentifierList _identifierList_3 = spec.getIdentifierList();
+              EList<String> _id1_1 = _identifierList_3.getId1();
+              for(final String id : _id1_1) {
+                _builder.append("\t");
+                String _string_1 = this.countaddr.toString();
+                _builder.append(_string_1, "\t");
+                _builder.append(": ST ");
+                _builder.append(id, "\t");
+                _builder.append(", TRUE");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+          }
+        }
+      }
+    }
+    return _builder;
   }
 }

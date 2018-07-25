@@ -137,6 +137,7 @@ public class MyDslFactoryImpl extends EFactoryImpl implements MyDslFactory
       case MyDslPackage.METHOD_EXPR: return createMethodExpr();
       case MyDslPackage.RECEIVER_TYPE: return createReceiverType();
       case MyDslPackage.EXPRESSION: return createExpression();
+      case MyDslPackage.EXPRESSION1: return createExpression1();
       case MyDslPackage.EXPRESSION_LINHA: return createExpression_Linha();
       case MyDslPackage.UNARY_EXPR: return createUnaryExpr();
       case MyDslPackage.BINARY_OP: return createBINARY_OP();
@@ -976,6 +977,17 @@ public class MyDslFactoryImpl extends EFactoryImpl implements MyDslFactory
   {
     ExpressionImpl expression = new ExpressionImpl();
     return expression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Expression1 createExpression1()
+  {
+    Expression1Impl expression1 = new Expression1Impl();
+    return expression1;
   }
 
   /**

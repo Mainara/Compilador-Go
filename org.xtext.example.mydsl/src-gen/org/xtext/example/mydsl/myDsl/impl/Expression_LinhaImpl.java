@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.xtext.example.mydsl.myDsl.BINARY_OP;
-import org.xtext.example.mydsl.myDsl.Expression;
+import org.xtext.example.mydsl.myDsl.Expression1;
 import org.xtext.example.mydsl.myDsl.Expression_Linha;
 import org.xtext.example.mydsl.myDsl.MyDslPackage;
 
@@ -26,7 +26,7 @@ import org.xtext.example.mydsl.myDsl.MyDslPackage;
  * </p>
  * <ul>
  *   <li>{@link org.xtext.example.mydsl.myDsl.impl.Expression_LinhaImpl#getBINARY_OP <em>BINARY OP</em>}</li>
- *   <li>{@link org.xtext.example.mydsl.myDsl.impl.Expression_LinhaImpl#getExpression <em>Expression</em>}</li>
+ *   <li>{@link org.xtext.example.mydsl.myDsl.impl.Expression_LinhaImpl#getExpression1 <em>Expression1</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.impl.Expression_LinhaImpl#getExpression_Linha <em>Expression Linha</em>}</li>
  * </ul>
  *
@@ -45,14 +45,14 @@ public class Expression_LinhaImpl extends MinimalEObjectImpl.Container implement
   protected BINARY_OP binarY_OP;
 
   /**
-   * The cached value of the '{@link #getExpression() <em>Expression</em>}' containment reference.
+   * The cached value of the '{@link #getExpression1() <em>Expression1</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getExpression()
+   * @see #getExpression1()
    * @generated
    * @ordered
    */
-  protected Expression expression;
+  protected Expression1 expression1;
 
   /**
    * The cached value of the '{@link #getExpression_Linha() <em>Expression Linha</em>}' containment reference.
@@ -138,9 +138,9 @@ public class Expression_LinhaImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
-  public Expression getExpression()
+  public Expression1 getExpression1()
   {
-    return expression;
+    return expression1;
   }
 
   /**
@@ -148,13 +148,13 @@ public class Expression_LinhaImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetExpression(Expression newExpression, NotificationChain msgs)
+  public NotificationChain basicSetExpression1(Expression1 newExpression1, NotificationChain msgs)
   {
-    Expression oldExpression = expression;
-    expression = newExpression;
+    Expression1 oldExpression1 = expression1;
+    expression1 = newExpression1;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MyDslPackage.EXPRESSION_LINHA__EXPRESSION, oldExpression, newExpression);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MyDslPackage.EXPRESSION_LINHA__EXPRESSION1, oldExpression1, newExpression1);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -165,20 +165,20 @@ public class Expression_LinhaImpl extends MinimalEObjectImpl.Container implement
    * <!-- end-user-doc -->
    * @generated
    */
-  public void setExpression(Expression newExpression)
+  public void setExpression1(Expression1 newExpression1)
   {
-    if (newExpression != expression)
+    if (newExpression1 != expression1)
     {
       NotificationChain msgs = null;
-      if (expression != null)
-        msgs = ((InternalEObject)expression).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MyDslPackage.EXPRESSION_LINHA__EXPRESSION, null, msgs);
-      if (newExpression != null)
-        msgs = ((InternalEObject)newExpression).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MyDslPackage.EXPRESSION_LINHA__EXPRESSION, null, msgs);
-      msgs = basicSetExpression(newExpression, msgs);
+      if (expression1 != null)
+        msgs = ((InternalEObject)expression1).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MyDslPackage.EXPRESSION_LINHA__EXPRESSION1, null, msgs);
+      if (newExpression1 != null)
+        msgs = ((InternalEObject)newExpression1).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MyDslPackage.EXPRESSION_LINHA__EXPRESSION1, null, msgs);
+      msgs = basicSetExpression1(newExpression1, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MyDslPackage.EXPRESSION_LINHA__EXPRESSION, newExpression, newExpression));
+      eNotify(new ENotificationImpl(this, Notification.SET, MyDslPackage.EXPRESSION_LINHA__EXPRESSION1, newExpression1, newExpression1));
   }
 
   /**
@@ -241,8 +241,8 @@ public class Expression_LinhaImpl extends MinimalEObjectImpl.Container implement
     {
       case MyDslPackage.EXPRESSION_LINHA__BINARY_OP:
         return basicSetBINARY_OP(null, msgs);
-      case MyDslPackage.EXPRESSION_LINHA__EXPRESSION:
-        return basicSetExpression(null, msgs);
+      case MyDslPackage.EXPRESSION_LINHA__EXPRESSION1:
+        return basicSetExpression1(null, msgs);
       case MyDslPackage.EXPRESSION_LINHA__EXPRESSION_LINHA:
         return basicSetExpression_Linha(null, msgs);
     }
@@ -261,8 +261,8 @@ public class Expression_LinhaImpl extends MinimalEObjectImpl.Container implement
     {
       case MyDslPackage.EXPRESSION_LINHA__BINARY_OP:
         return getBINARY_OP();
-      case MyDslPackage.EXPRESSION_LINHA__EXPRESSION:
-        return getExpression();
+      case MyDslPackage.EXPRESSION_LINHA__EXPRESSION1:
+        return getExpression1();
       case MyDslPackage.EXPRESSION_LINHA__EXPRESSION_LINHA:
         return getExpression_Linha();
     }
@@ -282,8 +282,8 @@ public class Expression_LinhaImpl extends MinimalEObjectImpl.Container implement
       case MyDslPackage.EXPRESSION_LINHA__BINARY_OP:
         setBINARY_OP((BINARY_OP)newValue);
         return;
-      case MyDslPackage.EXPRESSION_LINHA__EXPRESSION:
-        setExpression((Expression)newValue);
+      case MyDslPackage.EXPRESSION_LINHA__EXPRESSION1:
+        setExpression1((Expression1)newValue);
         return;
       case MyDslPackage.EXPRESSION_LINHA__EXPRESSION_LINHA:
         setExpression_Linha((Expression_Linha)newValue);
@@ -305,8 +305,8 @@ public class Expression_LinhaImpl extends MinimalEObjectImpl.Container implement
       case MyDslPackage.EXPRESSION_LINHA__BINARY_OP:
         setBINARY_OP((BINARY_OP)null);
         return;
-      case MyDslPackage.EXPRESSION_LINHA__EXPRESSION:
-        setExpression((Expression)null);
+      case MyDslPackage.EXPRESSION_LINHA__EXPRESSION1:
+        setExpression1((Expression1)null);
         return;
       case MyDslPackage.EXPRESSION_LINHA__EXPRESSION_LINHA:
         setExpression_Linha((Expression_Linha)null);
@@ -327,8 +327,8 @@ public class Expression_LinhaImpl extends MinimalEObjectImpl.Container implement
     {
       case MyDslPackage.EXPRESSION_LINHA__BINARY_OP:
         return binarY_OP != null;
-      case MyDslPackage.EXPRESSION_LINHA__EXPRESSION:
-        return expression != null;
+      case MyDslPackage.EXPRESSION_LINHA__EXPRESSION1:
+        return expression1 != null;
       case MyDslPackage.EXPRESSION_LINHA__EXPRESSION_LINHA:
         return expression_Linha != null;
     }

@@ -3,7 +3,6 @@ package org.xtext.example.mydsl;
 import org.eclipse.xtext.diagnostics.Diagnostic;
 import org.eclipse.xtext.nodemodel.SyntaxErrorMessage;
 import org.eclipse.xtext.parser.antlr.ISyntaxErrorMessageProvider;
-import org.eclipse.xtext.parser.antlr.SyntaxErrorMessageProvider;
 
 public class MyDslSyntaxErrorMessageProvider implements ISyntaxErrorMessageProvider{
 

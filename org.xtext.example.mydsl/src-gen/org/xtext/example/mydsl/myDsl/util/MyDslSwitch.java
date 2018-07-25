@@ -577,6 +577,13 @@ public class MyDslSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case MyDslPackage.EXPRESSION1:
+      {
+        Expression1 expression1 = (Expression1)theEObject;
+        T result = caseExpression1(expression1);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case MyDslPackage.EXPRESSION_LINHA:
       {
         Expression_Linha expression_Linha = (Expression_Linha)theEObject;
@@ -2037,6 +2044,22 @@ public class MyDslSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseExpression(Expression object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Expression1</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Expression1</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseExpression1(Expression1 object)
   {
     return null;
   }

@@ -436,6 +436,11 @@ public class MyDslAdapterFactory extends AdapterFactoryImpl
         return createExpressionAdapter();
       }
       @Override
+      public Adapter caseExpression1(Expression1 object)
+      {
+        return createExpression1Adapter();
+      }
+      @Override
       public Adapter caseExpression_Linha(Expression_Linha object)
       {
         return createExpression_LinhaAdapter();
@@ -1753,6 +1758,21 @@ public class MyDslAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createExpressionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.xtext.example.mydsl.myDsl.Expression1 <em>Expression1</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.xtext.example.mydsl.myDsl.Expression1
+   * @generated
+   */
+  public Adapter createExpression1Adapter()
   {
     return null;
   }

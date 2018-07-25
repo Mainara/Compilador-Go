@@ -305,13 +305,16 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MyDsl.ecore#//Expression/unaryExpr"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MyDsl.ecore#//Expression/expression_Linha"/>
     </genClasses>
+    <genClasses ecoreClass="MyDsl.ecore#//Expression1">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MyDsl.ecore#//Expression1/unaryExpr"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MyDsl.ecore#//Expression1/expression_Linha"/>
+    </genClasses>
     <genClasses ecoreClass="MyDsl.ecore#//Expression_Linha">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MyDsl.ecore#//Expression_Linha/BINARY_OP"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MyDsl.ecore#//Expression_Linha/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MyDsl.ecore#//Expression_Linha/expression1"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MyDsl.ecore#//Expression_Linha/expression_Linha"/>
     </genClasses>
     <genClasses ecoreClass="MyDsl.ecore#//UnaryExpr">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MyDsl.ecore#//UnaryExpr/unary_op"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MyDsl.ecore#//UnaryExpr/primaryExpr"/>
     </genClasses>
     <genClasses ecoreClass="MyDsl.ecore#//BINARY_OP">
@@ -408,6 +411,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MyDsl.ecore#//ExprSwitchCase/default"/>
     </genClasses>
     <genClasses ecoreClass="MyDsl.ecore#//TypeSwitchStmt">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MyDsl.ecore#//TypeSwitchStmt/switch"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MyDsl.ecore#//TypeSwitchStmt/simpleStmt"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MyDsl.ecore#//TypeSwitchStmt/typeSwitchGuard"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MyDsl.ecore#//TypeSwitchStmt/typeCaseClause"/>

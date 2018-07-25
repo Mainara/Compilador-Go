@@ -1,24 +1,13 @@
 package org.xtext.example.mydsl.validation;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-
-import org.eclipse.emf.common.util.EList;
 import org.xtext.example.mydsl.myDsl.ConstDecl;
 import org.xtext.example.mydsl.myDsl.ConstSpec;
-import org.xtext.example.mydsl.myDsl.Expression;
+import org.xtext.example.mydsl.myDsl.MyDslPackage;
 
 public class ConstDeclValidator {
 	
-	List<String> type = new ArrayList<>();
-	List<String> asIds = new ArrayList<>();
-	
-	List<String> type1 = new ArrayList<>();
-	List<String> asIds1 = new ArrayList<>();
-	
-	public String validaConstDecl(ConstDecl constDecl){
-		
+	public Exception validaConstDecl(ConstDecl constDecl){
 		if(constDecl.getConstSpec() != null){
 			return validaConstSpec(constDecl.getConstSpec());
 		}else{
@@ -27,77 +16,20 @@ public class ConstDeclValidator {
 	}
 	
 	
-	public String validaConstSpec(ConstSpec constSpec){
+	public Exception validaConstSpec(ConstSpec constSpec){
 		int contId = contIds(constSpec);
 		int contExp = contExp(constSpec);
 		
 		if(contId > contExp){
-			return "Erro semântico: numero de ids diferentes do núemro de expressões";
+			return new Exception("Erro semântico: numero de ids diferentes do número de expressões", MyDslPackage.Literals.DECLARATION__CONST_DECL);
 		}else if(contExp > contId){
-			return "Erro semântico: numero de ids diferentes do núemro de expressões";
-		}
-		
-		addIds(constSpec);
-		validaConstSpecType(constSpec);
-		validaExpression(constSpec.getExpressionList().getExpression());
-		
-		for(Expression ex: constSpec.getExpressionList().getExpression1()){
-			validaExpression(ex);
-		}
-		
-		for(String id: asIds){
-			System.out.println(id);
-		}
-		
-		for(String id: type){
-			System.out.println(id);
-		}
-		
-		return null;
-	}
-	
-	public String validaConstSpecType(ConstSpec constSpec){
-		if(constSpec.getType().getTypeName() != null){
-			if(!constSpec.getType().getTypeName().getId().equals("boolean")){
-				return "Erro semântico: Expressão relacional incompatível com este tipo";
-			}
-		}else{
-			for(String id: asIds){
-				type.add("boolean");
+			return new Exception("Erro semântico: numero de ids diferentes do número de expressões", MyDslPackage.Literals.DECLARATION__CONST_DECL);
+		}else if(constSpec.getType() != null){
+			if(constSpec.getType().getTypeName() == null || !constSpec.getType().getTypeName().getId().equals("bool")){
+				return new Exception("Erro semântico: incompatibilidade de tipo, expressões relacionais relacionais só podem ser atribuíveis ao tipo bool", MyDslPackage.Literals.DECLARATION__CONST_DECL);
 			}
 		}
-		return null;
 		
-	}
-	
-	public String validaConstSpec1(EList<ConstSpec> constSpec1) {
-		int cont = 0;
-		if(constSpec1.get(0).getExpressionList() == null){
-			return "Erro Semântico: não pode omitir a lista de exeperssão da primeira constante";
-		}else{
-			contExp(constSpec1.get(0));
-		}
-		List<Integer> quantExp = new ArrayList<>();
-		quantExp.add(cont);
-		
-		for (int j = 1; j < constSpec1.size(); j++) {
-			int contId = contIds(constSpec1.get(j));
-			if(constSpec1.get(j).getExpressionList() == null){
-				if(contId > quantExp.get(j-1)){
-					return "Erro semântico: numero de ids diferentes do núemro de expressões";
-				}else if(quantExp.get(j-1) > contId){
-					return "Erro semântico: numero de ids diferentes do núemro de expressões";
-				}
-			}else{
-				int contExp = contExp(constSpec1.get(j));
-				quantExp.add(contExp);
-				if(contId > contExp){
-					return "Erro semântico: numero de ids diferentes do núemro de expressões";
-				}else if(contExp > contId){
-					return "Erro semântico: numero de ids diferentes do núemro de expressões";
-				}
-			}
-		}
 		return null;
 	}
 	
@@ -131,24 +63,41 @@ public class ConstDeclValidator {
 		return cont;
 	}
 	
-	public void addIds(ConstSpec constSpec){
-		if(!constSpec.getIdentifierList().getId().isEmpty()){
-			asIds.add(constSpec.getIdentifierList().getId());
+	public Exception validaConstSpec1(List<ConstSpec> constSpecs){
+		if(constSpecs.get(0).getExpressionList() == null){
+			return new Exception("Erro semântico: lista de expressões não pode ser omitida da primeira constante", MyDslPackage.Literals.DECLARATION__CONST_DECL);
 		}
 		
-		if(constSpec.getIdentifierList().getId1().size() > 0){
-			for(String id: constSpec.getIdentifierList().getId1()){
-				if(!id.isEmpty()){
-						asIds.add(id);
-				}
+		if(contIds(constSpecs.get(0)) > contExp(constSpecs.get(0)) || contExp(constSpecs.get(0)) > contIds(constSpecs.get(0))){
+			return new Exception("Erro semântico: numero de ids diferentes do número de expressões", MyDslPackage.Literals.DECLARATION__CONST_DECL);
+		}
+		
+		if(constSpecs.get(0).getType() != null){
+			if(constSpecs.get(0).getType().getTypeName() == null || !constSpecs.get(0).getType().getTypeName().getId().equals("bool")){
+				return new Exception("Erro semântico: incompatibilidade de tipo, expressões relacionais constantes só podem ser atribuíveis ao tipo bool", MyDslPackage.Literals.DECLARATION__CONST_DECL);
 			}
 		}
-	}
-	
-	public String validaExpression(Expression expression){
-		if(!expression.getUnaryExpr().getPrimaryExpr().getOperand().getOperandName().getId().equals("true") ||
-			!expression.getUnaryExpr().getPrimaryExpr().getOperand().getOperandName().getId().equals("false")){
-			return "Erro semântico: tipo de expressão incompatível com o tipo booleano";
+		
+		for(int i = 1; i < constSpecs.size(); i ++){
+			if(constSpecs.get(i).getExpressionList() == null){
+				for(int j = i-1; j >= 0; j --){
+					if(constSpecs.get(j).getExpressionList() != null){
+						if(contIds(constSpecs.get(i)) > contExp(constSpecs.get(j)) || contExp(constSpecs.get(j)) > contIds(constSpecs.get(i))){
+							return new Exception("Erro semântico: numero de ids diferentes do número de expressões", MyDslPackage.Literals.DECLARATION__CONST_DECL);
+						}
+					}
+				}
+			}else{
+				if(contIds(constSpecs.get(i)) > contExp(constSpecs.get(i)) || contExp(constSpecs.get(i)) > contIds(constSpecs.get(i))){
+					return new Exception("Erro semântico: numero de ids diferentes do número de expressões", MyDslPackage.Literals.DECLARATION__CONST_DECL);
+				}
+			}
+			
+			if(constSpecs.get(i).getType() != null){
+				if(constSpecs.get(i).getType().getTypeName() == null || !constSpecs.get(i).getType().getTypeName().getId().equals("bool")){
+					return new Exception("Erro semântico: incompatibilidade de tipo, expressões relacionais constantes só podem ser atribuíveis ao tipo bool", MyDslPackage.Literals.DECLARATION__CONST_DECL);
+				}
+			}
 		}
 		return null;
 	}

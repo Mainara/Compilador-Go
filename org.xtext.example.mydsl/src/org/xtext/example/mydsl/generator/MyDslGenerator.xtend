@@ -7,6 +7,15 @@ import org.eclipse.emf.ecore.resource.Resource
 import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
+import org.xtext.example.mydsl.myDsl.TopLevelDecl
+import javax.inject.Inject
+import org.eclipse.xtext.naming.IQualifiedNameProvider
+import org.xtext.example.mydsl.myDsl.VarDecl
+import org.xtext.example.mydsl.myDsl.ConstDecl
+import org.xtext.example.mydsl.myDsl.TypeDecl
+import org.xtext.example.mydsl.myDsl.MethodDecl
+import org.xtext.example.mydsl.myDsl.Declaration
+import org.xtext.example.mydsl.myDsl.ConstSpec
 
 /**
  * Generates code from your model files on save.
@@ -14,12 +23,64 @@ import org.eclipse.xtext.generator.IGeneratorContext
  * See https://www.eclipse.org/Xtext/documentation/303_runtime_concepts.html#code-generation
  */
 class MyDslGenerator extends AbstractGenerator {
-
+	
+	Integer countVar = 1;
+	Integer countaddr = 0;
+	
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
+		countVar = 1;
+		countaddr = 0;
+		for (e : resource.allContents.toIterable.filter(TopLevelDecl)) {
+                fsa.generateFile(e.declaration.toString() + ".txt", e.compile)
+        }
 //		fsa.generateFile('greetings.txt', 'People to greet: ' + 
 //			resource.allContents
 //				.filter(typeof(Greeting))
 //				.map[name]
 //				.join(', '))
 	}
+	
+	def compile(TopLevelDecl topDecl)'''
+		«IF topDecl.declaration instanceof Declaration»
+				«(topDecl.declaration as Declaration).genDeclaration»
+		«ELSEIF topDecl.methodDecl instanceof MethodDecl»
+				«(topDecl.declaration.constDecl as ConstDecl).genConst»
+		«ENDIF»	
+	'''
+	
+	def genType(TypeDecl decl)'''
+		«countaddr»: LD SP, 1000
+	'''
+	
+	def genDeclaration(Declaration decl)'''
+		«IF decl.constDecl instanceof ConstDecl»
+			«(decl.constDecl as ConstDecl).genConst»
+		«ENDIF»
+	'''
+	
+	def genConst(ConstDecl constDecl)'''
+		«IF constDecl.constSpec != null»
+			«(constDecl.constSpec as ConstSpec).genConstSpec»
+		«ELSEIF constDecl.constSpec1 != null»
+			«FOR constSpec : constDecl.constSpec1»
+				«genConstSpec(constSpec)»
+			«ENDFOR»
+		«ENDIF»
+	'''
+	
+	def genConstSpec(ConstSpec spec) '''
+		«IF spec.expressionList != null»
+			«IF !spec.identifierList.id.empty»
+				«countaddr.toString()»: ST «spec.identifierList.id», TRUE
+			«ENDIF»
+		
+			«IF spec.identifierList.id1 != null»
+				«FOR id: spec.identifierList.id1»
+					«countaddr.toString()»: ST «id», TRUE
+				«ENDFOR»
+			«ENDIF»
+	«ENDIF»
+	'''
+	
+	
 }

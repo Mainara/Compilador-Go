@@ -660,37 +660,24 @@ ruleExpression:
 	ruleExpression_Linha
 ;
 
+// Rule Expression1
+ruleExpression1:
+	ruleUnaryExpr
+	ruleExpression_Linha
+;
+
 // Rule Expression_Linha
 ruleExpression_Linha:
 	(
 		ruleBINARY_OP
-		ruleExpression
+		ruleExpression1
 		ruleExpression_Linha
 	)?
 ;
 
 // Rule UnaryExpr
 ruleUnaryExpr:
-	(
-		(
-			'+'
-			    |
-			'-'
-			    |
-			'!'
-			    |
-			'^'
-			    |
-			'*'
-			    |
-			'&'
-			    |
-			'<-'
-		)+
-		rulePrimaryExpr
-		    |
-		rulePrimaryExpr
-	)
+	rulePrimaryExpr
 ;
 
 // Rule BINARY_OP
@@ -880,7 +867,7 @@ ruleSwitchStmt:
 
 // Rule ExprSwitchStmt
 ruleExprSwitchStmt:
-	RULE_SWITCH
+	'switch'
 	(
 		ruleSimpleStmt
 		';'
@@ -903,16 +890,16 @@ ruleExprCaseClause:
 // Rule ExprSwitchCase
 ruleExprSwitchCase:
 	(
-		RULE_CASE
+		'case'
 		ruleExpressionList
 		    |
-		RULE_DEFAULT
+		'default'
 	)
 ;
 
 // Rule TypeSwitchStmt
 ruleTypeSwitchStmt:
-	RULE_SWITCH
+	'switch'
 	(
 		ruleSimpleStmt
 		';'
@@ -947,10 +934,10 @@ ruleTypeCaseClause:
 // Rule TypeSwitchCase
 ruleTypeSwitchCase:
 	(
-		RULE_CASE
+		'case'
 		ruleTypeList
 		    |
-		RULE_DEFAULT
+		'default'
 	)
 ;
 
@@ -1069,11 +1056,11 @@ ruleCommClause:
 // Rule CommCase
 ruleCommCase:
 	(
-		RULE_CASE
+		'case'
 		ruleExpression
 		ruleCommCaseLinha
 		    |
-		RULE_DEFAULT
+		'default'
 	)
 ;
 
@@ -1182,7 +1169,7 @@ ruleImportSpec:
 
 fragment RULE_NEWLINE : ('\n'|'\r'|'\n\r');
 
-fragment RULE_UNICODE_CHAR : 'nao seei';
+fragment RULE_UNICODE_CHAR : RULE_LETTER;
 
 fragment RULE_LETTER : ('a'..'z'|'A'..'Z'|'_');
 
@@ -1194,13 +1181,9 @@ fragment RULE_HEX_DIGIT : ('0'..'9'|'A'..'F'|'a'..'f');
 
 RULE_BREAK : 'break';
 
-RULE_DEFAULT : 'default';
-
 RULE_INTERFACE : 'interface';
 
 RULE_SELECT : 'select';
-
-RULE_CASE : 'case';
 
 RULE_DEFER : 'defer';
 
@@ -1215,8 +1198,6 @@ RULE_CHAN : 'chan';
 RULE_ELSE : 'else';
 
 RULE_GOTO : 'goto';
-
-RULE_SWITCH : 'switch';
 
 RULE_FALLTHROUGH : 'fallthrough';
 

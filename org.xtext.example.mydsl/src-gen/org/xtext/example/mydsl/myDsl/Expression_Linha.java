@@ -15,7 +15,7 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link org.xtext.example.mydsl.myDsl.Expression_Linha#getBINARY_OP <em>BINARY OP</em>}</li>
- *   <li>{@link org.xtext.example.mydsl.myDsl.Expression_Linha#getExpression <em>Expression</em>}</li>
+ *   <li>{@link org.xtext.example.mydsl.myDsl.Expression_Linha#getExpression1 <em>Expression1</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.Expression_Linha#getExpression_Linha <em>Expression Linha</em>}</li>
  * </ul>
  *
@@ -52,30 +52,30 @@ public interface Expression_Linha extends EObject
   void setBINARY_OP(BINARY_OP value);
 
   /**
-   * Returns the value of the '<em><b>Expression</b></em>' containment reference.
+   * Returns the value of the '<em><b>Expression1</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <p>
-   * If the meaning of the '<em>Expression</em>' containment reference isn't clear,
+   * If the meaning of the '<em>Expression1</em>' containment reference isn't clear,
    * there really should be more of a description here...
    * </p>
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Expression</em>' containment reference.
-   * @see #setExpression(Expression)
-   * @see org.xtext.example.mydsl.myDsl.MyDslPackage#getExpression_Linha_Expression()
+   * @return the value of the '<em>Expression1</em>' containment reference.
+   * @see #setExpression1(Expression1)
+   * @see org.xtext.example.mydsl.myDsl.MyDslPackage#getExpression_Linha_Expression1()
    * @model containment="true"
    * @generated
    */
-  Expression getExpression();
+  Expression1 getExpression1();
 
   /**
-   * Sets the value of the '{@link org.xtext.example.mydsl.myDsl.Expression_Linha#getExpression <em>Expression</em>}' containment reference.
+   * Sets the value of the '{@link org.xtext.example.mydsl.myDsl.Expression_Linha#getExpression1 <em>Expression1</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Expression</em>' containment reference.
-   * @see #getExpression()
+   * @param value the new value of the '<em>Expression1</em>' containment reference.
+   * @see #getExpression1()
    * @generated
    */
-  void setExpression(Expression value);
+  void setExpression1(Expression1 value);
 
   /**
    * Returns the value of the '<em><b>Expression Linha</b></em>' containment reference.

@@ -33,6 +33,7 @@ import org.xtext.example.mydsl.myDsl.TypeSwitchStmt;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.xtext.example.mydsl.myDsl.impl.TypeSwitchStmtImpl#getSwitch <em>Switch</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.impl.TypeSwitchStmtImpl#getSimpleStmt <em>Simple Stmt</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.impl.TypeSwitchStmtImpl#getTypeSwitchGuard <em>Type Switch Guard</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.impl.TypeSwitchStmtImpl#getTypeCaseClause <em>Type Case Clause</em>}</li>
@@ -42,6 +43,26 @@ import org.xtext.example.mydsl.myDsl.TypeSwitchStmt;
  */
 public class TypeSwitchStmtImpl extends MinimalEObjectImpl.Container implements TypeSwitchStmt
 {
+  /**
+   * The default value of the '{@link #getSwitch() <em>Switch</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSwitch()
+   * @generated
+   * @ordered
+   */
+  protected static final String SWITCH_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getSwitch() <em>Switch</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getSwitch()
+   * @generated
+   * @ordered
+   */
+  protected String switch_ = SWITCH_EDEFAULT;
+
   /**
    * The cached value of the '{@link #getSimpleStmt() <em>Simple Stmt</em>}' containment reference.
    * <!-- begin-user-doc -->
@@ -91,6 +112,29 @@ public class TypeSwitchStmtImpl extends MinimalEObjectImpl.Container implements 
   protected EClass eStaticClass()
   {
     return MyDslPackage.Literals.TYPE_SWITCH_STMT;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String getSwitch()
+  {
+    return switch_;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public void setSwitch(String newSwitch)
+  {
+    String oldSwitch = switch_;
+    switch_ = newSwitch;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, MyDslPackage.TYPE_SWITCH_STMT__SWITCH, oldSwitch, switch_));
   }
 
   /**
@@ -233,6 +277,8 @@ public class TypeSwitchStmtImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
+      case MyDslPackage.TYPE_SWITCH_STMT__SWITCH:
+        return getSwitch();
       case MyDslPackage.TYPE_SWITCH_STMT__SIMPLE_STMT:
         return getSimpleStmt();
       case MyDslPackage.TYPE_SWITCH_STMT__TYPE_SWITCH_GUARD:
@@ -254,6 +300,9 @@ public class TypeSwitchStmtImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
+      case MyDslPackage.TYPE_SWITCH_STMT__SWITCH:
+        setSwitch((String)newValue);
+        return;
       case MyDslPackage.TYPE_SWITCH_STMT__SIMPLE_STMT:
         setSimpleStmt((SimpleStmt)newValue);
         return;
@@ -278,6 +327,9 @@ public class TypeSwitchStmtImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
+      case MyDslPackage.TYPE_SWITCH_STMT__SWITCH:
+        setSwitch(SWITCH_EDEFAULT);
+        return;
       case MyDslPackage.TYPE_SWITCH_STMT__SIMPLE_STMT:
         setSimpleStmt((SimpleStmt)null);
         return;
@@ -301,6 +353,8 @@ public class TypeSwitchStmtImpl extends MinimalEObjectImpl.Container implements 
   {
     switch (featureID)
     {
+      case MyDslPackage.TYPE_SWITCH_STMT__SWITCH:
+        return SWITCH_EDEFAULT == null ? switch_ != null : !SWITCH_EDEFAULT.equals(switch_);
       case MyDslPackage.TYPE_SWITCH_STMT__SIMPLE_STMT:
         return simpleStmt != null;
       case MyDslPackage.TYPE_SWITCH_STMT__TYPE_SWITCH_GUARD:
@@ -309,6 +363,23 @@ public class TypeSwitchStmtImpl extends MinimalEObjectImpl.Container implements 
         return typeCaseClause != null && !typeCaseClause.isEmpty();
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuffer result = new StringBuffer(super.toString());
+    result.append(" (switch: ");
+    result.append(switch_);
+    result.append(')');
+    return result.toString();
   }
 
 } //TypeSwitchStmtImpl
