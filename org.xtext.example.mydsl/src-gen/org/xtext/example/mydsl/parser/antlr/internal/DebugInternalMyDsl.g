@@ -683,15 +683,9 @@ ruleUnaryExpr:
 // Rule BINARY_OP
 ruleBINARY_OP:
 	(
-		'||'
-		    |
-		'&&'
-		    |
 		RULE_REL_OP
 		    |
 		RULE_ADD_OP
-		    |
-		RULE_MUL_OP
 	)
 ;
 
@@ -868,10 +862,8 @@ ruleSwitchStmt:
 // Rule ExprSwitchStmt
 ruleExprSwitchStmt:
 	'switch'
-	(
-		ruleSimpleStmt
-		';'
-	)?
+	ruleSimpleStmt
+	?
 	ruleExpression
 	?
 	'{'
@@ -1091,7 +1083,7 @@ ruleRecvExpr:
 
 // Rule ReturnStmt
 ruleReturnStmt:
-	RULE_RETURN
+	'return'
 	ruleExpressionList
 ;
 
@@ -1209,8 +1201,6 @@ RULE_CONTINUE : 'continue';
 
 RULE_FOR : 'for';
 
-RULE_RETURN : 'return';
-
 RULE_IDENTIFIER : RULE_LETTER (RULE_LETTER|'0'..'9')*;
 
 RULE_INT_LIT : ('1'..'9' RULE_DECIMAL_DIGIT*|'0' RULE_OCTAL_DIGIT*|'0' ('x'|'X') RULE_HEX_DIGIT+);
@@ -1249,7 +1239,9 @@ RULE_ANY_OTHER : '#';
 
 RULE_REL_OP : ('=='|'!='|'<'|'<='|'>'|'>=');
 
-RULE_ADD_OP : ('+'|'-'|'|'|'^');
+RULE_ADD_OP : ('*'|'/'|RULE_A_D_D__O_P__LINHA);
+
+fragment RULE_A_D_D__O_P__LINHA : ('+'|'-');
 
 RULE_MUL_OP : ('*'|'/'|'%'|'<<'|'>>'|'&'|'&^');
 

@@ -26,6 +26,7 @@ class MyDslValidator extends AbstractMyDslValidator {
 	VarDeclValidator varDeclValidator = new VarDeclValidator();
 	TypeDeclValidator typeDeclValidator = new TypeDeclValidator();
 	ExpressionValidator expressionValidator = new ExpressionValidator();
+	SwitchStmtValidator switchStmtValidator = new SwitchStmtValidator();
 	Map<String, String> idsTypes = new HashMap<String,String>;
 	List<MethodDecl> methodDeclList = new ArrayList;
 	Map<String, String> typeDefs = new HashMap;
@@ -82,6 +83,10 @@ class MyDslValidator extends AbstractMyDslValidator {
 	
 	@Check
 	def checkSwitch(SwitchStmt switchStmt){
+		if(switchStmtValidator.validaSwicthStmt(switchStmt) != null){
+			var Exception erro = switchStmtValidator.validaSwicthStmt(switchStmt)
+			error(erro.erro, erro.feature);
+		}
 		
 	}
 	

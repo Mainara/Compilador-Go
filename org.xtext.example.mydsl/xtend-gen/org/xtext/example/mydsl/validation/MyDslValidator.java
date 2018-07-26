@@ -21,6 +21,7 @@ import org.xtext.example.mydsl.validation.AbstractMyDslValidator;
 import org.xtext.example.mydsl.validation.ConstDeclValidator;
 import org.xtext.example.mydsl.validation.ExpressionValidator;
 import org.xtext.example.mydsl.validation.MethodDeclValidator;
+import org.xtext.example.mydsl.validation.SwitchStmtValidator;
 import org.xtext.example.mydsl.validation.TypeDeclValidator;
 import org.xtext.example.mydsl.validation.VarDeclValidator;
 
@@ -40,6 +41,8 @@ public class MyDslValidator extends AbstractMyDslValidator {
   private TypeDeclValidator typeDeclValidator = new TypeDeclValidator();
   
   private ExpressionValidator expressionValidator = new ExpressionValidator();
+  
+  private SwitchStmtValidator switchStmtValidator = new SwitchStmtValidator();
   
   private Map<String, String> idsTypes = new HashMap<String, String>();
   
@@ -106,7 +109,12 @@ public class MyDslValidator extends AbstractMyDslValidator {
   }
   
   @Check
-  public Object checkSwitch(final SwitchStmt switchStmt) {
-    return null;
+  public void checkSwitch(final SwitchStmt switchStmt) {
+    org.xtext.example.mydsl.validation.Exception _validaSwicthStmt = this.switchStmtValidator.validaSwicthStmt(switchStmt);
+    boolean _notEquals = (!Objects.equal(_validaSwicthStmt, null));
+    if (_notEquals) {
+      org.xtext.example.mydsl.validation.Exception erro = this.switchStmtValidator.validaSwicthStmt(switchStmt);
+      this.error(erro.erro, erro.feature);
+    }
   }
 }

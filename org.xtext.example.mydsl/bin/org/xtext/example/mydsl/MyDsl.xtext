@@ -99,7 +99,8 @@ terminal FOR:
 /*terminal IMPORT:
 	"import"
 ;*/
-terminal RETURN: 
+
+/*terminal RETURN: 
 	"return"
 ;
 /*terminal VAR: 
@@ -487,14 +488,18 @@ UnaryExpr:
 ;
 
 BINARY_OP: 
-	or = "||" | and = "&&" | rEL_OP= REL_OP | aDD_OP = ADD_OP | mUL_OP = MUL_OP
+	rEL_OP= REL_OP | aDD_OP = ADD_OP
 ;
 
 terminal REL_OP : 
 	"==" | "!=" | "<" | "<=" | ">" | ">="
 ;
 terminal ADD_OP :
-	"+" | "-" | "|" | "^" 
+	"*" | "/" | A_D_D__O_P__LINHA
+;
+
+terminal A_D_D__O_P__LINHA:
+	"+" | "-"
 ;
 terminal MUL_OP :
 	"*" | "/" | "%" | "<<" | ">>" | "&" | "&^"
@@ -582,7 +587,7 @@ SwitchStmtLinhaLinha:
 ;*/
 
 ExprSwitchStmt:
-	switch = "switch" (simpleStmt = SimpleStmt ";")? (expression= Expression)? "{" ( exprCaseClause += ExprCaseClause )* "}"
+	switch = "switch" (simpleStmt = SimpleStmt)? (expression= Expression)? "{" ( exprCaseClause += ExprCaseClause )* "}"
 ;
 
 ExprCaseClause:
@@ -676,7 +681,7 @@ RecvExpr:
 ;
 
 ReturnStmt:
-	return = RETURN ( expressionList = ExpressionList )
+	return = "return" ( expressionList = ExpressionList )
 ;
 
 BreakStmt:

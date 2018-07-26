@@ -5216,39 +5216,9 @@ ruleBINARY_OP returns [EObject current=null]
 	(
 		(
 			(
-				lv_or_0_0='||'
+				lv_rEL_OP_0_0=RULE_REL_OP
 				{
-					newLeafNode(lv_or_0_0, grammarAccess.getBINARY_OPAccess().getOrVerticalLineVerticalLineKeyword_0_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getBINARY_OPRule());
-					}
-					setWithLastConsumed($current, "or", lv_or_0_0, "||");
-				}
-			)
-		)
-		    |
-		(
-			(
-				lv_and_1_0='&&'
-				{
-					newLeafNode(lv_and_1_0, grammarAccess.getBINARY_OPAccess().getAndAmpersandAmpersandKeyword_1_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getBINARY_OPRule());
-					}
-					setWithLastConsumed($current, "and", lv_and_1_0, "&&");
-				}
-			)
-		)
-		    |
-		(
-			(
-				lv_rEL_OP_2_0=RULE_REL_OP
-				{
-					newLeafNode(lv_rEL_OP_2_0, grammarAccess.getBINARY_OPAccess().getREL_OPREL_OPTerminalRuleCall_2_0());
+					newLeafNode(lv_rEL_OP_0_0, grammarAccess.getBINARY_OPAccess().getREL_OPREL_OPTerminalRuleCall_0_0());
 				}
 				{
 					if ($current==null) {
@@ -5257,7 +5227,7 @@ ruleBINARY_OP returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"rEL_OP",
-						lv_rEL_OP_2_0,
+						lv_rEL_OP_0_0,
 						"org.xtext.example.mydsl.MyDsl.REL_OP");
 				}
 			)
@@ -5265,9 +5235,9 @@ ruleBINARY_OP returns [EObject current=null]
 		    |
 		(
 			(
-				lv_aDD_OP_3_0=RULE_ADD_OP
+				lv_aDD_OP_1_0=RULE_ADD_OP
 				{
-					newLeafNode(lv_aDD_OP_3_0, grammarAccess.getBINARY_OPAccess().getADD_OPADD_OPTerminalRuleCall_3_0());
+					newLeafNode(lv_aDD_OP_1_0, grammarAccess.getBINARY_OPAccess().getADD_OPADD_OPTerminalRuleCall_1_0());
 				}
 				{
 					if ($current==null) {
@@ -5276,27 +5246,8 @@ ruleBINARY_OP returns [EObject current=null]
 					setWithLastConsumed(
 						$current,
 						"aDD_OP",
-						lv_aDD_OP_3_0,
+						lv_aDD_OP_1_0,
 						"org.xtext.example.mydsl.MyDsl.ADD_OP");
-				}
-			)
-		)
-		    |
-		(
-			(
-				lv_mUL_OP_4_0=RULE_MUL_OP
-				{
-					newLeafNode(lv_mUL_OP_4_0, grammarAccess.getBINARY_OPAccess().getMUL_OPMUL_OPTerminalRuleCall_4_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getBINARY_OPRule());
-					}
-					setWithLastConsumed(
-						$current,
-						"mUL_OP",
-						lv_mUL_OP_4_0,
-						"org.xtext.example.mydsl.MyDsl.MUL_OP");
 				}
 			)
 		)
@@ -6685,35 +6636,29 @@ ruleExprSwitchStmt returns [EObject current=null]
 		)
 		(
 			(
-				(
-					{
-						newCompositeNode(grammarAccess.getExprSwitchStmtAccess().getSimpleStmtSimpleStmtParserRuleCall_1_0_0());
+				{
+					newCompositeNode(grammarAccess.getExprSwitchStmtAccess().getSimpleStmtSimpleStmtParserRuleCall_1_0());
+				}
+				lv_simpleStmt_1_0=ruleSimpleStmt
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getExprSwitchStmtRule());
 					}
-					lv_simpleStmt_1_0=ruleSimpleStmt
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getExprSwitchStmtRule());
-						}
-						set(
-							$current,
-							"simpleStmt",
-							lv_simpleStmt_1_0,
-							"org.xtext.example.mydsl.MyDsl.SimpleStmt");
-						afterParserOrEnumRuleCall();
-					}
-				)
+					set(
+						$current,
+						"simpleStmt",
+						lv_simpleStmt_1_0,
+						"org.xtext.example.mydsl.MyDsl.SimpleStmt");
+					afterParserOrEnumRuleCall();
+				}
 			)
-			otherlv_2=';'
-			{
-				newLeafNode(otherlv_2, grammarAccess.getExprSwitchStmtAccess().getSemicolonKeyword_1_1());
-			}
 		)?
 		(
 			(
 				{
 					newCompositeNode(grammarAccess.getExprSwitchStmtAccess().getExpressionExpressionParserRuleCall_2_0());
 				}
-				lv_expression_3_0=ruleExpression
+				lv_expression_2_0=ruleExpression
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getExprSwitchStmtRule());
@@ -6721,22 +6666,22 @@ ruleExprSwitchStmt returns [EObject current=null]
 					set(
 						$current,
 						"expression",
-						lv_expression_3_0,
+						lv_expression_2_0,
 						"org.xtext.example.mydsl.MyDsl.Expression");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)?
-		otherlv_4='{'
+		otherlv_3='{'
 		{
-			newLeafNode(otherlv_4, grammarAccess.getExprSwitchStmtAccess().getLeftCurlyBracketKeyword_3());
+			newLeafNode(otherlv_3, grammarAccess.getExprSwitchStmtAccess().getLeftCurlyBracketKeyword_3());
 		}
 		(
 			(
 				{
 					newCompositeNode(grammarAccess.getExprSwitchStmtAccess().getExprCaseClauseExprCaseClauseParserRuleCall_4_0());
 				}
-				lv_exprCaseClause_5_0=ruleExprCaseClause
+				lv_exprCaseClause_4_0=ruleExprCaseClause
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getExprSwitchStmtRule());
@@ -6744,15 +6689,15 @@ ruleExprSwitchStmt returns [EObject current=null]
 					add(
 						$current,
 						"exprCaseClause",
-						lv_exprCaseClause_5_0,
+						lv_exprCaseClause_4_0,
 						"org.xtext.example.mydsl.MyDsl.ExprCaseClause");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)*
-		otherlv_6='}'
+		otherlv_5='}'
 		{
-			newLeafNode(otherlv_6, grammarAccess.getExprSwitchStmtAccess().getRightCurlyBracketKeyword_5());
+			newLeafNode(otherlv_5, grammarAccess.getExprSwitchStmtAccess().getRightCurlyBracketKeyword_5());
 		}
 	)
 ;
@@ -8385,19 +8330,15 @@ ruleReturnStmt returns [EObject current=null]
 	(
 		(
 			(
-				lv_return_0_0=RULE_RETURN
+				lv_return_0_0='return'
 				{
-					newLeafNode(lv_return_0_0, grammarAccess.getReturnStmtAccess().getReturnRETURNTerminalRuleCall_0_0());
+					newLeafNode(lv_return_0_0, grammarAccess.getReturnStmtAccess().getReturnReturnKeyword_0_0());
 				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getReturnStmtRule());
 					}
-					setWithLastConsumed(
-						$current,
-						"return",
-						lv_return_0_0,
-						"org.xtext.example.mydsl.MyDsl.RETURN");
+					setWithLastConsumed($current, "return", lv_return_0_0, "return");
 				}
 			)
 		)
@@ -9044,8 +8985,6 @@ RULE_CONTINUE : 'continue';
 
 RULE_FOR : 'for';
 
-RULE_RETURN : 'return';
-
 RULE_IDENTIFIER : RULE_LETTER (RULE_LETTER|'0'..'9')*;
 
 RULE_INT_LIT : ('1'..'9' RULE_DECIMAL_DIGIT*|'0' RULE_OCTAL_DIGIT*|'0' ('x'|'X') RULE_HEX_DIGIT+);
@@ -9084,7 +9023,9 @@ RULE_ANY_OTHER : '#';
 
 RULE_REL_OP : ('=='|'!='|'<'|'<='|'>'|'>=');
 
-RULE_ADD_OP : ('+'|'-'|'|'|'^');
+RULE_ADD_OP : ('*'|'/'|RULE_A_D_D__O_P__LINHA);
+
+fragment RULE_A_D_D__O_P__LINHA : ('+'|'-');
 
 RULE_MUL_OP : ('*'|'/'|'%'|'<<'|'>>'|'&'|'&^');
 

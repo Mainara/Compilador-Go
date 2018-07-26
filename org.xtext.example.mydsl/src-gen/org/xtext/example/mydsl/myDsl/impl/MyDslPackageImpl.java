@@ -3394,7 +3394,7 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getBINARY_OP_Or()
+  public EAttribute getBINARY_OP_REL_OP()
   {
     return (EAttribute)binarY_OPEClass.getEStructuralFeatures().get(0);
   }
@@ -3404,39 +3404,9 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  public EAttribute getBINARY_OP_And()
-  {
-    return (EAttribute)binarY_OPEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getBINARY_OP_REL_OP()
-  {
-    return (EAttribute)binarY_OPEClass.getEStructuralFeatures().get(2);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   public EAttribute getBINARY_OP_ADD_OP()
   {
-    return (EAttribute)binarY_OPEClass.getEStructuralFeatures().get(3);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public EAttribute getBINARY_OP_MUL_OP()
-  {
-    return (EAttribute)binarY_OPEClass.getEStructuralFeatures().get(4);
+    return (EAttribute)binarY_OPEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -5521,11 +5491,8 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
     createEReference(unaryExprEClass, UNARY_EXPR__PRIMARY_EXPR);
 
     binarY_OPEClass = createEClass(BINARY_OP);
-    createEAttribute(binarY_OPEClass, BINARY_OP__OR);
-    createEAttribute(binarY_OPEClass, BINARY_OP__AND);
     createEAttribute(binarY_OPEClass, BINARY_OP__REL_OP);
     createEAttribute(binarY_OPEClass, BINARY_OP__ADD_OP);
-    createEAttribute(binarY_OPEClass, BINARY_OP__MUL_OP);
 
     conversionEClass = createEClass(CONVERSION);
     createEReference(conversionEClass, CONVERSION__TYPE);
@@ -6086,11 +6053,8 @@ public class MyDslPackageImpl extends EPackageImpl implements MyDslPackage
     initEReference(getUnaryExpr_PrimaryExpr(), this.getPrimaryExpr(), null, "primaryExpr", null, 0, 1, UnaryExpr.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(binarY_OPEClass, org.xtext.example.mydsl.myDsl.BINARY_OP.class, "BINARY_OP", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getBINARY_OP_Or(), ecorePackage.getEString(), "or", null, 0, 1, org.xtext.example.mydsl.myDsl.BINARY_OP.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getBINARY_OP_And(), ecorePackage.getEString(), "and", null, 0, 1, org.xtext.example.mydsl.myDsl.BINARY_OP.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getBINARY_OP_REL_OP(), ecorePackage.getEString(), "rEL_OP", null, 0, 1, org.xtext.example.mydsl.myDsl.BINARY_OP.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getBINARY_OP_ADD_OP(), ecorePackage.getEString(), "aDD_OP", null, 0, 1, org.xtext.example.mydsl.myDsl.BINARY_OP.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getBINARY_OP_MUL_OP(), ecorePackage.getEString(), "mUL_OP", null, 0, 1, org.xtext.example.mydsl.myDsl.BINARY_OP.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(conversionEClass, Conversion.class, "Conversion", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getConversion_Type(), this.getType(), null, "type", null, 0, 1, Conversion.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

@@ -28,12 +28,12 @@ public class MethodDeclValidator {
 	
 	public Exception validaBaseType(Type type, Map<String, String> typeDefs){
 		if(type.getTypeName() == null){
-			return new Exception("Erro Semântico: tipo base deve ser da forma T ou *T onde T é um nome de um tipo já definido", MyDslPackage.Literals.TOP_LEVEL_DECL__METHOD_DECL);
+			return new Exception("Erro Semântico: tipo base deve ser da forma T ou *T onde T é um nome de um tipo já definido", MyDslPackage.Literals.METHOD_DECL__METHOD_NAME);
 		}else if(!typeDefs.containsKey(type.getTypeName().getId())){
-			return new Exception("Tipo não definido", MyDslPackage.Literals.TOP_LEVEL_DECL__METHOD_DECL);
+			return new Exception("Tipo não definido", MyDslPackage.Literals.METHOD_DECL__METHOD_NAME);
 		}else{
 			if(typeDefs.get(type.getTypeName().getId()).equals("pointer") || typeDefs.get(type.getTypeName().getId()).equals("interface")){
-				return new Exception("Tipo Base nao poder ser do tipo ponteiro ou interface", MyDslPackage.Literals.TOP_LEVEL_DECL__METHOD_DECL);
+				return new Exception("Tipo Base nao poder ser do tipo ponteiro ou interface", MyDslPackage.Literals.METHOD_DECL__METHOD_NAME);
 			}else{
 				return null;
 			}

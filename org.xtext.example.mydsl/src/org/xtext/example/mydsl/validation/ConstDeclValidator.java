@@ -26,13 +26,50 @@ public class ConstDeclValidator {
 			}else if(contExp > contId){
 				return new Exception("Erro semântico: numero de ids diferentes do número de expressões", MyDslPackage.Literals.DECLARATION__CONST_DECL);
 			}
+		}else{
+			
 		}
 		
-		if(constSpec.getType() != null){
-			if(constSpec.getType().getTypeName() == null || !constSpec.getType().getTypeName().getId().equals("bool")){
-				return new Exception("Erro semântico: incompatibilidade de tipo, expressões relacionais relacionais só podem ser atribuíveis ao tipo bool", MyDslPackage.Literals.DECLARATION__CONST_DECL);
+		if(constSpec.getExpressionList().getExpression().getExpression_Linha().getBINARY_OP() != null){
+			if(constSpec.getExpressionList().getExpression().getExpression_Linha().getBINARY_OP().getADD_OP() != null){
+				if(constSpec.getExpressionList().getExpression().getUnaryExpr().getPrimaryExpr().getOperand().getLiteral().getBasicLit().getInt_lit() != null &&
+						!constSpec.getType().getTypeName().getId().equals("int")){
+					return new Exception("Erro semântico: operações aritmeticas com inteiros retorna valores inteiros", MyDslPackage.Literals.DECLARATION__VAR_DECL);
+				}else if(constSpec.getExpressionList().getExpression().getUnaryExpr().getPrimaryExpr().getOperand().getLiteral().getBasicLit().getFloat_lit() != null &&
+						!constSpec.getType().getTypeName().getId().equals("float")){
+					return new Exception("Erro semântico: operações aritmetica com float retorna valores float", MyDslPackage.Literals.DECLARATION__VAR_DECL);
+				}
+			}else{
+				if(!constSpec.getType().getTypeName().getId().equals("bool")){
+					return new Exception("Erro semântico: expressões relacionais retornam apenas valores booleanos", MyDslPackage.Literals.DECLARATION__VAR_DECL);
+				}
+			}
+		}else{
+			if(constSpec.getExpressionList().getExpression().getUnaryExpr().getPrimaryExpr().getOperand().getOperandName() != null){
+			if(constSpec.getExpressionList().getExpression().getUnaryExpr().getPrimaryExpr().getOperand().getOperandName().getId().equals("true") ||
+					constSpec.getExpressionList().getExpression().getUnaryExpr().getPrimaryExpr().getOperand().getOperandName().getId().equals("false")){
+				if(!constSpec.getType().getTypeName().getId().equals("bool")){
+					return new Exception("Erro semântico: incompatibilidade de tipo", MyDslPackage.Literals.DECLARATION__VAR_DECL);
+				}
+			}
+		}else{
+			if(constSpec.getExpressionList().getExpression().getUnaryExpr().getPrimaryExpr().getOperand().getLiteral().getBasicLit().getInt_lit() != null){
+				if(!constSpec.getType().getTypeName().getId().equals("int")){
+					return new Exception("Erro semântico: incompatibilidade de tipo", MyDslPackage.Literals.DECLARATION__VAR_DECL);
+				}
+			}else if(constSpec.getExpressionList().getExpression().getUnaryExpr().getPrimaryExpr().getOperand().getLiteral().getBasicLit().getFloat_lit() != null){
+				if(!constSpec.getType().getTypeName().getId().equals("float")){
+					return new Exception("Erro semântico: incompatibilidade de tipo", MyDslPackage.Literals.DECLARATION__VAR_DECL);
+				}
+			}else if(constSpec.getExpressionList().getExpression().getUnaryExpr().getPrimaryExpr().getOperand().getLiteral().getBasicLit().getString_lit() != null){
+				if(!constSpec.getType().getTypeName().getId().equals("string")){
+					return new Exception("Erro semântico: incompatibilidade de tipo", MyDslPackage.Literals.DECLARATION__VAR_DECL);
+				}
 			}
 		}
+	}
+		
+		
 		
 		return null;
 	}
@@ -76,12 +113,6 @@ public class ConstDeclValidator {
 			return new Exception("Erro semântico: numero de ids diferentes do número de expressões", MyDslPackage.Literals.DECLARATION__CONST_DECL);
 		}
 		
-		if(constSpecs.get(0).getType() != null){
-			if(constSpecs.get(0).getType().getTypeName() == null || !constSpecs.get(0).getType().getTypeName().getId().equals("bool")){
-				return new Exception("Erro semântico: incompatibilidade de tipo, expressões relacionais constantes só podem ser atribuíveis ao tipo bool", MyDslPackage.Literals.DECLARATION__CONST_DECL);
-			}
-		}
-		
 		for(int i = 1; i < constSpecs.size(); i ++){
 			if(constSpecs.get(i).getExpressionList() == null){
 				for(int j = i-1; j >= 0; j --){
@@ -96,12 +127,6 @@ public class ConstDeclValidator {
 			}else{
 				if(contIds(constSpecs.get(i)) > contExp(constSpecs.get(i)) || contExp(constSpecs.get(i)) > contIds(constSpecs.get(i))){
 					return new Exception("Erro semântico: numero de ids diferentes do número de expressões", MyDslPackage.Literals.DECLARATION__CONST_DECL);
-				}
-			}
-			
-			if(constSpecs.get(i).getType() != null){
-				if(constSpecs.get(i).getType().getTypeName() == null || !constSpecs.get(i).getType().getTypeName().getId().equals("bool")){
-					return new Exception("Erro semântico: incompatibilidade de tipo, expressões relacionais constantes só podem ser atribuíveis ao tipo bool", MyDslPackage.Literals.DECLARATION__CONST_DECL);
 				}
 			}
 		}

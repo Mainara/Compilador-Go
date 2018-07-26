@@ -318,11 +318,8 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MyDsl.ecore#//UnaryExpr/primaryExpr"/>
     </genClasses>
     <genClasses ecoreClass="MyDsl.ecore#//BINARY_OP">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MyDsl.ecore#//BINARY_OP/or"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MyDsl.ecore#//BINARY_OP/and"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MyDsl.ecore#//BINARY_OP/rEL_OP"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MyDsl.ecore#//BINARY_OP/aDD_OP"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MyDsl.ecore#//BINARY_OP/mUL_OP"/>
     </genClasses>
     <genClasses ecoreClass="MyDsl.ecore#//Conversion">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MyDsl.ecore#//Conversion/type"/>

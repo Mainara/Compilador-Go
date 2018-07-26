@@ -186,7 +186,6 @@ public class MyDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getIfStmtLinhaAccess().getGroup_1(), "rule__IfStmtLinha__Group_1__0");
 					put(grammarAccess.getIfStmtLinhaAccess().getGroup_1_1(), "rule__IfStmtLinha__Group_1_1__0");
 					put(grammarAccess.getExprSwitchStmtAccess().getGroup(), "rule__ExprSwitchStmt__Group__0");
-					put(grammarAccess.getExprSwitchStmtAccess().getGroup_1(), "rule__ExprSwitchStmt__Group_1__0");
 					put(grammarAccess.getExprCaseClauseAccess().getGroup(), "rule__ExprCaseClause__Group__0");
 					put(grammarAccess.getExprSwitchCaseAccess().getGroup_0(), "rule__ExprSwitchCase__Group_0__0");
 					put(grammarAccess.getTypeSwitchStmtAccess().getGroup(), "rule__TypeSwitchStmt__Group__0");
@@ -402,11 +401,8 @@ public class MyDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getExpression_LinhaAccess().getExpression1Assignment_1_1(), "rule__Expression_Linha__Expression1Assignment_1_1");
 					put(grammarAccess.getExpression_LinhaAccess().getExpression_LinhaAssignment_1_2(), "rule__Expression_Linha__Expression_LinhaAssignment_1_2");
 					put(grammarAccess.getUnaryExprAccess().getPrimaryExprAssignment(), "rule__UnaryExpr__PrimaryExprAssignment");
-					put(grammarAccess.getBINARY_OPAccess().getOrAssignment_0(), "rule__BINARY_OP__OrAssignment_0");
-					put(grammarAccess.getBINARY_OPAccess().getAndAssignment_1(), "rule__BINARY_OP__AndAssignment_1");
-					put(grammarAccess.getBINARY_OPAccess().getREL_OPAssignment_2(), "rule__BINARY_OP__REL_OPAssignment_2");
-					put(grammarAccess.getBINARY_OPAccess().getADD_OPAssignment_3(), "rule__BINARY_OP__ADD_OPAssignment_3");
-					put(grammarAccess.getBINARY_OPAccess().getMUL_OPAssignment_4(), "rule__BINARY_OP__MUL_OPAssignment_4");
+					put(grammarAccess.getBINARY_OPAccess().getREL_OPAssignment_0(), "rule__BINARY_OP__REL_OPAssignment_0");
+					put(grammarAccess.getBINARY_OPAccess().getADD_OPAssignment_1(), "rule__BINARY_OP__ADD_OPAssignment_1");
 					put(grammarAccess.getConversionAccess().getTypeAssignment_0(), "rule__Conversion__TypeAssignment_0");
 					put(grammarAccess.getConversionAccess().getExpressionAssignment_2(), "rule__Conversion__ExpressionAssignment_2");
 					put(grammarAccess.getStatementAccess().getDeclarationAssignment_0(), "rule__Statement__DeclarationAssignment_0");
@@ -463,7 +459,7 @@ public class MyDslParser extends AbstractContentAssistParser {
 					put(grammarAccess.getSwitchStmtAccess().getExprSwitchStmtAssignment_0(), "rule__SwitchStmt__ExprSwitchStmtAssignment_0");
 					put(grammarAccess.getSwitchStmtAccess().getTypeSwitchStmtAssignment_1(), "rule__SwitchStmt__TypeSwitchStmtAssignment_1");
 					put(grammarAccess.getExprSwitchStmtAccess().getSwitchAssignment_0(), "rule__ExprSwitchStmt__SwitchAssignment_0");
-					put(grammarAccess.getExprSwitchStmtAccess().getSimpleStmtAssignment_1_0(), "rule__ExprSwitchStmt__SimpleStmtAssignment_1_0");
+					put(grammarAccess.getExprSwitchStmtAccess().getSimpleStmtAssignment_1(), "rule__ExprSwitchStmt__SimpleStmtAssignment_1");
 					put(grammarAccess.getExprSwitchStmtAccess().getExpressionAssignment_2(), "rule__ExprSwitchStmt__ExpressionAssignment_2");
 					put(grammarAccess.getExprSwitchStmtAccess().getExprCaseClauseAssignment_4(), "rule__ExprSwitchStmt__ExprCaseClauseAssignment_4");
 					put(grammarAccess.getExprCaseClauseAccess().getExprSwitchCaseAssignment_0(), "rule__ExprCaseClause__ExprSwitchCaseAssignment_0");

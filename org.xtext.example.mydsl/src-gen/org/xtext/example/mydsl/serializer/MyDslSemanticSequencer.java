@@ -560,7 +560,7 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     BINARY_OP returns BINARY_OP
 	 *
 	 * Constraint:
-	 *     (or='||' | and='&&' | rEL_OP=REL_OP | aDD_OP=ADD_OP | mUL_OP=MUL_OP)
+	 *     (rEL_OP=REL_OP | aDD_OP=ADD_OP)
 	 */
 	protected void sequence_BINARY_OP(ISerializationContext context, BINARY_OP semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -1857,7 +1857,7 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 	 *     ReturnStmt returns ReturnStmt
 	 *
 	 * Constraint:
-	 *     (return=RETURN expressionList=ExpressionList)
+	 *     (return='return' expressionList=ExpressionList)
 	 */
 	protected void sequence_ReturnStmt(ISerializationContext context, ReturnStmt semanticObject) {
 		if (errorAcceptor != null) {
@@ -1867,7 +1867,7 @@ public class MyDslSemanticSequencer extends AbstractDelegatingSemanticSequencer 
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MyDslPackage.Literals.RETURN_STMT__EXPRESSION_LIST));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getReturnStmtAccess().getReturnRETURNTerminalRuleCall_0_0(), semanticObject.getReturn());
+		feeder.accept(grammarAccess.getReturnStmtAccess().getReturnReturnKeyword_0_0(), semanticObject.getReturn());
 		feeder.accept(grammarAccess.getReturnStmtAccess().getExpressionListExpressionListParserRuleCall_1_0(), semanticObject.getExpressionList());
 		feeder.finish();
 	}

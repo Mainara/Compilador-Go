@@ -2942,31 +2942,13 @@ public interface MyDslPackage extends EPackage
   int BINARY_OP = 75;
 
   /**
-   * The feature id for the '<em><b>Or</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BINARY_OP__OR = 0;
-
-  /**
-   * The feature id for the '<em><b>And</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BINARY_OP__AND = 1;
-
-  /**
    * The feature id for the '<em><b>REL OP</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int BINARY_OP__REL_OP = 2;
+  int BINARY_OP__REL_OP = 0;
 
   /**
    * The feature id for the '<em><b>ADD OP</b></em>' attribute.
@@ -2975,16 +2957,7 @@ public interface MyDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int BINARY_OP__ADD_OP = 3;
-
-  /**
-   * The feature id for the '<em><b>MUL OP</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BINARY_OP__MUL_OP = 4;
+  int BINARY_OP__ADD_OP = 1;
 
   /**
    * The number of structural features of the '<em>BINARY OP</em>' class.
@@ -2993,7 +2966,7 @@ public interface MyDslPackage extends EPackage
    * @generated
    * @ordered
    */
-  int BINARY_OP_FEATURE_COUNT = 5;
+  int BINARY_OP_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.xtext.example.mydsl.myDsl.impl.ConversionImpl <em>Conversion</em>}' class.
@@ -7504,28 +7477,6 @@ public interface MyDslPackage extends EPackage
   EClass getBINARY_OP();
 
   /**
-   * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.BINARY_OP#getOr <em>Or</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Or</em>'.
-   * @see org.xtext.example.mydsl.myDsl.BINARY_OP#getOr()
-   * @see #getBINARY_OP()
-   * @generated
-   */
-  EAttribute getBINARY_OP_Or();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.BINARY_OP#getAnd <em>And</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>And</em>'.
-   * @see org.xtext.example.mydsl.myDsl.BINARY_OP#getAnd()
-   * @see #getBINARY_OP()
-   * @generated
-   */
-  EAttribute getBINARY_OP_And();
-
-  /**
    * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.BINARY_OP#getREL_OP <em>REL OP</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -7546,17 +7497,6 @@ public interface MyDslPackage extends EPackage
    * @generated
    */
   EAttribute getBINARY_OP_ADD_OP();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.xtext.example.mydsl.myDsl.BINARY_OP#getMUL_OP <em>MUL OP</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>MUL OP</em>'.
-   * @see org.xtext.example.mydsl.myDsl.BINARY_OP#getMUL_OP()
-   * @see #getBINARY_OP()
-   * @generated
-   */
-  EAttribute getBINARY_OP_MUL_OP();
 
   /**
    * Returns the meta object for class '{@link org.xtext.example.mydsl.myDsl.Conversion <em>Conversion</em>}'.
@@ -11503,22 +11443,6 @@ public interface MyDslPackage extends EPackage
     EClass BINARY_OP = eINSTANCE.getBINARY_OP();
 
     /**
-     * The meta object literal for the '<em><b>Or</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute BINARY_OP__OR = eINSTANCE.getBINARY_OP_Or();
-
-    /**
-     * The meta object literal for the '<em><b>And</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute BINARY_OP__AND = eINSTANCE.getBINARY_OP_And();
-
-    /**
      * The meta object literal for the '<em><b>REL OP</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -11533,14 +11457,6 @@ public interface MyDslPackage extends EPackage
      * @generated
      */
     EAttribute BINARY_OP__ADD_OP = eINSTANCE.getBINARY_OP_ADD_OP();
-
-    /**
-     * The meta object literal for the '<em><b>MUL OP</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute BINARY_OP__MUL_OP = eINSTANCE.getBINARY_OP_MUL_OP();
 
     /**
      * The meta object literal for the '{@link org.xtext.example.mydsl.myDsl.impl.ConversionImpl <em>Conversion</em>}' class.

@@ -8,17 +8,24 @@ import org.eclipse.xtext.generator.AbstractGenerator
 import org.eclipse.xtext.generator.IFileSystemAccess2
 import org.eclipse.xtext.generator.IGeneratorContext
 import org.xtext.example.mydsl.myDsl.AliasDecl
+import org.xtext.example.mydsl.myDsl.Block
 import org.xtext.example.mydsl.myDsl.ConstDecl
 import org.xtext.example.mydsl.myDsl.ConstSpec
 import org.xtext.example.mydsl.myDsl.Declaration
+import org.xtext.example.mydsl.myDsl.ExprCaseClause
+import org.xtext.example.mydsl.myDsl.Expression
+import org.xtext.example.mydsl.myDsl.FunctionBody
 import org.xtext.example.mydsl.myDsl.MethodDecl
+import org.xtext.example.mydsl.myDsl.SourceFile
+import org.xtext.example.mydsl.myDsl.Statement
+import org.xtext.example.mydsl.myDsl.StatementList
+import org.xtext.example.mydsl.myDsl.SwitchStmt
 import org.xtext.example.mydsl.myDsl.TopLevelDecl
 import org.xtext.example.mydsl.myDsl.TypeDecl
 import org.xtext.example.mydsl.myDsl.TypeDef
 import org.xtext.example.mydsl.myDsl.TypeSpec
 import org.xtext.example.mydsl.myDsl.VarDecl
 import org.xtext.example.mydsl.myDsl.VarSpec
-import org.xtext.example.mydsl.myDsl.Expression
 
 /**
  * Generates code from your model files on save.
@@ -33,8 +40,8 @@ class MyDslGenerator extends AbstractGenerator {
 	override void doGenerate(Resource resource, IFileSystemAccess2 fsa, IGeneratorContext context) {
 		countVar = 1;
 		countaddr = 0;
-		for (e : resource.allContents.toIterable.filter(TopLevelDecl)) {
-			fsa.generateFile(e.declaration.toString() + ".txt", e.compile)
+		for (e : resource.allContents.toIterable.filter(SourceFile)) {
+			fsa.generateFile(e.topLevelDecl.toString() + ".txt", e.compile)
 		}
 //		fsa.generateFile('greetings.txt', 'People to greet: ' + 
 //			resource.allContents
@@ -43,15 +50,92 @@ class MyDslGenerator extends AbstractGenerator {
 //				.join(', '))
 	}
 
-	def compile(TopLevelDecl topDecl) '''
+	def compile(SourceFile sourceFile) '''
 		«countaddr»: LD SP, 1000
 		«nextAddress»
-		«IF topDecl.declaration instanceof Declaration»
-			«(topDecl.declaration as Declaration).genDeclaration»
-		«ELSEIF topDecl.methodDecl instanceof MethodDecl»
-			«(topDecl.declaration.constDecl as ConstDecl).genConst»
+		«FOR topLeveDecl: sourceFile.topLevelDecl»
+			«genField(topLeveDecl)»
+		«ENDFOR»
+	'''
+	
+	def genField(TopLevelDecl topLevelDecl)'''
+		«IF topLevelDecl.declaration instanceof Declaration»
+			«(topLevelDecl.declaration as Declaration).genDeclaration»
+		«ELSEIF topLevelDecl.methodDecl instanceof MethodDecl»
+			«(topLevelDecl.methodDecl as MethodDecl).genMethodDecl»
 		«ENDIF»	
 	'''
+	
+	def genMethodDecl(MethodDecl declaration) '''
+		«IF declaration.functionBody != null»
+			«declaration.methodName»:
+			«genFunctionBody(declaration.functionBody)»
+		«ENDIF»
+		
+	'''
+	def genFunctionBody(FunctionBody functioBody) '''
+		«IF functioBody.block != null»
+			«genBlock(functioBody.block)»
+		«ENDIF»
+		
+	'''
+	def genBlock(Block block) '''
+		«IF block.statementList != null»
+			«genStatementList(block.statementList)»
+		«ENDIF»
+		
+	'''
+
+	def genStatementList(StatementList statementList) '''
+		«IF statementList.statements != null»
+			«FOR actualStatment : statementList.statements»
+					«genStatement(actualStatment)»
+			«ENDFOR»
+		«ENDIF»
+	'''
+	def genStatement(Statement statement)'''
+		«IF statement.switchStmt != null»
+			«genSwicthStmt(statement.switchStmt)»
+		«ELSEIF statement.declaration != null»
+			«genDeclaration(statement.declaration)»
+		«ENDIF»
+	'''
+	
+	def genSwicthStmt(SwitchStmt switchStmt)'''
+		«IF switchStmt.exprSwitchStmt != null»
+			«IF switchStmt.exprSwitchStmt.simpleStmt != null»
+				«IF switchStmt.exprSwitchStmt.simpleStmt.shortVarDecl != null»
+					«genExpression(switchStmt.exprSwitchStmt.simpleStmt.shortVarDecl.expressionList.expression, switchStmt.exprSwitchStmt.simpleStmt.shortVarDecl.identifierList.id)»
+					«countaddr.toString()»: LD R«countVar.toString()», «switchStmt.exprSwitchStmt.simpleStmt.shortVarDecl.identifierList.id»
+					«increment»
+					«nextAddress»
+				«ENDIF»
+			«ENDIF»
+			«IF switchStmt.exprSwitchStmt.exprCaseClause != null»
+				«FOR exprCaseClause: switchStmt.exprSwitchStmt.exprCaseClause»
+					«genExprCaseClause(exprCaseClause)»
+				«ENDFOR»
+			«ENDIF»
+		«ENDIF»
+	'''
+	def genExprCaseClause(ExprCaseClause exprCaseClause)'''
+		«IF exprCaseClause.exprSwitchCase.expressionList != null»
+			«IF exprCaseClause.exprSwitchCase.expressionList.expression.unaryExpr.primaryExpr.operand.literal != null»
+				«countaddr.toString()»: LD R«countVar.toString()», «exprCaseClause.exprSwitchCase.expressionList.expression.unaryExpr.primaryExpr.operand.literal.basicLit»
+				«increment»
+				«countaddr.toString()»: BQE R«(countVar-2).toString()»,  R«(countVar-1).toString()», #EXECUTE
+				#EXECUTE:
+			 «ELSE»
+			 	«countaddr.toString()»: LD R«countVar.toString()», «exprCaseClause.exprSwitchCase.expressionList.expression.unaryExpr.primaryExpr.operand.operandName»
+			 	«increment»
+			 	«countaddr.toString()»: BQE R«(countVar-2).toString()»,  R«(countVar-1).toString()», #EXECUTE
+			 	#EXECUTE:
+			 «ENDIF»
+		«ELSE»
+			DEFAULT:
+		«ENDIF»
+	'''
+	
 
 	def genType(TypeDecl typeDecl) '''
 		«IF typeDecl.typeSpec != null»
@@ -110,11 +194,7 @@ class MyDslGenerator extends AbstractGenerator {
 	def genVarSpec(VarSpec varSpec) '''
 		«IF varSpec.expressionList != null»
 			«IF !varSpec.identifierList.id.empty»
-				«countaddr.toString()»: LD R«countVar.toString()», #TRUE
-				«increment»
-				«nextAddress»
-				«countaddr.toString()»: ST «varSpec.identifierList.id», R«new Integer(countVar-1).toString()»
-				«nextAddress»
+				«genExpression(varSpec.expressionList.expression, varSpec.identifierList.id)»
 			«ENDIF»
 			
 			«IF varSpec.identifierList.id1 != null»
@@ -194,9 +274,13 @@ class MyDslGenerator extends AbstractGenerator {
 	}
 
 	def genExpression(Expression exp, String name) '''
+	«IF exp.expression_Linha.BINARY_OP != null»
 		«IF exp.expression_Linha.BINARY_OP.REL_OP != null»
 			«genExpressionRelop(exp, name)»
+		«ELSEIF exp.expression_Linha.BINARY_OP.ADD_OP != null»
+			«genExpressionArit(exp, name,  exp.expression_Linha.BINARY_OP.ADD_OP)»
 		«ENDIF»
+	«ENDIF»
 	'''
 
 	def genExpressionRelop(Expression exp, String name) '''
@@ -518,6 +602,28 @@ class MyDslGenerator extends AbstractGenerator {
 		«ENDIF»
 	'''
 	
-	
-	
+	def genExpressionArit(Expression exp, String name, String operador)'''
+		«countaddr.toString()»: LD R«countVar.toString()», #«exp.unaryExpr.primaryExpr.operand»
+		«increment»
+		«nextAddress»
+		«countaddr.toString()»: LD R«countVar.toString()», #«exp.expression_Linha.expression1.unaryExpr.primaryExpr.operand»
+		«increment»
+		«nextAddress»
+		«IF operador.equals("+")»
+			«countaddr.toString()»: ADD R«new Integer(countVar-2).toString()», R«new Integer(countVar-1).toString()» , R«new Integer(countVar-2).toString()»
+			«nextAddress»
+		«ELSEIF operador.equals("*")»
+				«countaddr.toString()»: MUL R«new Integer(countVar-2).toString()», R«new Integer(countVar-1).toString()» , R«new Integer(countVar-2).toString()»
+				«nextAddress»
+		«ELSEIF operador.equals("/")»
+				«countaddr.toString()»: DIV R«new Integer(countVar-2).toString()», R«new Integer(countVar-1).toString()» , R«new Integer(countVar-2).toString()»
+				«nextAddress»
+		«ELSEIF operador.equals("-")»
+				«countaddr.toString()»: SUB R«new Integer(countVar-2).toString()», R«new Integer(countVar-1).toString()» , R«new Integer(countVar-2).toString()»
+				«nextAddress»
+		«ENDIF»
+			«countaddr.toString()»: ST «name», R«new Integer(countVar-2).toString()»
+			«nextAddress»
+			«increment»
+	'''
 }

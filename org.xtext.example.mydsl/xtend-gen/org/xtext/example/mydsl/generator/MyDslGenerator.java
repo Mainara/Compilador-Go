@@ -17,19 +17,31 @@ import org.eclipse.xtext.xbase.lib.IteratorExtensions;
 import org.xtext.example.mydsl.myDsl.AliasDecl;
 import org.xtext.example.mydsl.myDsl.BINARY_OP;
 import org.xtext.example.mydsl.myDsl.BasicLit;
+import org.xtext.example.mydsl.myDsl.Block;
 import org.xtext.example.mydsl.myDsl.ConstDecl;
 import org.xtext.example.mydsl.myDsl.ConstSpec;
 import org.xtext.example.mydsl.myDsl.Declaration;
+import org.xtext.example.mydsl.myDsl.ExprCaseClause;
+import org.xtext.example.mydsl.myDsl.ExprSwitchCase;
+import org.xtext.example.mydsl.myDsl.ExprSwitchStmt;
 import org.xtext.example.mydsl.myDsl.Expression;
 import org.xtext.example.mydsl.myDsl.Expression1;
 import org.xtext.example.mydsl.myDsl.ExpressionList;
 import org.xtext.example.mydsl.myDsl.Expression_Linha;
+import org.xtext.example.mydsl.myDsl.FunctionBody;
 import org.xtext.example.mydsl.myDsl.IdentifierList;
 import org.xtext.example.mydsl.myDsl.Literal;
 import org.xtext.example.mydsl.myDsl.MethodDecl;
+import org.xtext.example.mydsl.myDsl.MethodName;
 import org.xtext.example.mydsl.myDsl.Operand;
 import org.xtext.example.mydsl.myDsl.OperandName;
 import org.xtext.example.mydsl.myDsl.PrimaryExpr;
+import org.xtext.example.mydsl.myDsl.ShortVarDecl;
+import org.xtext.example.mydsl.myDsl.SimpleStmt;
+import org.xtext.example.mydsl.myDsl.SourceFile;
+import org.xtext.example.mydsl.myDsl.Statement;
+import org.xtext.example.mydsl.myDsl.StatementList;
+import org.xtext.example.mydsl.myDsl.SwitchStmt;
 import org.xtext.example.mydsl.myDsl.TopLevelDecl;
 import org.xtext.example.mydsl.myDsl.TypeDecl;
 import org.xtext.example.mydsl.myDsl.TypeDef;
@@ -55,17 +67,17 @@ public class MyDslGenerator extends AbstractGenerator {
     this.countaddr = Integer.valueOf(0);
     TreeIterator<EObject> _allContents = resource.getAllContents();
     Iterable<EObject> _iterable = IteratorExtensions.<EObject>toIterable(_allContents);
-    Iterable<TopLevelDecl> _filter = Iterables.<TopLevelDecl>filter(_iterable, TopLevelDecl.class);
-    for (final TopLevelDecl e : _filter) {
-      Declaration _declaration = e.getDeclaration();
-      String _string = _declaration.toString();
+    Iterable<SourceFile> _filter = Iterables.<SourceFile>filter(_iterable, SourceFile.class);
+    for (final SourceFile e : _filter) {
+      EList<TopLevelDecl> _topLevelDecl = e.getTopLevelDecl();
+      String _string = _topLevelDecl.toString();
       String _plus = (_string + ".txt");
       CharSequence _compile = this.compile(e);
       fsa.generateFile(_plus, _compile);
     }
   }
   
-  public CharSequence compile(final TopLevelDecl topDecl) {
+  public CharSequence compile(final SourceFile sourceFile) {
     StringConcatenation _builder = new StringConcatenation();
     _builder.append(this.countaddr, "");
     _builder.append(": LD SP, 1000");
@@ -73,21 +85,287 @@ public class MyDslGenerator extends AbstractGenerator {
     this.nextAddress();
     _builder.newLineIfNotEmpty();
     {
-      Declaration _declaration = topDecl.getDeclaration();
+      EList<TopLevelDecl> _topLevelDecl = sourceFile.getTopLevelDecl();
+      for(final TopLevelDecl topLeveDecl : _topLevelDecl) {
+        CharSequence _genField = this.genField(topLeveDecl);
+        _builder.append(_genField, "");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    return _builder;
+  }
+  
+  public CharSequence genField(final TopLevelDecl topLevelDecl) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      Declaration _declaration = topLevelDecl.getDeclaration();
       if ((_declaration instanceof Declaration)) {
-        Declaration _declaration_1 = topDecl.getDeclaration();
+        Declaration _declaration_1 = topLevelDecl.getDeclaration();
         CharSequence _genDeclaration = this.genDeclaration(((Declaration) _declaration_1));
         _builder.append(_genDeclaration, "");
         _builder.newLineIfNotEmpty();
       } else {
-        MethodDecl _methodDecl = topDecl.getMethodDecl();
+        MethodDecl _methodDecl = topLevelDecl.getMethodDecl();
         if ((_methodDecl instanceof MethodDecl)) {
-          Declaration _declaration_2 = topDecl.getDeclaration();
-          ConstDecl _constDecl = _declaration_2.getConstDecl();
-          CharSequence _genConst = this.genConst(((ConstDecl) _constDecl));
-          _builder.append(_genConst, "");
+          MethodDecl _methodDecl_1 = topLevelDecl.getMethodDecl();
+          CharSequence _genMethodDecl = this.genMethodDecl(((MethodDecl) _methodDecl_1));
+          _builder.append(_genMethodDecl, "");
           _builder.newLineIfNotEmpty();
         }
+      }
+    }
+    return _builder;
+  }
+  
+  public CharSequence genMethodDecl(final MethodDecl declaration) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      FunctionBody _functionBody = declaration.getFunctionBody();
+      boolean _notEquals = (!Objects.equal(_functionBody, null));
+      if (_notEquals) {
+        MethodName _methodName = declaration.getMethodName();
+        _builder.append(_methodName, "");
+        _builder.append(":");
+        _builder.newLineIfNotEmpty();
+        FunctionBody _functionBody_1 = declaration.getFunctionBody();
+        CharSequence _genFunctionBody = this.genFunctionBody(_functionBody_1);
+        _builder.append(_genFunctionBody, "");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence genFunctionBody(final FunctionBody functioBody) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      Block _block = functioBody.getBlock();
+      boolean _notEquals = (!Objects.equal(_block, null));
+      if (_notEquals) {
+        Block _block_1 = functioBody.getBlock();
+        CharSequence _genBlock = this.genBlock(_block_1);
+        _builder.append(_genBlock, "");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence genBlock(final Block block) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      StatementList _statementList = block.getStatementList();
+      boolean _notEquals = (!Objects.equal(_statementList, null));
+      if (_notEquals) {
+        StatementList _statementList_1 = block.getStatementList();
+        CharSequence _genStatementList = this.genStatementList(_statementList_1);
+        _builder.append(_genStatementList, "");
+        _builder.newLineIfNotEmpty();
+      }
+    }
+    _builder.newLine();
+    return _builder;
+  }
+  
+  public CharSequence genStatementList(final StatementList statementList) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      EList<Statement> _statements = statementList.getStatements();
+      boolean _notEquals = (!Objects.equal(_statements, null));
+      if (_notEquals) {
+        {
+          EList<Statement> _statements_1 = statementList.getStatements();
+          for(final Statement actualStatment : _statements_1) {
+            CharSequence _genStatement = this.genStatement(actualStatment);
+            _builder.append(_genStatement, "");
+            _builder.newLineIfNotEmpty();
+          }
+        }
+      }
+    }
+    return _builder;
+  }
+  
+  public CharSequence genStatement(final Statement statement) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      SwitchStmt _switchStmt = statement.getSwitchStmt();
+      boolean _notEquals = (!Objects.equal(_switchStmt, null));
+      if (_notEquals) {
+        SwitchStmt _switchStmt_1 = statement.getSwitchStmt();
+        CharSequence _genSwicthStmt = this.genSwicthStmt(_switchStmt_1);
+        _builder.append(_genSwicthStmt, "");
+        _builder.newLineIfNotEmpty();
+      } else {
+        Declaration _declaration = statement.getDeclaration();
+        boolean _notEquals_1 = (!Objects.equal(_declaration, null));
+        if (_notEquals_1) {
+          Declaration _declaration_1 = statement.getDeclaration();
+          CharSequence _genDeclaration = this.genDeclaration(_declaration_1);
+          _builder.append(_genDeclaration, "");
+          _builder.newLineIfNotEmpty();
+        }
+      }
+    }
+    return _builder;
+  }
+  
+  public CharSequence genSwicthStmt(final SwitchStmt switchStmt) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      ExprSwitchStmt _exprSwitchStmt = switchStmt.getExprSwitchStmt();
+      boolean _notEquals = (!Objects.equal(_exprSwitchStmt, null));
+      if (_notEquals) {
+        {
+          ExprSwitchStmt _exprSwitchStmt_1 = switchStmt.getExprSwitchStmt();
+          SimpleStmt _simpleStmt = _exprSwitchStmt_1.getSimpleStmt();
+          boolean _notEquals_1 = (!Objects.equal(_simpleStmt, null));
+          if (_notEquals_1) {
+            {
+              ExprSwitchStmt _exprSwitchStmt_2 = switchStmt.getExprSwitchStmt();
+              SimpleStmt _simpleStmt_1 = _exprSwitchStmt_2.getSimpleStmt();
+              ShortVarDecl _shortVarDecl = _simpleStmt_1.getShortVarDecl();
+              boolean _notEquals_2 = (!Objects.equal(_shortVarDecl, null));
+              if (_notEquals_2) {
+                ExprSwitchStmt _exprSwitchStmt_3 = switchStmt.getExprSwitchStmt();
+                SimpleStmt _simpleStmt_2 = _exprSwitchStmt_3.getSimpleStmt();
+                ShortVarDecl _shortVarDecl_1 = _simpleStmt_2.getShortVarDecl();
+                ExpressionList _expressionList = _shortVarDecl_1.getExpressionList();
+                Expression _expression = _expressionList.getExpression();
+                ExprSwitchStmt _exprSwitchStmt_4 = switchStmt.getExprSwitchStmt();
+                SimpleStmt _simpleStmt_3 = _exprSwitchStmt_4.getSimpleStmt();
+                ShortVarDecl _shortVarDecl_2 = _simpleStmt_3.getShortVarDecl();
+                IdentifierList _identifierList = _shortVarDecl_2.getIdentifierList();
+                String _id = _identifierList.getId();
+                CharSequence _genExpression = this.genExpression(_expression, _id);
+                _builder.append(_genExpression, "");
+                _builder.newLineIfNotEmpty();
+                String _string = this.countaddr.toString();
+                _builder.append(_string, "");
+                _builder.append(": LD R");
+                String _string_1 = this.countVar.toString();
+                _builder.append(_string_1, "");
+                _builder.append(", ");
+                ExprSwitchStmt _exprSwitchStmt_5 = switchStmt.getExprSwitchStmt();
+                SimpleStmt _simpleStmt_4 = _exprSwitchStmt_5.getSimpleStmt();
+                ShortVarDecl _shortVarDecl_3 = _simpleStmt_4.getShortVarDecl();
+                IdentifierList _identifierList_1 = _shortVarDecl_3.getIdentifierList();
+                String _id_1 = _identifierList_1.getId();
+                _builder.append(_id_1, "");
+                _builder.newLineIfNotEmpty();
+                this.increment();
+                _builder.newLineIfNotEmpty();
+                this.nextAddress();
+                _builder.newLineIfNotEmpty();
+              }
+            }
+          }
+        }
+        {
+          ExprSwitchStmt _exprSwitchStmt_6 = switchStmt.getExprSwitchStmt();
+          EList<ExprCaseClause> _exprCaseClause = _exprSwitchStmt_6.getExprCaseClause();
+          boolean _notEquals_3 = (!Objects.equal(_exprCaseClause, null));
+          if (_notEquals_3) {
+            {
+              ExprSwitchStmt _exprSwitchStmt_7 = switchStmt.getExprSwitchStmt();
+              EList<ExprCaseClause> _exprCaseClause_1 = _exprSwitchStmt_7.getExprCaseClause();
+              for(final ExprCaseClause exprCaseClause : _exprCaseClause_1) {
+                CharSequence _genExprCaseClause = this.genExprCaseClause(exprCaseClause);
+                _builder.append(_genExprCaseClause, "");
+                _builder.newLineIfNotEmpty();
+              }
+            }
+          }
+        }
+      }
+    }
+    return _builder;
+  }
+  
+  public CharSequence genExprCaseClause(final ExprCaseClause exprCaseClause) {
+    StringConcatenation _builder = new StringConcatenation();
+    {
+      ExprSwitchCase _exprSwitchCase = exprCaseClause.getExprSwitchCase();
+      ExpressionList _expressionList = _exprSwitchCase.getExpressionList();
+      boolean _notEquals = (!Objects.equal(_expressionList, null));
+      if (_notEquals) {
+        {
+          ExprSwitchCase _exprSwitchCase_1 = exprCaseClause.getExprSwitchCase();
+          ExpressionList _expressionList_1 = _exprSwitchCase_1.getExpressionList();
+          Expression _expression = _expressionList_1.getExpression();
+          UnaryExpr _unaryExpr = _expression.getUnaryExpr();
+          PrimaryExpr _primaryExpr = _unaryExpr.getPrimaryExpr();
+          Operand _operand = _primaryExpr.getOperand();
+          Literal _literal = _operand.getLiteral();
+          boolean _notEquals_1 = (!Objects.equal(_literal, null));
+          if (_notEquals_1) {
+            String _string = this.countaddr.toString();
+            _builder.append(_string, "");
+            _builder.append(": LD R");
+            String _string_1 = this.countVar.toString();
+            _builder.append(_string_1, "");
+            _builder.append(", ");
+            ExprSwitchCase _exprSwitchCase_2 = exprCaseClause.getExprSwitchCase();
+            ExpressionList _expressionList_2 = _exprSwitchCase_2.getExpressionList();
+            Expression _expression_1 = _expressionList_2.getExpression();
+            UnaryExpr _unaryExpr_1 = _expression_1.getUnaryExpr();
+            PrimaryExpr _primaryExpr_1 = _unaryExpr_1.getPrimaryExpr();
+            Operand _operand_1 = _primaryExpr_1.getOperand();
+            Literal _literal_1 = _operand_1.getLiteral();
+            BasicLit _basicLit = _literal_1.getBasicLit();
+            _builder.append(_basicLit, "");
+            _builder.newLineIfNotEmpty();
+            this.increment();
+            _builder.newLineIfNotEmpty();
+            String _string_2 = this.countaddr.toString();
+            _builder.append(_string_2, "");
+            _builder.append(": BQE R");
+            String _string_3 = Integer.valueOf(((this.countVar).intValue() - 2)).toString();
+            _builder.append(_string_3, "");
+            _builder.append(",  R");
+            String _string_4 = Integer.valueOf(((this.countVar).intValue() - 1)).toString();
+            _builder.append(_string_4, "");
+            _builder.append(", #EXECUTE");
+            _builder.newLineIfNotEmpty();
+            _builder.append("#EXECUTE:");
+            _builder.newLine();
+          } else {
+            String _string_5 = this.countaddr.toString();
+            _builder.append(_string_5, "");
+            _builder.append(": LD R");
+            String _string_6 = this.countVar.toString();
+            _builder.append(_string_6, "");
+            _builder.append(", ");
+            ExprSwitchCase _exprSwitchCase_3 = exprCaseClause.getExprSwitchCase();
+            ExpressionList _expressionList_3 = _exprSwitchCase_3.getExpressionList();
+            Expression _expression_2 = _expressionList_3.getExpression();
+            UnaryExpr _unaryExpr_2 = _expression_2.getUnaryExpr();
+            PrimaryExpr _primaryExpr_2 = _unaryExpr_2.getPrimaryExpr();
+            Operand _operand_2 = _primaryExpr_2.getOperand();
+            OperandName _operandName = _operand_2.getOperandName();
+            _builder.append(_operandName, "");
+            _builder.newLineIfNotEmpty();
+            this.increment();
+            _builder.newLineIfNotEmpty();
+            String _string_7 = this.countaddr.toString();
+            _builder.append(_string_7, "");
+            _builder.append(": BQE R");
+            String _string_8 = Integer.valueOf(((this.countVar).intValue() - 2)).toString();
+            _builder.append(_string_8, "");
+            _builder.append(",  R");
+            String _string_9 = Integer.valueOf(((this.countVar).intValue() - 1)).toString();
+            _builder.append(_string_9, "");
+            _builder.append(", #EXECUTE");
+            _builder.newLineIfNotEmpty();
+            _builder.append("#EXECUTE:");
+            _builder.newLine();
+          }
+        }
+      } else {
+        _builder.append("DEFAULT:");
+        _builder.newLine();
       }
     }
     return _builder;
@@ -265,29 +543,12 @@ public class MyDslGenerator extends AbstractGenerator {
           boolean _isEmpty = _id.isEmpty();
           boolean _not = (!_isEmpty);
           if (_not) {
-            String _string = this.countaddr.toString();
-            _builder.append(_string, "");
-            _builder.append(": LD R");
-            String _string_1 = this.countVar.toString();
-            _builder.append(_string_1, "");
-            _builder.append(", #TRUE");
-            _builder.newLineIfNotEmpty();
-            this.increment();
-            _builder.newLineIfNotEmpty();
-            this.nextAddress();
-            _builder.newLineIfNotEmpty();
-            String _string_2 = this.countaddr.toString();
-            _builder.append(_string_2, "");
-            _builder.append(": ST ");
+            ExpressionList _expressionList_1 = varSpec.getExpressionList();
+            Expression _expression = _expressionList_1.getExpression();
             IdentifierList _identifierList_1 = varSpec.getIdentifierList();
             String _id_1 = _identifierList_1.getId();
-            _builder.append(_id_1, "");
-            _builder.append(", R");
-            Integer _integer = new Integer(((this.countVar).intValue() - 1));
-            String _string_3 = _integer.toString();
-            _builder.append(_string_3, "");
-            _builder.newLineIfNotEmpty();
-            this.nextAddress();
+            CharSequence _genExpression = this.genExpression(_expression, _id_1);
+            _builder.append(_genExpression, "");
             _builder.newLineIfNotEmpty();
           }
         }
@@ -301,27 +562,27 @@ public class MyDslGenerator extends AbstractGenerator {
               IdentifierList _identifierList_3 = varSpec.getIdentifierList();
               EList<String> _id1_1 = _identifierList_3.getId1();
               for(final String id : _id1_1) {
-                String _string_4 = this.countaddr.toString();
-                _builder.append(_string_4, "");
+                String _string = this.countaddr.toString();
+                _builder.append(_string, "");
                 _builder.append(": LD R");
-                String _string_5 = this.countVar.toString();
-                _builder.append(_string_5, "");
+                String _string_1 = this.countVar.toString();
+                _builder.append(_string_1, "");
                 _builder.append(", #TRUE");
                 _builder.newLineIfNotEmpty();
                 this.increment();
                 _builder.newLineIfNotEmpty();
                 this.nextAddress();
                 _builder.newLineIfNotEmpty();
-                String _string_6 = this.countaddr.toString();
-                _builder.append(_string_6, "");
+                String _string_2 = this.countaddr.toString();
+                _builder.append(_string_2, "");
                 _builder.append(": ST ");
                 IdentifierList _identifierList_4 = varSpec.getIdentifierList();
                 String _id_2 = _identifierList_4.getId();
                 _builder.append(_id_2, "");
                 _builder.append(", R");
-                Integer _integer_1 = new Integer(((this.countVar).intValue() - 1));
-                String _string_7 = _integer_1.toString();
-                _builder.append(_string_7, "");
+                Integer _integer = new Integer(((this.countVar).intValue() - 1));
+                String _string_3 = _integer.toString();
+                _builder.append(_string_3, "");
                 _builder.newLineIfNotEmpty();
                 this.nextAddress();
                 _builder.newLineIfNotEmpty();
@@ -336,11 +597,11 @@ public class MyDslGenerator extends AbstractGenerator {
           boolean _isEmpty_1 = _id_3.isEmpty();
           boolean _not_1 = (!_isEmpty_1);
           if (_not_1) {
-            String _string_8 = this.countaddr.toString();
-            _builder.append(_string_8, "");
+            String _string_4 = this.countaddr.toString();
+            _builder.append(_string_4, "");
             _builder.append(": LD R");
-            String _string_9 = this.countVar.toString();
-            _builder.append(_string_9, "");
+            String _string_5 = this.countVar.toString();
+            _builder.append(_string_5, "");
             _builder.append(", ");
             IdentifierList _identifierList_6 = varSpec.getIdentifierList();
             String _id_4 = _identifierList_6.getId();
@@ -362,11 +623,11 @@ public class MyDslGenerator extends AbstractGenerator {
               IdentifierList _identifierList_8 = varSpec.getIdentifierList();
               EList<String> _id1_3 = _identifierList_8.getId1();
               for(final String id_1 : _id1_3) {
-                String _string_10 = this.countaddr.toString();
-                _builder.append(_string_10, "");
+                String _string_6 = this.countaddr.toString();
+                _builder.append(_string_6, "");
                 _builder.append(": LD R");
-                String _string_11 = this.countVar.toString();
-                _builder.append(_string_11, "");
+                String _string_7 = this.countVar.toString();
+                _builder.append(_string_7, "");
                 _builder.append(", ");
                 _builder.append(id_1, "");
                 _builder.newLineIfNotEmpty();
@@ -540,12 +801,32 @@ public class MyDslGenerator extends AbstractGenerator {
     {
       Expression_Linha _expression_Linha = exp.getExpression_Linha();
       BINARY_OP _bINARY_OP = _expression_Linha.getBINARY_OP();
-      String _rEL_OP = _bINARY_OP.getREL_OP();
-      boolean _notEquals = (!Objects.equal(_rEL_OP, null));
+      boolean _notEquals = (!Objects.equal(_bINARY_OP, null));
       if (_notEquals) {
-        CharSequence _genExpressionRelop = this.genExpressionRelop(exp, name);
-        _builder.append(_genExpressionRelop, "");
-        _builder.newLineIfNotEmpty();
+        {
+          Expression_Linha _expression_Linha_1 = exp.getExpression_Linha();
+          BINARY_OP _bINARY_OP_1 = _expression_Linha_1.getBINARY_OP();
+          String _rEL_OP = _bINARY_OP_1.getREL_OP();
+          boolean _notEquals_1 = (!Objects.equal(_rEL_OP, null));
+          if (_notEquals_1) {
+            CharSequence _genExpressionRelop = this.genExpressionRelop(exp, name);
+            _builder.append(_genExpressionRelop, "");
+            _builder.newLineIfNotEmpty();
+          } else {
+            Expression_Linha _expression_Linha_2 = exp.getExpression_Linha();
+            BINARY_OP _bINARY_OP_2 = _expression_Linha_2.getBINARY_OP();
+            String _aDD_OP = _bINARY_OP_2.getADD_OP();
+            boolean _notEquals_2 = (!Objects.equal(_aDD_OP, null));
+            if (_notEquals_2) {
+              Expression_Linha _expression_Linha_3 = exp.getExpression_Linha();
+              BINARY_OP _bINARY_OP_3 = _expression_Linha_3.getBINARY_OP();
+              String _aDD_OP_1 = _bINARY_OP_3.getADD_OP();
+              CharSequence _genExpressionArit = this.genExpressionArit(exp, name, _aDD_OP_1);
+              _builder.append(_genExpressionArit, "");
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
       }
     }
     return _builder;
@@ -2420,6 +2701,144 @@ public class MyDslGenerator extends AbstractGenerator {
         }
       }
     }
+    return _builder;
+  }
+  
+  public CharSequence genExpressionArit(final Expression exp, final String name, final String operador) {
+    StringConcatenation _builder = new StringConcatenation();
+    String _string = this.countaddr.toString();
+    _builder.append(_string, "");
+    _builder.append(": LD R");
+    String _string_1 = this.countVar.toString();
+    _builder.append(_string_1, "");
+    _builder.append(", #");
+    UnaryExpr _unaryExpr = exp.getUnaryExpr();
+    PrimaryExpr _primaryExpr = _unaryExpr.getPrimaryExpr();
+    Operand _operand = _primaryExpr.getOperand();
+    _builder.append(_operand, "");
+    _builder.newLineIfNotEmpty();
+    this.increment();
+    _builder.newLineIfNotEmpty();
+    this.nextAddress();
+    _builder.newLineIfNotEmpty();
+    String _string_2 = this.countaddr.toString();
+    _builder.append(_string_2, "");
+    _builder.append(": LD R");
+    String _string_3 = this.countVar.toString();
+    _builder.append(_string_3, "");
+    _builder.append(", #");
+    Expression_Linha _expression_Linha = exp.getExpression_Linha();
+    Expression1 _expression1 = _expression_Linha.getExpression1();
+    UnaryExpr _unaryExpr_1 = _expression1.getUnaryExpr();
+    PrimaryExpr _primaryExpr_1 = _unaryExpr_1.getPrimaryExpr();
+    Operand _operand_1 = _primaryExpr_1.getOperand();
+    _builder.append(_operand_1, "");
+    _builder.newLineIfNotEmpty();
+    this.increment();
+    _builder.newLineIfNotEmpty();
+    this.nextAddress();
+    _builder.newLineIfNotEmpty();
+    {
+      boolean _equals = operador.equals("+");
+      if (_equals) {
+        String _string_4 = this.countaddr.toString();
+        _builder.append(_string_4, "");
+        _builder.append(": ADD R");
+        Integer _integer = new Integer(((this.countVar).intValue() - 2));
+        String _string_5 = _integer.toString();
+        _builder.append(_string_5, "");
+        _builder.append(", R");
+        Integer _integer_1 = new Integer(((this.countVar).intValue() - 1));
+        String _string_6 = _integer_1.toString();
+        _builder.append(_string_6, "");
+        _builder.append(" , R");
+        Integer _integer_2 = new Integer(((this.countVar).intValue() - 2));
+        String _string_7 = _integer_2.toString();
+        _builder.append(_string_7, "");
+        _builder.newLineIfNotEmpty();
+        this.nextAddress();
+        _builder.newLineIfNotEmpty();
+      } else {
+        boolean _equals_1 = operador.equals("*");
+        if (_equals_1) {
+          String _string_8 = this.countaddr.toString();
+          _builder.append(_string_8, "");
+          _builder.append(": MUL R");
+          Integer _integer_3 = new Integer(((this.countVar).intValue() - 2));
+          String _string_9 = _integer_3.toString();
+          _builder.append(_string_9, "");
+          _builder.append(", R");
+          Integer _integer_4 = new Integer(((this.countVar).intValue() - 1));
+          String _string_10 = _integer_4.toString();
+          _builder.append(_string_10, "");
+          _builder.append(" , R");
+          Integer _integer_5 = new Integer(((this.countVar).intValue() - 2));
+          String _string_11 = _integer_5.toString();
+          _builder.append(_string_11, "");
+          _builder.newLineIfNotEmpty();
+          this.nextAddress();
+          _builder.newLineIfNotEmpty();
+        } else {
+          boolean _equals_2 = operador.equals("/");
+          if (_equals_2) {
+            String _string_12 = this.countaddr.toString();
+            _builder.append(_string_12, "");
+            _builder.append(": DIV R");
+            Integer _integer_6 = new Integer(((this.countVar).intValue() - 2));
+            String _string_13 = _integer_6.toString();
+            _builder.append(_string_13, "");
+            _builder.append(", R");
+            Integer _integer_7 = new Integer(((this.countVar).intValue() - 1));
+            String _string_14 = _integer_7.toString();
+            _builder.append(_string_14, "");
+            _builder.append(" , R");
+            Integer _integer_8 = new Integer(((this.countVar).intValue() - 2));
+            String _string_15 = _integer_8.toString();
+            _builder.append(_string_15, "");
+            _builder.newLineIfNotEmpty();
+            this.nextAddress();
+            _builder.newLineIfNotEmpty();
+          } else {
+            boolean _equals_3 = operador.equals("-");
+            if (_equals_3) {
+              String _string_16 = this.countaddr.toString();
+              _builder.append(_string_16, "");
+              _builder.append(": SUB R");
+              Integer _integer_9 = new Integer(((this.countVar).intValue() - 2));
+              String _string_17 = _integer_9.toString();
+              _builder.append(_string_17, "");
+              _builder.append(", R");
+              Integer _integer_10 = new Integer(((this.countVar).intValue() - 1));
+              String _string_18 = _integer_10.toString();
+              _builder.append(_string_18, "");
+              _builder.append(" , R");
+              Integer _integer_11 = new Integer(((this.countVar).intValue() - 2));
+              String _string_19 = _integer_11.toString();
+              _builder.append(_string_19, "");
+              _builder.newLineIfNotEmpty();
+              this.nextAddress();
+              _builder.newLineIfNotEmpty();
+            }
+          }
+        }
+      }
+    }
+    _builder.append("\t");
+    String _string_20 = this.countaddr.toString();
+    _builder.append(_string_20, "\t");
+    _builder.append(": ST ");
+    _builder.append(name, "\t");
+    _builder.append(", R");
+    Integer _integer_12 = new Integer(((this.countVar).intValue() - 2));
+    String _string_21 = _integer_12.toString();
+    _builder.append(_string_21, "\t");
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    this.nextAddress();
+    _builder.newLineIfNotEmpty();
+    _builder.append("\t");
+    this.increment();
+    _builder.newLineIfNotEmpty();
     return _builder;
   }
 }

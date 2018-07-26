@@ -21,57 +21,14 @@ import org.xtext.example.mydsl.myDsl.MyDslPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.xtext.example.mydsl.myDsl.impl.BINARY_OPImpl#getOr <em>Or</em>}</li>
- *   <li>{@link org.xtext.example.mydsl.myDsl.impl.BINARY_OPImpl#getAnd <em>And</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.impl.BINARY_OPImpl#getREL_OP <em>REL OP</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.impl.BINARY_OPImpl#getADD_OP <em>ADD OP</em>}</li>
- *   <li>{@link org.xtext.example.mydsl.myDsl.impl.BINARY_OPImpl#getMUL_OP <em>MUL OP</em>}</li>
  * </ul>
  *
  * @generated
  */
 public class BINARY_OPImpl extends MinimalEObjectImpl.Container implements BINARY_OP
 {
-  /**
-   * The default value of the '{@link #getOr() <em>Or</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOr()
-   * @generated
-   * @ordered
-   */
-  protected static final String OR_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getOr() <em>Or</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getOr()
-   * @generated
-   * @ordered
-   */
-  protected String or = OR_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getAnd() <em>And</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getAnd()
-   * @generated
-   * @ordered
-   */
-  protected static final String AND_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getAnd() <em>And</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getAnd()
-   * @generated
-   * @ordered
-   */
-  protected String and = AND_EDEFAULT;
-
   /**
    * The default value of the '{@link #getREL_OP() <em>REL OP</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -113,26 +70,6 @@ public class BINARY_OPImpl extends MinimalEObjectImpl.Container implements BINAR
   protected String aDD_OP = ADD_OP_EDEFAULT;
 
   /**
-   * The default value of the '{@link #getMUL_OP() <em>MUL OP</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getMUL_OP()
-   * @generated
-   * @ordered
-   */
-  protected static final String MUL_OP_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getMUL_OP() <em>MUL OP</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getMUL_OP()
-   * @generated
-   * @ordered
-   */
-  protected String mUL_OP = MUL_OP_EDEFAULT;
-
-  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -151,52 +88,6 @@ public class BINARY_OPImpl extends MinimalEObjectImpl.Container implements BINAR
   protected EClass eStaticClass()
   {
     return MyDslPackage.Literals.BINARY_OP;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getOr()
-  {
-    return or;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setOr(String newOr)
-  {
-    String oldOr = or;
-    or = newOr;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MyDslPackage.BINARY_OP__OR, oldOr, or));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String getAnd()
-  {
-    return and;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setAnd(String newAnd)
-  {
-    String oldAnd = and;
-    and = newAnd;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MyDslPackage.BINARY_OP__AND, oldAnd, and));
   }
 
   /**
@@ -250,44 +141,15 @@ public class BINARY_OPImpl extends MinimalEObjectImpl.Container implements BINAR
    * <!-- end-user-doc -->
    * @generated
    */
-  public String getMUL_OP()
-  {
-    return mUL_OP;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public void setMUL_OP(String newMUL_OP)
-  {
-    String oldMUL_OP = mUL_OP;
-    mUL_OP = newMUL_OP;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MyDslPackage.BINARY_OP__MUL_OP, oldMUL_OP, mUL_OP));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
     {
-      case MyDslPackage.BINARY_OP__OR:
-        return getOr();
-      case MyDslPackage.BINARY_OP__AND:
-        return getAnd();
       case MyDslPackage.BINARY_OP__REL_OP:
         return getREL_OP();
       case MyDslPackage.BINARY_OP__ADD_OP:
         return getADD_OP();
-      case MyDslPackage.BINARY_OP__MUL_OP:
-        return getMUL_OP();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -302,20 +164,11 @@ public class BINARY_OPImpl extends MinimalEObjectImpl.Container implements BINAR
   {
     switch (featureID)
     {
-      case MyDslPackage.BINARY_OP__OR:
-        setOr((String)newValue);
-        return;
-      case MyDslPackage.BINARY_OP__AND:
-        setAnd((String)newValue);
-        return;
       case MyDslPackage.BINARY_OP__REL_OP:
         setREL_OP((String)newValue);
         return;
       case MyDslPackage.BINARY_OP__ADD_OP:
         setADD_OP((String)newValue);
-        return;
-      case MyDslPackage.BINARY_OP__MUL_OP:
-        setMUL_OP((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -331,20 +184,11 @@ public class BINARY_OPImpl extends MinimalEObjectImpl.Container implements BINAR
   {
     switch (featureID)
     {
-      case MyDslPackage.BINARY_OP__OR:
-        setOr(OR_EDEFAULT);
-        return;
-      case MyDslPackage.BINARY_OP__AND:
-        setAnd(AND_EDEFAULT);
-        return;
       case MyDslPackage.BINARY_OP__REL_OP:
         setREL_OP(REL_OP_EDEFAULT);
         return;
       case MyDslPackage.BINARY_OP__ADD_OP:
         setADD_OP(ADD_OP_EDEFAULT);
-        return;
-      case MyDslPackage.BINARY_OP__MUL_OP:
-        setMUL_OP(MUL_OP_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -360,16 +204,10 @@ public class BINARY_OPImpl extends MinimalEObjectImpl.Container implements BINAR
   {
     switch (featureID)
     {
-      case MyDslPackage.BINARY_OP__OR:
-        return OR_EDEFAULT == null ? or != null : !OR_EDEFAULT.equals(or);
-      case MyDslPackage.BINARY_OP__AND:
-        return AND_EDEFAULT == null ? and != null : !AND_EDEFAULT.equals(and);
       case MyDslPackage.BINARY_OP__REL_OP:
         return REL_OP_EDEFAULT == null ? rEL_OP != null : !REL_OP_EDEFAULT.equals(rEL_OP);
       case MyDslPackage.BINARY_OP__ADD_OP:
         return ADD_OP_EDEFAULT == null ? aDD_OP != null : !ADD_OP_EDEFAULT.equals(aDD_OP);
-      case MyDslPackage.BINARY_OP__MUL_OP:
-        return MUL_OP_EDEFAULT == null ? mUL_OP != null : !MUL_OP_EDEFAULT.equals(mUL_OP);
     }
     return super.eIsSet(featureID);
   }
@@ -385,16 +223,10 @@ public class BINARY_OPImpl extends MinimalEObjectImpl.Container implements BINAR
     if (eIsProxy()) return super.toString();
 
     StringBuffer result = new StringBuffer(super.toString());
-    result.append(" (or: ");
-    result.append(or);
-    result.append(", and: ");
-    result.append(and);
-    result.append(", rEL_OP: ");
+    result.append(" (rEL_OP: ");
     result.append(rEL_OP);
     result.append(", aDD_OP: ");
     result.append(aDD_OP);
-    result.append(", mUL_OP: ");
-    result.append(mUL_OP);
     result.append(')');
     return result.toString();
   }

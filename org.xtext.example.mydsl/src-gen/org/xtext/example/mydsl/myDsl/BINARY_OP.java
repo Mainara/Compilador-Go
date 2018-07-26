@@ -14,11 +14,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.xtext.example.mydsl.myDsl.BINARY_OP#getOr <em>Or</em>}</li>
- *   <li>{@link org.xtext.example.mydsl.myDsl.BINARY_OP#getAnd <em>And</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.BINARY_OP#getREL_OP <em>REL OP</em>}</li>
  *   <li>{@link org.xtext.example.mydsl.myDsl.BINARY_OP#getADD_OP <em>ADD OP</em>}</li>
- *   <li>{@link org.xtext.example.mydsl.myDsl.BINARY_OP#getMUL_OP <em>MUL OP</em>}</li>
  * </ul>
  *
  * @see org.xtext.example.mydsl.myDsl.MyDslPackage#getBINARY_OP()
@@ -27,58 +24,6 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface BINARY_OP extends EObject
 {
-  /**
-   * Returns the value of the '<em><b>Or</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Or</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Or</em>' attribute.
-   * @see #setOr(String)
-   * @see org.xtext.example.mydsl.myDsl.MyDslPackage#getBINARY_OP_Or()
-   * @model
-   * @generated
-   */
-  String getOr();
-
-  /**
-   * Sets the value of the '{@link org.xtext.example.mydsl.myDsl.BINARY_OP#getOr <em>Or</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Or</em>' attribute.
-   * @see #getOr()
-   * @generated
-   */
-  void setOr(String value);
-
-  /**
-   * Returns the value of the '<em><b>And</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>And</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>And</em>' attribute.
-   * @see #setAnd(String)
-   * @see org.xtext.example.mydsl.myDsl.MyDslPackage#getBINARY_OP_And()
-   * @model
-   * @generated
-   */
-  String getAnd();
-
-  /**
-   * Sets the value of the '{@link org.xtext.example.mydsl.myDsl.BINARY_OP#getAnd <em>And</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>And</em>' attribute.
-   * @see #getAnd()
-   * @generated
-   */
-  void setAnd(String value);
-
   /**
    * Returns the value of the '<em><b>REL OP</b></em>' attribute.
    * <!-- begin-user-doc -->
@@ -130,31 +75,5 @@ public interface BINARY_OP extends EObject
    * @generated
    */
   void setADD_OP(String value);
-
-  /**
-   * Returns the value of the '<em><b>MUL OP</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>MUL OP</em>' attribute isn't clear,
-   * there really should be more of a description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>MUL OP</em>' attribute.
-   * @see #setMUL_OP(String)
-   * @see org.xtext.example.mydsl.myDsl.MyDslPackage#getBINARY_OP_MUL_OP()
-   * @model
-   * @generated
-   */
-  String getMUL_OP();
-
-  /**
-   * Sets the value of the '{@link org.xtext.example.mydsl.myDsl.BINARY_OP#getMUL_OP <em>MUL OP</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>MUL OP</em>' attribute.
-   * @see #getMUL_OP()
-   * @generated
-   */
-  void setMUL_OP(String value);
 
 } // BINARY_OP
